@@ -1,0 +1,11 @@
+{
+  "name": "ds-160",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0"
+  }
+}
