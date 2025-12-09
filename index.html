@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DS-160 Client Survey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>DS-160 Client Survey</h1>
+        <p>يرجى ملء النموذج التالي بعناية. سيتم إرسال البيانات إلى خدمة الاستلام الخارجية في نافذة جديدة.</p>
+
+        <form action="/api/submit" method="POST" id="ds160Form">
+
+            <fieldset>
+                <legend>1. Personal Information (المعلومات الشخصية)</legend>
+                <div class="question-group">
+                    <label for="fullName">الاسم بالكامل:</label>
+                    <input type="text" id="fullName" name="FullName" required style="direction: auto;">
+                    <span class="error-message" id="error-fullName"></span>
+                </div>
+                <div class="question-group">
+                    <label for="maritalStatus">الحالة الاجتماعية:</label>
+                    <select id="maritalStatus" name="MaritalStatus" required>
+                        <option value="">-- اختر الحالة --</option>
+                        <option value="Married">متزوج</option>
+                        <option value="Single">أعزب</option>
+                        <option value="Widowed">أرمل</option>
+                        <option value="Divorced">مطلق</option>
+                    </select>
+                    <span class="error-message" id="error-maritalStatus"></span>
+                </div>
+
+                <!-- Nationality / other nationality question (added) -->
+                <div class="question-group">
+                    <label for="nationality">بلد/منطقة المنشأ (الجنسية):</label>
+                    <select id="nationality" name="Nationality">
+                        <option value="">-- اختر / Select --</option>
+                        <option value="Afghanistan">Afghanistan</option>
+                        <option value="Albania">Albania</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="Andorra">Andorra</option>
+                        <option value="Angola">Angola</option>
+                        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Armenia">Armenia</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Azerbaijan">Azerbaijan</option>
+                        <option value="Bahamas">Bahamas</option>
+                        <option value="Bahrain">Bahrain</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Barbados">Barbados</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Belize">Belize</option>
+                        <option value="Benin">Benin</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Bolivia">Bolivia</option>
+                        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Brunei">Brunei</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Burkina Faso">Burkina Faso</option>
+                        <option value="Burundi">Burundi</option>
+                        <option value="Cabo Verde">Cabo Verde</option>
+                        <option value="Cambodia">Cambodia</option>
+                        <option value="Cameroon">Cameroon</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Central African Republic">Central African Republic</option>
+                        <option value="Chad">Chad</option>
+                        <option value="Chile">Chile</option>
+                        <option value="China">China</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Comoros">Comoros</option>
+                        <option value="Costa Rica">Costa Rica</option>
+                        <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Cuba">Cuba</option>
+                        <option value="Cyprus">Cyprus</option>
+                        <option value="Czechia">Czechia</option>
+                        <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Djibouti">Djibouti</option>
+                        <option value="Dominica">Dominica</option>
+                        <option value="Dominican Republic">Dominican Republic</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="El Salvador">El Salvador</option>
+                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                        <option value="Eritrea">Eritrea</option>
+                        <option value="Estonia">Estonia</option>
+                        <option value="Eswatini">Eswatini</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Federated States of Micronesia">Federated States of Micronesia</option>
+                        <option value="Fiji">Fiji</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="Gabon">Gabon</option>
+                        <option value="Gambia">Gambia</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Greece">Greece</option>
+                        <option value="Grenada">Grenada</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Guinea">Guinea</option>
+                        <option value="Guinea-Bissau">Guinea-Bissau</option>
+                        <option value="Guyana">Guyana</option>
+                        <option value="Haiti">Haiti</option>
+                        <option value="Honduras">Honduras</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Iceland">Iceland</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Iran">Iran</option>
+                        <option value="Iraq">Iraq</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Jamaica">Jamaica</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Jordan">Jordan</option>
+                        <option value="Kazakhstan">Kazakhstan</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Kiribati">Kiribati</option>
+                        <option value="Kosovo">Kosovo</option>
+                        <option value="Kuwait">Kuwait</option>
+                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                        <option value="Laos">Laos</option>
+                        <option value="Latvia">Latvia</option>
+                        <option value="Lebanon">Lebanon</option>
+                        <option value="Lesotho">Lesotho</option>
+                        <option value="Liberia">Liberia</option>
+                        <option value="Libya">Libya</option>
+                        <option value="Liechtenstein">Liechtenstein</option>
+                        <option value="Lithuania">Lithuania</option>
+                        <option value="Luxembourg">Luxembourg</option>
+                        <option value="Madagascar">Madagascar</option>
+                        <option value="Malawi">Malawi</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Maldives">Maldives</option>
+                        <option value="Mali">Mali</option>
+                        <option value="Malta">Malta</option>
+                        <option value="Marshall Islands">Marshall Islands</option>
+                        <option value="Mauritania">Mauritania</option>
+                        <option value="Mauritius">Mauritius</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Moldova">Moldova</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Mongolia">Mongolia</option>
+                        <option value="Montenegro">Montenegro</option>
+                        <option value="Morocco">Morocco</option>
+                        <option value="Mozambique">Mozambique</option>
+                        <option value="Myanmar">Myanmar</option>
+                        <option value="Namibia">Namibia</option>
+                        <option value="Nauru">Nauru</option>
+                        <option value="Nepal">Nepal</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Nicaragua">Nicaragua</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="North Korea">North Korea</option>
+                        <option value="North Macedonia">North Macedonia</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Oman">Oman</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Palau">Palau</option>
+                        <option value="Panama">Panama</option>
+                        <option value="Papua New Guinea">Papua New Guinea</option>
+                        <option value="Paraguay">Paraguay</option>
+                        <option value="Peru">Peru</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Qatar">Qatar</option>
+                        <option value="Republic of the Congo">Republic of the Congo</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Rwanda">Rwanda</option>
+                        <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                        <option value="Saint Lucia">Saint Lucia</option>
+                        <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                        <option value="Samoa">Samoa</option>
+                        <option value="San Marino">San Marino</option>
+                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="Senegal">Senegal</option>
+                        <option value="Serbia">Serbia</option>
+                        <option value="Seychelles">Seychelles</option>
+                        <option value="Sierra Leone">Sierra Leone</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Slovakia">Slovakia</option>
+                        <option value="Slovenia">Slovenia</option>
+                        <option value="Solomon Islands">Solomon Islands</option>
+                        <option value="Somalia">Somalia</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="South Sudan">South Sudan</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="Sudan">Sudan</option>
+                        <option value="Suriname">Suriname</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Syria">Syria</option>
+                        <option value="Taiwan">Taiwan</option>
+                        <option value="Tajikistan">Tajikistan</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Timor-Leste">Timor-Leste</option>
+                        <option value="Togo">Togo</option>
+                        <option value="Tonga">Tonga</option>
+                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                        <option value="Tunisia">Tunisia</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Turkmenistan">Turkmenistan</option>
+                        <option value="Tuvalu">Tuvalu</option>
+                        <option value="Uganda">Uganda</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab Emirates">United Arab Emirates</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="United States of America">United States of America</option>
+                        <option value="Uruguay">Uruguay</option>
+                        <option value="Uzbekistan">Uzbekistan</option>
+                        <option value="Vanuatu">Vanuatu</option>
+                        <option value="Vatican City">Vatican City</option>
+                        <option value="Venezuela">Venezuela</option>
+                        <option value="Vietnam">Vietnam</option>
+                        <option value="Yemen">Yemen</option>
+                        <option value="Zambia">Zambia</option>
+                        <option value="Zimbabwe">Zimbabwe</option>
+                    </select>
+                    <span class="error-message" id="error-nationality"></span>
+                </div>
+
+                <div class="question-group">
+                    <label>هل لديك/هل امتلكت جنسية أخرى غير المذكورة أعلاه؟</label>
+                    <label><input type="radio" name="HasOtherNationality" value="Yes" id="otherNatYes"> نعم</label>
+                    <label><input type="radio" name="HasOtherNationality" value="No" id="otherNatNo" checked> لا</label>
+                </div>
+
+                <fieldset id="otherNationalityFields" class="conditional-fields" style="display: none;">
+                    <legend>يرجى تقديم المعلومات التالية:</legend>
+                    <div class="question-group">
+                        <label for="otherNationalitySelect">البلد/منطقة المنشأ الأخرى (الجنسية):</label>
+                        <select id="otherNationalitySelect" name="Other_Nationality" required>
+                            <option value="">- اختر -</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Albania">Albania</option>
+                            <option value="Algeria">Algeria</option>
+                            <option value="Andorra">Andorra</option>
+                            <option value="Angola">Angola</option>
+                            <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="Armenia">Armenia</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Austria">Austria</option>
+                            <option value="Azerbaijan">Azerbaijan</option>
+                            <option value="Bahamas">Bahamas</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Belize">Belize</option>
+                            <option value="Benin">Benin</option>
+                            <option value="Bhutan">Bhutan</option>
+                            <option value="Bolivia">Bolivia</option>
+                            <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                            <option value="Botswana">Botswana</option>
+                            <option value="Brazil">Brazil</option>
+                            <option value="Brunei">Brunei</option>
+                            <option value="Bulgaria">Bulgaria</option>
+                            <option value="Burkina Faso">Burkina Faso</option>
+                            <option value="Burundi">Burundi</option>
+                            <option value="Cabo Verde">Cabo Verde</option>
+                            <option value="Cambodia">Cambodia</option>
+                            <option value="Cameroon">Cameroon</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Central African Republic">Central African Republic</option>
+                            <option value="Chad">Chad</option>
+                            <option value="Chile">Chile</option>
+                            <option value="China">China</option>
+                            <option value="Colombia">Colombia</option>
+                            <option value="Comoros">Comoros</option>
+                            <option value="Costa Rica">Costa Rica</option>
+                            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                            <option value="Croatia">Croatia</option>
+                            <option value="Cuba">Cuba</option>
+                            <option value="Cyprus">Cyprus</option>
+                            <option value="Czechia">Czechia</option>
+                            <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                            <option value="Denmark">Denmark</option>
+                            <option value="Djibouti">Djibouti</option>
+                            <option value="Dominica">Dominica</option>
+                            <option value="Dominican Republic">Dominican Republic</option>
+                            <option value="Ecuador">Ecuador</option>
+                            <option value="Egypt">Egypt</option>
+                            <option value="El Salvador">El Salvador</option>
+                            <option value="Equatorial Guinea">Equatorial Guinea</option>
+                            <option value="Eritrea">Eritrea</option>
+                            <option value="Estonia">Estonia</option>
+                            <option value="Eswatini">Eswatini</option>
+                            <option value="Ethiopia">Ethiopia</option>
+                            <option value="Federated States of Micronesia">Federated States of Micronesia</option>
+                            <option value="Fiji">Fiji</option>
+                            <option value="Finland">Finland</option>
+                            <option value="France">France</option>
+                            <option value="Gabon">Gabon</option>
+                            <option value="Gambia">Gambia</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Ghana">Ghana</option>
+                            <option value="Greece">Greece</option>
+                            <option value="Grenada">Grenada</option>
+                            <option value="Guatemala">Guatemala</option>
+                            <option value="Guinea">Guinea</option>
+                            <option value="Guinea-Bissau">Guinea-Bissau</option>
+                            <option value="Guyana">Guyana</option>
+                            <option value="Haiti">Haiti</option>
+                            <option value="Honduras">Honduras</option>
+                            <option value="Hungary">Hungary</option>
+                            <option value="Iceland">Iceland</option>
+                            <option value="India">India</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="Iran">Iran</option>
+                            <option value="Iraq">Iraq</option>
+                            <option value="Ireland">Ireland</option>
+                            <option value="Israel">Israel</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Jamaica">Jamaica</option>
+                            <option value="Japan">Japan</option>
+                            <option value="Jordan">Jordan</option>
+                            <option value="Kazakhstan">Kazakhstan</option>
+                            <option value="Kenya">Kenya</option>
+                            <option value="Kiribati">Kiribati</option>
+                            <option value="Kosovo">Kosovo</option>
+                            <option value="Kuwait">Kuwait</option>
+                            <option value="Kyrgyzstan">Kyrgyzstan</option>
+                            <option value="Laos">Laos</option>
+                            <option value="Latvia">Latvia</option>
+                            <option value="Lebanon">Lebanon</option>
+                            <option value="Lesotho">Lesotho</option>
+                            <option value="Liberia">Liberia</option>
+                            <option value="Libya">Libya</option>
+                            <option value="Liechtenstein">Liechtenstein</option>
+                            <option value="Lithuania">Lithuania</option>
+                            <option value="Luxembourg">Luxembourg</option>
+                            <option value="Madagascar">Madagascar</option>
+                            <option value="Malawi">Malawi</option>
+                            <option value="Malaysia">Malaysia</option>
+                            <option value="Maldives">Maldives</option>
+                            <option value="Mali">Mali</option>
+                            <option value="Malta">Malta</option>
+                            <option value="Marshall Islands">Marshall Islands</option>
+                            <option value="Mauritania">Mauritania</option>
+                            <option value="Mauritius">Mauritius</option>
+                            <option value="Mexico">Mexico</option>
+                            <option value="Moldova">Moldova</option>
+                            <option value="Monaco">Monaco</option>
+                            <option value="Mongolia">Mongolia</option>
+                            <option value="Montenegro">Montenegro</option>
+                            <option value="Morocco">Morocco</option>
+                            <option value="Mozambique">Mozambique</option>
+                            <option value="Myanmar">Myanmar</option>
+                            <option value="Namibia">Namibia</option>
+                            <option value="Nauru">Nauru</option>
+                            <option value="Nepal">Nepal</option>
+                            <option value="Netherlands">Netherlands</option>
+                            <option value="New Zealand">New Zealand</option>
+                            <option value="Nicaragua">Nicaragua</option>
+                            <option value="Niger">Niger</option>
+                            <option value="Nigeria">Nigeria</option>
+                            <option value="North Korea">North Korea</option>
+                            <option value="North Macedonia">North Macedonia</option>
+                            <option value="Norway">Norway</option>
+                            <option value="Oman">Oman</option>
+                            <option value="Pakistan">Pakistan</option>
+                            <option value="Palau">Palau</option>
+                            <option value="Panama">Panama</option>
+                            <option value="Papua New Guinea">Papua New Guinea</option>
+                            <option value="Paraguay">Paraguay</option>
+                            <option value="Peru">Peru</option>
+                            <option value="Philippines">Philippines</option>
+                            <option value="Poland">Poland</option>
+                            <option value="Portugal">Portugal</option>
+                            <option value="Qatar">Qatar</option>
+                            <option value="Republic of the Congo">Republic of the Congo</option>
+                            <option value="Romania">Romania</option>
+                            <option value="Russia">Russia</option>
+                            <option value="Rwanda">Rwanda</option>
+                            <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                            <option value="Saint Lucia">Saint Lucia</option>
+                            <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                            <option value="Samoa">Samoa</option>
+                            <option value="San Marino">San Marino</option>
+                            <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                            <option value="Saudi Arabia">Saudi Arabia</option>
+                            <option value="Senegal">Senegal</option>
+                            <option value="Serbia">Serbia</option>
+                            <option value="Seychelles">Seychelles</option>
+                            <option value="Sierra Leone">Sierra Leone</option>
+                            <option value="Singapore">Singapore</option>
+                            <option value="Slovakia">Slovakia</option>
+                            <option value="Slovenia">Slovenia</option>
+                            <option value="Solomon Islands">Solomon Islands</option>
+                            <option value="Somalia">Somalia</option>
+                            <option value="South Africa">South Africa</option>
+                            <option value="South Korea">South Korea</option>
+                            <option value="South Sudan">South Sudan</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Sri Lanka">Sri Lanka</option>
+                            <option value="Sudan">Sudan</option>
+                            <option value="Suriname">Suriname</option>
+                            <option value="Sweden">Sweden</option>
+                            <option value="Switzerland">Switzerland</option>
+                            <option value="Syria">Syria</option>
+                            <option value="Taiwan">Taiwan</option>
+                            <option value="Tajikistan">Tajikistan</option>
+                            <option value="Tanzania">Tanzania</option>
+                            <option value="Thailand">Thailand</option>
+                            <option value="Timor-Leste">Timor-Leste</option>
+                            <option value="Togo">Togo</option>
+                            <option value="Tonga">Tonga</option>
+                            <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                            <option value="Tunisia">Tunisia</option>
+                            <option value="Turkey">Turkey</option>
+                            <option value="Turkmenistan">Turkmenistan</option>
+                            <option value="Tuvalu">Tuvalu</option>
+                            <option value="Uganda">Uganda</option>
+                            <option value="Ukraine">Ukraine</option>
+                            <option value="United Arab Emirates">United Arab Emirates</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="United States of America">United States of America</option>
+                            <option value="Uruguay">Uruguay</option>
+                            <option value="Uzbekistan">Uzbekistan</option>
+                            <option value="Vanuatu">Vanuatu</option>
+                            <option value="Vatican City">Vatican City</option>
+                            <option value="Venezuela">Venezuela</option>
+                            <option value="Vietnam">Vietnam</option>
+                            <option value="Yemen">Yemen</option>
+                            <option value="Zambia">Zambia</option>
+                            <option value="Zimbabwe">Zimbabwe</option>
+                        </select>
+                        <span class="error-message" id="error-otherNationalitySelect"></span>
+                    </div>
+
+                    <div class="question-group">
+                        <label>هل بحوزتك جواز سفر للبلد/الجنسبة الأخرى؟</label>
+                        <label><input type="radio" name="Other_Nationality_Passport" value="Yes" id="otherPassYes"> نعم</label>
+                        <label><input type="radio" name="Other_Nationality_Passport" value="No" id="otherPassNo" checked> لا</label>
+                    </div>
+
+                    <div id="otherPassportField" class="conditional-fields" style="display: none;">
+                        <div class="question-group"><label for="otherPassportNumber">رقم جواز السفر:</label><input type="text" id="otherPassportNumber" name="Other_PassportNumber" required style="direction: ltr;"></div>
+                        <span class="error-message" id="error-otherPassportNumber"></span>
+                    </div>
+                </fieldset>
+
+                <!-- Permanent resident question (added in Arabic) -->
+                <div class="question-group">
+                    <label>هل أنت مقيم دائم في دولة/منطقة أخرى غير بلد/منطقة المنشأ (الجنسية) الموضحة أعلاه؟</label>
+                    <label><input type="radio" name="HasOtherPermanentResident" value="Yes" id="permResYes"> نعم</label>
+                    <label><input type="radio" name="HasOtherPermanentResident" value="No" id="permResNo" checked> لا</label>
+                </div>
+
+                <fieldset id="otherPermanentResidentFields" class="conditional-fields" style="display: none;">
+                    <legend>يرجى تقديم المعلومات التالية:</legend>
+                    <div class="question-group">
+                        <label for="otherPermanentResidentSelect">الدولة/المنطقة المقيم الدائم الأخرى:</label>
+                        <select id="otherPermanentResidentSelect" name="Other_PermanentResident" required>
+                            <!-- options will be populated from the main nationality list -->
+                        </select>
+                        <span class="error-message" id="error-otherPermanentResidentSelect"></span>
+                    </div>
+                </fieldset>
+            </fieldset>
+
+            <fieldset id="marriedFields" class="conditional-fields" style="display: none;">
+                <legend>تفاصيل الزواج</legend>
+                <div class="question-group"><label for="spouseName">اسم الزوج/الزوجة بالكامل:</label><input type="text" id="spouseName" name="Spouse_FullName" style="direction: auto;"></div>
+                <div class="question-group"><label>تاريخ الميلاد:</label>
+                    <div class="date-row">
+                        <select id="spouseDOBDay" name="Spouse_DOB_Day" required>
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="spouseDOBMonth" name="Spouse_DOB_Month" required>
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="spouseDOBYear" name="Spouse_DOB_Year" placeholder="YYYY" required style="width:110px;">
+                    </div>
+                    <span class="error-message" id="error-spouseDOBDay"></span>
+                    <span class="error-message" id="error-spouseDOBMonth"></span>
+                    <span class="error-message" id="error-spouseDOBYear"></span>
+                </div>
+                <div class="question-group"><label for="spousePOB">محافظة وبلد الميلاد:</label><input type="text" id="spousePOB" name="Spouse_POB" style="direction: auto;"></div>
+            </fieldset>
+
+            <fieldset id="widowedFields" class="conditional-fields" style="display: none;">
+                <legend>تفاصيل الأرملة/الأرمل</legend>
+                <div class="question-group"><label for="deceasedName">اسم الزوج/الزوجة بالكامل:</label><input type="text" id="deceasedName" name="Deceased_FullName" style="direction: auto;"></div>
+                <div class="question-group"><label>تاريخ الوفاة:</label>
+                    <div class="date-row">
+                        <select id="dateOfDeathDay" name="Deceased_DOD_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="dateOfDeathMonth" name="Deceased_DOD_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="dateOfDeathYear" name="Deceased_DOD_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                    <span class="error-message" id="error-dateOfDeathDay"></span>
+                    <span class="error-message" id="error-dateOfDeathMonth"></span>
+                    <span class="error-message" id="error-dateOfDeathYear"></span>
+                </div>
+                <div class="question-group"><label for="deceasedPOB">محافظة وبلد الميلاد:</label><input type="text" id="deceasedPOB" name="Deceased_POB" style="direction: auto;"></div>
+            </fieldset>
+
+            <fieldset id="divorcedFields" class="conditional-fields" style="display: none;">
+                <legend>تفاصيل الطلاق</legend>
+                <div class="question-group"><label for="exName">اسم الزوج/الزوجة السابقة بالكامل:</label><input type="text" id="exName" name="ExSpouse_FullName" style="direction: auto;"></div>
+                <div class="question-group"><label>تاريخ الطلاق:</label>
+                    <div class="date-row">
+                        <select id="dateOfDivorceDay" name="ExSpouse_DODDivorce_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="dateOfDivorceMonth" name="ExSpouse_DODDivorce_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="dateOfDivorceYear" name="ExSpouse_DODDivorce_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                    <span class="error-message" id="error-dateOfDivorceDay"></span>
+                    <span class="error-message" id="error-dateOfDivorceMonth"></span>
+                    <span class="error-message" id="error-dateOfDivorceYear"></span>
+                </div>
+                <div class="question-group"><label>تاريخ الميلاد:</label>
+                    <div class="date-row">
+                        <select id="exDOBDay" name="ExSpouse_DOB_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="exDOBMonth" name="ExSpouse_DOB_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="exDOBYear" name="ExSpouse_DOB_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                    <span class="error-message" id="error-exDOBDay"></span>
+                    <span class="error-message" id="error-exDOBMonth"></span>
+                    <span class="error-message" id="error-exDOBYear"></span>
+                </div>
+                <div class="question-group"><label for="exPOB">محافظة وبلد الميلاد:</label><input type="text" id="exPOB" name="ExSpouse_POB" style="direction: auto;"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>2. Contact Information (معلومات التواصل)</legend>
+                <div class="question-group"><label for="address">عنوان الإقامة الحالي بالتفصيل:</label><textarea id="address" name="Current_Address" rows="3" required style="direction: auto;"></textarea><span class="error-message" id="error-address"></span></div>
+                <div class="question-group"><label for="phonePrimary">رقم التليفون الأساسي:</label><input type="tel" id="phonePrimary" name="Phone_Primary" required style="direction: ltr;"><span class="error-message" id="error-phonePrimary"></span></div>
+                <div class="question-group"><label for="phoneSecondary">رقم التليفون الاحتياطي:</label><input type="tel" id="phoneSecondary" name="Phone_Secondary" style="direction: ltr;"></div>
+                <div class="question-group"><label for="phoneWork">رقم تليفون العمل:</label><input type="tel" id="phoneWork" name="Phone_Work" style="direction: ltr;"></div>
+                <div class="question-group"><label for="email">البريد الإلكتروني:</label><input type="email" id="email" name="Email" required style="direction: ltr;"></input><span class="error-message" id="error-email"></span></div>
+                <div class="question-group"><label for="facebookLink">لينك صفحة الفيسبوك (مثال: https://www.facebook.com/...):</label><input type="url" id="facebookLink" name="Facebook_Link" placeholder="https://www.facebook.com/..." style="direction: ltr;"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>3. Travel Companions (مرافقو السفر)</legend>
+                <div class="question-group">
+                    <label>هل هناك أشخاص يسافرون معك في هذه الرحلة؟</label>
+                    <label><input type="radio" name="TravellingWithOthers" value="Yes" id="travelYes"> نعم</label>
+                    <label><input type="radio" name="TravellingWithOthers" value="No" id="travelNo" checked> لا</label>
+                </div>
+                <div id="travelCompanionFields" class="conditional-fields" style="display: none;">
+                    <div class="question-group"><label for="companionsNames">اسم الشخص بالكامل (إذا كان هناك أكثر من شخص يرجى ذكرهم):</label><textarea id="companionsNames" name="Companions_Names" rows="2" style="direction: auto;"></textarea></div>
+                    <div class="question-group"><label for="companionsRelation">علاقتك الاجتماعية به:</label><input type="text" id="companionsRelation" name="Companions_Relation" style="direction: auto;"></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>4. US History (سجل السفر إلى أمريكا)</legend>
+                <div class="question-group"><label>هل كنت في أمريكا سابقا؟</label><label><input type="radio" name="VisitedUSBefore" value="Yes"> نعم</label><label><input type="radio" name="VisitedUSBefore" value="No" checked> لا</label></div>
+                <div class="question-group"><label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label><label><input type="radio" name="HadUSVisaBefore" value="Yes"> نعم</label><label><input type="radio" name="HadUSVisaBefore" value="No" checked> لا</label></div>
+                
+                <fieldset id="previousUSVisas" class="conditional-fields" style="display: none;">
+                    <legend>السجلات السابقة لتأشيرات الولايات المتحدة</legend>
+                    <div class="question-group">
+                        <label>تاريخ إصدار آخر فيزا (التنسيق: يوم-شهر-سنة):</label>
+                        <div class="date-row">
+                            <select id="visaDay" name="Visa_Last_Issue_Day">
+                                <option value="">يوم</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                            </select>
+                            <select id="visaMonth" name="Visa_Last_Issue_Month">
+                                <option value="">شهر</option>
+                                <option value="Jan">Jan</option>
+                                <option value="Feb">Feb</option>
+                                <option value="Mar">Mar</option>
+                                <option value="Apr">Apr</option>
+                                <option value="May">May</option>
+                                <option value="Jun">Jun</option>
+                                <option value="Jul">Jul</option>
+                                <option value="Aug">Aug</option>
+                                <option value="Sep">Sep</option>
+                                <option value="Oct">Oct</option>
+                                <option value="Nov">Nov</option>
+                                <option value="Dec">Dec</option>
+                            </select>
+                            <input type="text" id="visaYear" name="Visa_Last_Issue_Year" placeholder="YYYY" style="width:110px;">
+                        </div>
+                        <span class="error-message" id="error-visaDate"></span>
+                    </div>
+
+                    <div class="question-group">
+                        <label for="visaNumber">رقم التأشيرة:</label>
+                        <input type="text" id="visaNumber" name="Visa_Number" style="direction: ltr;">
+                        <label><input type="checkbox" id="visaNumberUnknown" name="Visa_Number_Unknown"> لا أعرف</label>
+                        <span class="error-message" id="error-visaNumber"></span>
+                    </div>
+                </fieldset>
+                <div class="question-group">
+                    <label>هل تم رفضك قبل ذلك في التقديم على تأشيرة أمريكا؟</label>
+                    <label><input type="radio" name="USVisaDenied" value="Yes" id="deniedYes"> نعم</label>
+                    <label><input type="radio" name="USVisaDenied" value="No" id="deniedNo" checked> لا</label>
+                </div>
+                <div id="denialTimeField" class="conditional-fields" style="display: none;">
+                    <div class="question-group"><label for="denialTime">إذا تم الرفض، يرجى ذكر الوقت الذي تم فيه الرفض (السنة/الشهر):</label><input type="text" id="denialTime" name="Denial_Time" style="direction: auto;"></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>5. Family Data (البيانات العائلية)</legend>
+                <div class="question-group"><label for="fatherName">اسم الاب بالكامل:</label><input type="text" id="fatherName" name="Father_FullName" required style="direction: auto;"><span class="error-message" id="error-fatherName"></span></div>
+                <div class="question-group"><label>تاريخ ميلاد الاب:</label>
+                    <div class="date-row">
+                        <select id="fatherDOBDay" name="Father_DOB_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="fatherDOBMonth" name="Father_DOB_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="fatherDOBYear" name="Father_DOB_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                    <span class="error-message" id="error-fatherDOBDay"></span>
+                    <span class="error-message" id="error-fatherDOBMonth"></span>
+                    <span class="error-message" id="error-fatherDOBYear"></span>
+                </div>
+                <div class="question-group"><label for="motherName">اسم الام بالكامل:</label><input type="text" id="motherName" name="Mother_FullName" required style="direction: auto;"><span class="error-message" id="error-motherName"></span></div>
+                <div class="question-group"><label>تاريخ ميلاد الام:</label>
+                    <div class="date-row">
+                        <select id="motherDOBDay" name="Mother_DOB_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="motherDOBMonth" name="Mother_DOB_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="motherDOBYear" name="Mother_DOB_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                    <span class="error-message" id="error-motherDOBDay"></span>
+                    <span class="error-message" id="error-motherDOBMonth"></span>
+                    <span class="error-message" id="error-motherDOBYear"></span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>6. Current Employment (الوظيفة الحالية)</legend>
+                <div class="question-group"><label for="jobTitleCurrent">المسمى الوظيفي:</label><input type="text" id="jobTitleCurrent" name="Current_JobTitle" required style="direction: auto;"><span class="error-message" id="error-jobTitleCurrent"></span></div>
+                <div class="question-group"><label for="workplaceCurrent">مكان العمل:</label><input type="text" id="workplaceCurrent" name="Current_Workplace" required style="direction: auto;"><span class="error-message" id="error-workplaceCurrent"></span></div>
+                <div class="question-group"><label for="addressWorkCurrent">عنوان العمل بالتفصيل:</label><textarea id="addressWorkCurrent" name="Current_WorkAddress" rows="2" required style="direction: auto;"></textarea><span class="error-message" id="error-addressWorkCurrent"></span></div>
+                <div class="question-group"><label>تاريخ التعيين:</label>
+                    <div class="date-row">
+                        <select id="startDateCurrentDay" name="Current_StartDate_Day" required>
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="startDateCurrentMonth" name="Current_StartDate_Month" required>
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="startDateCurrent" name="Current_StartDate_Year" placeholder="YYYY" required style="width:110px;">
+                    </div>
+                    <span class="error-message" id="error-startDateCurrentDay"></span>
+                    <span class="error-message" id="error-startDateCurrentMonth"></span>
+                    <span class="error-message" id="error-startDateCurrent"></span>
+                </div>
+                <div class="question-group"><label for="phoneWorkCurrent">تليفون العمل:</label><input type="tel" id="phoneWorkCurrent" name="Current_WorkPhone" style="direction: ltr;"></div>
+                <div class="question-group"><label for="salaryCurrent">الراتب الشهري:</label><input type="number" id="salaryCurrent" name="Current_Salary" style="direction: ltr;"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>7. Previous Employment (الوظائف السابقة)</legend>
+                <h3>الوظيفة السابقة (1)</h3>
+                <div class="question-group"><label for="jobTitlePrev1">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev1" name="PrevJob1_Title" style="direction: auto;"></div>
+                <div class="question-group"><label for="workplacePrev1">مكان العمل:</label><input type="text" id="workplacePrev1" name="PrevJob1_Workplace" style="direction: auto;"></div>
+                <div class="question-group"><label for="addressWorkPrev1">عنوان العمل بالتفصيل:</label><textarea id="addressWorkPrev1" name="PrevJob1_WorkAddress" rows="2" style="direction: auto;"></textarea></div>
+                <div class="date-row">
+                    <div class="date-group">
+                        <label>تاريخ التعيين:</label>
+                        <select id="startDatePrev1Day" name="PrevJob1_StartDate_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="startDatePrev1Month" name="PrevJob1_StartDate_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="startDatePrev1Year" name="PrevJob1_StartDate_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                    <div class="date-group">
+                        <label>تاريخ الانتهاء:</label>
+                        <select id="endDatePrev1Day" name="PrevJob1_EndDate_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="endDatePrev1Month" name="PrevJob1_EndDate_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="endDatePrev1Year" name="PrevJob1_EndDate_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                </div>
+                <div class="question-group"><label for="phoneWorkPrev1">تليفون العمل:</label><input type="tel" id="phoneWorkPrev1" name="PrevJob1_WorkPhone" style="direction: ltr;"></div>
+                
+                <h3>الوظيفة السابقة (2)</h3>
+                <div class="question-group"><label for="jobTitlePrev2">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev2" name="PrevJob2_Title" style="direction: auto;"></div>
+                <h3>الوظيفة السابقة (3)</h3>
+                <div class="question-group"><label for="jobTitlePrev3">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev3" name="PrevJob3_Title" style="direction: auto;"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>8. Education History (المؤهلات العلمية)</legend>
+                <div class="question-group"><label for="institutionName">اسم المؤسسة التعليمية:</label><input type="text" id="institutionName" name="Education_InstitutionName" style="direction: auto;"></div>
+                <div class="question-group"><label for="institutionAddress">عنوانها:</label><textarea id="institutionAddress" name="Education_Address" rows="2" style="direction: auto;"></textarea></div>
+                <div class="question-group"><label for="qualificationName">اسم المؤهل:</label><input type="text" id="qualificationName" name="Education_QualificationName" style="direction: auto;"></div>
+                <div class="question-group"><label for="qualificationMajor">شعبة المؤهل:</label><input type="text" id="qualificationMajor" name="Education_QualificationMajor" style="direction: auto;"></div>
+                <div class="date-row">
+                    <div class="date-group">
+                        <label>تاريخ بدء الدراسة:</label>
+                        <select id="studyStartDateDay" name="Education_StudyStartDate_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="studyStartDateMonth" name="Education_StudyStartDate_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="studyStartDateYear" name="Education_StudyStartDate_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                    <div class="date-group">
+                        <label>تاريخ نهاية الدراسة:</label>
+                        <select id="studyEndDateDay" name="Education_StudyEndDate_Day">
+                            <option value="">يوم</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                        <select id="studyEndDateMonth" name="Education_StudyEndDate_Month">
+                            <option value="">شهر</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <input type="text" id="studyEndDateYear" name="Education_StudyEndDate_Year" placeholder="YYYY" style="width:110px;">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>9. Travel History (تاريخ السفر)</legend>
+                <div class="question-group"><label for="prevTravelCountries">اذكر البلاد التي سافرت إليها خلال الخمس سنوات الماضية (افصل بينها بفاصلة):</label><textarea id="prevTravelCountries" name="Previous_Travel_Countries" rows="4" style="direction: auto;"></textarea></div>
+            </fieldset>
+
+            <button type="submit" class="submit-btn">إرسال البيانات (Submit Data)</button>
+        </form>
+
+        <div id="confirmationMessage">
+            <h2>✅ شكراً جزيلاً!</h2>
+            <p>تم إرسال بياناتك بنجاح. سيتم التواصل معك قريباً.</p>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

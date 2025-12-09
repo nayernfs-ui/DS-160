@@ -1,0 +1,162 @@
+/* Global styles and RTL setup */
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background-color: #f4f6f8;
+  direction: rtl;
+  text-align: right;
+  color: #222;
+  margin: 0;
+  padding: 24px;
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(30,40,60,0.08);
+}
+
+h1 {
+  margin-top: 0;
+  text-align: center;
+  color: #1f2937;
+}
+
+p { color: #4b5563; margin-bottom: 16px; }
+
+/* Form layout */
+form { width: 100%; }
+label { display: block; font-weight: 600; margin-bottom: 6px; }
+.question-group { margin-bottom: 14px; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background: #fff;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
+}
+
+/* Ensure multi-lingual typing inherits proper alignment */
+input, textarea { text-align: inherit; }
+
+fieldset {
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+}
+
+legend {
+  font-weight: 700;
+  color: #0f172a;
+  padding: 0 8px;
+}
+
+.date-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.date-row label { margin: 0; }
+.date-row input { max-width: 220px; }
+
+.conditional-fields {
+  transition: all 0.5s ease-in-out;
+  opacity: 1;
+  max-height: 1000px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+/* Styling for the Submission Confirmation Message */
+#confirmationMessage {
+  display: none;
+  padding: 20px;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.1em;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Validation Feedback Style */
+input:invalid:not(:placeholder-shown),
+textarea:invalid:not(:placeholder-shown),
+select:invalid:not(:placeholder-shown) {
+  border-color: red !important;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+}
+
+/* Ensure required inputs are visible on focus */
+input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Inline Error Message Styling */
+.error-message {
+    display: block;
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-top: 5px;
+    font-weight: bold;
+    text-align: right;
+}
+
+/* Ensure the field border is red only if invalid via class */
+input.is-invalid, 
+textarea.is-invalid, 
+select.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
+}
+
+/* Buttons */
+.submit-btn {
+  background: linear-gradient(180deg,#0b84ff,#0066d6);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.submit-btn:hover { opacity: 0.95; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .container { padding: 16px; }
+  .date-row { flex-direction: column; }
+  .date-row input { width: 100%; max-width: none; }
+}
+
+/* Keyframe for a slight fade-in effect (used by JS) */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
