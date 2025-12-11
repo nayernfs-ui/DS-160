@@ -7,21 +7,21 @@ Contains:
 - `script.js`
 - `style.css`
 
-Deployment & server email forwarding (Vercel + SendGrid)
+Deployment & server email forwarding (Vercel + SendinBlue)
 
 - Recipient email: `nayer.nfs@gmail.com`
 
-This project includes a serverless endpoint at `api/submit` that forwards form submissions to an email address via SendGrid. To enable it on Vercel:
+This project includes a serverless endpoint at `api/submit` that forwards form submissions to an email address via SendinBlue. To enable it on Vercel:
 
-1. Add your SendGrid API key in the Vercel project settings as an environment variable named `SENDGRID_API_KEY`.
+1. Add your SendinBlue (Brevo) API key in the Vercel project settings as an environment variable named `SENDINBLUE_API_KEY`.
 2. (Optional) Set `RECIPIENT_EMAIL` to change where messages are sent. By default it uses `nayer.nfs@gmail.com`.
-3. (Optional) Set `SENDER_EMAIL` to a valid verified sender address in your SendGrid account. If not set, the function uses `no-reply@<your-project>.vercel.app`.
+3. (Optional) Set `SENDER_EMAIL` to a valid verified sender address in your SendinBlue account. If not set, the function uses `no-reply@<your-project>.vercel.app`.
 4. Redeploy the project (Vercel will install dependencies from `package.json`).
 
 How the endpoint works
 
-- The client-side `script.js` gathers the form data and does a JSON POST to `/api/submit`.
-- The serverless function `api/submit.js` uses `@sendgrid/mail` to send the submission as an email.
+ - The client-side `script.js` gathers the form data and does a JSON POST to `/api/submit`.
+ - The serverless function `api/submit.js` uses `sib-api-v3-sdk` (SendinBlue / Brevo) to send the submission as an email.
 
 Local testing (optional)
 

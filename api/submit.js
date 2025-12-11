@@ -1,4 +1,4 @@
-const sgMail = require('@sendgrid/mail');
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 
 function escapeHtml(unsafe) {
   return unsafe
@@ -15,16 +15,18 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+  const SENDINBLUE_API_KEY = process.env.SENDINBLUE_API_KEY;
   const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || 'nayer.nfs@gmail.com';
   const SENDER_EMAIL = process.env.SENDER_EMAIL || `no-reply@${process.env.VERCEL_URL || 'vercel.app'}`;
-
-  if (!SENDGRID_API_KEY) {
-    res.status(500).json({ error: 'SENDGRID_API_KEY is not configured' });
+  if (!SENDINBLUE_API_KEY) {
+    res.status(500).json({ error: 'SENDINBLUE_API_KEY is not configured' });
     return;
   }
 
-  sgMail.setApiKey(SENDGRID_API_KEY);
+  const defaultClient = SibApiV3Sdk.ApiClient.instance;
+  const apiKey = defaultClient.authentications['api-key'];
+  apiKey.apiKey = SENDINBLUE_API_KEY;
+  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
   const data = req.body || {};
 
@@ -40,21 +42,20 @@ module.exports = async (req, res) => {
 
   html += '</ul>';
 
-  const msg = {
-    to: RECIPIENT_EMAIL,
-    from: SENDER_EMAIL,
+  const sendSmtpEmail = {
+    to: [{ email: RECIPIENT_EMAIL }],
+    sender: { email: SENDER_EMAIL },
     subject: 'DS-160 Form Submission',
-    text,
-    html
+    htmlContent: html,
+    textContent: text
   };
 
   try {
-    await sgMail.send(msg);
+    await apiInstance.sendTransacEmail(sendSmtpEmail);
     res.status(200).json({ ok: true, message: 'Email sent' });
   } catch (err) {
-    console.error('SendGrid error:', err);
-    // SendGrid may return detailed error in err.response.body
-    const detail = err && err.response && err.response.body ? err.response.body : err.message || err;
+    console.error('SendinBlue error:', err);
+    const detail = err && err.response ? err.response.body : err.message || err;
     res.status(500).json({ error: 'Failed to send email', detail });
   }
 };
