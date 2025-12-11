@@ -32,6 +32,32 @@ function fieldSection(key) {
     return 'Other';
 }
 
+// --- Field Mapping for Cleaner PDF Labels ---
+const FIELD_MAP = {
+    FullName: 'Full Name (Arabic)',
+    FirstName_Arabic: 'First Name (Arabic)',
+    LastName_Arabic: 'Last Name (Arabic)',
+    DOB_Day: 'Date of Birth (Day)',
+    DOB_Month: 'Date of Birth (Month)',
+    DOB_Year: 'Date of Birth (Year)',
+    Nationality: 'Current Nationality',
+    PassportType: 'Passport Type',
+    PassportNumber: 'Passport Number',
+    IssueDate_Day: 'Passport Issue Date (Day)',
+    IssueDate_Month: 'Passport Issue Date (Month)',
+    IssueDate_Year: 'Passport Issue Date (Year)',
+    
+    // Example for Conditional Fields
+    Other_Nationality: 'Other Nationality (If Applicable)',
+    Other_PassportNumber: 'Second Passport Number',
+    Spouse_DOB_Day: 'Spouse Date of Birth (Day)',
+    Spouse_DOB_Month: 'Spouse Date of Birth (Month)',
+    Spouse_DOB_Year: 'Spouse Date of Birth (Year)',
+
+    // Add more mappings here for cleaner output...
+};
+// --- End Field Mapping ---
+
 /**
  * Generates a PDF buffer from form data and groups fields under section headings.
  * @param {object} formData 
