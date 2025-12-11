@@ -14,7 +14,7 @@
         <form action="/api/submit" method="POST" id="ds160Form" novalidate>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>1. Personal Information (المعلومات الشخصية)</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M12 12a3 3 0 100-6 3 3 0 000 6zm6 8a6 6 0 10-12 0v1h12v-1z"/></svg></span>1. Personal Information (المعلومات الشخصية)</legend>
                 <div class="question-group">
                     <label for="fullName">الاسم بالكامل:</label>
                     <input type="text" id="fullName" name="FullName" required style="direction: auto;">
@@ -244,7 +244,7 @@
                 </div>
 
                 <fieldset id="otherNationalityFields" class="conditional-fields" style="display: none;">
-                    <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>يرجى تقديم المعلومات التالية:</legend>
+                    <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"/></svg></span>يرجى تقديم المعلومات التالية:</legend>
                     <div class="question-group">
                         <label for="otherNationalitySelect">البلد/منطقة المنشأ الأخرى (الجنسية):</label>
                         <select id="otherNationalitySelect" name="Other_Nationality" required>
@@ -469,7 +469,7 @@
                 </div>
 
                 <fieldset id="otherPermanentResidentFields" class="conditional-fields" style="display: none;">
-                    <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>يرجى تقديم المعلومات التالية:</legend>
+                    <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"/></svg></span>يرجى تقديم المعلومات التالية:</legend>
                     <div class="question-group">
                         <label for="otherPermanentResidentSelect">الدولة/المنطقة المقيم الدائم الأخرى:</label>
                         <select id="otherPermanentResidentSelect" name="Other_PermanentResident" required>
@@ -481,7 +481,7 @@
             </fieldset>
 
             <fieldset id="marriedFields" class="conditional-fields" style="display: none;">
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>تفاصيل الزواج</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M12 7a3 3 0 100-6 3 3 0 000 6zm0 3c-2.33 0-7 1.17-7 3.5V17h14v-3.5C19 11.17 14.33 10 12 10z"/></svg></span>تفاصيل الزواج</legend>
                 <div class="question-group"><label for="spouseName">اسم الزوج/الزوجة بالكامل:</label><input type="text" id="spouseName" name="Spouse_FullName" style="direction: auto;"></div>
                 <div class="question-group"><label>تاريخ الميلاد:</label>
                     <div class="date-row">
@@ -544,7 +544,7 @@
             </fieldset>
 
             <fieldset id="widowedFields" class="conditional-fields" style="display: none;">
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>تفاصيل الأرملة/الأرمل</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M12 21s-6.716-4.948-9-8c-1.35-1.666-1.02-4 1.5-5.5C8.598 6.456 11.5 9 12 9s3.402-2.544 7.5-1.5c2.52 1.5 2.85 3.834 1.5 5.5-2.284 3.052-9 8-9 8z"/></svg></span>تفاصيل الأرملة/الأرمل</legend>
                 <div class="question-group"><label for="deceasedName">اسم الزوج/الزوجة بالكامل:</label><input type="text" id="deceasedName" name="Deceased_FullName" style="direction: auto;"></div>
                 <div class="question-group"><label>تاريخ الوفاة:</label>
                     <div class="date-row">
@@ -607,7 +607,7 @@
             </fieldset>
 
             <fieldset id="divorcedFields" class="conditional-fields" style="display: none;">
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>تفاصيل الطلاق</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M19 3l-7 8L5 3l-1 1 7 8-7 8 1 1 7-8 7 8 1-1-7-8 7-8-1-1z"/></svg></span>تفاصيل الطلاق</legend>
                 <div class="question-group"><label for="exName">اسم الزوج/الزوجة السابقة بالكامل:</label><input type="text" id="exName" name="ExSpouse_FullName" style="direction: auto;"></div>
                 <div class="question-group"><label>تاريخ الطلاق:</label>
                     <div class="date-row">
@@ -727,7 +727,7 @@
             </fieldset>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>2. Contact Information (معلومات التواصل)</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M4 4h4l2 3-3 2 3 3 3-1 3 3v4h-3l-3-3-3 1-3-3 3-3-2-3H4V4z"/></svg></span>2. Contact Information (معلومات التواصل)</legend>
                 <div class="question-group"><label for="address">عنوان الإقامة الحالي بالتفصيل:</label><textarea id="address" name="Current_Address" rows="3" required style="direction: auto;"></textarea><span class="error-message" id="error-address"></span></div>
                 <div class="question-group"><label for="phonePrimary">رقم التليفون الأساسي:</label><input type="tel" id="phonePrimary" name="Phone_Primary" required style="direction: ltr;"><span class="error-message" id="error-phonePrimary"></span></div>
                 <div class="question-group"><label for="phoneSecondary">رقم التليفون الاحتياطي:</label><input type="tel" id="phoneSecondary" name="Phone_Secondary" style="direction: ltr;"></div>
@@ -737,7 +737,7 @@
             </fieldset>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>3. Travel Companions (مرافقو السفر)</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M16 11a3 3 0 100-6 3 3 0 000 6zM8 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM16 20v-1a4 4 0 00-8 0v1h8z"/></svg></span>3. Travel Companions (مرافقو السفر)</legend>
                 <div class="question-group">
                     <label>هل هناك أشخاص يسافرون معك في هذه الرحلة؟</label>
                     <label><input type="radio" name="TravellingWithOthers" value="Yes" id="travelYes"> نعم</label>
@@ -750,12 +750,12 @@
             </fieldset>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>4. US History (سجل السفر إلى أمريكا)</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M5 3v18h2V3H5zm2 3l9 3-9 3V6z"/></svg></span>4. US History (سجل السفر إلى أمريكا)</legend>
                 <div class="question-group"><label>هل كنت في أمريكا سابقا؟</label><label><input type="radio" name="VisitedUSBefore" value="Yes"> نعم</label><label><input type="radio" name="VisitedUSBefore" value="No" checked> لا</label></div>
                 <div class="question-group"><label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label><label><input type="radio" name="HadUSVisaBefore" value="Yes"> نعم</label><label><input type="radio" name="HadUSVisaBefore" value="No" checked> لا</label></div>
                 
                 <fieldset id="previousUSVisas" class="conditional-fields" style="display: none;">
-                    <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>السجلات السابقة لتأشيرات الولايات المتحدة</legend>
+                    <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M6 2h8a2 2 0 012 2v16h-2l-1-2H7a2 2 0 01-2-2V4a2 2 0 012-2zM8 8a4 4 0 100 8 4 4 0 000-8z"/></svg></span>السجلات السابقة لتأشيرات الولايات المتحدة</legend>
                     <div class="question-group">
                         <label>تاريخ إصدار آخر فيزا (التنسيق: يوم-شهر-سنة):</label>
                         <div class="date-row">
@@ -831,7 +831,7 @@
             </fieldset>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>5. Family Data (البيانات العائلية)</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M12 12a3 3 0 100-6 3 3 0 000 6zM5 11a3 3 0 100-6 3 3 0 000 6zM19 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM14 20v-1a4 4 0 00-8 0v1h8z"/></svg></span>5. Family Data (البيانات العائلية)</legend>
                 <div class="question-group"><label for="fatherName">اسم الاب بالكامل:</label><input type="text" id="fatherName" name="Father_FullName" required style="direction: auto;"><span class="error-message" id="error-fatherName"></span></div>
                 <div class="question-group"><label>تاريخ ميلاد الاب:</label>
                     <div class="date-row">
@@ -951,7 +951,7 @@
             </fieldset>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>6. Current Employment (الوظيفة الحالية)</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"/></svg></span>6. Current Employment (الوظيفة الحالية)</legend>
                 <div class="question-group"><label for="jobTitleCurrent">المسمى الوظيفي:</label><input type="text" id="jobTitleCurrent" name="Current_JobTitle" required style="direction: auto;"><span class="error-message" id="error-jobTitleCurrent"></span></div>
                 <div class="question-group"><label for="workplaceCurrent">مكان العمل:</label><input type="text" id="workplaceCurrent" name="Current_Workplace" required style="direction: auto;"><span class="error-message" id="error-workplaceCurrent"></span></div>
                 <div class="question-group"><label for="addressWorkCurrent">عنوان العمل بالتفصيل:</label><textarea id="addressWorkCurrent" name="Current_WorkAddress" rows="2" required style="direction: auto;"></textarea><span class="error-message" id="error-addressWorkCurrent"></span></div>
@@ -1017,8 +1017,8 @@
             </fieldset>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>7. Previous Employment (الوظائف السابقة)</legend>
-                <h3><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>الوظيفة السابقة (1)</h3>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M12 1a11 11 0 1011 11A11 11 0 0012 1zm1 12V8h2v6h-3z"/></svg></span>7. Previous Employment (الوظائف السابقة)</legend>
+                <h3><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"/></svg></span>الوظيفة السابقة (1)</h3>
                 <div class="question-group"><label for="jobTitlePrev1">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev1" name="PrevJob1_Title" style="direction: auto;"></div>
                 <div class="question-group"><label for="workplacePrev1">مكان العمل:</label><input type="text" id="workplacePrev1" name="PrevJob1_Workplace" style="direction: auto;"></div>
                 <div class="question-group"><label for="addressWorkPrev1">عنوان العمل بالتفصيل:</label><textarea id="addressWorkPrev1" name="PrevJob1_WorkAddress" rows="2" style="direction: auto;"></textarea></div>
@@ -1134,7 +1134,7 @@
                 <div class="question-group"><label for="managerNamePrev1">اسم المدير المسئول:</label><input type="text" id="managerNamePrev1" name="PrevJob1_ManagerName" style="direction: auto;"></div>
                 <span class="error-message" id="error-managerNamePrev1"></span>
                 
-                <h3><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>الوظيفة السابقة (2)</h3>
+                <h3><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"/></svg></span>الوظيفة السابقة (2)</h3>
                 <div class="question-group"><label for="jobTitlePrev2">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev2" name="PrevJob2_Title" style="direction: auto;"></div>
                 <div class="question-group"><label for="workplacePrev2">مكان العمل:</label><input type="text" id="workplacePrev2" name="PrevJob2_Workplace" style="direction: auto;"></div>
                 <div class="question-group"><label for="addressWorkPrev2">عنوان العمل بالتفصيل:</label><textarea id="addressWorkPrev2" name="PrevJob2_WorkAddress" rows="2" style="direction: auto;"></textarea></div>
@@ -1250,7 +1250,7 @@
                 <div class="question-group"><label for="managerNamePrev2">اسم المدير المسئول:</label><input type="text" id="managerNamePrev2" name="PrevJob2_ManagerName" style="direction: auto;"></div>
                 <span class="error-message" id="error-managerNamePrev2"></span>
 
-                <h3><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>الوظيفة السابقة (3)</h3>
+                <h3><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"/></svg></span>الوظيفة السابقة (3)</h3>
                 <div class="question-group"><label for="jobTitlePrev3">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev3" name="PrevJob3_Title" style="direction: auto;"></div>
                 <div class="question-group"><label for="workplacePrev3">مكان العمل:</label><input type="text" id="workplacePrev3" name="PrevJob3_Workplace" style="direction: auto;"></div>
                 <div class="question-group"><label for="addressWorkPrev3">عنوان العمل بالتفصيل:</label><textarea id="addressWorkPrev3" name="PrevJob3_WorkAddress" rows="2" style="direction: auto;"></textarea></div>
@@ -1368,7 +1368,7 @@
             </fieldset>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>8. Education History (المؤهلات العلمية)</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M12 3L1 9l11 6 11-6-11-6zm0 9l-8-4 8 4 8-4-8 4z"/></svg></span>8. Education History (المؤهلات العلمية)</legend>
                 <div class="question-group"><label for="institutionName">اسم المؤسسة التعليمية:</label><input type="text" id="institutionName" name="Education_InstitutionName" style="direction: auto;"></div>
                 <div class="question-group"><label for="institutionAddress">عنوانها:</label><textarea id="institutionAddress" name="Education_Address" rows="2" style="direction: auto;"></textarea></div>
                 <div class="question-group"><label for="qualificationName">اسم المؤهل:</label><input type="text" id="qualificationName" name="Education_QualificationName" style="direction: auto;"></div>
@@ -1484,7 +1484,7 @@
             </fieldset>
 
             <fieldset>
-                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 14c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z" fill="#fff"/></svg></span>9. Travel History (تاريخ السفر)</legend>
+                <legend><span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545"/><path fill="#fff" d="M2 17l5-1 7-7-1-2-3 1L9 6 18 4l2 3-6 4 3 3 3 1-2 2-4-1-5 1z"/></svg></span>9. Travel History (تاريخ السفر)</legend>
                 <div class="question-group"><label for="prevTravelCountries">اذكر البلاد التي سافرت إليها خلال الخمس سنوات الماضية (افصل بينها بفاصلة):</label><textarea id="prevTravelCountries" name="Previous_Travel_Countries" rows="4" style="direction: auto;"></textarea></div>
             </fieldset>
 
