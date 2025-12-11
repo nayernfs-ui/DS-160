@@ -71,6 +71,9 @@ legend {
   padding: 0 8px 0 12px;
   border-left: 4px solid #dc3545;
   padding-left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Make section titles (legend and subsection h3) red + accent */
@@ -78,11 +81,24 @@ legend {
   color: #dc3545;
   font-weight: 700;
   font-size: 1.1em;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   border-left: 4px solid #dc3545;
   padding-left: 8px;
   margin-left: 0;
 }
+
+/* Icon before section title */
+.section-icon { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  width: 20px; 
+  height: 20px; 
+  flex: 0 0 20px;
+}
+.section-icon svg { width: 20px; height: 20px; display: block; }
 
 .date-row {
   display: flex;
