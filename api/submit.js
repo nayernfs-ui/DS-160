@@ -1,61 +1,63 @@
+// --- NEW CODE USING BREVO (Sendinblue) SDK ---
+
 const SibApiV3Sdk = require('sib-api-v3-sdk');
 
-function escapeHtml(unsafe) {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+// Configuration
+// We use SENDGRID_API_KEY name, but it holds the Brevo Key
+const API_KEY = process.env.SENDGRID_API_KEY; 
+const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || 'nayer.nfa@gmail.com';
+const SENDER_EMAIL = process.env.SENDER_EMAIL || 'nayer.nfa@gmail.com'; 
+
+// Initialize Brevo Client
+let defaultClient = SibApiV3Sdk.ApiClient.instance;
+let apiKey = defaultClient.authentications['api-key'];
+apiKey.apiKey = API_KEY; 
+
+let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+function formatFormBody(body) {
+    let html = '<h2>DS-160 Survey Submission</h2>';
+    html += '<table border="1" style="border-collapse: collapse; width: 100%;"><tr><th>Field (Arabic)</th><th>Value</th></tr>';
+
+    for (const [key, value] of Object.entries(body)) {
+        if (key.startsWith('_')) continue; 
+        
+        const displayKey = key.replace(/([A-Z])/g, ' $1').trim();
+        const displayValue = Array.isArray(value) ? value.join(', ') : value;
+
+        html += `<tr><td style="padding: 8px;">${displayKey}</td><td style="padding: 8px;">${displayValue}</td></tr>`;
+    }
+    html += '</table>';
+    return html;
 }
 
 module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
-  }
+    if (req.method !== 'POST') {
+        return res.status(405).send('Method Not Allowed');
+    }
 
-  const SENDINBLUE_API_KEY = process.env.SENDINBLUE_API_KEY;
-  const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || 'nayer.nfs@gmail.com';
-  const SENDER_EMAIL = process.env.SENDER_EMAIL || `no-reply@${process.env.VERCEL_URL || 'vercel.app'}`;
-  if (!SENDINBLUE_API_KEY) {
-    res.status(500).json({ error: 'SENDINBLUE_API_KEY is not configured' });
-    return;
-  }
+    try {
+        const body = req.body;
+        
+        // Brevo email structure
+        let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+        sendSmtpEmail.subject = `New DS-160 Form Submission - ${body.FullName || 'Client'}`;
+        sendSmtpEmail.htmlContent = formatFormBody(body);
+        
+        // Define Sender
+        sendSmtpEmail.sender = { "name": "DS-160 Form", "email": SENDER_EMAIL };
+        
+        // Define Recipients
+        sendSmtpEmail.to = [{ "email": RECIPIENT_EMAIL }];
 
-  const defaultClient = SibApiV3Sdk.ApiClient.instance;
-  const apiKey = defaultClient.authentications['api-key'];
-  apiKey.apiKey = SENDINBLUE_API_KEY;
-  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+        // Send the email
+        await apiInstance.sendTransacEmail(sendSmtpEmail);
 
-  const data = req.body || {};
+        console.log(`Email sent successfully to ${RECIPIENT_EMAIL} via Brevo.`);
+        res.status(200).json({ success: true, message: 'Email sent successfully via Brevo Proxy.' });
 
-  // Build HTML and text versions of the submission
-  let html = '<h2>New DS-160 Submission</h2><ul>';
-  let text = 'New DS-160 Submission\n\n';
-
-  for (const key of Object.keys(data)) {
-    const value = Array.isArray(data[key]) ? data[key].join(', ') : String(data[key]);
-    html += `<li><strong>${escapeHtml(key)}</strong>: ${escapeHtml(value)}</li>`;
-    text += `${key}: ${value}\n`;
-  }
-
-  html += '</ul>';
-
-  const sendSmtpEmail = {
-    to: [{ email: RECIPIENT_EMAIL }],
-    sender: { email: SENDER_EMAIL },
-    subject: 'DS-160 Form Submission',
-    htmlContent: html,
-    textContent: text
-  };
-
-  try {
-    await apiInstance.sendTransacEmail(sendSmtpEmail);
-    res.status(200).json({ ok: true, message: 'Email sent' });
-  } catch (err) {
-    console.error('SendinBlue error:', err);
-    const detail = err && err.response ? err.response.body : err.message || err;
-    res.status(500).json({ error: 'Failed to send email', detail });
-  }
+    } catch (error) {
+        console.error('Brevo API Error:', error.response ? error.response.text : error);
+        res.status(500).json({ success: false, message: 'Failed to send email via Brevo. Check Vercel logs for details.' });
+    }
 };
