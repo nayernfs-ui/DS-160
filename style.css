@@ -67,12 +67,21 @@ fieldset {
 legend {
   font-weight: 700;
   color: #dc3545; /* red */
-  padding: 0 8px;
+  font-size: 1.1em; /* increased font size */
+  padding: 0 8px 0 12px;
+  border-left: 4px solid #dc3545;
+  padding-left: 12px;
 }
 
-/* Make section titles (legend and subsection h3) red */
+/* Make section titles (legend and subsection h3) red + accent */
 .container h3 {
   color: #dc3545;
+  font-weight: 700;
+  font-size: 1.1em;
+  display: block;
+  border-left: 4px solid #dc3545;
+  padding-left: 8px;
+  margin-left: 0;
 }
 
 .date-row {
