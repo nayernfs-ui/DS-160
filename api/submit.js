@@ -3,6 +3,12 @@
 const SibApiV3Sdk = require('sib-api-v3-sdk');
 const PDFDocument = require('pdfkit');
 const getStream = require('get-stream'); // Helper to convert the PDF stream
+// 💡 NEW: Import the path module
+const path = require('path');
+
+// Define the path to your Arabic font file
+// __dirname is the current directory (api folder), so go up one level and into Fonts
+const ARABIC_FONT_PATH = path.join(__dirname, '../Fonts/ae_AlArabiya.ttf'); 
 
 // Configuration (using existing environment variables)
 const API_KEY = process.env.SENDGRID_API_KEY; 
@@ -67,9 +73,26 @@ function generatePDF(formData) {
     return new Promise(async (resolve, reject) => {
         const doc = new PDFDocument({ margin: 50 });
 
+        // 💡 NEW: Use the Arabic font for all subsequent text where applicable
+        try {
+            doc.font(ARABIC_FONT_PATH);
+        } catch (err) {
+            console.warn('Setting default Arabic font failed, continuing with default font.', err);
+        }
+
+        // Register Arabic font (falls back to default if it fails)
+        try {
+            doc.registerFont('Arabic', ARABIC_FONT_PATH);
+        } catch (err) {
+            console.warn('Arabic font registration failed, continuing with default font.', err);
+        }
+
         // Header
         doc.fontSize(16).text('DS-160 Survey Submission Report', { underline: true }).moveDown(0.5);
         doc.fontSize(12).text(`Date: ${new Date().toLocaleString()}`).moveDown(1);
+
+        // Helper to detect Arabic chars
+        const containsArabic = (s) => /[\u0600-\u06FF]/.test(String(s || ''));
 
         // Group fields by section
         const sections = {};
@@ -98,17 +121,30 @@ function generatePDF(formData) {
             const fields = sections[sec];
             if (!fields) continue;
 
-            // Section header
+            // Section header (use Arabic font for Arabic characters)
             doc.moveDown(0.5);
-            doc.fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
+            if (containsArabic(sec)) {
+                doc.font('Arabic').fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
+                doc.font('Helvetica');
+            } else {
+                doc.fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
+            }
 
             // List fields in this section
             for (const [key, value] of Object.entries(fields)) {
                 const displayKey = FIELD_MAP[key] || key.replace(/([A-Z])/g, ' $1').trim();
                 const displayValue = Array.isArray(value) ? value.join(', ') : (value === undefined || value === null ? '' : String(value));
                 if (displayValue && displayValue.trim() !== '') {
+                    // Use Arabic font if the key or value contains Arabic script
+                    const useArabic = containsArabic(displayKey) || containsArabic(displayValue);
+                    if (useArabic) doc.font('Arabic');
+                    else doc.font('Helvetica');
+
                     doc.fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true })
                         .fillColor('gray').text(displayValue);
+
+                    // Revert to default font for subsequent content when needed
+                    if (useArabic) doc.font('Helvetica');
                 }
             }
         }
