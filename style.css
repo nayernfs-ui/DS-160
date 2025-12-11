@@ -66,8 +66,13 @@ fieldset {
 
 legend {
   font-weight: 700;
-  color: #0f172a;
+  color: #dc3545; /* red */
   padding: 0 8px;
+}
+
+/* Make section titles (legend and subsection h3) red */
+.container h3 {
+  color: #dc3545;
 }
 
 .date-row {
