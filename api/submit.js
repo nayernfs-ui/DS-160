@@ -16,40 +16,79 @@ apiKey.apiKey = API_KEY;
 let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 /**
- * Generates a PDF buffer from form data.
+ * Map a field key to one of the major sections.
+ */
+function fieldSection(key) {
+    const k = key.toLowerCase();
+    if (/name|dob|birth|nationality|marital|passport|placeofbirth|place/i.test(k) || k === 'fullname') return 'Personal Information (المعلومات الشخصية)';
+    if (/email|phone|address|city|state|zip|postal|contact|telephone/i.test(k)) return 'Contact Information (معلومات التواصل)';
+    if (/companion|travelcompanion|accompany/i.test(k)) return 'Travel Companions (مرافقو السفر)';
+    if (/visa|us|previousus|traveltoamerica|previousvisa|usvisit/i.test(k)) return 'US History (سجل السفر إلى أمريكا)';
+    if (/spouse|father|mother|family|relative|children|زوج|زوجة|ابن|ابنة/i.test(k)) return 'Family Data (البيانات العائلية)';
+    if (/current|employer|company|jobtitle|position|workplace/i.test(k)) return 'Current Employment (الوظيفة الحالية)';
+    if (/prev|previous|previousemployment|prevjob|الوظيفة السابقة/i.test(k)) return 'Previous Employment (الوظائف السابقة)';
+    if (/education|degree|school|university|qualification|college|collegelevel/i.test(k)) return 'Education History (المؤهلات العلمية)';
+    if (/travel|trip|visited|countries|travelhistory/i.test(k)) return 'Travel History (تاريخ السفر)';
+    return 'Other';
+}
+
+/**
+ * Generates a PDF buffer from form data and groups fields under section headings.
  * @param {object} formData 
  * @returns {Promise<Buffer>} The PDF content as a buffer.
  */
 function generatePDF(formData) {
     return new Promise(async (resolve, reject) => {
         const doc = new PDFDocument({ margin: 50 });
-        
-        // --- 🎨 PDF Layout Definition ---
-        
-        doc.fontSize(16).text('DS-160 Survey Submission Report', { underline: true }).moveDown(0.5);
-        doc.fontSize(12).text(`Date: ${new Date().toLocaleDateString()}`).moveDown(1);
-        
-        doc.fontSize(14).text('Personal Information', { paragraphGap: 5, fill: 'blue' }).moveDown(0.5);
-        
-        // Simple iteration to display form fields
-        for (const [key, value] of Object.entries(formData)) {
-            if (key.startsWith('_')) continue;
-            
-            const displayKey = key.replace(/([A-Z])/g, ' $1').trim();
-            const displayValue = Array.isArray(value) ? value.join(', ') : value;
 
-            // Only display fields that have a value
-            if (displayValue && displayValue.trim() !== '') {
-                doc.fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true })
-                    .fillColor('gray').text(displayValue);
+        // Header
+        doc.fontSize(16).text('DS-160 Survey Submission Report', { underline: true }).moveDown(0.5);
+        doc.fontSize(12).text(`Date: ${new Date().toLocaleString()}`).moveDown(1);
+
+        // Group fields by section
+        const sections = {};
+        for (const [key, value] of Object.entries(formData)) {
+            if (!key || key.startsWith('_')) continue;
+            const section = fieldSection(key);
+            if (!sections[section]) sections[section] = {};
+            sections[section][key] = value;
+        }
+
+        // Ensure the desired section order
+        const order = [
+            'Personal Information (المعلومات الشخصية)',
+            'Contact Information (معلومات التواصل)',
+            'Travel Companions (مرافقو السفر)',
+            'US History (سجل السفر إلى أمريكا)',
+            'Family Data (البيانات العائلية)',
+            'Current Employment (الوظيفة الحالية)',
+            'Previous Employment (الوظائف السابقة)',
+            'Education History (المؤهلات العلمية)',
+            'Travel History (تاريخ السفر)',
+            'Other'
+        ];
+
+        for (const sec of order) {
+            const fields = sections[sec];
+            if (!fields) continue;
+
+            // Section header
+            doc.moveDown(0.5);
+            doc.fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
+
+            // List fields in this section
+            for (const [key, value] of Object.entries(fields)) {
+                const displayKey = key.replace(/([A-Z_])/g, (m) => ' ' + m.replace('_', ' ')).trim();
+                const displayValue = Array.isArray(value) ? value.join(', ') : (value === undefined || value === null ? '' : String(value));
+                if (displayValue && displayValue.trim() !== '') {
+                    doc.fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true })
+                        .fillColor('gray').text(displayValue);
+                }
             }
         }
-        
-        // --- 🎨 End Layout Definition ---
-        
+
         doc.end();
 
-        // Convert the PDF stream to a buffer
         try {
             const buffer = await getStream.buffer(doc);
             resolve(buffer);
