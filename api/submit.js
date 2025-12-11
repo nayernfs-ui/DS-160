@@ -104,7 +104,7 @@ function generatePDF(formData) {
 
             // List fields in this section
             for (const [key, value] of Object.entries(fields)) {
-                const displayKey = key.replace(/([A-Z_])/g, (m) => ' ' + m.replace('_', ' ')).trim();
+                const displayKey = FIELD_MAP[key] || key.replace(/([A-Z])/g, ' $1').trim();
                 const displayValue = Array.isArray(value) ? value.join(', ') : (value === undefined || value === null ? '' : String(value));
                 if (displayValue && displayValue.trim() !== '') {
                     doc.fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true })
