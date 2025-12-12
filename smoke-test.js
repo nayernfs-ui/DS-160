@@ -80,15 +80,15 @@ async function generatePDF(formData) {
         if (isArabic && reshaper) {
             try { textToPrint = reshaper.reshape(displayValue); } catch (e) { textToPrint = displayValue; }
         }
-        // Add an array with two runs so we can style LTR vs RTL
-        content.push({
-            columns: [
-                { width: '*', text: [ { text: displayKey + ': ', bold: true, font: 'Roboto', alignment: 'left' } ] },
-                { width: 'auto', text: [ { text: textToPrint, font: isArabic ? 'Amiri' : 'Roboto' } ], alignment: isArabic ? 'right' : 'left' }
-            ],
-            columnGap: 10,
-            margin: [0, 0, 0, 2]
-        });
+            // Add an array with two columns so we can style LTR vs RTL and set direction
+            content.push({
+                columns: [
+                    { width: '*', text: displayKey + ':', bold: true, font: 'Roboto', alignment: 'left', direction: 'ltr' },
+                    { width: 'auto', text: textToPrint, font: isArabic ? 'Amiri' : 'Roboto', alignment: isArabic ? 'right' : 'left', direction: isArabic ? 'rtl' : 'ltr' }
+                ],
+                columnGap: 10,
+                margin: [0, 0, 0, 2]
+            });
     }
 
     const docDefinition = {

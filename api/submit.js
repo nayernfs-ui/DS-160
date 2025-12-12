@@ -116,16 +116,16 @@ async function generatePDF(formData) {
             // Loop through form data (simplifying content for demonstration)
             ...Object.entries(formData).map(([key, value]) => {
                 const displayKey = FIELD_MAP[key] || key; // Assuming FIELD_MAP is still available
-                const displayValue = String(value);
-
-                // Use a simple text run for key/value (explicit fonts for LTR vs RTL)
+                const displayValue = value === undefined || value === null ? '' : String(value);
                 const isArabicVal = /[\u0600-\u06FF]/.test(displayValue);
+                // Use columns for stable mixing of LTR and RTL
                 return {
-                    text: [
-                        { text: displayKey + ': ', bold: true, alignment: 'left', font: 'Roboto' },
-                        { text: displayValue, alignment: isArabicVal ? 'right' : 'left', font: isArabicVal ? 'Amiri' : 'Roboto' }
+                    columns: [
+                        { width: '*', text: displayKey + ':', bold: true, font: 'Roboto', alignment: 'left', direction: 'ltr' },
+                        { width: 'auto', text: displayValue, font: isArabicVal ? 'Amiri' : 'Roboto', alignment: isArabicVal ? 'right' : 'left', direction: isArabicVal ? 'rtl' : 'ltr' }
                     ],
-                    // We may need to wrap this in a table for complex RTL/LTR mixing
+                    columnGap: 10,
+                    margin: [0, 0, 0, 2]
                 };
             })
         ],
