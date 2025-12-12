@@ -47,7 +47,7 @@ const FIELD_MAP = {
     DOB_Day: 'Date of Birth (Day)',
     DOB_Month: 'Date of Birth (Month)',
     DOB_Year: 'Date of Birth (Year)',
-    Nationality: 'Current Nationality',
+    Nationality: 'بلد/منطقة المنشأ (الجنسية)',
     PassportType: 'Passport Type',
     PassportNumber: 'Passport Number',
     IssueDate_Day: 'Passport Issue Date (Day)',
@@ -134,8 +134,32 @@ function generatePDF(formData) {
             // List fields in this section
             for (const [key, value] of Object.entries(fields)) {
                 const displayKey = FIELD_MAP[key] || key.replace(/([A-Z])/g, ' $1').trim();
-                const displayValue = Array.isArray(value) ? value.join(', ') : (value === undefined || value === null ? '' : String(value));
+                let displayValue = Array.isArray(value) ? value.join(', ') : (value === undefined || value === null ? '' : String(value));
                 if (displayValue && displayValue.trim() !== '') {
+                        // If this is a nationality field, translate common English names to Arabic
+                        const nationalityKey = key.toLowerCase();
+                        if (nationalityKey === 'nationality' || nationalityKey.includes('nationality')) {
+                            // Map of some common nationalities (lowercased keys)
+                            const NATIONALITY_TRANSLATIONS = {
+                                'egypt': 'مصر',
+                                'syria': 'سوريا',
+                                'jordan': 'الأردن',
+                                'lebanon': 'لبنان',
+                                'iraq': 'العراق',
+                                'saudi arabia': 'المملكة العربية السعودية',
+                                'united states': 'الولايات المتحدة',
+                                'united kingdom': 'المملكة المتحدة',
+                                'canada': 'كندا',
+                                'france': 'فرنسا',
+                                'germany': 'ألمانيا',
+                                'india': 'الهند'
+                            };
+
+                            // Handle comma-separated list also
+                            const parts = displayValue.split(',').map(p => p.trim());
+                            const translatedParts = parts.map(p => NATIONALITY_TRANSLATIONS[p.toLowerCase()] || p);
+                            displayValue = translatedParts.join(', ');
+                        }
                     // Use Arabic font if the key or value contains Arabic script
                     const useArabic = containsArabic(displayKey) || containsArabic(displayValue);
                     if (useArabic) doc.font('Arabic');
