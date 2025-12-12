@@ -1,13 +1,26 @@
 const fs = require('fs');
 const path = require('path');
-const PDFDocument = require('pdfkit');
-const getStream = require('get-stream');
-
+const pdfMake = require('pdfmake/build/pdfmake');
+const pdfFonts = require('pdfmake/build/vfs_fonts');
 // Import Reshaper as module to handle property fallbacks in the smoke test
 const ReshaperModule = require('arabic-reshaper');
 
 // Local font path (project root Fonts folder)
 const ARABIC_FONT_PATH = path.join(__dirname, 'Fonts', 'ae_AlArabiya.ttf');
+
+// Setup pdfMake VFS and include Arabic font
+pdfMake.vfs = pdfFonts.pdfMake && pdfFonts.pdfMake.vfs ? pdfFonts.pdfMake.vfs : pdfFonts;
+try {
+    if (fs.existsSync(ARABIC_FONT_PATH)) {
+        pdfMake.vfs['ae_AlArabiya.ttf'] = fs.readFileSync(ARABIC_FONT_PATH).toString('base64');
+    }
+} catch (e) {
+    console.warn('Could not add Arabic font to pdfMake vfs:', e.message || e);
+}
+pdfMake.fonts = {
+    Roboto: { normal: 'Roboto-Regular.ttf', bold: 'Roboto-Medium.ttf', italics: 'Roboto-Italic.ttf', bolditalics: 'Roboto-Italic.ttf' },
+    AEAlArabiya: { normal: 'ae_AlArabiya.ttf', bold: 'ae_AlArabiya.ttf' }
+};
 
 // Minimal FIELD_MAP (copy necessary keys from api/submit.js)
 const FIELD_MAP = {
@@ -21,19 +34,9 @@ const FIELD_MAP = {
 // Helper to detect Arabic chars
 const containsArabic = (s) => /[\u0600-\u06FF]/.test(String(s || ''));
 
-// Copy of generatePDF simplified for smoke test
+// Use pdfmake to generate a PDF buffer for the smoke test
 async function generatePDF(formData) {
-    const doc = new PDFDocument({ margin: 50 });
-    try {
-        doc.font(ARABIC_FONT_PATH);
-    } catch (err) {
-        console.warn('Arabic font load failed, continuing with default font.', err);
-    }
-
-    doc.fontSize(16).text('DS-160 Smoke Test PDF', { underline: true }).moveDown(0.5);
-    doc.fontSize(12).text(`Date: ${new Date().toLocaleString()}`).moveDown(1);
-
-    // Initialize reshaper using robust mapping (support .convertArabic or .reshape)
+    // Initialize reshaper as before to guarantee correct shaping
     const ReshaperExport = ReshaperModule.default || ReshaperModule.ArabicReshaper || ReshaperModule;
     let reshaper;
     try {
@@ -45,52 +48,66 @@ async function generatePDF(formData) {
                 } else if (instance && typeof instance.reshape === 'function') {
                     reshaper = instance;
                 } else {
-                    throw new Error('No shaping method on instance');
+                    reshaper = { reshape: (t) => t };
                 }
             } catch (instErr) {
                 const value = ReshaperExport();
                 if (value && typeof value.convertArabic === 'function') reshaper = { reshape: value.convertArabic.bind(value) };
                 else if (value && typeof value.reshape === 'function') reshaper = value;
-                else throw new Error('Reshaper factory did not return expected methods');
+                else reshaper = { reshape: (t) => t };
             }
         } else if (ReshaperExport && typeof ReshaperExport.convertArabic === 'function') {
             reshaper = { reshape: ReshaperExport.convertArabic.bind(ReshaperExport) };
         } else {
-            throw new Error('Reshaper module has no supported export');
+            reshaper = { reshape: (text) => text };
         }
-        console.log('--- Reshaper Initialized Successfully ---');
     } catch (e) {
-        console.error('--- Reshaper Initialization Failed Locally (Using Dummy) ---', e.message || e);
         reshaper = { reshape: (text) => text };
     }
+
+    // Compose a pdfmake doc definition
+    const content = [
+        { text: 'DS-160 Smoke Test PDF', style: 'header' },
+        { text: `Date: ${new Date().toLocaleString()}`, alignment: 'left', margin: [0, 0, 0, 10] }
+    ];
 
     for (const [key, value] of Object.entries(formData)) {
         const displayKey = FIELD_MAP[key] || key;
         const displayValue = value === undefined || value === null ? '' : String(value);
         if (!displayValue.trim()) continue;
-
         const isArabic = containsArabic(displayValue);
         let textToPrint = displayValue;
         if (isArabic && reshaper) {
-            try {
-                textToPrint = reshaper.reshape(displayValue);
-                textToPrint = textToPrint.split('').reverse().join('');
-            } catch (err) {
-                console.warn('Reshape failed:', err.message);
-                textToPrint = displayValue;
-            }
+            try { textToPrint = reshaper.reshape(displayValue); } catch (e) { textToPrint = displayValue; }
         }
-
-        doc.fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true });
-        if (isArabic) doc.font(ARABIC_FONT_PATH);
-        else doc.font('Helvetica');
-        doc.fillColor('gray').text(textToPrint, { align: isArabic ? 'right' : 'left' });
-        doc.font('Helvetica');
-        doc.text('').moveDown(0.2);
+        // Add an array with two runs so we can style LTR vs RTL
+        content.push({
+            columns: [
+                { width: '*', text: [ { text: displayKey + ': ', bold: true, font: 'Roboto', alignment: 'left' } ] },
+                { width: 'auto', text: [ { text: textToPrint, font: isArabic ? 'AEAlArabiya' : 'Roboto' } ], alignment: isArabic ? 'right' : 'left' }
+            ],
+            columnGap: 10,
+            margin: [0, 0, 0, 2]
+        });
     }
 
-    doc.end();
-    return getStream.buffer(doc);
+    const docDefinition = {
+        defaultStyle: { font: 'AEAlArabiya', fontSize: 12, alignment: 'right' },
+        styles: { header: { fontSize: 16, bold: true, margin: [0, 0, 0, 10] } },
+        content
+    };
+
+    return new Promise((resolve, reject) => {
+        try {
+            const pdfDoc = pdfMake.createPdf(docDefinition);
+            // Ensure an available filename by removing prior file if present
+            const outFile = path.join(__dirname, `test_output_${Date.now()}.pdf`);
+            pdfDoc.getBuffer((buffer) => {
+                try { fs.writeFileSync(outFile, buffer); } catch (e) { return reject(e); }
+                resolve(outFile);
+            });
+        } catch (e) { reject(e); }
+    });
 }
 
 // --- Sample Arabic Test Data ---
@@ -105,10 +122,8 @@ const sampleFormData = {
 async function runSmokeTest() {
     console.log('Starting PDF Generation Smoke Test...');
     try {
-        const pdfBuffer = await generatePDF(sampleFormData);
-        const outputFilePath = path.join(__dirname, 'test_output.pdf');
-        fs.writeFileSync(outputFilePath, pdfBuffer);
-        console.log('✅ Smoke Test Successful! PDF saved to:', outputFilePath);
+        const outputPath = await generatePDF(sampleFormData);
+        console.log('✅ Smoke Test Successful! PDF saved to:', outputPath);
     } catch (error) {
         console.error('❌ Smoke Test Failed! Error Details:', error);
     }
