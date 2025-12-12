@@ -5,6 +5,7 @@ const PDFDocument = require('pdfkit');
 const getStream = require('get-stream'); // Helper to convert the PDF stream
 // 💡 NEW: Import the path module
 const path = require('path');
+const rtl = require('rtl-css'); // 💡 NEW: RTL library for Arabic text processing
 
 // Define the path to your Arabic font file
 // __dirname is the current directory (api folder), so go up one level and into Fonts
