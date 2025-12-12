@@ -28,7 +28,7 @@ pdfMake.fonts = {
         bold: 'Roboto-Medium.ttf',
         italics: 'Roboto-Italic.ttf',
         bolditalics: 'Roboto-Italic.ttf'
-    }
+    },
     AEAlArabiya: {
         normal: 'ae_AlArabiya.ttf',
         bold: 'ae_AlArabiya.ttf'
