@@ -71,6 +71,9 @@ async function generatePDF(formData) {
         { text: `Date: ${new Date().toLocaleString()}`, alignment: 'left', margin: [0, 0, 0, 10] }
     ];
 
+    // Build table body for key/value rows
+    const tableBody = [];
+
     for (const [key, value] of Object.entries(formData)) {
         const displayKey = FIELD_MAP[key] || key;
         const displayValue = value === undefined || value === null ? '' : String(value);
@@ -80,16 +83,18 @@ async function generatePDF(formData) {
         if (isArabic && reshaper) {
             try { textToPrint = reshaper.reshape(displayValue); } catch (e) { textToPrint = displayValue; }
         }
-            // Add an array with two columns so we can style LTR vs RTL and set direction
-            content.push({
-                columns: [
-                    { width: '*', text: displayKey + ':', bold: true, font: 'Roboto', alignment: 'left', direction: 'ltr' },
-                    { width: 'auto', text: textToPrint, font: isArabic ? 'Amiri' : 'Roboto', alignment: isArabic ? 'right' : 'left', direction: isArabic ? 'rtl' : 'ltr' }
-                ],
-                columnGap: 10,
-                margin: [0, 0, 0, 2]
-            });
+            // Push row for the table
+            tableBody.push([
+                { text: displayKey + ':', bold: true, font: 'Roboto', alignment: 'left', direction: 'ltr', margin: [0, 2, 0, 2] },
+                { text: textToPrint, font: isArabic ? 'Amiri' : 'Roboto', alignment: isArabic ? 'right' : 'left', direction: isArabic ? 'rtl' : 'ltr', margin: [0, 2, 0, 2] }
+            ]);
     }
+
+    // Insert table into content
+    content.push({
+        table: { widths: ['*', 'auto'], body: tableBody },
+        layout: 'noBorders'
+    });
 
     const docDefinition = {
         defaultStyle: { font: 'Amiri', fontSize: 12, alignment: 'right' },

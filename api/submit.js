@@ -98,6 +98,17 @@ const FIELD_MAP = {
  */
 async function generatePDF(formData) {
     // pdfmake uses document definition objects for layout
+    // Build a table body for key/value rows
+    const tableBody = Object.entries(formData).map(([key, value]) => {
+        const displayKey = FIELD_MAP[key] || key;
+        const displayValue = value === undefined || value === null ? '' : String(value);
+        const isArabicVal = /[\u0600-\u06FF]/.test(displayValue);
+        return [
+            { text: displayKey + ':', bold: true, font: 'Roboto', alignment: 'left', direction: 'ltr', margin: [0, 2, 0, 2] },
+            { text: displayValue, font: isArabicVal ? 'Amiri' : 'Roboto', alignment: isArabicVal ? 'right' : 'left', direction: isArabicVal ? 'rtl' : 'ltr', margin: [0, 2, 0, 2] }
+        ];
+    });
+
     const docDefinition = {
         // Critical: Set the global alignment for RTL languages
         defaultStyle: {
@@ -113,21 +124,14 @@ async function generatePDF(formData) {
             // Example of Arabic section title
             { text: 'المعلومات الشخصية', style: 'sectionTitle' },
             
-            // Loop through form data (simplifying content for demonstration)
-            ...Object.entries(formData).map(([key, value]) => {
-                const displayKey = FIELD_MAP[key] || key; // Assuming FIELD_MAP is still available
-                const displayValue = value === undefined || value === null ? '' : String(value);
-                const isArabicVal = /[\u0600-\u06FF]/.test(displayValue);
-                // Use columns for stable mixing of LTR and RTL
-                return {
-                    columns: [
-                        { width: '*', text: displayKey + ':', bold: true, font: 'Roboto', alignment: 'left', direction: 'ltr' },
-                        { width: 'auto', text: displayValue, font: isArabicVal ? 'Amiri' : 'Roboto', alignment: isArabicVal ? 'right' : 'left', direction: isArabicVal ? 'rtl' : 'ltr' }
-                    ],
-                    columnGap: 10,
-                    margin: [0, 0, 0, 2]
-                };
-            })
+            // Table with two columns: Key | Value
+            {
+                table: {
+                    widths: ['*', 'auto'],
+                    body: tableBody
+                },
+                layout: 'noBorders'
+            }
         ],
         styles: {
             sectionTitle: {
