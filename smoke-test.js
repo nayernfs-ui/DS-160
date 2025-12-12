@@ -6,20 +6,20 @@ const pdfFonts = require('pdfmake/build/vfs_fonts');
 const ReshaperModule = require('arabic-reshaper');
 
 // Local font path (project root Fonts folder)
-const ARABIC_FONT_PATH = path.join(__dirname, 'Fonts', 'ae_AlArabiya.ttf');
+const ARABIC_FONT_PATH = path.join(__dirname, 'Fonts', 'Amiri-Regular.ttf');
 
 // Setup pdfMake VFS and include Arabic font
 pdfMake.vfs = pdfFonts.pdfMake && pdfFonts.pdfMake.vfs ? pdfFonts.pdfMake.vfs : pdfFonts;
 try {
     if (fs.existsSync(ARABIC_FONT_PATH)) {
-        pdfMake.vfs['ae_AlArabiya.ttf'] = fs.readFileSync(ARABIC_FONT_PATH).toString('base64');
+        pdfMake.vfs['Amiri-Regular.ttf'] = fs.readFileSync(ARABIC_FONT_PATH).toString('base64');
     }
 } catch (e) {
     console.warn('Could not add Arabic font to pdfMake vfs:', e.message || e);
 }
 pdfMake.fonts = {
     Roboto: { normal: 'Roboto-Regular.ttf', bold: 'Roboto-Medium.ttf', italics: 'Roboto-Italic.ttf', bolditalics: 'Roboto-Italic.ttf' },
-    AEAlArabiya: { normal: 'ae_AlArabiya.ttf', bold: 'ae_AlArabiya.ttf' }
+    Amiri: { normal: 'Amiri-Regular.ttf', bold: 'Amiri-Regular.ttf' }
 };
 
 // Minimal FIELD_MAP (copy necessary keys from api/submit.js)
@@ -84,7 +84,7 @@ async function generatePDF(formData) {
         content.push({
             columns: [
                 { width: '*', text: [ { text: displayKey + ': ', bold: true, font: 'Roboto', alignment: 'left' } ] },
-                { width: 'auto', text: [ { text: textToPrint, font: isArabic ? 'AEAlArabiya' : 'Roboto' } ], alignment: isArabic ? 'right' : 'left' }
+                { width: 'auto', text: [ { text: textToPrint, font: isArabic ? 'Amiri' : 'Roboto' } ], alignment: isArabic ? 'right' : 'left' }
             ],
             columnGap: 10,
             margin: [0, 0, 0, 2]
@@ -92,7 +92,7 @@ async function generatePDF(formData) {
     }
 
     const docDefinition = {
-        defaultStyle: { font: 'AEAlArabiya', fontSize: 12, alignment: 'right' },
+        defaultStyle: { font: 'Amiri', fontSize: 12, alignment: 'right' },
         styles: { header: { fontSize: 16, bold: true, margin: [0, 0, 0, 10] } },
         content
     };

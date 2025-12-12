@@ -10,11 +10,11 @@ const pdfFonts = require('pdfmake/build/vfs_fonts');
 // Setup pdfMake VFS and add Arabic font from local Fonts folder
 pdfMake.vfs = pdfFonts.pdfMake && pdfFonts.pdfMake.vfs ? pdfFonts.pdfMake.vfs : pdfFonts;
 try {
-    const arabicFontPath = path.join(__dirname, '..', 'Fonts', 'ae_AlArabiya.ttf');
+    const arabicFontPath = path.join(__dirname, '..', 'Fonts', 'Amiri-Regular.ttf');
     if (fs.existsSync(arabicFontPath)) {
         const fontBase64 = fs.readFileSync(arabicFontPath).toString('base64');
         // Add custom Arabic font to the vfs under the file name
-        pdfMake.vfs['ae_AlArabiya.ttf'] = fontBase64;
+        pdfMake.vfs['Amiri-Regular.ttf'] = fontBase64;
     }
 } catch (err) {
     console.warn('Unable to read / add Arabic font to pdfMake vfs:', err.message || err);
@@ -29,9 +29,9 @@ pdfMake.fonts = {
         italics: 'Roboto-Italic.ttf',
         bolditalics: 'Roboto-Italic.ttf'
     },
-    AEAlArabiya: {
-        normal: 'ae_AlArabiya.ttf',
-        bold: 'ae_AlArabiya.ttf'
+    Amiri: {
+        normal: 'Amiri-Regular.ttf',
+        bold: 'Amiri-Regular.ttf'
     }
 };
 
@@ -101,7 +101,7 @@ async function generatePDF(formData) {
     const docDefinition = {
         // Critical: Set the global alignment for RTL languages
         defaultStyle: {
-            font: 'AEAlArabiya', // Use the Arabic font by default to ensure correct shaping
+            font: 'Amiri', // Use the Arabic font by default to ensure correct shaping
             fontSize: 12,
             alignment: 'right', // Align all text to the right by default
         },
@@ -123,7 +123,7 @@ async function generatePDF(formData) {
                 return {
                     text: [
                         { text: displayKey + ': ', bold: true, alignment: 'left', font: 'Roboto' },
-                        { text: displayValue, alignment: isArabicVal ? 'right' : 'left', font: isArabicVal ? 'AEAlArabiya' : 'Roboto' }
+                        { text: displayValue, alignment: isArabicVal ? 'right' : 'left', font: isArabicVal ? 'Amiri' : 'Roboto' }
                     ],
                     // We may need to wrap this in a table for complex RTL/LTR mixing
                 };
