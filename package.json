@@ -6,7 +6,6 @@
     "start": "vercel dev"
   },
   "dependencies": {
-    "@fontsource/noto-sans-arabic": "^5.2.10",
     "arabic-reshaper": "^1.1.0",
     "blob-stream": "^0.1.3",
     "get-stream": "^6.0.0",

@@ -8,18 +8,9 @@ const path = require('path');
 // 💡 NEW: Import the reshaping library
 const ArabicReshaperConstructor = require('arabic-reshaper');
 
-// Define the path to the Noto Sans Arabic font (installed via @fontsource)
-// This path structure is typical for fontsource packages in Node environments.
-// It assumes the font will be installed in node_modules
-const ARABIC_FONT_PATH = path.join(
-    __dirname,
-    '..',
-    'node_modules',
-    '@fontsource',
-    'noto-sans-arabic',
-    'files',
-    'noto-sans-arabic-arabic-400-normal.woff2'
-);
+// Define the path to the Arabic font file shipped with this project (local TTF)
+// Using a local TTF avoids fetching font packages and helps prevent Vercel timeouts.
+const ARABIC_FONT_PATH = path.join(__dirname, '..', 'Fonts', 'ae_AlArabiya.ttf');
 
 // Configuration (using existing environment variables)
 const API_KEY = process.env.SENDGRID_API_KEY; 
@@ -84,11 +75,12 @@ function generatePDF(formData) {
     return new Promise(async (resolve, reject) => {
         const doc = new PDFDocument({ margin: 50 });
 
-        // 💡 NEW: Register the Arabic font with PDFKit
+        // 💡 Use local TTF font by file path for faster loading
         try {
-            doc.registerFont('Arabic', ARABIC_FONT_PATH);
+            // Set the font by its file path directly (no registerFont)
+            doc.font(ARABIC_FONT_PATH);
         } catch (err) {
-            console.warn('Arabic font registration failed, continuing with default font.', err);
+            console.warn('Arabic font load failed, continuing with default font.', err);
         }
 
         // Header
@@ -134,7 +126,7 @@ function generatePDF(formData) {
             // Section header (use Arabic font for Arabic characters)
             doc.moveDown(0.5);
             if (containsArabic(sec)) {
-                doc.font('Arabic').fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
+                doc.font(ARABIC_FONT_PATH).fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
                 doc.font('Helvetica');
             } else {
                 doc.fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
@@ -161,7 +153,7 @@ function generatePDF(formData) {
                     doc.font('Helvetica').fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true });
                     
                     // Print the Value (RTL corrected)
-                    if (isArabic) doc.font('Arabic');
+                    if (isArabic) doc.font(ARABIC_FONT_PATH);
                     else doc.font('Helvetica');
                     doc.fillColor('gray').text(textToPrint, { 
                         align: isArabic ? 'right' : 'left'
