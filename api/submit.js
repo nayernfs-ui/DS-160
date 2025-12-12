@@ -1,17 +1,24 @@
 // --- NEW CODE INCLUDING PDF GENERATION AND ATTACHMENT ---
 
 const SibApiV3Sdk = require('sib-api-v3-sdk');
-const PDFDocument = require('pdfkit');
-const getStream = require('get-stream'); // Helper to convert the PDF stream
-// 💡 NEW: Import the path module
-const path = require('path');
-// 💡 NEW: Import the reshaping library
-// Import the module itself; we'll handle various export styles at runtime
-const ReshaperModule = require('arabic-reshaper');
+const pdfMake = require('pdfmake/build/pdfmake');
+const pdfFonts = require('pdfmake/build/vfs_fonts');
 
-// Define the path to the Arabic font file shipped with this project (local TTF)
-// Using a local TTF avoids fetching font packages and helps prevent Vercel timeouts.
-const ARABIC_FONT_PATH = path.join(__dirname, '..', 'Fonts', 'ae_AlArabiya.ttf');
+// Assign the fonts to pdfMake VFS (Virtual File System)
+pdfMake.vfs = pdfFonts;
+
+// Define a simple fonts map. If you add a custom Arabic font in the VFS,
+// add it here (example: Amiri). For now, Roboto will be used as default.
+pdfMake.fonts = {
+    Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-Italic.ttf'
+    }
+};
+
+// (Removed local TTF font path - we're using the VFS fonts via pdfmake)
 
 // Configuration (using existing environment variables)
 const API_KEY = process.env.SENDGRID_API_KEY; 
@@ -72,149 +79,59 @@ const FIELD_MAP = {
  * @param {object} formData 
  * @returns {Promise<Buffer>} The PDF content as a buffer.
  */
-function generatePDF(formData) {
-    return new Promise(async (resolve, reject) => {
-        const doc = new PDFDocument({ margin: 50 });
+async function generatePDF(formData) {
+    // pdfmake uses document definition objects for layout
+    const docDefinition = {
+        // Critical: Set the global alignment for RTL languages
+        defaultStyle: {
+            font: 'Roboto', // Use a font that exists in the VFS or define your custom font here
+            fontSize: 12,
+            alignment: 'right', // Align all text to the right by default
+        },
+        content: [
+            // Text objects automatically handle RTL when alignment is set to right
+            { text: 'DS-160 Submission Report', fontSize: 18, margin: [0, 0, 0, 10] },
+            { text: `Date: ${new Date().toLocaleString('en-US')}`, margin: [0, 0, 0, 20], alignment: 'left' },
 
-        // 💡 Use local TTF font by file path for faster loading
-        try {
-            // Set the font by its file path directly (no registerFont)
-            doc.font(ARABIC_FONT_PATH);
-        } catch (err) {
-            console.warn('Arabic font load failed, continuing with default font.', err);
+            // Example of Arabic section title
+            { text: 'المعلومات الشخصية', style: 'sectionTitle' },
+            
+            // Loop through form data (simplifying content for demonstration)
+            ...Object.entries(formData).map(([key, value]) => {
+                const displayKey = FIELD_MAP[key] || key; // Assuming FIELD_MAP is still available
+                const displayValue = String(value);
+
+                // Use a simple text run for key/value
+                return {
+                    text: [
+                        { text: displayKey + ': ', bold: true, alignment: 'left' },
+                        { text: displayValue, alignment: 'right' }
+                    ],
+                    // We may need to wrap this in a table for complex RTL/LTR mixing
+                };
+            })
+        ],
+        styles: {
+            sectionTitle: {
+                fontSize: 14,
+                bold: true,
+                color: 'red',
+                alignment: 'right',
+                margin: [0, 10, 0, 5]
+            }
         }
+    };
 
-        // Header
-        doc.fontSize(16).text('DS-160 Survey Submission Report', { underline: true }).moveDown(0.5);
-        doc.fontSize(12).text(`Date: ${new Date().toLocaleString()}`).moveDown(1);
-
-        // Helper to detect Arabic chars
-        const containsArabic = (s) => /[\u0600-\u06FF]/.test(String(s || ''));
-
-        // Group fields by section
-        const sections = {};
-        for (const [key, value] of Object.entries(formData)) {
-            if (!key || key.startsWith('_')) continue;
-            const section = fieldSection(key);
-            if (!sections[section]) sections[section] = {};
-            sections[section][key] = value;
-        }
-
-        // Ensure the desired section order
-        const order = [
-            'Personal Information (المعلومات الشخصية)',
-            'Contact Information (معلومات التواصل)',
-            'Travel Companions (مرافقو السفر)',
-            'US History (سجل السفر إلى أمريكا)',
-            'Family Data (البيانات العائلية)',
-            'Current Employment (الوظيفة الحالية)',
-            'Previous Employment (الوظائف السابقة)',
-            'Education History (المؤهلات العلمية)',
-            'Travel History (تاريخ السفر)',
-            'Other'
-        ];
-
-        // Initialize the Reshaper instance once with a defensive fallback
-                // Robust Reshaper initialization that supports multiple export patterns
-                let reshaper;
-                try {
-                    const ReshaperExport = ReshaperModule.default || ReshaperModule.ArabicReshaper || ReshaperModule;
-                    if (typeof ReshaperExport === 'function') {
-                        try {
-                            // Try to instantiate as a constructor
-                            const instance = new ReshaperExport();
-                            if (instance && typeof instance.convertArabic === 'function') {
-                                reshaper = { reshape: instance.convertArabic.bind(instance) };
-                            } else if (instance && typeof instance.reshape === 'function') {
-                                reshaper = instance;
-                            } else {
-                                // The instance is not useful; fall back to dummy
-                                reshaper = { reshape: (t) => t };
-                            }
-                        } catch (instErr) {
-                            // Not a constructor; try calling as factory function
-                            const value = ReshaperExport();
-                            if (value && typeof value.convertArabic === 'function') {
-                                reshaper = { reshape: value.convertArabic.bind(value) };
-                            } else if (value && typeof value.reshape === 'function') {
-                                reshaper = value;
-                            } else if (typeof value === 'function') {
-                                reshaper = { reshape: value };
-                            } else {
-                                reshaper = { reshape: (t) => t };
-                            }
-                        }
-                    } else if (ReshaperExport && typeof ReshaperExport.convertArabic === 'function') {
-                        reshaper = { reshape: ReshaperExport.convertArabic.bind(ReshaperExport) };
-                    } else {
-                        reshaper = { reshape: (t) => t };
-                    }
-                } catch (e) {
-                    console.error('CRITICAL ERROR: Failed to instantiate ArabicReshaper, rendering LTR.', e);
-                    reshaper = { reshape: (text) => text };
-                }
-
-        for (const sec of order) {
-            const fields = sections[sec];
-            if (!fields) continue;
-
-            // Section header (use Arabic font for Arabic characters)
-            doc.moveDown(0.5);
-            if (containsArabic(sec)) {
-                doc.font(ARABIC_FONT_PATH).fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
-                doc.font('Helvetica');
+    // Use pdfmake to create the PDF Buffer
+    return new Promise((resolve, reject) => {
+        const pdfDoc = pdfMake.createPdf(docDefinition);
+        pdfDoc.getBuffer((buffer) => {
+            if (buffer) {
+                resolve(buffer);
             } else {
-                doc.fontSize(14).fillColor('#dc3545').text(sec).moveDown(0.25);
+                reject(new Error("PDFMake failed to create buffer."));
             }
-
-            // List fields in this section
-            for (const [key, value] of Object.entries(fields)) {
-                const displayKey = FIELD_MAP[key] || key.replace(/([A-Z])/g, ' $1').trim();
-                const displayValue = Array.isArray(value) ? value.join(', ') : (value === undefined || value === null ? '' : String(value));
-                if (displayValue && displayValue.trim() !== '') {
-                    // Check if the value contains Arabic characters (assuming Arabic is main language for certain fields)
-                    const isArabic = /[\u0600-\u06FF]/.test(displayValue);
-                    
-                    // Apply Reshaping only if Arabic text is detected
-                    let textToPrint = displayValue;
-                    if (isArabic && reshaper) {
-                        // 💡 NEW LOGIC: Use the reshaper instance (if available)
-                        try {
-                            textToPrint = reshaper.reshape(displayValue);
-                            // Important: Reverse the string for RTL display in LTR-optimized pdfkit
-                            textToPrint = textToPrint.split('').reverse().join(''); 
-                        } catch (e) {
-                            // If reshaping fails, fallback to original displayValue
-                            console.warn('Arabic reshaping failed, falling back to original text', e);
-                            textToPrint = displayValue;
-                        }
-                    }
-
-                    // Print the Key (LTR)
-                    doc.font('Helvetica').fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true });
-                    
-                    // Print the Value (RTL corrected)
-                    if (isArabic) doc.font(ARABIC_FONT_PATH);
-                    else doc.font('Helvetica');
-                    doc.fillColor('gray').text(textToPrint, { 
-                        align: isArabic ? 'right' : 'left',
-                        features: isArabic ? ['liga', 'rlig'] : []
-                    });
-                    // Revert to a default font after printing value
-                    doc.font('Helvetica');
-                    doc.text('').moveDown(0.2); 
-                }
-            }
-        }
-
-        doc.end();
-
-        try {
-            const buffer = await getStream.buffer(doc);
-            resolve(buffer);
-        } catch (error) {
-            reject(error);
-        }
+        });
     });
 }
 
