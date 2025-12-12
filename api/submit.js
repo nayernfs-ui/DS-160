@@ -6,7 +6,7 @@ const getStream = require('get-stream'); // Helper to convert the PDF stream
 // 💡 NEW: Import the path module
 const path = require('path');
 // 💡 NEW: Import the reshaping library
-const ArabicReshaperConstructor = require('arabic-reshaper');
+const ReshaperConstructor = require('arabic-reshaper');
 
 // Define the path to the Arabic font file shipped with this project (local TTF)
 // Using a local TTF avoids fetching font packages and helps prevent Vercel timeouts.
@@ -113,11 +113,24 @@ function generatePDF(formData) {
             'Other'
         ];
 
-        // Initialize the Reshaper instance once
-        // Try using the default export if available, otherwise fallback to the constructor object
-        const ReshaperClass = ArabicReshaperConstructor.default || ArabicReshaperConstructor;
-        // Call the library as a factory function (most common in JS modules); avoid `new` to prevent TypeError
-        const reshaper = ReshaperClass();
+        // Initialize the Reshaper instance once with a defensive fallback
+        let reshaper;
+        try {
+            // Attempt the standard class initialization (e.g., if it's a constructor export)
+            reshaper = new ReshaperConstructor();
+        } catch (e1) {
+            try {
+                // If that fails, attempt calling it as a factory function
+                reshaper = ReshaperConstructor();
+            } catch (e2) {
+                // As a final fallback, try a common property name for exported constructors
+                try {
+                    reshaper = ReshaperConstructor.ArabicReshaper ? new ReshaperConstructor.ArabicReshaper() : null;
+                } catch (e3) {
+                    reshaper = null;
+                }
+            }
+        }
 
         for (const sec of order) {
             const fields = sections[sec];
@@ -142,11 +155,17 @@ function generatePDF(formData) {
                     
                     // Apply Reshaping only if Arabic text is detected
                     let textToPrint = displayValue;
-                    if (isArabic) {
-                        // 💡 NEW LOGIC: Use the reshaper instance
-                        textToPrint = reshaper.reshape(displayValue);
-                        // Important: Reverse the string for RTL display in LTR-optimized pdfkit
-                        textToPrint = textToPrint.split('').reverse().join(''); 
+                    if (isArabic && reshaper) {
+                        // 💡 NEW LOGIC: Use the reshaper instance (if available)
+                        try {
+                            textToPrint = reshaper.reshape(displayValue);
+                            // Important: Reverse the string for RTL display in LTR-optimized pdfkit
+                            textToPrint = textToPrint.split('').reverse().join(''); 
+                        } catch (e) {
+                            // If reshaping fails, fallback to original displayValue
+                            console.warn('Arabic reshaping failed, falling back to original text', e);
+                            textToPrint = displayValue;
+                        }
                     }
 
                     // Print the Key (LTR)
