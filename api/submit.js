@@ -6,7 +6,7 @@ const getStream = require('get-stream'); // Helper to convert the PDF stream
 // 💡 NEW: Import the path module
 const path = require('path');
 // 💡 NEW: Import the reshaping library
-const arabicReshaper = require('arabic-reshaper');
+const ArabicReshaper = require('arabic-reshaper');
 
 // Define the path to the Noto Sans Arabic font (installed via @fontsource)
 // This path structure is typical for fontsource packages in Node environments.
@@ -121,6 +121,9 @@ function generatePDF(formData) {
             'Other'
         ];
 
+        // Initialize the Reshaper instance once
+        const reshaper = new ArabicReshaper();
+
         for (const sec of order) {
             const fields = sections[sec];
             if (!fields) continue;
@@ -145,7 +148,8 @@ function generatePDF(formData) {
                     // Apply Reshaping only if Arabic text is detected
                     let textToPrint = displayValue;
                     if (isArabic) {
-                        textToPrint = arabicReshaper.reshape(displayValue);
+                        // 💡 NEW LOGIC: Use the reshaper instance
+                        textToPrint = reshaper.reshape(displayValue);
                         // Important: Reverse the string for RTL display in LTR-optimized pdfkit
                         textToPrint = textToPrint.split('').reverse().join(''); 
                     }
