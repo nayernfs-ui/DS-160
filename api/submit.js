@@ -6,10 +6,21 @@ const getStream = require('get-stream'); // Helper to convert the PDF stream
 // 💡 NEW: Import the path module
 const path = require('path');
 const rtl = require('rtl-css'); // 💡 NEW: RTL library for Arabic text processing
+// 💡 NEW: Import the reshaping library
+const arabicReshaper = require('arabic-reshaper');
 
-// Define the path to your Arabic font file
-// __dirname is the current directory (api folder), so go up one level and into Fonts
-const ARABIC_FONT_PATH = path.join(__dirname, '../Fonts/ae_AlArabiya.ttf'); 
+// Define the path to the Noto Sans Arabic font (installed via @fontsource)
+// This path structure is typical for fontsource packages in Node environments.
+// It assumes the font will be installed in node_modules
+const ARABIC_FONT_PATH = path.join(
+    __dirname,
+    '..',
+    'node_modules',
+    '@fontsource',
+    'noto-sans-arabic',
+    'files',
+    'noto-sans-arabic-arabic-400-normal.woff2'
+);
 
 // Configuration (using existing environment variables)
 const API_KEY = process.env.SENDGRID_API_KEY; 
@@ -74,14 +85,7 @@ function generatePDF(formData) {
     return new Promise(async (resolve, reject) => {
         const doc = new PDFDocument({ margin: 50 });
 
-        // 💡 NEW: Use the Arabic font for all subsequent text where applicable
-        try {
-            doc.font(ARABIC_FONT_PATH);
-        } catch (err) {
-            console.warn('Setting default Arabic font failed, continuing with default font.', err);
-        }
-
-        // Register Arabic font (falls back to default if it fails)
+        // 💡 NEW: Register the Arabic font with PDFKit
         try {
             doc.registerFont('Arabic', ARABIC_FONT_PATH);
         } catch (err) {
@@ -136,21 +140,29 @@ function generatePDF(formData) {
                 const displayKey = FIELD_MAP[key] || key.replace(/([A-Z])/g, ' $1').trim();
                 const displayValue = Array.isArray(value) ? value.join(', ') : (value === undefined || value === null ? '' : String(value));
                 if (displayValue && displayValue.trim() !== '') {
-                    // Use Arabic font if the key or value contains Arabic script
-                    const useArabic = containsArabic(displayKey) || containsArabic(displayValue);
-                    if (useArabic) doc.font('Arabic');
+                    // Check if the value contains Arabic characters (assuming Arabic is main language for certain fields)
+                    const isArabic = /[\u0600-\u06FF]/.test(displayValue);
+                    
+                    // Apply Reshaping only if Arabic text is detected
+                    let textToPrint = displayValue;
+                    if (isArabic) {
+                        textToPrint = arabicReshaper.reshape(displayValue);
+                        // Important: Reverse the string for RTL display in LTR-optimized pdfkit
+                        textToPrint = textToPrint.split('').reverse().join(''); 
+                    }
+
+                    // Print the Key (LTR)
+                    doc.font('Helvetica').fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true });
+                    
+                    // Print the Value (RTL corrected)
+                    if (isArabic) doc.font('Arabic');
                     else doc.font('Helvetica');
-
-                    // 💡 NEW: Apply RTL correction for Arabic strings before printing
-                    const correctedValue = (useArabic && rtl && typeof rtl.process === 'function')
-                        ? rtl.process(displayValue)
-                        : displayValue;
-
-                    doc.fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true })
-                        .fillColor('gray').text(correctedValue);
-
-                    // Revert to default font for subsequent content when needed
-                    if (useArabic) doc.font('Helvetica');
+                    doc.fillColor('gray').text(textToPrint, { 
+                        align: isArabic ? 'right' : 'left'
+                    });
+                    // Revert to a default font after printing value
+                    doc.font('Helvetica');
+                    doc.text('').moveDown(0.2); 
                 }
             }
         }
