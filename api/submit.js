@@ -114,25 +114,14 @@ function generatePDF(formData) {
         ];
 
         // Initialize the Reshaper instance once with a defensive fallback
-        let reshaper;
-        try {
-            // Attempt the standard class initialization (e.g., if it's a constructor export)
-            reshaper = new ReshaperConstructor();
-        } catch (e1) {
-            console.error('Reshaper Init 1 Failed (new constructor):', e1.message);
+            let reshaper;
             try {
-                // If that fails, attempt calling it as a factory function
+                // Call the library as a factory function (preferred for this package)
                 reshaper = ReshaperConstructor();
-            } catch (e2) {
-                console.error('Reshaper Init 2 Failed (factory function):', e2.message);
-                // As a final fallback, try a common property name for exported constructors
-                try {
-                    reshaper = ReshaperConstructor.ArabicReshaper ? new ReshaperConstructor.ArabicReshaper() : null;
-                } catch (e3) {
-                    console.error('Reshaper Init 3 Failed (Property Access):', e3.message);
-                    reshaper = null;
-                }
-            }
+            } catch (e) {
+                console.error('FINAL RESOLUTION: ArabicReshaper Factory Function Failed. Using dummy object.', e.message);
+                // Use a dummy reshaper to avoid runtime errors and 500 responses
+                reshaper = { reshape: (text) => text };
         }
 
         for (const sec of order) {
