@@ -119,14 +119,17 @@ function generatePDF(formData) {
             // Attempt the standard class initialization (e.g., if it's a constructor export)
             reshaper = new ReshaperConstructor();
         } catch (e1) {
+            console.error('Reshaper Init 1 Failed (new constructor):', e1.message);
             try {
                 // If that fails, attempt calling it as a factory function
                 reshaper = ReshaperConstructor();
             } catch (e2) {
+                console.error('Reshaper Init 2 Failed (factory function):', e2.message);
                 // As a final fallback, try a common property name for exported constructors
                 try {
                     reshaper = ReshaperConstructor.ArabicReshaper ? new ReshaperConstructor.ArabicReshaper() : null;
                 } catch (e3) {
+                    console.error('Reshaper Init 3 Failed (Property Access):', e3.message);
                     reshaper = null;
                 }
             }
