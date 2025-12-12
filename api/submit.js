@@ -6,7 +6,7 @@ const getStream = require('get-stream'); // Helper to convert the PDF stream
 // 💡 NEW: Import the path module
 const path = require('path');
 // 💡 NEW: Import the reshaping library
-const ArabicReshaper = require('arabic-reshaper');
+const ArabicReshaperConstructor = require('arabic-reshaper');
 
 // Define the path to the Noto Sans Arabic font (installed via @fontsource)
 // This path structure is typical for fontsource packages in Node environments.
@@ -122,7 +122,10 @@ function generatePDF(formData) {
         ];
 
         // Initialize the Reshaper instance once
-        const reshaper = new ArabicReshaper();
+        // Try using the default export if available, otherwise fallback to the constructor object
+        const ReshaperClass = ArabicReshaperConstructor.default || ArabicReshaperConstructor;
+        // Call the library as a factory function (most common in JS modules); avoid `new` to prevent TypeError
+        const reshaper = ReshaperClass();
 
         for (const sec of order) {
             const fields = sections[sec];
