@@ -3,8 +3,8 @@ const path = require('path');
 const PDFDocument = require('pdfkit');
 const getStream = require('get-stream');
 
-// Import Reshaper similar to production code
-const ReshaperConstructor = require('arabic-reshaper').ArabicReshaper || require('arabic-reshaper');
+// Import Reshaper as module to handle property fallbacks in the smoke test
+const ReshaperModule = require('arabic-reshaper');
 
 // Local font path (project root Fonts folder)
 const ARABIC_FONT_PATH = path.join(__dirname, 'Fonts', 'ae_AlArabiya.ttf');
@@ -33,14 +33,14 @@ async function generatePDF(formData) {
     doc.fontSize(16).text('DS-160 Smoke Test PDF', { underline: true }).moveDown(0.5);
     doc.fontSize(12).text(`Date: ${new Date().toLocaleString()}`).moveDown(1);
 
-    // Initialize reshaper using documented constructor pattern
-    const ReshaperClass = require('arabic-reshaper');
+    // Initialize reshaper using deep property access and log results
+    const ReshaperConstructor = ReshaperModule.ArabicReshaper || ReshaperModule.default || ReshaperModule;
     let reshaper;
     try {
-        const Constructor = ReshaperClass.default || ReshaperClass.ArabicReshaper || ReshaperClass;
-        reshaper = new Constructor();
+        reshaper = new ReshaperConstructor();
+        console.log('--- Reshaper Initialized Successfully ---');
     } catch (e) {
-        console.error('CRITICAL ERROR: Failed to instantiate ArabicReshaper for smoke-test, using dummy.', e.message);
+        console.error('--- Reshaper Initialization Failed Locally (Using Dummy) ---', e.message);
         reshaper = { reshape: (text) => text };
     }
 
