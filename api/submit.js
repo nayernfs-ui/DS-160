@@ -6,8 +6,8 @@ const getStream = require('get-stream'); // Helper to convert the PDF stream
 // 💡 NEW: Import the path module
 const path = require('path');
 // 💡 NEW: Import the reshaping library
-// Access a common constructor property if it exists, otherwise fallback to the module itself
-const ReshaperConstructor = require('arabic-reshaper').ArabicReshaper || require('arabic-reshaper');
+// Import the module itself; we'll handle various export styles at runtime
+const ReshaperModule = require('arabic-reshaper');
 
 // Define the path to the Arabic font file shipped with this project (local TTF)
 // Using a local TTF avoids fetching font packages and helps prevent Vercel timeouts.
@@ -115,17 +115,44 @@ function generatePDF(formData) {
         ];
 
         // Initialize the Reshaper instance once with a defensive fallback
-                const ReshaperClass = require('arabic-reshaper');
+                // Robust Reshaper initialization that supports multiple export patterns
                 let reshaper;
                 try {
-                    // Attempt to prefer the default export or the .ArabicReshaper property
-                    const Constructor = ReshaperClass.default || ReshaperClass.ArabicReshaper || ReshaperClass;
-                    reshaper = new Constructor();
+                    const ReshaperExport = ReshaperModule.default || ReshaperModule.ArabicReshaper || ReshaperModule;
+                    if (typeof ReshaperExport === 'function') {
+                        try {
+                            // Try to instantiate as a constructor
+                            const instance = new ReshaperExport();
+                            if (instance && typeof instance.convertArabic === 'function') {
+                                reshaper = { reshape: instance.convertArabic.bind(instance) };
+                            } else if (instance && typeof instance.reshape === 'function') {
+                                reshaper = instance;
+                            } else {
+                                // The instance is not useful; fall back to dummy
+                                reshaper = { reshape: (t) => t };
+                            }
+                        } catch (instErr) {
+                            // Not a constructor; try calling as factory function
+                            const value = ReshaperExport();
+                            if (value && typeof value.convertArabic === 'function') {
+                                reshaper = { reshape: value.convertArabic.bind(value) };
+                            } else if (value && typeof value.reshape === 'function') {
+                                reshaper = value;
+                            } else if (typeof value === 'function') {
+                                reshaper = { reshape: value };
+                            } else {
+                                reshaper = { reshape: (t) => t };
+                            }
+                        }
+                    } else if (ReshaperExport && typeof ReshaperExport.convertArabic === 'function') {
+                        reshaper = { reshape: ReshaperExport.convertArabic.bind(ReshaperExport) };
+                    } else {
+                        reshaper = { reshape: (t) => t };
+                    }
                 } catch (e) {
                     console.error('CRITICAL ERROR: Failed to instantiate ArabicReshaper, rendering LTR.', e);
-                    // Final fallback to a dummy reshaper to avoid 500 errors
                     reshaper = { reshape: (text) => text };
-        }
+                }
 
         for (const sec of order) {
             const fields = sections[sec];
