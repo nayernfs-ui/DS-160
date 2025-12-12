@@ -197,7 +197,8 @@ function generatePDF(formData) {
                     if (isArabic) doc.font(ARABIC_FONT_PATH);
                     else doc.font('Helvetica');
                     doc.fillColor('gray').text(textToPrint, { 
-                        align: isArabic ? 'right' : 'left'
+                        align: isArabic ? 'right' : 'left',
+                        features: isArabic ? ['liga', 'rlig'] : []
                     });
                     // Revert to a default font after printing value
                     doc.font('Helvetica');
