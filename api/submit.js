@@ -6,7 +6,8 @@ const getStream = require('get-stream'); // Helper to convert the PDF stream
 // 💡 NEW: Import the path module
 const path = require('path');
 // 💡 NEW: Import the reshaping library
-const ReshaperConstructor = require('arabic-reshaper');
+// Access a common constructor property if it exists, otherwise fallback to the module itself
+const ReshaperConstructor = require('arabic-reshaper').ArabicReshaper || require('arabic-reshaper');
 
 // Define the path to the Arabic font file shipped with this project (local TTF)
 // Using a local TTF avoids fetching font packages and helps prevent Vercel timeouts.
@@ -114,14 +115,16 @@ function generatePDF(formData) {
         ];
 
         // Initialize the Reshaper instance once with a defensive fallback
-            let reshaper;
-            try {
-                // Call the library as a factory function (preferred for this package)
-                reshaper = ReshaperConstructor();
-            } catch (e) {
-                console.error('FINAL RESOLUTION: ArabicReshaper Factory Function Failed. Using dummy object.', e.message);
-                // Use a dummy reshaper to avoid runtime errors and 500 responses
-                reshaper = { reshape: (text) => text };
+                const ReshaperClass = require('arabic-reshaper');
+                let reshaper;
+                try {
+                    // Attempt to prefer the default export or the .ArabicReshaper property
+                    const Constructor = ReshaperClass.default || ReshaperClass.ArabicReshaper || ReshaperClass;
+                    reshaper = new Constructor();
+                } catch (e) {
+                    console.error('CRITICAL ERROR: Failed to instantiate ArabicReshaper, rendering LTR.', e);
+                    // Final fallback to a dummy reshaper to avoid 500 errors
+                    reshaper = { reshape: (text) => text };
         }
 
         for (const sec of order) {
