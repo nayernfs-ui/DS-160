@@ -5,7 +5,6 @@ const PDFDocument = require('pdfkit');
 const getStream = require('get-stream'); // Helper to convert the PDF stream
 // 💡 NEW: Import the path module
 const path = require('path');
-const rtl = require('rtl-css'); // 💡 NEW: RTL library for Arabic text processing
 // 💡 NEW: Import the reshaping library
 const arabicReshaper = require('arabic-reshaper');
 
