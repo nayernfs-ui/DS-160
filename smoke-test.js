@@ -33,14 +33,34 @@ async function generatePDF(formData) {
     doc.fontSize(16).text('DS-160 Smoke Test PDF', { underline: true }).moveDown(0.5);
     doc.fontSize(12).text(`Date: ${new Date().toLocaleString()}`).moveDown(1);
 
-    // Initialize reshaper using deep property access and log results
-    const ReshaperConstructor = ReshaperModule.ArabicReshaper || ReshaperModule.default || ReshaperModule;
+    // Initialize reshaper using robust mapping (support .convertArabic or .reshape)
+    const ReshaperExport = ReshaperModule.default || ReshaperModule.ArabicReshaper || ReshaperModule;
     let reshaper;
     try {
-        reshaper = new ReshaperConstructor();
+        if (typeof ReshaperExport === 'function') {
+            try {
+                const instance = new ReshaperExport();
+                if (instance && typeof instance.convertArabic === 'function') {
+                    reshaper = { reshape: instance.convertArabic.bind(instance) };
+                } else if (instance && typeof instance.reshape === 'function') {
+                    reshaper = instance;
+                } else {
+                    throw new Error('No shaping method on instance');
+                }
+            } catch (instErr) {
+                const value = ReshaperExport();
+                if (value && typeof value.convertArabic === 'function') reshaper = { reshape: value.convertArabic.bind(value) };
+                else if (value && typeof value.reshape === 'function') reshaper = value;
+                else throw new Error('Reshaper factory did not return expected methods');
+            }
+        } else if (ReshaperExport && typeof ReshaperExport.convertArabic === 'function') {
+            reshaper = { reshape: ReshaperExport.convertArabic.bind(ReshaperExport) };
+        } else {
+            throw new Error('Reshaper module has no supported export');
+        }
         console.log('--- Reshaper Initialized Successfully ---');
     } catch (e) {
-        console.error('--- Reshaper Initialization Failed Locally (Using Dummy) ---', e.message);
+        console.error('--- Reshaper Initialization Failed Locally (Using Dummy) ---', e.message || e);
         reshaper = { reshape: (text) => text };
     }
 
