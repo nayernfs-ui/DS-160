@@ -141,8 +141,13 @@ function generatePDF(formData) {
                     if (useArabic) doc.font('Arabic');
                     else doc.font('Helvetica');
 
+                    // 💡 NEW: Apply RTL correction for Arabic strings before printing
+                    const correctedValue = (useArabic && rtl && typeof rtl.process === 'function')
+                        ? rtl.process(displayValue)
+                        : displayValue;
+
                     doc.fontSize(10).fillColor('black').text(`• ${displayKey}: `, { continued: true })
-                        .fillColor('gray').text(displayValue);
+                        .fillColor('gray').text(correctedValue);
 
                     // Revert to default font for subsequent content when needed
                     if (useArabic) doc.font('Helvetica');
