@@ -1,11 +1,24 @@
 // --- NEW CODE INCLUDING PDF GENERATION AND ATTACHMENT ---
 
 const SibApiV3Sdk = require('sib-api-v3-sdk');
+const fs = require('fs');
+const path = require('path');
 const pdfMake = require('pdfmake/build/pdfmake');
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
 // Assign the fonts to pdfMake VFS (Virtual File System)
-pdfMake.vfs = pdfFonts;
+// Setup pdfMake VFS and add Arabic font from local Fonts folder
+pdfMake.vfs = pdfFonts.pdfMake && pdfFonts.pdfMake.vfs ? pdfFonts.pdfMake.vfs : pdfFonts;
+try {
+    const arabicFontPath = path.join(__dirname, '..', 'Fonts', 'ae_AlArabiya.ttf');
+    if (fs.existsSync(arabicFontPath)) {
+        const fontBase64 = fs.readFileSync(arabicFontPath).toString('base64');
+        // Add custom Arabic font to the vfs under the file name
+        pdfMake.vfs['ae_AlArabiya.ttf'] = fontBase64;
+    }
+} catch (err) {
+    console.warn('Unable to read / add Arabic font to pdfMake vfs:', err.message || err);
+}
 
 // Define a simple fonts map. If you add a custom Arabic font in the VFS,
 // add it here (example: Amiri). For now, Roboto will be used as default.
@@ -15,6 +28,10 @@ pdfMake.fonts = {
         bold: 'Roboto-Medium.ttf',
         italics: 'Roboto-Italic.ttf',
         bolditalics: 'Roboto-Italic.ttf'
+    }
+    AEAlArabiya: {
+        normal: 'ae_AlArabiya.ttf',
+        bold: 'ae_AlArabiya.ttf'
     }
 };
 
@@ -84,7 +101,7 @@ async function generatePDF(formData) {
     const docDefinition = {
         // Critical: Set the global alignment for RTL languages
         defaultStyle: {
-            font: 'Roboto', // Use a font that exists in the VFS or define your custom font here
+            font: 'AEAlArabiya', // Use the Arabic font by default to ensure correct shaping
             fontSize: 12,
             alignment: 'right', // Align all text to the right by default
         },
@@ -101,11 +118,12 @@ async function generatePDF(formData) {
                 const displayKey = FIELD_MAP[key] || key; // Assuming FIELD_MAP is still available
                 const displayValue = String(value);
 
-                // Use a simple text run for key/value
+                // Use a simple text run for key/value (explicit fonts for LTR vs RTL)
+                const isArabicVal = /[\u0600-\u06FF]/.test(displayValue);
                 return {
                     text: [
-                        { text: displayKey + ': ', bold: true, alignment: 'left' },
-                        { text: displayValue, alignment: 'right' }
+                        { text: displayKey + ': ', bold: true, alignment: 'left', font: 'Roboto' },
+                        { text: displayValue, alignment: isArabicVal ? 'right' : 'left', font: isArabicVal ? 'AEAlArabiya' : 'Roboto' }
                     ],
                     // We may need to wrap this in a table for complex RTL/LTR mixing
                 };
