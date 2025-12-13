@@ -4,7 +4,7 @@ const SibApiV3Sdk = require('sib-api-v3-sdk');
 const fs = require('fs');
 const path = require('path');
 const docx = require('docx');
-const { Document, Packer, Paragraph, TextRun, AlignmentType } = docx;
+const { Document, Packer, Paragraph, TextRun, ImageRun, AlignmentType } = docx;
 // Import Reshaper to ensure Arabic shaping works for Word output
 const ReshaperModule = require('arabic-reshaper');
 
@@ -183,7 +183,59 @@ async function generateDocument(formData, opts = {}) {
     const titleParagraph = new Paragraph({ children: [new TextRun({ text: 'DS-160 Submission Report', bold: true, size: 32 })], alignment: AlignmentType.CENTER });
     const dateParagraph = new Paragraph({ children: [new TextRun(`Date: ${new Date().toLocaleDateString()}`)], alignment: AlignmentType.LEFT });
 
-    const doc = new Document({ sections: [{ children: [titleParagraph, dateParagraph, dataTable] }] });
+    // ----------------------------------------------------
+    // 1. Read the Image File and Convert to Buffer
+    // ----------------------------------------------------
+    const imagePath = path.resolve(process.cwd(), 'assets', 'ds160_header.png');
+    let imageBuffer;
+    try {
+        imageBuffer = fs.readFileSync(imagePath);
+    } catch (e) {
+        console.warn(`Warning: Could not load image from ${imagePath}. Skipping image addition.`, e);
+        imageBuffer = null;
+    }
+
+
+    // ----------------------------------------------------
+    // 2. Build Content (Sections Children Array)
+    // ----------------------------------------------------
+    const documentChildren = [];
+    
+    if (imageBuffer) {
+        // Add the image as the very first element
+        documentChildren.push(
+            new Paragraph({
+                children: [
+                    new ImageRun({
+                        data: imageBuffer,
+                        transformation: {
+                            width: 500,
+                            height: 100,
+                        },
+                    }),
+                ],
+                alignment: AlignmentType.CENTER,
+                spacing: { after: 200 },
+            })
+        );
+    }
+
+    // Add the Title (if it was a separate paragraph)
+    documentChildren.push(titleParagraph);
+    documentChildren.push(dateParagraph);
+    
+    // Add the Table we created previously
+    // (Ensure the dataTable object is defined from your previous code)
+    documentChildren.push(dataTable);
+
+
+    // 3. Assemble the Document
+    const doc = new Document({
+        sections: [{
+            children: documentChildren,
+        }],
+    });
+
     const buffer = await Packer.toBuffer(doc);
     if (opts.returnProcessedData) return { buffer, processedData };
     return buffer;
