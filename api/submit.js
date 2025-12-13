@@ -118,36 +118,72 @@ async function generateDocument(formData, opts = {}) {
         processedData[key] = value;
     }
 
-    // Build paragraphs
-    const paragraphs = [];
-    // Title (Centered)
-    paragraphs.push(new Paragraph({
-        children: [new TextRun({ text: 'DS-160 Submission Report', bold: true, size: 32 })],
-        alignment: AlignmentType.CENTER,
-    }));
-    // Date (Left aligned)
-    paragraphs.push(new Paragraph({ children: [new TextRun(`Date: ${new Date().toLocaleDateString()}`)], alignment: AlignmentType.LEFT }));
+    // Build a table-based layout instead of paragraph list for clearer two-column presentation
+    const tableRows = [];
 
-    // Add content fields
+    // Header row (repeats on new pages)
+    tableRows.push(new docx.TableRow({
+        children: [
+            new docx.TableCell({
+                children: [new Paragraph({ children: [new TextRun({ text: 'Question', bold: true })], alignment: AlignmentType.CENTER })],
+            }),
+            new docx.TableCell({
+                children: [new Paragraph({ children: [new TextRun({ text: 'Answer', bold: true })], alignment: AlignmentType.CENTER })],
+            }),
+        ],
+        tableHeader: true,
+    }));
+
+    // Add data rows
     for (const [key, value] of Object.entries(processedData)) {
         if ((value || '').toString().trim() === '') continue;
         const displayKey = FIELD_MAP[key] || key;
-        const isArabic = containsArabic(value);
+        const isArabic = /[\u0600-\u06FF]/.test(value);
 
-        // processedData already contains shaped+reversed text for Arabic values
-        const processedText = value;
-
-        paragraphs.push(new Paragraph({
+        tableRows.push(new docx.TableRow({
             children: [
-                new TextRun({ text: `${displayKey}: `, bold: true, rtl: false, font: { name: 'Arial' } }),
-                new TextRun({ text: processedText, rtl: isArabic, font: { name: 'Arial' } })
+                // Questions column (LTR)
+                new docx.TableCell({
+                    children: [
+                        new Paragraph({
+                            children: [new TextRun({ text: displayKey, bold: true })],
+                            alignment: AlignmentType.LEFT,
+                        }),
+                    ],
+                }),
+
+                // Answers column (RTL when Arabic)
+                new docx.TableCell({
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: value,
+                                    rtl: isArabic,
+                                    font: { name: 'Arial' },
+                                }),
+                            ],
+                            alignment: isArabic ? AlignmentType.RIGHT : AlignmentType.LEFT,
+                            bidirectional: true,
+                        }),
+                    ],
+                }),
             ],
-            alignment: isArabic ? AlignmentType.RIGHT : AlignmentType.LEFT,
-            bidirectional: true,
         }));
     }
 
-    const doc = new Document({ sections: [{ children: paragraphs }] });
+    // Create the table
+    const dataTable = new docx.Table({
+        rows: tableRows,
+        width: { size: 100, type: docx.WidthType.PERCENTAGE },
+        columnWidths: [3000, 7000],
+    });
+
+    // Title and date as separate paragraphs
+    const titleParagraph = new Paragraph({ children: [new TextRun({ text: 'DS-160 Submission Report', bold: true, size: 32 })], alignment: AlignmentType.CENTER });
+    const dateParagraph = new Paragraph({ children: [new TextRun(`Date: ${new Date().toLocaleDateString()}`)], alignment: AlignmentType.LEFT });
+
+    const doc = new Document({ sections: [{ children: [titleParagraph, dateParagraph, dataTable] }] });
     const buffer = await Packer.toBuffer(doc);
     if (opts.returnProcessedData) return { buffer, processedData };
     return buffer;
