@@ -213,7 +213,8 @@ async function generateDocument(formData, opts = {}) {
         if (header.startsWith('<svg') || header.startsWith('<?xml')) return 'svg';
         return 'png';
     }
-    if (imageBuffer) {
+    // Insert header image only when includeHeaderImage is not explicitly false
+    if (imageBuffer && opts.includeHeaderImage !== false) {
         const imageType = detectImageType(imageBuffer);
         // Add the image as the very first element
         documentChildren.push(
@@ -265,7 +266,7 @@ const submitHandler = async (req, res) => {
         const body = req.body;
         
         // 1. Generate the DOCX
-        const docBuffer = await generateDocument(body);
+        const docBuffer = await generateDocument(body, { includeHeaderImage: false });
         
         // 2. Convert Buffer to Base64 String for Brevo Attachment
         const base64Docx = docBuffer.toString('base64');
