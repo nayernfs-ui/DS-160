@@ -12,5 +12,8 @@
     "docx": "^9.5.1",
     "pdfmake": "^0.2.20",
     "sib-api-v3-sdk": "^8.5.0"
+  },
+  "devDependencies": {
+    "jszip": "^3.10.1"
   }
 }

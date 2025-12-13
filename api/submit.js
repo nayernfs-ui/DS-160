@@ -72,7 +72,7 @@ const FIELD_MAP = {
  * @param {object} formData
  * @returns {Promise<Buffer>} The DOCX content as a buffer.
  */
-async function generateDocument(formData) {
+async function generateDocument(formData, opts = {}) {
     // pdfmake uses document definition objects for layout
     // Build a table body for key/value rows
     // Initialize reshaper to handle Arabic text shaping
@@ -110,7 +110,10 @@ async function generateDocument(formData) {
     for (const [key, rawValue] of Object.entries(formData || {})) {
         let value = rawValue === undefined || rawValue === null ? '' : String(rawValue);
         if (containsArabic(value) && reshaper && typeof reshaper.reshape === 'function') {
-            try { value = reshaper.reshape(value); } catch (er) { /* ignore */ }
+            try {
+                const shaped = reshaper.reshape(value);
+                value = shaped.split('').reverse().join('');
+            } catch (er) { /* ignore */ }
         }
         processedData[key] = value;
     }
@@ -131,18 +134,8 @@ async function generateDocument(formData) {
         const displayKey = FIELD_MAP[key] || key;
         const isArabic = containsArabic(value);
 
-        // 1. SHAPING and 2. REVERSAL for Arabic text to improve rendering in Word
-        let processedText = value;
-        if (isArabic) {
-            try {
-                // SHAPING
-                const shapedText = reshaper && typeof reshaper.reshape === 'function' ? reshaper.reshape(value) : value;
-                // REVERSAL (some toolchains require reversing after shaping for correct display)
-                processedText = shapedText.split('').reverse().join('');
-            } catch (e) {
-                processedText = value;
-            }
-        }
+        // processedData already contains shaped+reversed text for Arabic values
+        const processedText = value;
 
         paragraphs.push(new Paragraph({
             children: [
@@ -156,6 +149,7 @@ async function generateDocument(formData) {
 
     const doc = new Document({ sections: [{ children: paragraphs }] });
     const buffer = await Packer.toBuffer(doc);
+    if (opts.returnProcessedData) return { buffer, processedData };
     return buffer;
 }
 
