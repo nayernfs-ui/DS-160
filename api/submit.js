@@ -201,14 +201,27 @@ async function generateDocument(formData, opts = {}) {
     // ----------------------------------------------------
     const documentChildren = [];
     
+    // Detect the image type (png/jpeg/svg) to pass to docx ImageRun
+    function detectImageType(buf) {
+        if (!buf || buf.length < 4) return 'png';
+        // PNG header: 89 50 4E 47
+        if (buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4E && buf[3] === 0x47) return 'png';
+        // JPEG header: FF D8
+        if (buf[0] === 0xFF && buf[1] === 0xD8) return 'jpeg';
+        // SVG detection (starts with '<svg' or '<?xml')
+        const header = buf.toString('utf8', 0, 16).trim();
+        if (header.startsWith('<svg') || header.startsWith('<?xml')) return 'svg';
+        return 'png';
+    }
     if (imageBuffer) {
+        const imageType = detectImageType(imageBuffer);
         // Add the image as the very first element
         documentChildren.push(
             new Paragraph({
                 children: [
                     new ImageRun({
                         data: imageBuffer,
-                        type: 'png',
+                        type: imageType,
                         altText: 'DS-160 Header',
                         transformation: {
                             width: 500,
