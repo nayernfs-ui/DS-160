@@ -208,6 +208,8 @@ async function generateDocument(formData, opts = {}) {
                 children: [
                     new ImageRun({
                         data: imageBuffer,
+                        type: 'png',
+                        altText: 'DS-160 Header',
                         transformation: {
                             width: 500,
                             height: 100,
