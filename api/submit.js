@@ -3,37 +3,13 @@
 const SibApiV3Sdk = require('sib-api-v3-sdk');
 const fs = require('fs');
 const path = require('path');
-const pdfMake = require('pdfmake/build/pdfmake');
-const pdfFonts = require('pdfmake/build/vfs_fonts');
+const docx = require('docx');
+const { Document, Packer, Paragraph, TextRun, AlignmentType } = docx;
+// Import Reshaper to ensure Arabic shaping works for Word output
+const ReshaperModule = require('arabic-reshaper');
 
-// Assign the fonts to pdfMake VFS (Virtual File System)
-// Setup pdfMake VFS and add Arabic font from local Fonts folder
-pdfMake.vfs = pdfFonts.pdfMake && pdfFonts.pdfMake.vfs ? pdfFonts.pdfMake.vfs : pdfFonts;
-try {
-    const arabicFontPath = path.join(__dirname, '..', 'Fonts', 'Amiri-Regular.ttf');
-    if (fs.existsSync(arabicFontPath)) {
-        const fontBase64 = fs.readFileSync(arabicFontPath).toString('base64');
-        // Add custom Arabic font to the vfs under the file name
-        pdfMake.vfs['Amiri-Regular.ttf'] = fontBase64;
-    }
-} catch (err) {
-    console.warn('Unable to read / add Arabic font to pdfMake vfs:', err.message || err);
-}
-
-// Define a simple fonts map. If you add a custom Arabic font in the VFS,
-// add it here (example: Amiri). For now, Roboto will be used as default.
-pdfMake.fonts = {
-    Roboto: {
-        normal: 'Roboto-Regular.ttf',
-        bold: 'Roboto-Medium.ttf',
-        italics: 'Roboto-Italic.ttf',
-        bolditalics: 'Roboto-Italic.ttf'
-    },
-    Amiri: {
-        normal: 'Amiri-Regular.ttf',
-        bold: 'Amiri-Regular.ttf'
-    }
-};
+// We use `arabic-reshaper` to ensure Arabic text is shaped correctly for Word
+// Docx will handle font embedding at client side or server if fonts are available.
 
 // (Removed local TTF font path - we're using the VFS fonts via pdfmake)
 
@@ -92,72 +68,98 @@ const FIELD_MAP = {
 // --- End Field Mapping ---
 
 /**
- * Generates a PDF buffer from form data and groups fields under section headings.
- * @param {object} formData 
- * @returns {Promise<Buffer>} The PDF content as a buffer.
+ * Generates a DOCX buffer from form data and groups fields under section headings.
+ * @param {object} formData
+ * @returns {Promise<Buffer>} The DOCX content as a buffer.
  */
-async function generatePDF(formData) {
+async function generateDocument(formData) {
     // pdfmake uses document definition objects for layout
     // Build a table body for key/value rows
-    const tableBody = Object.entries(formData).map(([key, value]) => {
-        const displayKey = FIELD_MAP[key] || key;
-        const displayValue = value === undefined || value === null ? '' : String(value);
-        const isArabicVal = /[\u0600-\u06FF]/.test(displayValue);
-        return [
-            { text: displayKey + ':', bold: true, font: 'Roboto', alignment: 'left', direction: 'ltr', margin: [0, 2, 0, 2] },
-            { text: displayValue, font: isArabicVal ? 'Amiri' : 'Roboto', alignment: isArabicVal ? 'right' : 'left', direction: isArabicVal ? 'rtl' : 'ltr', margin: [0, 2, 0, 2] }
-        ];
-    });
-
-    const docDefinition = {
-        // Critical: Set the global alignment for RTL languages
-        defaultStyle: {
-            font: 'Amiri', // Use the Arabic font by default to ensure correct shaping
-            fontSize: 12,
-            alignment: 'right', // Align all text to the right by default
-        },
-        content: [
-            // Text objects automatically handle RTL when alignment is set to right
-            { text: 'DS-160 Submission Report', fontSize: 18, margin: [0, 0, 0, 10] },
-            { text: `Date: ${new Date().toLocaleString('en-US')}`, margin: [0, 0, 0, 20], alignment: 'left' },
-
-            // Example of Arabic section title
-            { text: 'المعلومات الشخصية', style: 'sectionTitle' },
-            
-            // Table with two columns: Key | Value
-            {
-                table: {
-                    widths: ['*', 'auto'],
-                    body: tableBody
-                },
-                layout: 'noBorders'
+    // Initialize reshaper to handle Arabic text shaping
+    const ReshaperExport = ReshaperModule.default || ReshaperModule.ArabicReshaper || ReshaperModule;
+    let reshaper;
+    try {
+        if (typeof ReshaperExport === 'function') {
+            try {
+                const instance = new ReshaperExport();
+                if (instance && typeof instance.convertArabic === 'function') {
+                    reshaper = { reshape: instance.convertArabic.bind(instance) };
+                } else if (instance && typeof instance.reshape === 'function') {
+                    reshaper = instance;
+                } else {
+                    reshaper = { reshape: (t) => t };
+                }
+            } catch (instErr) {
+                const value = ReshaperExport();
+                if (value && typeof value.convertArabic === 'function') reshaper = { reshape: value.convertArabic.bind(value) };
+                else if (value && typeof value.reshape === 'function') reshaper = value;
+                else reshaper = { reshape: (t) => t };
             }
-        ],
-        styles: {
-            sectionTitle: {
-                fontSize: 14,
-                bold: true,
-                color: 'red',
-                alignment: 'right',
-                margin: [0, 10, 0, 5]
+        } else if (ReshaperExport && typeof ReshaperExport.convertArabic === 'function') {
+            reshaper = { reshape: ReshaperExport.convertArabic.bind(ReshaperExport) };
+        } else {
+            reshaper = { reshape: (text) => text };
+        }
+    } catch (e) {
+        reshaper = { reshape: (text) => text };
+    }
+
+    // Process and reshape values
+    const processedData = {};
+    const containsArabic = (s) => /[\u0600-\u06FF]/.test(String(s || ''));
+    for (const [key, rawValue] of Object.entries(formData || {})) {
+        let value = rawValue === undefined || rawValue === null ? '' : String(rawValue);
+        if (containsArabic(value) && reshaper && typeof reshaper.reshape === 'function') {
+            try { value = reshaper.reshape(value); } catch (er) { /* ignore */ }
+        }
+        processedData[key] = value;
+    }
+
+    // Build paragraphs
+    const paragraphs = [];
+    // Title (Centered)
+    paragraphs.push(new Paragraph({
+        children: [new TextRun({ text: 'DS-160 Submission Report', bold: true, size: 32 })],
+        alignment: AlignmentType.CENTER,
+    }));
+    // Date (Left aligned)
+    paragraphs.push(new Paragraph({ children: [new TextRun(`Date: ${new Date().toLocaleDateString()}`)], alignment: AlignmentType.LEFT }));
+
+    // Add content fields
+    for (const [key, value] of Object.entries(processedData)) {
+        if ((value || '').toString().trim() === '') continue;
+        const displayKey = FIELD_MAP[key] || key;
+        const isArabic = containsArabic(value);
+
+        // 1. SHAPING and 2. REVERSAL for Arabic text to improve rendering in Word
+        let processedText = value;
+        if (isArabic) {
+            try {
+                // SHAPING
+                const shapedText = reshaper && typeof reshaper.reshape === 'function' ? reshaper.reshape(value) : value;
+                // REVERSAL (some toolchains require reversing after shaping for correct display)
+                processedText = shapedText.split('').reverse().join('');
+            } catch (e) {
+                processedText = value;
             }
         }
-    };
 
-    // Use pdfmake to create the PDF Buffer
-    return new Promise((resolve, reject) => {
-        const pdfDoc = pdfMake.createPdf(docDefinition);
-        pdfDoc.getBuffer((buffer) => {
-            if (buffer) {
-                resolve(buffer);
-            } else {
-                reject(new Error("PDFMake failed to create buffer."));
-            }
-        });
-    });
+        paragraphs.push(new Paragraph({
+            children: [
+                new TextRun({ text: `${displayKey}: `, bold: true, rtl: false, font: { name: 'Arial' } }),
+                new TextRun({ text: processedText, rtl: isArabic, font: { name: 'Arial' } })
+            ],
+            alignment: isArabic ? AlignmentType.RIGHT : AlignmentType.LEFT,
+            bidirectional: true,
+        }));
+    }
+
+    const doc = new Document({ sections: [{ children: paragraphs }] });
+    const buffer = await Packer.toBuffer(doc);
+    return buffer;
 }
 
-module.exports = async (req, res) => {
+const submitHandler = async (req, res) => {
     if (req.method !== 'POST') {
         return res.status(405).send('Method Not Allowed');
     }
@@ -165,36 +167,42 @@ module.exports = async (req, res) => {
     try {
         const body = req.body;
         
-        // 1. Generate the PDF
-        const pdfBuffer = await generatePDF(body);
+        // 1. Generate the DOCX
+        const docBuffer = await generateDocument(body);
         
         // 2. Convert Buffer to Base64 String for Brevo Attachment
-        const base64Pdf = pdfBuffer.toString('base64');
+        const base64Docx = docBuffer.toString('base64');
         
         // 3. Construct Brevo Email
         let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-        sendSmtpEmail.subject = `PDF ATTACHED: DS-160 Submission - ${body.FullName || 'Client'}`;
+        sendSmtpEmail.subject = `DOCX ATTACHED: DS-160 Submission - ${body.FullName || 'Client'}`;
         
         // Brevo requires a text body even with attachments
-        sendSmtpEmail.htmlContent = 'The detailed DS-160 survey submission is attached as a PDF file.';
+        sendSmtpEmail.htmlContent = 'The detailed DS-160 survey submission is attached as a DOCX file.';
         
         sendSmtpEmail.sender = { "name": "DS-160 Form", "email": SENDER_EMAIL };
         sendSmtpEmail.to = [{ "email": RECIPIENT_EMAIL }];
         
-        // 4. Add the PDF Attachment
-        sendSmtpEmail.attachment = [{ 
-            'content': base64Pdf,
-            'name': `DS-160_Submission_${Date.now()}.pdf` 
+        // 4. Add the DOCX Attachment - include filename and proper MIME type
+        sendSmtpEmail.attachment = [{
+            'content': base64Docx,
+            'name': `DS-160_Submission_${Date.now()}.docx`, // keep for backward compatibility
+            'filename': `DS-160_Submission_${Date.now()}.docx`,
+            'contentType': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         }];
 
         // 5. Send the Email
         await apiInstance.sendTransacEmail(sendSmtpEmail);
 
-        console.log(`PDF Attached & Email sent successfully via Brevo.`);
-        res.status(200).json({ success: true, message: 'Form submitted and PDF email sent successfully.' });
+        console.log(`DOCX Attached & Email sent successfully via Brevo.`);
+        res.status(200).json({ success: true, message: 'Form submitted and DOCX email sent successfully.' });
 
     } catch (error) {
-        console.error('Brevo/PDF Error:', error);
-        res.status(500).json({ success: false, message: 'Failed to process PDF or send email. Check Vercel logs.' });
+        console.error('Brevo/DOCX Error:', error);
+        res.status(500).json({ success: false, message: 'Failed to process DOCX or send email. Check Vercel logs.' });
     }
 };
+
+// Expose the handler and generateDocument for testing
+module.exports = submitHandler;
+module.exports.generateDocument = generateDocument;
