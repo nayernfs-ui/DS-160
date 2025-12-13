@@ -95,6 +95,46 @@ async function runDocxSmokeTest() {
         }
 
         console.log('✅ DOCX Smoke Test Successful! File saved to:', outFile);
+        // Extra: Check if the header image is embedded into word/media
+        const headerImagePath = path.resolve(__dirname, 'assets', 'ds160_header.png');
+        let origImageBuffer;
+        try {
+            origImageBuffer = fs.readFileSync(headerImagePath);
+        } catch (e) {
+            console.warn('Header image not found in assets; skipping image validation.', e);
+            origImageBuffer = null;
+        }
+        if (origImageBuffer) {
+            const mediaFiles = zip.filter((relativePath, file) => relativePath.startsWith('word/media/'));
+            if (mediaFiles.length === 0) {
+                throw new Error('No images found under word/media in generated DOCX; header not embedded');
+            }
+            let foundMatch = false;
+            for (const mf of mediaFiles) {
+                // mf is a file object when using zip.filter
+                const mfBuf = await mf.async('nodebuffer');
+                if (mfBuf.length === origImageBuffer.length) {
+                    // Do byte-level comparison
+                    if (mfBuf.equals(origImageBuffer)) {
+                        foundMatch = true;
+                        console.log('✅ Found embedded header image in DOCX as', mf);
+                        break;
+                    }
+                }
+            }
+            if (!foundMatch) {
+                console.warn('⚠️ Header image not exactly matched in DOCX media files — image might be embedded but modified or optimalized. media files:', mediaFiles);
+            }
+        }
+
+        // Verify that a DOCX generated for email (no header) does NOT include media images
+        const bufferNoHeader = await submit.generateDocument(sampleFormData, { includeHeaderImage: false });
+        const zipNoHeader = await JSZip.loadAsync(bufferNoHeader);
+        const mediaFilesNoHeader = zipNoHeader.filter((relativePath, file) => relativePath.startsWith('word/media/'));
+        if (mediaFilesNoHeader.length !== 0) {
+            console.warn('⚠️ DOCX generated with includeHeaderImage=false still contains media files:', mediaFilesNoHeader.map(m => m.name || m));
+            throw new Error('DOCX generated for email unexpectedly contains media files');
+        }
     } catch (err) {
         console.error('❌ DOCX Smoke Test Failed!', err);
         process.exitCode = 2;
