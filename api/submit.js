@@ -66,6 +66,16 @@ const FIELD_MAP = {
     'degree-2': 'المؤهل العلمي (2)',
     'institution-2': 'اسم المؤسسة التعليمية (2)',
     'study-start-2': 'تاريخ بدء الدراسة (2)',
+    'Education_InstitutionName_2': 'اسم المؤسسة التعليمية (2)',
+    'Education_Address_2': 'عنوانها (2)',
+    'Education_QualificationName_2': 'اسم المؤهل (2)',
+    'Education_QualificationMajor_2': 'شعبة المؤهل (2)',
+    'Education_StudyStartDate_2_Day': 'تاريخ بدء الدراسة (يوم) (2)',
+    'Education_StudyStartDate_2_Month': 'تاريخ بدء الدراسة (شهر) (2)',
+    'Education_StudyStartDate_2_Year': 'تاريخ بدء الدراسة (سنة) (2)',
+    'Education_StudyEndDate_2_Day': 'تاريخ نهاية الدراسة (يوم) (2)',
+    'Education_StudyEndDate_2_Month': 'تاريخ نهاية الدراسة (شهر) (2)',
+    'Education_StudyEndDate_2_Year': 'تاريخ نهاية الدراسة (سنة) (2)',
 
     // Add more mappings here for cleaner output...
 };
@@ -124,15 +134,38 @@ async function generateDocument(formData, opts = {}) {
 
     // Extract and set aside any second-degree education fields so they can be added
     // to the DOCX report explicitly (and prevent duplication in the auto-added table rows)
+    // Consolidate second-education fields from multiple possible naming patterns
     const educationData2 = {
-        degree: processedData['degree-2'] || '',
-        institution: processedData['institution-2'] || '',
+        degree: processedData['Education_QualificationName_2'] || processedData['degree-2'] || '',
+        institution: processedData['Education_InstitutionName_2'] || processedData['institution-2'] || '',
+        address: processedData['Education_Address_2'] || processedData['institutionAddress-2'] || '',
+        major: processedData['Education_QualificationMajor_2'] || processedData['qualificationMajor-2'] || '',
+        studyStartDay: processedData['Education_StudyStartDate_2_Day'] || '',
+        studyStartMonth: processedData['Education_StudyStartDate_2_Month'] || '',
+        studyStartYear: processedData['Education_StudyStartDate_2_Year'] || '',
+        studyEndDay: processedData['Education_StudyEndDate_2_Day'] || '',
+        studyEndMonth: processedData['Education_StudyEndDate_2_Month'] || '',
+        studyEndYear: processedData['Education_StudyEndDate_2_Year'] || '',
         studyStart: processedData['study-start-2'] || '',
+        studyEnd: processedData['study-end-2'] || '',
     };
     // Remove elements from processedData to avoid duplicate entries in the default loop
+    delete processedData['Education_QualificationName_2'];
     delete processedData['degree-2'];
+    delete processedData['Education_InstitutionName_2'];
     delete processedData['institution-2'];
+    delete processedData['Education_Address_2'];
+    delete processedData['institutionAddress-2'];
+    delete processedData['Education_QualificationMajor_2'];
+    delete processedData['qualificationMajor-2'];
+    delete processedData['Education_StudyStartDate_2_Day'];
+    delete processedData['Education_StudyStartDate_2_Month'];
+    delete processedData['Education_StudyStartDate_2_Year'];
+    delete processedData['Education_StudyEndDate_2_Day'];
+    delete processedData['Education_StudyEndDate_2_Month'];
+    delete processedData['Education_StudyEndDate_2_Year'];
     delete processedData['study-start-2'];
+    delete processedData['study-end-2'];
 
     // Build a table-based layout instead of paragraph list for clearer two-column presentation
     const tableRows = [];
@@ -189,8 +222,12 @@ async function generateDocument(formData, opts = {}) {
     }
 
     // Append explicit rows for the second degree (if present)
-    if ((educationData2.degree || educationData2.institution || educationData2.studyStart) &&
-        ((educationData2.degree || '').toString().trim() !== '' || (educationData2.institution || '').toString().trim() !== '' || (educationData2.studyStart || '').toString().trim() !== '')) {
+    const anyEducation2Value = [
+        educationData2.degree, educationData2.institution, educationData2.address, educationData2.major,
+        educationData2.studyStartDay, educationData2.studyStartMonth, educationData2.studyStartYear,
+        educationData2.studyStart, educationData2.studyEndDay, educationData2.studyEndMonth, educationData2.studyEndYear, educationData2.studyEnd
+    ].some(v => (v || '').toString().trim() !== '');
+    if (anyEducation2Value) {
         // Degree (2)
         tableRows.push(new docx.TableRow({
             children: [
@@ -215,17 +252,69 @@ async function generateDocument(formData, opts = {}) {
             ],
         }));
 
+        // Compose start/end date strings (prefer day/month/year fields, otherwise use single-field fallback)
+        function combineDateParts(day, month, year) {
+            if ((day || '').toString().trim() === '' && (month || '').toString().trim() === '' && (year || '').toString().trim() === '') return '';
+            return `${day || ''}/${month || ''}/${year || ''}`;
+        }
+        const startDateStr = combineDateParts(educationData2.studyStartDay, educationData2.studyStartMonth, educationData2.studyStartYear) || educationData2.studyStart || '';
+        const endDateStr = combineDateParts(educationData2.studyEndDay, educationData2.studyEndMonth, educationData2.studyEndYear) || educationData2.studyEnd || '';
+
+        // Address (2)
+        if (educationData2.address && educationData2.address.toString().trim() !== '') {
+            tableRows.push(new docx.TableRow({
+                children: [
+                    new docx.TableCell({
+                        children: [new Paragraph({ children: [new TextRun({ text: 'عنوان المؤسسة (2):', bold: true })], alignment: AlignmentType.LEFT })],
+                    }),
+                    new docx.TableCell({
+                        children: [new Paragraph({ children: [new TextRun({ text: educationData2.address, font: { name: 'Arial' } })], alignment: /[\u0600-\u06FF]/.test(educationData2.address) ? AlignmentType.RIGHT : AlignmentType.LEFT, bidirectional: true })],
+                    }),
+                ],
+            }));
+        }
+
+        // Major (2)
+        if (educationData2.major && educationData2.major.toString().trim() !== '') {
+            tableRows.push(new docx.TableRow({
+                children: [
+                    new docx.TableCell({
+                        children: [new Paragraph({ children: [new TextRun({ text: 'شعبة المؤهل (2):', bold: true })], alignment: AlignmentType.LEFT })],
+                    }),
+                    new docx.TableCell({
+                        children: [new Paragraph({ children: [new TextRun({ text: educationData2.major, font: { name: 'Arial' } })], alignment: /[\u0600-\u06FF]/.test(educationData2.major) ? AlignmentType.RIGHT : AlignmentType.LEFT, bidirectional: true })],
+                    }),
+                ],
+            }));
+        }
+
         // Study Start (2)
-        tableRows.push(new docx.TableRow({
-            children: [
-                new docx.TableCell({
-                    children: [new Paragraph({ children: [new TextRun({ text: 'تاريخ بدء الدراسة (2):', bold: true })], alignment: AlignmentType.LEFT })],
-                }),
-                new docx.TableCell({
-                    children: [new Paragraph({ children: [new TextRun({ text: educationData2.studyStart, font: { name: 'Arial' } })], alignment: /[\u0600-\u06FF]/.test(educationData2.studyStart) ? AlignmentType.RIGHT : AlignmentType.LEFT, bidirectional: true })],
-                }),
-            ],
-        }));
+        if (startDateStr && startDateStr.toString().trim() !== '') {
+            tableRows.push(new docx.TableRow({
+                children: [
+                    new docx.TableCell({
+                        children: [new Paragraph({ children: [new TextRun({ text: 'تاريخ بدء الدراسة (2):', bold: true })], alignment: AlignmentType.LEFT })],
+                    }),
+                    new docx.TableCell({
+                        children: [new Paragraph({ children: [new TextRun({ text: startDateStr, font: { name: 'Arial' } })], alignment: /[\u0600-\u06FF]/.test(startDateStr) ? AlignmentType.RIGHT : AlignmentType.LEFT, bidirectional: true })],
+                    }),
+                ],
+            }));
+        }
+
+        // Study End (2)
+        if (endDateStr && endDateStr.toString().trim() !== '') {
+            tableRows.push(new docx.TableRow({
+                children: [
+                    new docx.TableCell({
+                        children: [new Paragraph({ children: [new TextRun({ text: 'تاريخ نهاية الدراسة (2):', bold: true })], alignment: AlignmentType.LEFT })],
+                    }),
+                    new docx.TableCell({
+                        children: [new Paragraph({ children: [new TextRun({ text: endDateStr, font: { name: 'Arial' } })], alignment: /[\u0600-\u06FF]/.test(endDateStr) ? AlignmentType.RIGHT : AlignmentType.LEFT, bidirectional: true })],
+                    }),
+                ],
+            }));
+        }
     }
 
     // Create the table
