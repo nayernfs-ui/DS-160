@@ -143,6 +143,7 @@ legend {
 }
 .date-row input {
   max-width: 220px;
+  text-align: center;
 }
 
 .conditional-fields {
