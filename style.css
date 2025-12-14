@@ -15,7 +15,7 @@ body {
   background: #fff;
   padding: 24px;
   border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(30,40,60,0.08);
+  box-shadow: 0 6px 18px rgba(30, 40, 60, 0.08);
 }
 
 /* Header image for the form */
@@ -23,7 +23,12 @@ body {
   margin-bottom: 20px; /* Adds space between the image and the start of the form */
   text-align: center; /* To ensure image container is centered */
 }
-.form-header-image img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+.form-header-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
 
 h1 {
   margin-top: 0;
@@ -31,19 +36,30 @@ h1 {
   color: #1f2937;
 }
 
-p { color: #4b5563; margin-bottom: 16px; }
+p {
+  color: #4b5563;
+  margin-bottom: 16px;
+}
 
 /* Form layout */
-form { width: 100%; }
-label { display: block; font-weight: 600; margin-bottom: 6px; }
-.question-group { margin-bottom: 14px; }
+form {
+  width: 100%;
+}
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.question-group {
+  margin-bottom: 14px;
+}
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="url"],
-input[type="date"],
-input[type="number"],
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='url'],
+input[type='date'],
+input[type='number'],
 select,
 textarea {
   width: 100%;
@@ -55,14 +71,19 @@ textarea {
   background: #fff;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
 }
 
 /* Ensure multi-lingual typing inherits proper alignment */
-input, textarea { text-align: inherit; }
+input,
+textarea {
+  text-align: inherit;
+}
 
 fieldset {
   border: 1px solid #e5e7eb;
@@ -97,15 +118,19 @@ legend {
 }
 
 /* Icon before section title */
-.section-icon { 
-  width: 28px; 
-  height: 28px; 
+.section-icon {
+  width: 28px;
+  height: 28px;
   flex: 0 0 28px;
-  width: 20px; 
-  height: 20px; 
+  width: 20px;
+  height: 20px;
   flex: 0 0 20px;
 }
-.section-icon svg { width: 20px; height: 20px; display: block; }
+.section-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
 
 .date-row {
   display: flex;
@@ -113,8 +138,12 @@ legend {
   align-items: center;
   flex-wrap: wrap;
 }
-.date-row label { margin: 0; }
-.date-row input { max-width: 220px; }
+.date-row label {
+  margin: 0;
+}
+.date-row input {
+  max-width: 220px;
+}
 
 .conditional-fields {
   transition: all 0.5s ease-in-out;
@@ -155,25 +184,25 @@ input:focus {
 
 /* Inline Error Message Styling */
 .error-message {
-    display: block;
-    color: #dc3545;
-    font-size: 0.9em;
-    margin-top: 5px;
-    font-weight: bold;
-    text-align: right;
+  display: block;
+  color: #dc3545;
+  font-size: 0.9em;
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: right;
 }
 
 /* Ensure the field border is red only if invalid via class */
-input.is-invalid, 
-textarea.is-invalid, 
+input.is-invalid,
+textarea.is-invalid,
 select.is-invalid {
-    border-color: #dc3545 !important;
-    box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
 }
 
 /* Buttons */
 .submit-btn {
-  background: linear-gradient(180deg,#0b84ff,#0066d6);
+  background: linear-gradient(180deg, #0b84ff, #0066d6);
   color: #fff;
   border: none;
   padding: 12px 20px;
@@ -183,17 +212,32 @@ select.is-invalid {
   display: inline-block;
 }
 
-.submit-btn:hover { opacity: 0.95; }
+.submit-btn:hover {
+  opacity: 0.95;
+}
 
 /* Responsive */
 @media (max-width: 640px) {
-  .container { padding: 16px; }
-  .date-row { flex-direction: column; }
-  .date-row input { width: 100%; max-width: none; }
+  .container {
+    padding: 16px;
+  }
+  .date-row {
+    flex-direction: column;
+  }
+  .date-row input {
+    width: 100%;
+    max-width: none;
+  }
 }
 
 /* Keyframe for a slight fade-in effect (used by JS) */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

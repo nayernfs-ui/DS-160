@@ -7,5 +7,5 @@ const JSZip = require('jszip');
   const zip = await JSZip.loadAsync(buf);
   const mediaFiles = zip.filter((relativePath) => relativePath.startsWith('word/media/'));
   console.log('mediaFiles length:', mediaFiles.length);
-  mediaFiles.forEach(m => console.log('media:', m.name || m));
+  mediaFiles.forEach((m) => console.log('media:', m.name || m));
 })();

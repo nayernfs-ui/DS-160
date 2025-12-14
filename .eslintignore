@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.docx
+test_output_docx_*.docx
+coverage/
+.DS_Store
+npm-debug.log

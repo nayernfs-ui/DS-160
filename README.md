@@ -3,6 +3,7 @@
 This is the nayernfs-ui project.
 
 Contains:
+
 - `index.html`
 - `script.js`
 - `style.css`
@@ -20,8 +21,8 @@ This project includes a serverless endpoint at `api/submit` that forwards form s
 
 How the endpoint works
 
- - The client-side `script.js` gathers the form data and does a JSON POST to `/api/submit`.
- - The serverless function `api/submit.js` uses `sib-api-v3-sdk` (SendinBlue / Brevo) to send the submission as an email.
+- The client-side `script.js` gathers the form data and does a JSON POST to `/api/submit`.
+- The serverless function `api/submit.js` uses `sib-api-v3-sdk` (SendinBlue / Brevo) to send the submission as an email.
 
 Local testing (optional)
 

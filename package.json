@@ -4,7 +4,13 @@
   "private": true,
   "scripts": {
     "start": "vercel dev",
-    "smoke-docx": "node smoke-test-docx.js"
+    "smoke-docx": "node smoke-test-docx.js",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
+    "lint:ci": "eslint . --ext .js --max-warnings=0",
+    "format": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "arabic-reshaper": "^1.1.0",
@@ -12,6 +18,18 @@
     "sib-api-v3-sdk": "^8.5.0"
   },
   "devDependencies": {
-    "jszip": "^3.10.1"
+    "jszip": "^3.10.1",
+    "eslint": "^8.45.0",
+    "prettier": "^2.8.8",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-config-prettier": "^8.8.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
