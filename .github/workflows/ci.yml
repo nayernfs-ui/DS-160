@@ -24,5 +24,8 @@ jobs:
       - name: Run linter (fail on warnings)
         run: npm run lint:ci
 
+      - name: Run HTML linter
+        run: npm run lint:html
+
       - name: Run DOCX Smoke Test
         run: npm run smoke-docx

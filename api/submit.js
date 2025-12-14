@@ -64,6 +64,16 @@ const FIELD_MAP = {
   Spouse_DOB_Year: 'Spouse Date of Birth (Year)',
 
   // Add more mappings here for cleaner output...
+  Education_InstitutionName_2: 'Education Institution (2)',
+  Education_Address_2: 'Education Address (2)',
+  Education_QualificationName_2: 'Qualification Name (2)',
+  Education_QualificationMajor_2: 'Qualification Major (2)',
+  Education_StudyStartDate_Day_2: 'Study Start Day (2)',
+  Education_StudyStartDate_Month_2: 'Study Start Month (2)',
+  Education_StudyStartDate_Year_2: 'Study Start Year (2)',
+  Education_StudyEndDate_Day_2: 'Study End Day (2)',
+  Education_StudyEndDate_Month_2: 'Study End Month (2)',
+  Education_StudyEndDate_Year_2: 'Study End Year (2)',
 };
 // --- End Field Mapping ---
 

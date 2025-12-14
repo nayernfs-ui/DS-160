@@ -143,6 +143,12 @@ legend {
 }
 .date-row input {
   max-width: 220px;
+  text-align: center;
+}
+
+/* Ensure Education History 2 year inputs match main Education styles */
+#educationHistory2 .date-row input {
+  text-align: center !important;
 }
 
 .conditional-fields {
