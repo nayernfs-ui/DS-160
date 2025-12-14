@@ -146,6 +146,11 @@ legend {
   text-align: center;
 }
 
+/* Ensure Education History 2 year inputs match main Education styles */
+#educationHistory2 .date-row input {
+  text-align: center !important;
+}
+
 .conditional-fields {
   transition: all 0.5s ease-in-out;
   opacity: 1;
