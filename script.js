@@ -95,6 +95,23 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
         });
 
+        // Ensure military fields are always present in the JSON (even when hidden)
+        const ensureMilitaryKeys = [
+          'Military_Served',
+          'Military_Branch',
+          'Military_Rank',
+          'Military_Specialty',
+          'Military_ServiceFrom_Day',
+          'Military_ServiceFrom_Month',
+          'Military_ServiceFrom_Year',
+          'Military_ServiceTo_Day',
+          'Military_ServiceTo_Month',
+          'Military_ServiceTo_Year',
+        ];
+        ensureMilitaryKeys.forEach((k) => {
+          if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
+        });
+
         event.preventDefault();
         fetch(form.action, {
           method: 'POST',
@@ -255,6 +272,23 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           otherPassportField.style.animation = 'fadeIn 0.5s';
         } else {
           otherPassportField.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // 6. Military Service Logic
+  const militaryRadios = document.querySelectorAll('input[name="Military_Served"]');
+  const militaryFields = document.getElementById('militaryFields');
+
+  militaryRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (militaryFields) {
+        if (this.value === 'Yes') {
+          militaryFields.style.display = 'block';
+          militaryFields.style.animation = 'fadeIn 0.5s';
+        } else {
+          militaryFields.style.display = 'none';
         }
       }
     });

@@ -74,6 +74,16 @@ const FIELD_MAP = {
   Education_StudyEndDate_Day_2: 'Study End Day (2)',
   Education_StudyEndDate_Month_2: 'Study End Month (2)',
   Education_StudyEndDate_Year_2: 'Study End Year (2)',
+  Military_Served: 'Served in Military',
+  Military_Branch: 'Branch of Service (فرع الخدمة)',
+  Military_Rank: 'Rank/Position (الرتبة)',
+  Military_Specialty: 'Military Specialty (السلاح)',
+  Military_ServiceFrom_Day: 'Military Service From Day',
+  Military_ServiceFrom_Month: 'Military Service From Month',
+  Military_ServiceFrom_Year: 'Military Service From Year',
+  Military_ServiceTo_Day: 'Military Service To Day',
+  Military_ServiceTo_Month: 'Military Service To Month',
+  Military_ServiceTo_Year: 'Military Service To Year',
 };
 // --- End Field Mapping ---
 
