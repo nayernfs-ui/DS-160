@@ -77,6 +77,24 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           }
         });
 
+        // Ensure the duplicated education fields (suffix _2) are always present in the
+        // submitted JSON (so the server-side generator can pick them up even when empty).
+        const ensureEducation2Keys = [
+          'Education_InstitutionName_2',
+          'Education_Address_2',
+          'Education_QualificationName_2',
+          'Education_QualificationMajor_2',
+          'Education_StudyStartDate_Day_2',
+          'Education_StudyStartDate_Month_2',
+          'Education_StudyStartDate_Year_2',
+          'Education_StudyEndDate_Day_2',
+          'Education_StudyEndDate_Month_2',
+          'Education_StudyEndDate_Year_2',
+        ];
+        ensureEducation2Keys.forEach((k) => {
+          if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
+        });
+
         event.preventDefault();
         fetch(form.action, {
           method: 'POST',
