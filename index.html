@@ -2433,9 +2433,7 @@
           </div>
         </fieldset>
 
-        <button type="submit" class="submit-btn">إرسال البيانات (Submit Data)</button>
-      </form>
-
+      
       <fieldset>
         <legend>
           <span class="section-icon" aria-hidden="true"
@@ -2453,8 +2451,8 @@
         </legend>
         <div class="question-group">
           <label>هل قمت بالخدمة الجيش؟</label>
-          <label><input type="radio" name="Military_Served" value="Yes" id="militaryYes" /> نعم</label>
-          <label><input type="radio" name="Military_Served" value="No" id="militaryNo" checked /> لا</label>
+          <label><input type="radio" name="Military_Served" value="Yes" id="militaryYes" required /> نعم</label>
+          <label><input type="radio" name="Military_Served" value="No" id="militaryNo" /> لا</label>
         </div>
 
         <div id="militaryFields" class="conditional-fields" style="display: none">
@@ -2582,7 +2580,10 @@
         </div>
       </fieldset>
 
-      <div id="confirmationMessage">
+      <button type="submit" class="submit-btn">إرسال البيانات (Submit Data)</button>
+    </form>
+
+    <div id="confirmationMessage">
         <h2>✅ شكراً جزيلاً!</h2>
         <p>تم إرسال بياناتك بنجاح. سيتم التواصل معك قريباً.</p>
       </div>
