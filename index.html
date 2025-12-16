@@ -1075,15 +1075,118 @@
                 <path fill="#fff" d="M5 3v18h2V3H5zm2 3l9 3-9 3V6z" /></svg></span>4. US History (سجل السفر إلى أمريكا)
           </legend>
           <div class="question-group">
-            <label>هل كنت في أمريكا سابقا؟</label
-            ><label><input type="radio" name="VisitedUSBefore" value="Yes" /> نعم</label
-            ><label><input type="radio" name="VisitedUSBefore" value="No" checked /> لا</label>
+            <label>Have you ever been in the U.S.? (هل زرت الولايات المتحدة من قبل؟)</label
+            ><label><input type="radio" name="US_Visited" value="Yes" /> نعم</label
+            ><label><input type="radio" name="US_Visited" value="No" checked /> لا</label>
           </div>
           <div class="question-group">
             <label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label
             ><label><input type="radio" name="HadUSVisaBefore" value="Yes" /> نعم</label
             ><label><input type="radio" name="HadUSVisaBefore" value="No" checked /> لا</label>
           </div>
+          <fieldset id="US_Visits_Container" class="conditional-fields" style="display: none" aria-live="polite" aria-expanded="false" aria-hidden="true">
+            <legend>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path
+                    fill="#fff"
+                    d="M12 12a3 3 0 100-6 3 3 0 000 6zM5 11a3 3 0 100-6 3 3 0 000 6zM19 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM14 20v-1a4 4 0 00-8 0v1h8z"
+                  /></svg></span>Provide information on your last five U.S. visits (آخر خمسة زيارات إلى الولايات المتحدة)
+            </legend>
+
+            <div id="visitEntries">
+              <div class="visit-entry" data-index="1">
+                <div class="question-group">
+                  <label id="label-USVisit_1_DateArrived">تاريخ الوصول (التنسيق: يوم-شهر-سنة):</label>
+                  <div class="date-row" role="group" aria-labelledby="label-USVisit_1_DateArrived">
+                    <label class="sr-only" for="USVisit_1_DateArrived_Day">يوم</label>
+                    <select name="USVisit_1_DateArrived_Day" id="USVisit_1_DateArrived_Day" aria-describedby="label-USVisit_1_DateArrived">
+                      <option value="">Day</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                      <option value="24">24</option>
+                      <option value="25">25</option>
+                      <option value="26">26</option>
+                      <option value="27">27</option>
+                      <option value="28">28</option>
+                      <option value="29">29</option>
+                      <option value="30">30</option>
+                      <option value="31">31</option>
+                    </select>
+                    <label class="sr-only" for="USVisit_1_DateArrived_Month">شهر</label>
+                    <select name="USVisit_1_DateArrived_Month" id="USVisit_1_DateArrived_Month" aria-describedby="label-USVisit_1_DateArrived">
+                      <option value="">شهر</option>
+                        <option value="Jan">يناير</option>
+                        <option value="Feb">فبراير</option>
+                        <option value="Mar">مارس</option>
+                        <option value="Apr">أبريل</option>
+                        <option value="May">مايو</option>
+                        <option value="Jun">يونيو</option>
+                        <option value="Jul">يوليو</option>
+                        <option value="Aug">أغسطس</option>
+                        <option value="Sep">سبتمبر</option>
+                        <option value="Oct">أكتوبر</option>
+                        <option value="Nov">نوفمبر</option>
+                        <option value="Dec">ديسمبر</option>
+                    </select>
+                    <label class="sr-only" for="USVisit_1_DateArrived_Year">سنة</label>
+                    <input type="text" name="USVisit_1_DateArrived_Year" id="USVisit_1_DateArrived_Year" placeholder="YYYY" style="width: 110px" aria-describedby="label-USVisit_1_DateArrived" />
+                  </div>
+                  <span class="error-message" id="error-USVisit_1_DateArrived"></span>
+                </div>
+
+                <div class="question-group">
+                  <label id="label-USVisit_1_Length">مدة الإقامة:</label>
+                  <label class="sr-only" for="USVisit_1_Length">المدة</label>
+                  <input type="text" name="USVisit_1_Length" id="USVisit_1_Length" style="width: 120px" aria-describedby="label-USVisit_1_Length" />
+                  <label class="sr-only" for="USVisit_1_Unit">وحدة</label>
+                  <select name="USVisit_1_Unit" id="USVisit_1_Unit" aria-describedby="label-USVisit_1_Length">
+                    <option value="">-اختر-</option>
+                    <option value="Days">أيام</option>
+                    <option value="Weeks">أسابيع</option>
+                    <option value="Months">أشهر</option>
+                  </select>
+                </div>
+
+                <div class="question-group">
+                  <a href="#" class="remove-visit" style="margin-left: 8px;">- إزالة</a>
+                </div>
+              </div>
+            </div>
+            <div class="question-group" id="visitControls">
+              <a href="#" class="add-visit">+ إضافة</a>
+            </div>
+          </fieldset>
 
           <fieldset id="previousUSVisas" class="conditional-fields" style="display: none">
             <legend>
@@ -2455,7 +2558,7 @@
           <label><input type="radio" name="Military_Served" value="No" id="militaryNo" /> لا</label>
         </div>
 
-        <div id="militaryFields" class="conditional-fields" style="display: none">
+        <div id="militaryFields" class="conditional-fields" style="display: none" aria-expanded="false" aria-hidden="true" aria-live="polite">
           <div class="question-group">
             <label for="militaryBranch">فرع الخدمة:</label>
             <input type="text" id="militaryBranch" name="Military_Branch" style="direction: auto" />
@@ -2471,7 +2574,8 @@
 
           <div class="date-row">
             <div class="date-group">
-              <label>تاريخ بداية الخدمة:</label>
+              <label id="milServiceFromLabel">تاريخ بداية الخدمة:</label>
+              <div class="date-row-group" role="group" aria-labelledby="milServiceFromLabel">
               <select id="milServiceFromDay" name="Military_ServiceFrom_Day">
                 <option value="">يوم</option>
                 <option value="1">1</option>
@@ -2522,9 +2626,11 @@
                 <option value="12">12</option>
               </select>
               <input type="text" id="milServiceFromYear" name="Military_ServiceFrom_Year" placeholder="YYYY" style="width: 110px" />
+              </div>
             </div>
             <div class="date-group">
-              <label>تاريخ انتهاء الخدمة:</label>
+              <label id="milServiceToLabel">تاريخ انتهاء الخدمة:</label>
+              <div class="date-row-group" role="group" aria-labelledby="milServiceToLabel">
               <select id="milServiceToDay" name="Military_ServiceTo_Day">
                 <option value="">يوم</option>
                 <option value="1">1</option>
@@ -2575,6 +2681,7 @@
                 <option value="12">12</option>
               </select>
               <input type="text" id="milServiceToYear" name="Military_ServiceTo_Year" placeholder="YYYY" style="width: 110px" />
+              </div>
             </div>
           </div>
         </div>
@@ -2589,6 +2696,6 @@
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
   </body>
 </html>

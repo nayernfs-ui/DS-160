@@ -11,12 +11,21 @@
     "lint:html": "html-validate index.html",
     "format": "prettier --write .",
     "prettier:check": "prettier --check .",
+    "test:visits": "node test/visits.test.js",
+    "test": "npm run test:visits",
     "prepare": "husky install"
   },
   "dependencies": {
     "arabic-reshaper": "^1.1.0",
     "docx": "^9.5.1",
     "sib-api-v3-sdk": "^8.5.0"
+  },
+  
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "devDependencies": {
     "eslint": "^8.45.0",
@@ -25,13 +34,9 @@
     "html-validate": "^9.7.1",
     "husky": "^8.0.3",
     "jszip": "^3.10.1",
+    "jsdom": "^22.1.0",
+    "puppeteer": "^21.0.0",
     "lint-staged": "^14.0.0",
     "prettier": "^2.8.8"
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix"
-    ]
   }
 }

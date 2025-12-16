@@ -244,6 +244,199 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     });
   }
 
+  // 4b. Previous U.S. Visits (show when US_Visited = Yes)
+  const visitedRadios = document.querySelectorAll('input[name="US_Visited"]');
+  const previousUSVisits = document.getElementById('US_Visits_Container');
+  const visitEntries = document.getElementById('visitEntries');
+  const maxVisits = 5;
+  // keep a hidden template clone for re-creating entries when all have been removed
+  const initialVisitTemplate = visitEntries ? visitEntries.querySelector('.visit-entry') : null;
+  const visitTemplateNode = initialVisitTemplate ? initialVisitTemplate.cloneNode(true) : null;
+
+  // debug: surface the configured max visits for easier troubleshooting in browser console
+  console.log('visits: maxVisits =', maxVisits);
+  console.log('visits: visitedRadios length =', visitedRadios.length);
+
+  function setVisitRequired(index, required) {
+    const year = document.getElementById(`USVisit_${index}_DateArrived_Year`);
+    const day = document.getElementById(`USVisit_${index}_DateArrived_Day`);
+    const month = document.getElementById(`USVisit_${index}_DateArrived_Month`);
+    const length = document.getElementById(`USVisit_${index}_Length`);
+    const unit = document.getElementById(`USVisit_${index}_Unit`);
+    [year, day, month, length, unit].forEach((el) => {
+      if (!el) return;
+      if (required) el.setAttribute('required', 'required');
+      else el.removeAttribute('required');
+    });
+  }
+
+  if (!window.__ds160VisitedInit) {
+    window.__ds160VisitedInit = true;
+
+    visitedRadios.forEach((radio) => {
+      radio.addEventListener('change', function () {
+        if (previousUSVisits) {
+          if (this.value === 'Yes') {
+            previousUSVisits.style.display = 'block';
+            previousUSVisits.style.animation = 'fadeIn 0.5s';
+            // accessibility: mark expanded and visible
+            previousUSVisits.setAttribute('aria-expanded', 'true');
+            previousUSVisits.setAttribute('aria-hidden', 'false');
+            // require fields for all currently visible entries
+            const currentCount = visitEntries
+              ? visitEntries.querySelectorAll('.visit-entry').length
+              : 0;
+            for (let i = 1; i <= currentCount; i++) setVisitRequired(i, true);
+          } else {
+            previousUSVisits.style.display = 'none';
+            // accessibility: mark collapsed/hidden
+            previousUSVisits.setAttribute('aria-expanded', 'false');
+            previousUSVisits.setAttribute('aria-hidden', 'true');
+            // remove required attributes from all entries
+            for (let i = 1; i <= maxVisits; i++) setVisitRequired(i, false);
+          }
+        }
+      });
+    });
+
+    // Add / Remove visit entries (delegated)
+    const clickDelegateRoot = previousUSVisits || visitEntries;
+    if (clickDelegateRoot) {
+      clickDelegateRoot.addEventListener('click', function (e) {
+        const addBtn = e.target.closest && e.target.closest('.add-visit');
+        const remBtn = e.target.closest && e.target.closest('.remove-visit');
+
+        if (addBtn && clickDelegateRoot.contains(addBtn)) {
+          e.preventDefault();
+          const current = visitEntries.querySelectorAll('.visit-entry').length;
+          console.info('add-click: current entries =', current);
+          if (current >= maxVisits) {
+            console.info('add-click: maxVisits reached, no-op');
+            return;
+          }
+          // use an existing entry as template, or fall back to the stored template node
+          const template = visitEntries.querySelector('.visit-entry') || visitTemplateNode;
+          if (!template) return;
+          const clone = template.cloneNode(true);
+          const newIndex = current + 1;
+          clone.setAttribute('data-index', String(newIndex));
+
+          // Update ids, names and label 'for' inside cloned node (handle any existing index)
+          clone.querySelectorAll('[id]').forEach((el) => {
+            el.id = el.id
+              .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIndex}_`)
+              .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIndex}`);
+            if (el.name)
+              el.name = el.name
+                .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIndex}_`)
+                .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIndex}`);
+            if (el.tagName === 'INPUT') el.value = '';
+            if (el.tagName === 'SELECT') el.selectedIndex = 0;
+          });
+          clone.querySelectorAll('label').forEach((lbl) => {
+            if (lbl.htmlFor)
+              lbl.htmlFor = lbl.htmlFor
+                .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIndex}_`)
+                .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIndex}`);
+            // if labels themselves have an id (group label), it will be updated in the id loop above
+          });
+
+          // Update aria-describedby references inside cloned node (so they point to updated label ids)
+          clone.querySelectorAll('[aria-describedby]').forEach((el) => {
+            const v = el.getAttribute('aria-describedby');
+            if (!v) return;
+            el.setAttribute(
+              'aria-describedby',
+              v
+                .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIndex}_`)
+                .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIndex}`)
+            );
+          });
+
+          // ensure required attributes for new entry when visible
+          const shouldRequire = window.getComputedStyle(previousUSVisits).display !== 'none';
+          // set required attributes directly on clone so they exist once appended
+          clone.querySelectorAll('input, select').forEach((el) => {
+            if (shouldRequire) el.setAttribute('required', 'required');
+            else el.removeAttribute('required');
+          });
+
+          visitEntries.appendChild(clone);
+          // also ensure required flags via DOM lookup for consistency
+          setVisitRequired(newIndex, shouldRequire);
+
+          console.info(
+            'add-click: appended clone, new entries =',
+            visitEntries.querySelectorAll('.visit-entry').length
+          );
+          updateAddControls();
+        }
+
+        if (remBtn && visitEntries.contains(remBtn)) {
+          e.preventDefault();
+          const entry = remBtn.closest('.visit-entry');
+          if (!entry) return;
+          const entries = visitEntries.querySelectorAll('.visit-entry');
+          if (entries.length === 1) {
+            // remove the only entry entirely from DOM
+            entry.remove();
+            // clear any required attributes for safety
+            for (let i = 1; i <= maxVisits; i++) setVisitRequired(i, false);
+            console.info(
+              'remove-click: last entry removed, entries now =',
+              visitEntries.querySelectorAll('.visit-entry').length
+            );
+            updateAddControls();
+
+            // If there are now zero entries and the user still has US_Visited=Yes, toggle to No
+            const remaining = visitEntries.querySelectorAll('.visit-entry').length;
+            if (remaining === 0) {
+              const yesRadio = document.querySelector('input[name="US_Visited"][value="Yes"]');
+              const noRadio = document.querySelector('input[name="US_Visited"][value="No"]');
+              if (yesRadio && yesRadio.checked && noRadio) {
+                // programmatically switch to 'No' to reuse existing hide/cleanup logic
+                noRadio.checked = true;
+                noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+              }
+            }
+          } else {
+            entry.remove();
+            // renumber remaining entries to keep indexes contiguous
+            const remaining = visitEntries.querySelectorAll('.visit-entry');
+            remaining.forEach((el, idx) => {
+              const newIdx = idx + 1;
+              el.setAttribute('data-index', String(newIdx));
+              el.querySelectorAll('[id]').forEach((node) => {
+                if (node.id)
+                  node.id = node.id
+                    .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIdx}_`)
+                    .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`);
+                if (node.name)
+                  node.name = node.name
+                    .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIdx}_`)
+                    .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`);
+              });
+            });
+            console.info('remove-click: entries after removal =', remaining.length);
+            updateAddControls();
+          }
+        }
+      });
+      // initialize add controls visibility
+      updateAddControls();
+    }
+  }
+
+  // show/hide add controls when at max
+  function updateAddControls() {
+    const entries = visitEntries.querySelectorAll('.visit-entry').length;
+    const adds = previousUSVisits.querySelectorAll('.add-visit');
+    adds.forEach((a) => {
+      if (entries >= maxVisits) a.style.display = 'none';
+      else a.style.display = '';
+    });
+  }
+
   // 4. Other Nationality Logic (new)
   const otherNatRadios = document.querySelectorAll('input[name="HasOtherNationality"]');
   const otherNationalityFields = document.getElementById('otherNationalityFields');
@@ -281,15 +474,32 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   const militaryRadios = document.querySelectorAll('input[name="Military_Served"]');
   const militaryFields = document.getElementById('militaryFields');
 
+  function setMilitaryRequired(is_required) {
+    if (!militaryFields) return;
+    const controls = militaryFields.querySelectorAll('input, select, textarea');
+    controls.forEach((c) => {
+      if (is_required) {
+        c.setAttribute('required', '');
+      } else {
+        c.removeAttribute('required');
+      }
+    });
+  }
+
   militaryRadios.forEach((radio) => {
     radio.addEventListener('change', function () {
-      if (militaryFields) {
-        if (this.value === 'Yes') {
-          militaryFields.style.display = 'block';
-          militaryFields.style.animation = 'fadeIn 0.5s';
-        } else {
-          militaryFields.style.display = 'none';
-        }
+      if (!militaryFields) return;
+      if (this.value === 'Yes') {
+        militaryFields.style.display = 'block';
+        militaryFields.style.animation = 'fadeIn 0.5s';
+        militaryFields.setAttribute('aria-expanded', 'true');
+        militaryFields.setAttribute('aria-hidden', 'false');
+        setMilitaryRequired(true);
+      } else {
+        militaryFields.style.display = 'none';
+        militaryFields.setAttribute('aria-expanded', 'false');
+        militaryFields.setAttribute('aria-hidden', 'true');
+        setMilitaryRequired(false);
       }
     });
   });
