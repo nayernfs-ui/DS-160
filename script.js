@@ -308,8 +308,10 @@ document.addEventListener('DOMContentLoaded', (_event) => {
 
         if (addBtn && clickDelegateRoot.contains(addBtn)) {
           e.preventDefault();
-          const current = visitEntries.querySelectorAll('.visit-entry').length;
-          console.info('add-click: current entries =', current);
+          const current = Array.from(visitEntries.querySelectorAll('.visit-entry')).filter(
+            (el) => window.getComputedStyle(el).display !== 'none'
+          ).length;
+          console.info('add-click: current visible entries =', current);
           if (current >= maxVisits) {
             console.info('add-click: maxVisits reached, no-op');
             return;
@@ -429,12 +431,20 @@ document.addEventListener('DOMContentLoaded', (_event) => {
 
   // show/hide add controls when at max
   function updateAddControls() {
-    const entries = visitEntries.querySelectorAll('.visit-entry').length;
-    const adds = previousUSVisits.querySelectorAll('.add-visit');
-    adds.forEach((a) => {
-      if (entries >= maxVisits) a.style.display = 'none';
-      else a.style.display = '';
+    const visitEntries = document.getElementById('visitEntries');
+    const entries = visitEntries ? visitEntries.querySelectorAll('.visit-entry').length : 0;
+    // Select all buttons with the class 'add-visit'
+    const addButtons = document.querySelectorAll('.add-visit');
+
+    addButtons.forEach((btn) => {
+      if (entries >= 5) {
+        // Ensure this is 5
+        btn.style.setProperty('display', 'none', 'important');
+      } else {
+        btn.style.display = 'inline-block';
+      }
     });
+    console.log(`Visits check: ${entries} of 5 entries present.`);
   }
 
   // 4. Other Nationality Logic (new)
