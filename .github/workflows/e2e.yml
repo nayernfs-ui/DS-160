@@ -1,0 +1,32 @@
+name: Live Smoke Tests
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  live-smoke-test:
+    name: Live Smoke Test (puppeteer-visits-live)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check required environment variables
+        run: npm run check-env
+
+      - name: Run live puppeteer visits smoke test
+        env:
+          # If you want to set these secrets in the repository, add them in GitHub repo Settings > Secrets
+          SENDINBLUE_API_KEY: ${{ secrets.SENDINBLUE_API_KEY }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+        run: npm run live-smoke

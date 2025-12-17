@@ -8,6 +8,10 @@ Contains:
 - `script.js`
 - `style.css`
 
+Notable UI changes:
+
+- **U.S. Visits** section now supports up to **5 entries** (repeatable visit history).
+
 Deployment & server email forwarding (Vercel + SendinBlue)
 
 - Recipient email: `nayer.nfs@gmail.com`
@@ -18,6 +22,8 @@ This project includes a serverless endpoint at `api/submit` that forwards form s
 2. (Optional) Set `RECIPIENT_EMAIL` to change where messages are sent. By default it uses `nayer.nfs@gmail.com`.
 3. (Optional) Set `SENDER_EMAIL` to a valid verified sender address in your SendinBlue account. If not set, the function uses `no-reply@<your-project>.vercel.app`.
 4. Redeploy the project (Vercel will install dependencies from `package.json`).
+
+Local checks: you can run `npm run check-env` to verify required env vars (`SENDINBLUE_API_KEY`, `SENDER_EMAIL`) are present locally or in CI.
 
 How the endpoint works
 

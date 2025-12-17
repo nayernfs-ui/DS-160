@@ -1,7 +1,7 @@
 {
   "extends": ["html-validate:recommended"],
   "rules": {
-    "void-style": ["error", {"style": "selfclose"}],
+    "void-style": ["error", { "style": "selfclose" }],
     "no-inline-style": "off",
     "no-trailing-whitespace": "warn"
   }

@@ -55,6 +55,18 @@ const { JSDOM } = require('jsdom');
     'US_Visits_Container should have aria-hidden="false" when visible'
   );
 
+  // Accessibility: add / remove controls should include aria-labels
+  const addControl = doc.querySelector('.add-visit');
+  assert(
+    addControl && addControl.getAttribute('aria-label'),
+    'add-visit should have an aria-label'
+  );
+  const initialRemove = doc.querySelector('.visit-entry .remove-visit');
+  assert(
+    initialRemove && initialRemove.getAttribute('aria-label'),
+    'initial remove-visit should have an aria-label'
+  );
+
   // 1) Required attrs present on first visible visit entry when shown
   const firstYear = doc.getElementById('USVisit_1_DateArrived_Year');
   const firstLength = doc.getElementById('USVisit_1_Length');
@@ -282,6 +294,11 @@ const { JSDOM } = require('jsdom');
 
   const remMid = doc.querySelector('.visit-entry[data-index="2"] .remove-visit');
   assert(remMid, 'remove button for middle entry should exist');
+  assert(
+    remMid.getAttribute('aria-label') &&
+      remMid.getAttribute('aria-label').indexOf('Remove visit') !== -1,
+    'remove button should have an aria-label containing "Remove visit"'
+  );
   const beforeRemoval = visitEntries().length;
   remMid.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
   await new Promise((r) => setTimeout(r, 20));

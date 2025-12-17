@@ -255,6 +255,14 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   const initialVisitTemplate = visitEntries ? visitEntries.querySelector('.visit-entry') : null;
   const visitTemplateNode = initialVisitTemplate ? initialVisitTemplate.cloneNode(true) : null;
 
+  // Ensure existing remove buttons are labeled with their index on initial load
+  if (visitEntries) {
+    visitEntries.querySelectorAll('.visit-entry').forEach((el, idx) => {
+      const rem = el.querySelector('.remove-visit');
+      if (rem) rem.setAttribute('aria-label', `Remove visit ${idx + 1}`);
+    });
+  }
+
   function setVisitRequired(index, required) {
     const year = document.getElementById(`USVisit_${index}_DateArrived_Year`);
     const day = document.getElementById(`USVisit_${index}_DateArrived_Day`);
@@ -358,6 +366,13 @@ document.addEventListener('DOMContentLoaded', (_event) => {
             else el.removeAttribute('required');
           });
 
+          // ensure cloned remove button is accessible and labeled for screen readers
+          clone.querySelectorAll('.remove-visit').forEach((btn) => {
+            btn.setAttribute('role', 'button');
+            btn.setAttribute('tabindex', '0');
+            btn.setAttribute('aria-label', `Remove visit ${newIndex}`);
+          });
+
           visitEntries.appendChild(clone);
           // also ensure required flags via DOM lookup for consistency
           setVisitRequired(newIndex, shouldRequire);
@@ -404,6 +419,10 @@ document.addEventListener('DOMContentLoaded', (_event) => {
                     .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIdx}_`)
                     .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`);
               });
+
+              // update remove button aria-labels for accessibility and keyboard users
+              const rem = el.querySelector('.remove-visit');
+              if (rem) rem.setAttribute('aria-label', `Remove visit ${newIdx}`);
             });
             updateAddControls();
           }
@@ -422,6 +441,11 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     const addButtons = document.querySelectorAll('.add-visit');
 
     addButtons.forEach((btn) => {
+      // Ensure controls are accessible
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('tabindex', '0');
+      if (!btn.getAttribute('aria-label')) btn.setAttribute('aria-label', 'Add visit');
+
       if (entries >= 5) {
         // Ensure this is 5
         btn.style.setProperty('display', 'none', 'important');
