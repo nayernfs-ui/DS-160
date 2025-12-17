@@ -17,7 +17,6 @@
     "test:country-mapping": "node test/country-mapping.test.js",
     "test": "npm run test:visits && npm run test:military && npm run test:education && npm run test:country-mapping",
     "prepare": "husky install",
-    "check-env": "node tools/check-env.js",
     "live-smoke": "node tests/e2e/puppeteer-visits-live.js"
   },
   "dependencies": {

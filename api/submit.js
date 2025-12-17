@@ -26,7 +26,8 @@ const ReshaperModule = require('arabic-reshaper');
 // (Removed local TTF font path - we're using the VFS fonts via pdfmake)
 
 // Configuration (using existing environment variables)
-const API_KEY = process.env.SENDGRID_API_KEY;
+// Prefer SENDINBLUE_API_KEY (Brevo), fall back to SENDGRID_API_KEY for compatibility
+const API_KEY = process.env.SENDINBLUE_API_KEY || process.env.SENDGRID_API_KEY;
 const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || 'nayer.nfa@gmail.com';
 const SENDER_EMAIL = process.env.SENDER_EMAIL || 'nayer.nfa@gmail.com';
 
