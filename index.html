@@ -2172,6 +2172,35 @@
               style="direction: auto"
             />
           </div>
+
+          <!-- Section 12: Repeated Education History (allow up to five institutions) -->
+          <div class="question-group">
+            <label>هل لديك مؤسسات تعليمية أخرى؟</label>
+            <label><input type="radio" name="HasOtherEducation" value="Yes" /> نعم</label>
+            <label><input type="radio" name="HasOtherEducation" value="No" checked /> لا</label>
+          </div>
+
+          <fieldset id="Education_Container" class="conditional-fields" style="display: none" aria-live="polite" aria-expanded="false" aria-hidden="true">
+            <legend>Provide up to five additional institutions (حتى خمسة مؤسسات إضافية)</legend>
+            <div id="educationEntries">
+              <div class="edu-entry" data-index="1">
+                <div class="question-group">
+                  <label for="Education_1_InstitutionName">اسم المؤسسة:</label>
+                  <input type="text" id="Education_1_InstitutionName" name="Education_1_InstitutionName" />
+                </div>
+                <div class="question-group">
+                  <label for="Education_1_QualificationName">المؤهل:</label>
+                  <input type="text" id="Education_1_QualificationName" name="Education_1_QualificationName" />
+                </div>
+                <div class="question-group">
+                  <a href="#" class="remove-education">- إزالة</a>
+                </div>
+              </div>
+            </div>
+            <div class="question-group">
+              <a href="#" class="add-education">+ إضافة مؤسسة</a>
+            </div>
+          </fieldset>
           <div class="question-group">
             <label for="institutionAddress">عنوانها:</label
             ><textarea

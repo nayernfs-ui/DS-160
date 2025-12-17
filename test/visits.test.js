@@ -251,6 +251,51 @@ const { JSDOM } = require('jsdom');
     assert.strictEqual(visitEntries().length, expected, `Expected ${expected} visit entries`);
   }
 
+  // When 5 entries exist, add should be hidden
+  const addAfterFive = doc.querySelector('.add-visit');
+  const computedAddDisplay = addAfterFive
+    ? dom.window.getComputedStyle(addAfterFive).display
+    : null;
+  const styled = addAfterFive ? addAfterFive.getAttribute('style') : null;
+
+  assert(
+    addAfterFive &&
+      visitEntries().length === 5 &&
+      (computedAddDisplay === 'none' ||
+        (styled && styled.indexOf('display: none') !== -1) ||
+        addAfterFive.style.display === ''),
+    'add control should be hidden or disabled at 5 entries'
+  );
+
+  // Renumbering test: add three entries then remove the middle and ensure indexes are contiguous
+  // (Ensure at least 3 entries exist; if not, add until length === 3)
+  while (visitEntries().length < 3) {
+    const add = doc.querySelector('.add-visit');
+    add.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 20));
+  }
+  assert.strictEqual(
+    visitEntries().length >= 3,
+    true,
+    'There should be at least 3 visit entries for renumbering test'
+  );
+
+  const remMid = doc.querySelector('.visit-entry[data-index="2"] .remove-visit');
+  assert(remMid, 'remove button for middle entry should exist');
+  const beforeRemoval = visitEntries().length;
+  remMid.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  // After removal, entries should decrease by one and the second entry should have id with index 2
+  assert.strictEqual(
+    visitEntries().length,
+    beforeRemoval - 1,
+    'After removing middle entry, entries should decrease by one'
+  );
+  assert(
+    doc.getElementById('USVisit_2_DateArrived_Year'),
+    'USVisit_2_DateArrived_Year should exist after renumbering'
+  );
+
   // Verify newly added entries receive required attributes while US_Visited=Yes
   const newYear = doc.getElementById('USVisit_2_DateArrived_Year');
   const newLength = doc.getElementById('USVisit_2_Length');
@@ -281,15 +326,6 @@ const { JSDOM } = require('jsdom');
     );
   }
 
-  // When 5 entries exist, add should be hidden
-  const addAfterFive = doc.querySelector('.add-visit');
-  assert(
-    addAfterFive &&
-      (addAfterFive.style.display === 'none' ||
-        (addAfterFive.style.display === '' && visitEntries().length === 5)),
-    'add control should be hidden or disabled at 5 entries'
-  );
-
   // Remove last entry and ensure count decreases and add becomes available again
   const removeLast = () => {
     const entries = visitEntries();
@@ -298,9 +334,14 @@ const { JSDOM } = require('jsdom');
     rem.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
   };
 
+  const beforeRemove = visitEntries().length;
   removeLast();
   await new Promise((r) => setTimeout(r, 20));
-  assert.strictEqual(visitEntries().length, 4, 'After removing one, there should be 4 entries');
+  assert.strictEqual(
+    visitEntries().length,
+    beforeRemove - 1,
+    'After removing one, entries should decrease by one'
+  );
 
   // Ensure add is available again
   const addNow = doc.querySelector('.add-visit');

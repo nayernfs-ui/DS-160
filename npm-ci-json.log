@@ -1,0 +1,1903 @@
+﻿node.exe : npm warn deprecated inflight@1.0.6: This module is not supported, and leaks 
+memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce 
+async requests by a key value, which is much more comprehensive and powerful.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm warn deprec...e and powerful.:String) [], Re 
+   moteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated formidable@1.2.6: Please upgrade to latest, formidable@v2 or 
+formidable@v3! Check these notes: https://bit.ly/2ZEqIau
+npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+npm warn deprecated querystring@0.2.0: The querystring API is considered Legacy. new code 
+should use the URLSearchParams API instead.
+npm warn deprecated superagent@3.7.0: Please upgrade to superagent v10.2.2+, see release 
+notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is 
+supported by Forward Email @ https://forwardemail.net
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see 
+https://eslint.org/version-support for other options.
+npm warn deprecated sib-api-v3-sdk@8.5.0: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+
+> ds-160@1.0.0 prepare
+> husky install
+
+husky - Git hooks installed
+{
+  "add": [
+    {
+      "name": "zod",
+      "version": "3.25.76",
+      "path": "D:\\DS-160\\node_modules\\zod"
+    },
+    {
+      "name": "yocto-queue",
+      "version": "0.1.0",
+      "path": "D:\\DS-160\\node_modules\\yocto-queue"
+    },
+    {
+      "name": "yauzl",
+      "version": "2.10.0",
+      "path": "D:\\DS-160\\node_modules\\yauzl"
+    },
+    {
+      "name": "yargs-parser",
+      "version": "21.1.1",
+      "path": "D:\\DS-160\\node_modules\\yargs-parser"
+    },
+    {
+      "name": "yargs",
+      "version": "17.7.2",
+      "path": "D:\\DS-160\\node_modules\\yargs"
+    },
+    {
+      "name": "string-width",
+      "version": "4.2.3",
+      "path": "D:\\DS-160\\node_modules\\yargs\\node_modules\\string-width"
+    },
+    {
+      "name": "is-fullwidth-code-point",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\yargs\\node_modules\\is-fullwidth-code-point"
+    },
+    {
+      "name": "emoji-regex",
+      "version": "8.0.0",
+      "path": "D:\\DS-160\\node_modules\\yargs\\node_modules\\emoji-regex"
+    },
+    {
+      "name": "yaml",
+      "version": "2.8.2",
+      "path": "D:\\DS-160\\node_modules\\yaml"
+    },
+    {
+      "name": "y18n",
+      "version": "5.0.8",
+      "path": "D:\\DS-160\\node_modules\\y18n"
+    },
+    {
+      "name": "xmlchars",
+      "version": "2.2.0",
+      "path": "D:\\DS-160\\node_modules\\xmlchars"
+    },
+    {
+      "name": "xml-name-validator",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\xml-name-validator"
+    },
+    {
+      "name": "xml-js",
+      "version": "1.6.11",
+      "path": "D:\\DS-160\\node_modules\\xml-js"
+    },
+    {
+      "name": "xml",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\xml"
+    },
+    {
+      "name": "ws",
+      "version": "8.18.3",
+      "path": "D:\\DS-160\\node_modules\\ws"
+    },
+    {
+      "name": "wrappy",
+      "version": "1.0.2",
+      "path": "D:\\DS-160\\node_modules\\wrappy"
+    },
+    {
+      "name": "wrap-ansi-cjs",
+      "version": "7.0.0",
+      "path": "D:\\DS-160\\node_modules\\wrap-ansi-cjs"
+    },
+    {
+      "name": "string-width",
+      "version": "4.2.3",
+      "path": "D:\\DS-160\\node_modules\\wrap-ansi-cjs\\node_modules\\string-width"
+    },
+    {
+      "name": "is-fullwidth-code-point",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\wrap-ansi-cjs\\node_modules\\is-fullwidth-code-point"
+    },
+    {
+      "name": "emoji-regex",
+      "version": "8.0.0",
+      "path": "D:\\DS-160\\node_modules\\wrap-ansi-cjs\\node_modules\\emoji-regex"
+    },
+    {
+      "name": "wrap-ansi",
+      "version": "8.1.0",
+      "path": "D:\\DS-160\\node_modules\\wrap-ansi"
+    },
+    {
+      "name": "strip-ansi",
+      "version": "7.1.2",
+      "path": "D:\\DS-160\\node_modules\\wrap-ansi\\node_modules\\strip-ansi"
+    },
+    {
+      "name": "ansi-styles",
+      "version": "6.2.3",
+      "path": "D:\\DS-160\\node_modules\\wrap-ansi\\node_modules\\ansi-styles"
+    },
+    {
+      "name": "ansi-regex",
+      "version": "6.2.2",
+      "path": "D:\\DS-160\\node_modules\\wrap-ansi\\node_modules\\ansi-regex"
+    },
+    {
+      "name": "word-wrap",
+      "version": "1.2.5",
+      "path": "D:\\DS-160\\node_modules\\word-wrap"
+    },
+    {
+      "name": "which",
+      "version": "2.0.2",
+      "path": "D:\\DS-160\\node_modules\\which"
+    },
+    {
+      "name": "whatwg-url",
+      "version": "12.0.1",
+      "path": "D:\\DS-160\\node_modules\\whatwg-url"
+    },
+    {
+      "name": "whatwg-mimetype",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\whatwg-mimetype"
+    },
+    {
+      "name": "whatwg-encoding",
+      "version": "2.0.0",
+      "path": "D:\\DS-160\\node_modules\\whatwg-encoding"
+    },
+    {
+      "name": "webidl-conversions",
+      "version": "7.0.0",
+      "path": "D:\\DS-160\\node_modules\\webidl-conversions"
+    },
+    {
+      "name": "webdriver-bidi-protocol",
+      "version": "0.3.9",
+      "path": "D:\\DS-160\\node_modules\\webdriver-bidi-protocol"
+    },
+    {
+      "name": "w3c-xmlserializer",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\w3c-xmlserializer"
+    },
+    {
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "path": "D:\\DS-160\\node_modules\\util-deprecate"
+    },
+    {
+      "name": "url-parse",
+      "version": "1.5.10",
+      "path": "D:\\DS-160\\node_modules\\url-parse"
+    },
+    {
+      "name": "uri-js",
+      "version": "4.4.1",
+      "path": "D:\\DS-160\\node_modules\\uri-js"
+    },
+    {
+      "name": "universalify",
+      "version": "0.2.0",
+      "path": "D:\\DS-160\\node_modules\\universalify"
+    },
+    {
+      "name": "undici-types",
+      "version": "7.16.0",
+      "path": "D:\\DS-160\\node_modules\\undici-types"
+    },
+    {
+      "name": "typed-query-selector",
+      "version": "2.12.0",
+      "path": "D:\\DS-160\\node_modules\\typed-query-selector"
+    },
+    {
+      "name": "type-fest",
+      "version": "0.20.2",
+      "path": "D:\\DS-160\\node_modules\\type-fest"
+    },
+    {
+      "name": "type-check",
+      "version": "0.4.0",
+      "path": "D:\\DS-160\\node_modules\\type-check"
+    },
+    {
+      "name": "tslib",
+      "version": "2.8.1",
+      "path": "D:\\DS-160\\node_modules\\tslib"
+    },
+    {
+      "name": "tr46",
+      "version": "4.1.1",
+      "path": "D:\\DS-160\\node_modules\\tr46"
+    },
+    {
+      "name": "tough-cookie",
+      "version": "4.1.4",
+      "path": "D:\\DS-160\\node_modules\\tough-cookie"
+    },
+    {
+      "name": "to-regex-range",
+      "version": "5.0.1",
+      "path": "D:\\DS-160\\node_modules\\to-regex-range"
+    },
+    {
+      "name": "text-table",
+      "version": "0.2.0",
+      "path": "D:\\DS-160\\node_modules\\text-table"
+    },
+    {
+      "name": "text-decoder",
+      "version": "1.2.3",
+      "path": "D:\\DS-160\\node_modules\\text-decoder"
+    },
+    {
+      "name": "tar-stream",
+      "version": "3.1.7",
+      "path": "D:\\DS-160\\node_modules\\tar-stream"
+    },
+    {
+      "name": "tar-fs",
+      "version": "3.1.1",
+      "path": "D:\\DS-160\\node_modules\\tar-fs"
+    },
+    {
+      "name": "symbol-tree",
+      "version": "3.2.4",
+      "path": "D:\\DS-160\\node_modules\\symbol-tree"
+    },
+    {
+      "name": "supports-color",
+      "version": "7.2.0",
+      "path": "D:\\DS-160\\node_modules\\supports-color"
+    },
+    {
+      "name": "superagent",
+      "version": "3.7.0",
+      "path": "D:\\DS-160\\node_modules\\superagent"
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.2.1",
+      "path": "D:\\DS-160\\node_modules\\superagent\\node_modules\\safe-buffer"
+    },
+    {
+      "name": "form-data",
+      "version": "2.5.5",
+      "path": "D:\\DS-160\\node_modules\\superagent\\node_modules\\form-data"
+    },
+    {
+      "name": "debug",
+      "version": "3.2.7",
+      "path": "D:\\DS-160\\node_modules\\superagent\\node_modules\\debug"
+    },
+    {
+      "name": "strip-json-comments",
+      "version": "3.1.1",
+      "path": "D:\\DS-160\\node_modules\\strip-json-comments"
+    },
+    {
+      "name": "strip-ansi-cjs",
+      "version": "6.0.1",
+      "path": "D:\\DS-160\\node_modules\\strip-ansi-cjs"
+    },
+    {
+      "name": "strip-ansi",
+      "version": "6.0.1",
+      "path": "D:\\DS-160\\node_modules\\strip-ansi"
+    },
+    {
+      "name": "string-width-cjs",
+      "version": "4.2.3",
+      "path": "D:\\DS-160\\node_modules\\string-width-cjs"
+    },
+    {
+      "name": "is-fullwidth-code-point",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\string-width-cjs\\node_modules\\is-fullwidth-code-point"
+    },
+    {
+      "name": "emoji-regex",
+      "version": "8.0.0",
+      "path": "D:\\DS-160\\node_modules\\string-width-cjs\\node_modules\\emoji-regex"
+    },
+    {
+      "name": "string-width",
+      "version": "5.1.2",
+      "path": "D:\\DS-160\\node_modules\\string-width"
+    },
+    {
+      "name": "strip-ansi",
+      "version": "7.1.2",
+      "path": "D:\\DS-160\\node_modules\\string-width\\node_modules\\strip-ansi"
+    },
+    {
+      "name": "ansi-regex",
+      "version": "6.2.2",
+      "path": "D:\\DS-160\\node_modules\\string-width\\node_modules\\ansi-regex"
+    },
+    {
+      "name": "string-argv",
+      "version": "0.3.2",
+      "path": "D:\\DS-160\\node_modules\\string-argv"
+    },
+    {
+      "name": "string_decoder",
+      "version": "1.1.1",
+      "path": "D:\\DS-160\\node_modules\\string_decoder"
+    },
+    {
+      "name": "streamx",
+      "version": "2.23.0",
+      "path": "D:\\DS-160\\node_modules\\streamx"
+    },
+    {
+      "name": "source-map",
+      "version": "0.6.1",
+      "path": "D:\\DS-160\\node_modules\\source-map"
+    },
+    {
+      "name": "socks-proxy-agent",
+      "version": "8.0.5",
+      "path": "D:\\DS-160\\node_modules\\socks-proxy-agent"
+    },
+    {
+      "name": "agent-base",
+      "version": "7.1.4",
+      "path": "D:\\DS-160\\node_modules\\socks-proxy-agent\\node_modules\\agent-base"
+    },
+    {
+      "name": "socks",
+      "version": "2.8.7",
+      "path": "D:\\DS-160\\node_modules\\socks"
+    },
+    {
+      "name": "smart-buffer",
+      "version": "4.2.0",
+      "path": "D:\\DS-160\\node_modules\\smart-buffer"
+    },
+    {
+      "name": "slice-ansi",
+      "version": "7.1.2",
+      "path": "D:\\DS-160\\node_modules\\slice-ansi"
+    },
+    {
+      "name": "ansi-styles",
+      "version": "6.2.3",
+      "path": "D:\\DS-160\\node_modules\\slice-ansi\\node_modules\\ansi-styles"
+    },
+    {
+      "name": "sisteransi",
+      "version": "1.0.5",
+      "path": "D:\\DS-160\\node_modules\\sisteransi"
+    },
+    {
+      "name": "signal-exit",
+      "version": "4.1.0",
+      "path": "D:\\DS-160\\node_modules\\signal-exit"
+    },
+    {
+      "name": "side-channel-weakmap",
+      "version": "1.0.2",
+      "path": "D:\\DS-160\\node_modules\\side-channel-weakmap"
+    },
+    {
+      "name": "side-channel-map",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\side-channel-map"
+    },
+    {
+      "name": "side-channel-list",
+      "version": "1.0.0",
+      "path": "D:\\DS-160\\node_modules\\side-channel-list"
+    },
+    {
+      "name": "side-channel",
+      "version": "1.1.0",
+      "path": "D:\\DS-160\\node_modules\\side-channel"
+    },
+    {
+      "name": "sib-api-v3-sdk",
+      "version": "8.5.0",
+      "path": "D:\\DS-160\\node_modules\\sib-api-v3-sdk"
+    },
+    {
+      "name": "shebang-regex",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\shebang-regex"
+    },
+    {
+      "name": "shebang-command",
+      "version": "2.0.0",
+      "path": "D:\\DS-160\\node_modules\\shebang-command"
+    },
+    {
+      "name": "setimmediate",
+      "version": "1.0.5",
+      "path": "D:\\DS-160\\node_modules\\setimmediate"
+    },
+    {
+      "name": "semver",
+      "version": "7.7.3",
+      "path": "D:\\DS-160\\node_modules\\semver"
+    },
+    {
+      "name": "saxes",
+      "version": "6.0.0",
+      "path": "D:\\DS-160\\node_modules\\saxes"
+    },
+    {
+      "name": "sax",
+      "version": "1.4.3",
+      "path": "D:\\DS-160\\node_modules\\sax"
+    },
+    {
+      "name": "safer-buffer",
+      "version": "2.1.2",
+      "path": "D:\\DS-160\\node_modules\\safer-buffer"
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.1.2",
+      "path": "D:\\DS-160\\node_modules\\safe-buffer"
+    },
+    {
+      "name": "run-parallel",
+      "version": "1.2.0",
+      "path": "D:\\DS-160\\node_modules\\run-parallel"
+    },
+    {
+      "name": "rrweb-cssom",
+      "version": "0.6.0",
+      "path": "D:\\DS-160\\node_modules\\rrweb-cssom"
+    },
+    {
+      "name": "rimraf",
+      "version": "3.0.2",
+      "path": "D:\\DS-160\\node_modules\\rimraf"
+    },
+    {
+      "name": "glob",
+      "version": "7.2.3",
+      "path": "D:\\DS-160\\node_modules\\rimraf\\node_modules\\glob"
+    },
+    {
+      "name": "rfdc",
+      "version": "1.4.1",
+      "path": "D:\\DS-160\\node_modules\\rfdc"
+    },
+    {
+      "name": "reusify",
+      "version": "1.1.0",
+      "path": "D:\\DS-160\\node_modules\\reusify"
+    },
+    {
+      "name": "restore-cursor",
+      "version": "5.1.0",
+      "path": "D:\\DS-160\\node_modules\\restore-cursor"
+    },
+    {
+      "name": "resolve-from",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\resolve-from"
+    },
+    {
+      "name": "requires-port",
+      "version": "1.0.0",
+      "path": "D:\\DS-160\\node_modules\\requires-port"
+    },
+    {
+      "name": "require-from-string",
+      "version": "2.0.2",
+      "path": "D:\\DS-160\\node_modules\\require-from-string"
+    },
+    {
+      "name": "require-directory",
+      "version": "2.1.1",
+      "path": "D:\\DS-160\\node_modules\\require-directory"
+    },
+    {
+      "name": "readable-stream",
+      "version": "2.3.8",
+      "path": "D:\\DS-160\\node_modules\\readable-stream"
+    },
+    {
+      "name": "queue-microtask",
+      "version": "1.2.3",
+      "path": "D:\\DS-160\\node_modules\\queue-microtask"
+    },
+    {
+      "name": "querystringify",
+      "version": "2.2.0",
+      "path": "D:\\DS-160\\node_modules\\querystringify"
+    },
+    {
+      "name": "querystring",
+      "version": "0.2.0",
+      "path": "D:\\DS-160\\node_modules\\querystring"
+    },
+    {
+      "name": "qs",
+      "version": "6.14.0",
+      "path": "D:\\DS-160\\node_modules\\qs"
+    },
+    {
+      "name": "puppeteer-core",
+      "version": "24.33.0",
+      "path": "D:\\DS-160\\node_modules\\puppeteer-core"
+    },
+    {
+      "name": "puppeteer",
+      "version": "24.33.0",
+      "path": "D:\\DS-160\\node_modules\\puppeteer"
+    },
+    {
+      "name": "punycode",
+      "version": "2.3.1",
+      "path": "D:\\DS-160\\node_modules\\punycode"
+    },
+    {
+      "name": "pump",
+      "version": "3.0.3",
+      "path": "D:\\DS-160\\node_modules\\pump"
+    },
+    {
+      "name": "psl",
+      "version": "1.15.0",
+      "path": "D:\\DS-160\\node_modules\\psl"
+    },
+    {
+      "name": "proxy-from-env",
+      "version": "1.1.0",
+      "path": "D:\\DS-160\\node_modules\\proxy-from-env"
+    },
+    {
+      "name": "proxy-agent",
+      "version": "6.5.0",
+      "path": "D:\\DS-160\\node_modules\\proxy-agent"
+    },
+    {
+      "name": "lru-cache",
+      "version": "7.18.3",
+      "path": "D:\\DS-160\\node_modules\\proxy-agent\\node_modules\\lru-cache"
+    },
+    {
+      "name": "https-proxy-agent",
+      "version": "7.0.6",
+      "path": "D:\\DS-160\\node_modules\\proxy-agent\\node_modules\\https-proxy-agent"
+    },
+    {
+      "name": "http-proxy-agent",
+      "version": "7.0.2",
+      "path": "D:\\DS-160\\node_modules\\proxy-agent\\node_modules\\http-proxy-agent"
+    },
+    {
+      "name": "agent-base",
+      "version": "7.1.4",
+      "path": "D:\\DS-160\\node_modules\\proxy-agent\\node_modules\\agent-base"
+    },
+    {
+      "name": "prompts",
+      "version": "2.4.2",
+      "path": "D:\\DS-160\\node_modules\\prompts"
+    },
+    {
+      "name": "kleur",
+      "version": "3.0.3",
+      "path": "D:\\DS-160\\node_modules\\prompts\\node_modules\\kleur"
+    },
+    {
+      "name": "progress",
+      "version": "2.0.3",
+      "path": "D:\\DS-160\\node_modules\\progress"
+    },
+    {
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "path": "D:\\DS-160\\node_modules\\process-nextick-args"
+    },
+    {
+      "name": "prettier-linter-helpers",
+      "version": "1.0.0",
+      "path": "D:\\DS-160\\node_modules\\prettier-linter-helpers"
+    },
+    {
+      "name": "prettier",
+      "version": "2.8.8",
+      "path": "D:\\DS-160\\node_modules\\prettier"
+    },
+    {
+      "name": "prelude-ls",
+      "version": "1.2.1",
+      "path": "D:\\DS-160\\node_modules\\prelude-ls"
+    },
+    {
+      "name": "pidtree",
+      "version": "0.6.0",
+      "path": "D:\\DS-160\\node_modules\\pidtree"
+    },
+    {
+      "name": "picomatch",
+      "version": "2.3.1",
+      "path": "D:\\DS-160\\node_modules\\picomatch"
+    },
+    {
+      "name": "picocolors",
+      "version": "1.1.1",
+      "path": "D:\\DS-160\\node_modules\\picocolors"
+    },
+    {
+      "name": "pend",
+      "version": "1.2.0",
+      "path": "D:\\DS-160\\node_modules\\pend"
+    },
+    {
+      "name": "path-scurry",
+      "version": "1.11.1",
+      "path": "D:\\DS-160\\node_modules\\path-scurry"
+    },
+    {
+      "name": "path-key",
+      "version": "3.1.1",
+      "path": "D:\\DS-160\\node_modules\\path-key"
+    },
+    {
+      "name": "path-is-absolute",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\path-is-absolute"
+    },
+    {
+      "name": "path-exists",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\path-exists"
+    },
+    {
+      "name": "parse5",
+      "version": "7.3.0",
+      "path": "D:\\DS-160\\node_modules\\parse5"
+    },
+    {
+      "name": "parse-json",
+      "version": "5.2.0",
+      "path": "D:\\DS-160\\node_modules\\parse-json"
+    },
+    {
+      "name": "parent-module",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\parent-module"
+    },
+    {
+      "name": "pako",
+      "version": "1.0.11",
+      "path": "D:\\DS-160\\node_modules\\pako"
+    },
+    {
+      "name": "package-json-from-dist",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\package-json-from-dist"
+    },
+    {
+      "name": "pac-resolver",
+      "version": "7.0.1",
+      "path": "D:\\DS-160\\node_modules\\pac-resolver"
+    },
+    {
+      "name": "pac-proxy-agent",
+      "version": "7.2.0",
+      "path": "D:\\DS-160\\node_modules\\pac-proxy-agent"
+    },
+    {
+      "name": "https-proxy-agent",
+      "version": "7.0.6",
+      "path": "D:\\DS-160\\node_modules\\pac-proxy-agent\\node_modules\\https-proxy-agent"
+    },
+    {
+      "name": "http-proxy-agent",
+      "version": "7.0.2",
+      "path": "D:\\DS-160\\node_modules\\pac-proxy-agent\\node_modules\\http-proxy-agent"
+    },
+    {
+      "name": "agent-base",
+      "version": "7.1.4",
+      "path": "D:\\DS-160\\node_modules\\pac-proxy-agent\\node_modules\\agent-base"
+    },
+    {
+      "name": "p-locate",
+      "version": "5.0.0",
+      "path": "D:\\DS-160\\node_modules\\p-locate"
+    },
+    {
+      "name": "p-limit",
+      "version": "3.1.0",
+      "path": "D:\\DS-160\\node_modules\\p-limit"
+    },
+    {
+      "name": "optionator",
+      "version": "0.9.4",
+      "path": "D:\\DS-160\\node_modules\\optionator"
+    },
+    {
+      "name": "onetime",
+      "version": "7.0.0",
+      "path": "D:\\DS-160\\node_modules\\onetime"
+    },
+    {
+      "name": "once",
+      "version": "1.4.0",
+      "path": "D:\\DS-160\\node_modules\\once"
+    },
+    {
+      "name": "object-inspect",
+      "version": "1.13.4",
+      "path": "D:\\DS-160\\node_modules\\object-inspect"
+    },
+    {
+      "name": "nwsapi",
+      "version": "2.2.23",
+      "path": "D:\\DS-160\\node_modules\\nwsapi"
+    },
+    {
+      "name": "netmask",
+      "version": "2.0.2",
+      "path": "D:\\DS-160\\node_modules\\netmask"
+    },
+    {
+      "name": "natural-compare",
+      "version": "1.4.0",
+      "path": "D:\\DS-160\\node_modules\\natural-compare"
+    },
+    {
+      "name": "nanoid",
+      "version": "5.1.6",
+      "path": "D:\\DS-160\\node_modules\\nanoid"
+    },
+    {
+      "name": "nano-spawn",
+      "version": "2.0.0",
+      "path": "D:\\DS-160\\node_modules\\nano-spawn"
+    },
+    {
+      "name": "ms",
+      "version": "2.1.3",
+      "path": "D:\\DS-160\\node_modules\\ms"
+    },
+    {
+      "name": "mitt",
+      "version": "3.0.1",
+      "path": "D:\\DS-160\\node_modules\\mitt"
+    },
+    {
+      "name": "minipass",
+      "version": "7.1.2",
+      "path": "D:\\DS-160\\node_modules\\minipass"
+    },
+    {
+      "name": "minimist",
+      "version": "1.2.8",
+      "path": "D:\\DS-160\\node_modules\\minimist"
+    },
+    {
+      "name": "minimatch",
+      "version": "3.1.2",
+      "path": "D:\\DS-160\\node_modules\\minimatch"
+    },
+    {
+      "name": "minimalistic-assert",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\minimalistic-assert"
+    },
+    {
+      "name": "mimic-function",
+      "version": "5.0.1",
+      "path": "D:\\DS-160\\node_modules\\mimic-function"
+    },
+    {
+      "name": "mime-types",
+      "version": "2.1.35",
+      "path": "D:\\DS-160\\node_modules\\mime-types"
+    },
+    {
+      "name": "mime-db",
+      "version": "1.52.0",
+      "path": "D:\\DS-160\\node_modules\\mime-db"
+    },
+    {
+      "name": "mime",
+      "version": "1.6.0",
+      "path": "D:\\DS-160\\node_modules\\mime"
+    },
+    {
+      "name": "micromatch",
+      "version": "4.0.8",
+      "path": "D:\\DS-160\\node_modules\\micromatch"
+    },
+    {
+      "name": "methods",
+      "version": "1.1.2",
+      "path": "D:\\DS-160\\node_modules\\methods"
+    },
+    {
+      "name": "math-intrinsics",
+      "version": "1.1.0",
+      "path": "D:\\DS-160\\node_modules\\math-intrinsics"
+    },
+    {
+      "name": "lru-cache",
+      "version": "10.4.3",
+      "path": "D:\\DS-160\\node_modules\\lru-cache"
+    },
+    {
+      "name": "log-update",
+      "version": "6.1.0",
+      "path": "D:\\DS-160\\node_modules\\log-update"
+    },
+    {
+      "name": "wrap-ansi",
+      "version": "9.0.2",
+      "path": "D:\\DS-160\\node_modules\\log-update\\node_modules\\wrap-ansi"
+    },
+    {
+      "name": "strip-ansi",
+      "version": "7.1.2",
+      "path": "D:\\DS-160\\node_modules\\log-update\\node_modules\\strip-ansi"
+    },
+    {
+      "name": "string-width",
+      "version": "7.2.0",
+      "path": "D:\\DS-160\\node_modules\\log-update\\node_modules\\string-width"
+    },
+    {
+      "name": "emoji-regex",
+      "version": "10.6.0",
+      "path": "D:\\DS-160\\node_modules\\log-update\\node_modules\\emoji-regex"
+    },
+    {
+      "name": "ansi-styles",
+      "version": "6.2.3",
+      "path": "D:\\DS-160\\node_modules\\log-update\\node_modules\\ansi-styles"
+    },
+    {
+      "name": "ansi-regex",
+      "version": "6.2.2",
+      "path": "D:\\DS-160\\node_modules\\log-update\\node_modules\\ansi-regex"
+    },
+    {
+      "name": "lodash.merge",
+      "version": "4.6.2",
+      "path": "D:\\DS-160\\node_modules\\lodash.merge"
+    },
+    {
+      "name": "locate-path",
+      "version": "6.0.0",
+      "path": "D:\\DS-160\\node_modules\\locate-path"
+    },
+    {
+      "name": "listr2",
+      "version": "9.0.5",
+      "path": "D:\\DS-160\\node_modules\\listr2"
+    },
+    {
+      "name": "wrap-ansi",
+      "version": "9.0.2",
+      "path": "D:\\DS-160\\node_modules\\listr2\\node_modules\\wrap-ansi"
+    },
+    {
+      "name": "strip-ansi",
+      "version": "7.1.2",
+      "path": "D:\\DS-160\\node_modules\\listr2\\node_modules\\strip-ansi"
+    },
+    {
+      "name": "string-width",
+      "version": "7.2.0",
+      "path": "D:\\DS-160\\node_modules\\listr2\\node_modules\\string-width"
+    },
+    {
+      "name": "emoji-regex",
+      "version": "10.6.0",
+      "path": "D:\\DS-160\\node_modules\\listr2\\node_modules\\emoji-regex"
+    },
+    {
+      "name": "ansi-styles",
+      "version": "6.2.3",
+      "path": "D:\\DS-160\\node_modules\\listr2\\node_modules\\ansi-styles"
+    },
+    {
+      "name": "ansi-regex",
+      "version": "6.2.2",
+      "path": "D:\\DS-160\\node_modules\\listr2\\node_modules\\ansi-regex"
+    },
+    {
+      "name": "lint-staged",
+      "version": "16.2.7",
+      "path": "D:\\DS-160\\node_modules\\lint-staged"
+    },
+    {
+      "name": "lines-and-columns",
+      "version": "1.2.4",
+      "path": "D:\\DS-160\\node_modules\\lines-and-columns"
+    },
+    {
+      "name": "lie",
+      "version": "3.3.0",
+      "path": "D:\\DS-160\\node_modules\\lie"
+    },
+    {
+      "name": "levn",
+      "version": "0.4.1",
+      "path": "D:\\DS-160\\node_modules\\levn"
+    },
+    {
+      "name": "kleur",
+      "version": "4.1.5",
+      "path": "D:\\DS-160\\node_modules\\kleur"
+    },
+    {
+      "name": "keyv",
+      "version": "4.5.4",
+      "path": "D:\\DS-160\\node_modules\\keyv"
+    },
+    {
+      "name": "jszip",
+      "version": "3.10.1",
+      "path": "D:\\DS-160\\node_modules\\jszip"
+    },
+    {
+      "name": "json-stable-stringify-without-jsonify",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\json-stable-stringify-without-jsonify"
+    },
+    {
+      "name": "json-schema-traverse",
+      "version": "0.4.1",
+      "path": "D:\\DS-160\\node_modules\\json-schema-traverse"
+    },
+    {
+      "name": "json-parse-even-better-errors",
+      "version": "2.3.1",
+      "path": "D:\\DS-160\\node_modules\\json-parse-even-better-errors"
+    },
+    {
+      "name": "json-buffer",
+      "version": "3.0.1",
+      "path": "D:\\DS-160\\node_modules\\json-buffer"
+    },
+    {
+      "name": "jsdom",
+      "version": "22.1.0",
+      "path": "D:\\DS-160\\node_modules\\jsdom"
+    },
+    {
+      "name": "js-yaml",
+      "version": "4.1.1",
+      "path": "D:\\DS-160\\node_modules\\js-yaml"
+    },
+    {
+      "name": "js-tokens",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\js-tokens"
+    },
+    {
+      "name": "jackspeak",
+      "version": "3.4.3",
+      "path": "D:\\DS-160\\node_modules\\jackspeak"
+    },
+    {
+      "name": "isexe",
+      "version": "2.0.0",
+      "path": "D:\\DS-160\\node_modules\\isexe"
+    },
+    {
+      "name": "isarray",
+      "version": "1.0.0",
+      "path": "D:\\DS-160\\node_modules\\isarray"
+    },
+    {
+      "name": "is-potential-custom-element-name",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\is-potential-custom-element-name"
+    },
+    {
+      "name": "is-path-inside",
+      "version": "3.0.3",
+      "path": "D:\\DS-160\\node_modules\\is-path-inside"
+    },
+    {
+      "name": "is-number",
+      "version": "7.0.0",
+      "path": "D:\\DS-160\\node_modules\\is-number"
+    },
+    {
+      "name": "is-glob",
+      "version": "4.0.3",
+      "path": "D:\\DS-160\\node_modules\\is-glob"
+    },
+    {
+      "name": "is-fullwidth-code-point",
+      "version": "5.1.0",
+      "path": "D:\\DS-160\\node_modules\\is-fullwidth-code-point"
+    },
+    {
+      "name": "is-extglob",
+      "version": "2.1.1",
+      "path": "D:\\DS-160\\node_modules\\is-extglob"
+    },
+    {
+      "name": "is-arrayish",
+      "version": "0.2.1",
+      "path": "D:\\DS-160\\node_modules\\is-arrayish"
+    },
+    {
+      "name": "ip-address",
+      "version": "10.1.0",
+      "path": "D:\\DS-160\\node_modules\\ip-address"
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.4",
+      "path": "D:\\DS-160\\node_modules\\inherits"
+    },
+    {
+      "name": "inflight",
+      "version": "1.0.6",
+      "path": "D:\\DS-160\\node_modules\\inflight"
+    },
+    {
+      "name": "imurmurhash",
+      "version": "0.1.4",
+      "path": "D:\\DS-160\\node_modules\\imurmurhash"
+    },
+    {
+      "name": "import-fresh",
+      "version": "3.3.1",
+      "path": "D:\\DS-160\\node_modules\\import-fresh"
+    },
+    {
+      "name": "immediate",
+      "version": "3.0.6",
+      "path": "D:\\DS-160\\node_modules\\immediate"
+    },
+    {
+      "name": "ignore",
+      "version": "5.3.2",
+      "path": "D:\\DS-160\\node_modules\\ignore"
+    },
+    {
+      "name": "iconv-lite",
+      "version": "0.6.3",
+      "path": "D:\\DS-160\\node_modules\\iconv-lite"
+    },
+    {
+      "name": "husky",
+      "version": "8.0.3",
+      "path": "D:\\DS-160\\node_modules\\husky"
+    },
+    {
+      "name": "https-proxy-agent",
+      "version": "5.0.1",
+      "path": "D:\\DS-160\\node_modules\\https-proxy-agent"
+    },
+    {
+      "name": "http-proxy-agent",
+      "version": "5.0.0",
+      "path": "D:\\DS-160\\node_modules\\http-proxy-agent"
+    },
+    {
+      "name": "html-validate",
+      "version": "9.7.1",
+      "path": "D:\\DS-160\\node_modules\\html-validate"
+    },
+    {
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "path": "D:\\DS-160\\node_modules\\html-validate\\node_modules\\json-schema-traverse"
+    },
+    {
+      "name": "ajv",
+      "version": "8.17.1",
+      "path": "D:\\DS-160\\node_modules\\html-validate\\node_modules\\ajv"
+    },
+    {
+      "name": "@sidvind/better-ajv-errors",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\html-validate\\node_modules\\@sidvind\\better-ajv-errors"
+    },
+    {
+      "name": "html-encoding-sniffer",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\html-encoding-sniffer"
+    },
+    {
+      "name": "hasown",
+      "version": "2.0.2",
+      "path": "D:\\DS-160\\node_modules\\hasown"
+    },
+    {
+      "name": "hash.js",
+      "version": "1.1.7",
+      "path": "D:\\DS-160\\node_modules\\hash.js"
+    },
+    {
+      "name": "has-tostringtag",
+      "version": "1.0.2",
+      "path": "D:\\DS-160\\node_modules\\has-tostringtag"
+    },
+    {
+      "name": "has-symbols",
+      "version": "1.1.0",
+      "path": "D:\\DS-160\\node_modules\\has-symbols"
+    },
+    {
+      "name": "has-flag",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\has-flag"
+    },
+    {
+      "name": "graphemer",
+      "version": "1.4.0",
+      "path": "D:\\DS-160\\node_modules\\graphemer"
+    },
+    {
+      "name": "gopd",
+      "version": "1.2.0",
+      "path": "D:\\DS-160\\node_modules\\gopd"
+    },
+    {
+      "name": "globals",
+      "version": "13.24.0",
+      "path": "D:\\DS-160\\node_modules\\globals"
+    },
+    {
+      "name": "glob-parent",
+      "version": "6.0.2",
+      "path": "D:\\DS-160\\node_modules\\glob-parent"
+    },
+    {
+      "name": "glob",
+      "version": "10.5.0",
+      "path": "D:\\DS-160\\node_modules\\glob"
+    },
+    {
+      "name": "minimatch",
+      "version": "9.0.5",
+      "path": "D:\\DS-160\\node_modules\\glob\\node_modules\\minimatch"
+    },
+    {
+      "name": "brace-expansion",
+      "version": "2.0.2",
+      "path": "D:\\DS-160\\node_modules\\glob\\node_modules\\brace-expansion"
+    },
+    {
+      "name": "get-uri",
+      "version": "6.0.5",
+      "path": "D:\\DS-160\\node_modules\\get-uri"
+    },
+    {
+      "name": "get-stream",
+      "version": "5.2.0",
+      "path": "D:\\DS-160\\node_modules\\get-stream"
+    },
+    {
+      "name": "get-proto",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\get-proto"
+    },
+    {
+      "name": "get-intrinsic",
+      "version": "1.3.0",
+      "path": "D:\\DS-160\\node_modules\\get-intrinsic"
+    },
+    {
+      "name": "get-east-asian-width",
+      "version": "1.4.0",
+      "path": "D:\\DS-160\\node_modules\\get-east-asian-width"
+    },
+    {
+      "name": "get-caller-file",
+      "version": "2.0.5",
+      "path": "D:\\DS-160\\node_modules\\get-caller-file"
+    },
+    {
+      "name": "function-bind",
+      "version": "1.1.2",
+      "path": "D:\\DS-160\\node_modules\\function-bind"
+    },
+    {
+      "name": "fs.realpath",
+      "version": "1.0.0",
+      "path": "D:\\DS-160\\node_modules\\fs.realpath"
+    },
+    {
+      "name": "formidable",
+      "version": "1.2.6",
+      "path": "D:\\DS-160\\node_modules\\formidable"
+    },
+    {
+      "name": "form-data",
+      "version": "4.0.5",
+      "path": "D:\\DS-160\\node_modules\\form-data"
+    },
+    {
+      "name": "foreground-child",
+      "version": "3.3.1",
+      "path": "D:\\DS-160\\node_modules\\foreground-child"
+    },
+    {
+      "name": "flatted",
+      "version": "3.3.3",
+      "path": "D:\\DS-160\\node_modules\\flatted"
+    },
+    {
+      "name": "flat-cache",
+      "version": "3.2.0",
+      "path": "D:\\DS-160\\node_modules\\flat-cache"
+    },
+    {
+      "name": "find-up",
+      "version": "5.0.0",
+      "path": "D:\\DS-160\\node_modules\\find-up"
+    },
+    {
+      "name": "fill-range",
+      "version": "7.1.1",
+      "path": "D:\\DS-160\\node_modules\\fill-range"
+    },
+    {
+      "name": "file-entry-cache",
+      "version": "6.0.1",
+      "path": "D:\\DS-160\\node_modules\\file-entry-cache"
+    },
+    {
+      "name": "fd-slicer",
+      "version": "1.1.0",
+      "path": "D:\\DS-160\\node_modules\\fd-slicer"
+    },
+    {
+      "name": "fastq",
+      "version": "1.19.1",
+      "path": "D:\\DS-160\\node_modules\\fastq"
+    },
+    {
+      "name": "fast-uri",
+      "version": "3.1.0",
+      "path": "D:\\DS-160\\node_modules\\fast-uri"
+    },
+    {
+      "name": "fast-levenshtein",
+      "version": "2.0.6",
+      "path": "D:\\DS-160\\node_modules\\fast-levenshtein"
+    },
+    {
+      "name": "fast-json-stable-stringify",
+      "version": "2.1.0",
+      "path": "D:\\DS-160\\node_modules\\fast-json-stable-stringify"
+    },
+    {
+      "name": "fast-fifo",
+      "version": "1.3.2",
+      "path": "D:\\DS-160\\node_modules\\fast-fifo"
+    },
+    {
+      "name": "fast-diff",
+      "version": "1.3.0",
+      "path": "D:\\DS-160\\node_modules\\fast-diff"
+    },
+    {
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "path": "D:\\DS-160\\node_modules\\fast-deep-equal"
+    },
+    {
+      "name": "extract-zip",
+      "version": "2.0.1",
+      "path": "D:\\DS-160\\node_modules\\extract-zip"
+    },
+    {
+      "name": "extend",
+      "version": "3.0.2",
+      "path": "D:\\DS-160\\node_modules\\extend"
+    },
+    {
+      "name": "events-universal",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\events-universal"
+    },
+    {
+      "name": "eventemitter3",
+      "version": "5.0.1",
+      "path": "D:\\DS-160\\node_modules\\eventemitter3"
+    },
+    {
+      "name": "esutils",
+      "version": "2.0.3",
+      "path": "D:\\DS-160\\node_modules\\esutils"
+    },
+    {
+      "name": "estraverse",
+      "version": "5.3.0",
+      "path": "D:\\DS-160\\node_modules\\estraverse"
+    },
+    {
+      "name": "esrecurse",
+      "version": "4.3.0",
+      "path": "D:\\DS-160\\node_modules\\esrecurse"
+    },
+    {
+      "name": "esquery",
+      "version": "1.6.0",
+      "path": "D:\\DS-160\\node_modules\\esquery"
+    },
+    {
+      "name": "esprima",
+      "version": "4.0.1",
+      "path": "D:\\DS-160\\node_modules\\esprima"
+    },
+    {
+      "name": "espree",
+      "version": "9.6.1",
+      "path": "D:\\DS-160\\node_modules\\espree"
+    },
+    {
+      "name": "eslint-visitor-keys",
+      "version": "3.4.3",
+      "path": "D:\\DS-160\\node_modules\\eslint-visitor-keys"
+    },
+    {
+      "name": "eslint-scope",
+      "version": "7.2.2",
+      "path": "D:\\DS-160\\node_modules\\eslint-scope"
+    },
+    {
+      "name": "eslint-plugin-prettier",
+      "version": "4.2.5",
+      "path": "D:\\DS-160\\node_modules\\eslint-plugin-prettier"
+    },
+    {
+      "name": "eslint-config-prettier",
+      "version": "8.10.2",
+      "path": "D:\\DS-160\\node_modules\\eslint-config-prettier"
+    },
+    {
+      "name": "eslint",
+      "version": "8.57.1",
+      "path": "D:\\DS-160\\node_modules\\eslint"
+    },
+    {
+      "name": "escodegen",
+      "version": "2.1.0",
+      "path": "D:\\DS-160\\node_modules\\escodegen"
+    },
+    {
+      "name": "escape-string-regexp",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\escape-string-regexp"
+    },
+    {
+      "name": "escalade",
+      "version": "3.2.0",
+      "path": "D:\\DS-160\\node_modules\\escalade"
+    },
+    {
+      "name": "es-set-tostringtag",
+      "version": "2.1.0",
+      "path": "D:\\DS-160\\node_modules\\es-set-tostringtag"
+    },
+    {
+      "name": "es-object-atoms",
+      "version": "1.1.1",
+      "path": "D:\\DS-160\\node_modules\\es-object-atoms"
+    },
+    {
+      "name": "es-errors",
+      "version": "1.3.0",
+      "path": "D:\\DS-160\\node_modules\\es-errors"
+    },
+    {
+      "name": "es-define-property",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\es-define-property"
+    },
+    {
+      "name": "error-ex",
+      "version": "1.3.4",
+      "path": "D:\\DS-160\\node_modules\\error-ex"
+    },
+    {
+      "name": "environment",
+      "version": "1.1.0",
+      "path": "D:\\DS-160\\node_modules\\environment"
+    },
+    {
+      "name": "env-paths",
+      "version": "2.2.1",
+      "path": "D:\\DS-160\\node_modules\\env-paths"
+    },
+    {
+      "name": "entities",
+      "version": "6.0.1",
+      "path": "D:\\DS-160\\node_modules\\entities"
+    },
+    {
+      "name": "end-of-stream",
+      "version": "1.4.5",
+      "path": "D:\\DS-160\\node_modules\\end-of-stream"
+    },
+    {
+      "name": "emoji-regex",
+      "version": "9.2.2",
+      "path": "D:\\DS-160\\node_modules\\emoji-regex"
+    },
+    {
+      "name": "eastasianwidth",
+      "version": "0.2.0",
+      "path": "D:\\DS-160\\node_modules\\eastasianwidth"
+    },
+    {
+      "name": "dunder-proto",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\dunder-proto"
+    },
+    {
+      "name": "domexception",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\domexception"
+    },
+    {
+      "name": "docx",
+      "version": "9.5.1",
+      "path": "D:\\DS-160\\node_modules\\docx"
+    },
+    {
+      "name": "doctrine",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\doctrine"
+    },
+    {
+      "name": "devtools-protocol",
+      "version": "0.0.1534754",
+      "path": "D:\\DS-160\\node_modules\\devtools-protocol"
+    },
+    {
+      "name": "delayed-stream",
+      "version": "1.0.0",
+      "path": "D:\\DS-160\\node_modules\\delayed-stream"
+    },
+    {
+      "name": "degenerator",
+      "version": "5.0.1",
+      "path": "D:\\DS-160\\node_modules\\degenerator"
+    },
+    {
+      "name": "deep-is",
+      "version": "0.1.4",
+      "path": "D:\\DS-160\\node_modules\\deep-is"
+    },
+    {
+      "name": "decimal.js",
+      "version": "10.6.0",
+      "path": "D:\\DS-160\\node_modules\\decimal.js"
+    },
+    {
+      "name": "debug",
+      "version": "4.4.3",
+      "path": "D:\\DS-160\\node_modules\\debug"
+    },
+    {
+      "name": "data-urls",
+      "version": "4.0.0",
+      "path": "D:\\DS-160\\node_modules\\data-urls"
+    },
+    {
+      "name": "data-uri-to-buffer",
+      "version": "6.0.2",
+      "path": "D:\\DS-160\\node_modules\\data-uri-to-buffer"
+    },
+    {
+      "name": "cssstyle",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\cssstyle"
+    },
+    {
+      "name": "cross-spawn",
+      "version": "7.0.6",
+      "path": "D:\\DS-160\\node_modules\\cross-spawn"
+    },
+    {
+      "name": "cosmiconfig",
+      "version": "9.0.0",
+      "path": "D:\\DS-160\\node_modules\\cosmiconfig"
+    },
+    {
+      "name": "core-util-is",
+      "version": "1.0.3",
+      "path": "D:\\DS-160\\node_modules\\core-util-is"
+    },
+    {
+      "name": "cookiejar",
+      "version": "2.1.4",
+      "path": "D:\\DS-160\\node_modules\\cookiejar"
+    },
+    {
+      "name": "concat-map",
+      "version": "0.0.1",
+      "path": "D:\\DS-160\\node_modules\\concat-map"
+    },
+    {
+      "name": "component-emitter",
+      "version": "1.3.1",
+      "path": "D:\\DS-160\\node_modules\\component-emitter"
+    },
+    {
+      "name": "commander",
+      "version": "14.0.2",
+      "path": "D:\\DS-160\\node_modules\\commander"
+    },
+    {
+      "name": "combined-stream",
+      "version": "1.0.8",
+      "path": "D:\\DS-160\\node_modules\\combined-stream"
+    },
+    {
+      "name": "colorette",
+      "version": "2.0.20",
+      "path": "D:\\DS-160\\node_modules\\colorette"
+    },
+    {
+      "name": "color-name",
+      "version": "1.1.4",
+      "path": "D:\\DS-160\\node_modules\\color-name"
+    },
+    {
+      "name": "color-convert",
+      "version": "2.0.1",
+      "path": "D:\\DS-160\\node_modules\\color-convert"
+    },
+    {
+      "name": "cliui",
+      "version": "8.0.1",
+      "path": "D:\\DS-160\\node_modules\\cliui"
+    },
+    {
+      "name": "wrap-ansi",
+      "version": "7.0.0",
+      "path": "D:\\DS-160\\node_modules\\cliui\\node_modules\\wrap-ansi"
+    },
+    {
+      "name": "string-width",
+      "version": "4.2.3",
+      "path": "D:\\DS-160\\node_modules\\cliui\\node_modules\\string-width"
+    },
+    {
+      "name": "is-fullwidth-code-point",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\cliui\\node_modules\\is-fullwidth-code-point"
+    },
+    {
+      "name": "emoji-regex",
+      "version": "8.0.0",
+      "path": "D:\\DS-160\\node_modules\\cliui\\node_modules\\emoji-regex"
+    },
+    {
+      "name": "cli-truncate",
+      "version": "5.1.1",
+      "path": "D:\\DS-160\\node_modules\\cli-truncate"
+    },
+    {
+      "name": "strip-ansi",
+      "version": "7.1.2",
+      "path": "D:\\DS-160\\node_modules\\cli-truncate\\node_modules\\strip-ansi"
+    },
+    {
+      "name": "string-width",
+      "version": "8.1.0",
+      "path": "D:\\DS-160\\node_modules\\cli-truncate\\node_modules\\string-width"
+    },
+    {
+      "name": "ansi-regex",
+      "version": "6.2.2",
+      "path": "D:\\DS-160\\node_modules\\cli-truncate\\node_modules\\ansi-regex"
+    },
+    {
+      "name": "cli-cursor",
+      "version": "5.0.0",
+      "path": "D:\\DS-160\\node_modules\\cli-cursor"
+    },
+    {
+      "name": "chromium-bidi",
+      "version": "11.0.0",
+      "path": "D:\\DS-160\\node_modules\\chromium-bidi"
+    },
+    {
+      "name": "chalk",
+      "version": "4.1.2",
+      "path": "D:\\DS-160\\node_modules\\chalk"
+    },
+    {
+      "name": "callsites",
+      "version": "3.1.0",
+      "path": "D:\\DS-160\\node_modules\\callsites"
+    },
+    {
+      "name": "call-bound",
+      "version": "1.0.4",
+      "path": "D:\\DS-160\\node_modules\\call-bound"
+    },
+    {
+      "name": "call-bind-apply-helpers",
+      "version": "1.0.2",
+      "path": "D:\\DS-160\\node_modules\\call-bind-apply-helpers"
+    },
+    {
+      "name": "buffer-crc32",
+      "version": "0.2.13",
+      "path": "D:\\DS-160\\node_modules\\buffer-crc32"
+    },
+    {
+      "name": "braces",
+      "version": "3.0.3",
+      "path": "D:\\DS-160\\node_modules\\braces"
+    },
+    {
+      "name": "brace-expansion",
+      "version": "1.1.12",
+      "path": "D:\\DS-160\\node_modules\\brace-expansion"
+    },
+    {
+      "name": "basic-ftp",
+      "version": "5.0.5",
+      "path": "D:\\DS-160\\node_modules\\basic-ftp"
+    },
+    {
+      "name": "bare-url",
+      "version": "2.3.2",
+      "path": "D:\\DS-160\\node_modules\\bare-url"
+    },
+    {
+      "name": "bare-stream",
+      "version": "2.7.0",
+      "path": "D:\\DS-160\\node_modules\\bare-stream"
+    },
+    {
+      "name": "bare-path",
+      "version": "3.0.0",
+      "path": "D:\\DS-160\\node_modules\\bare-path"
+    },
+    {
+      "name": "bare-os",
+      "version": "3.6.2",
+      "path": "D:\\DS-160\\node_modules\\bare-os"
+    },
+    {
+      "name": "bare-fs",
+      "version": "4.5.2",
+      "path": "D:\\DS-160\\node_modules\\bare-fs"
+    },
+    {
+      "name": "bare-events",
+      "version": "2.8.2",
+      "path": "D:\\DS-160\\node_modules\\bare-events"
+    },
+    {
+      "name": "balanced-match",
+      "version": "1.0.2",
+      "path": "D:\\DS-160\\node_modules\\balanced-match"
+    },
+    {
+      "name": "b4a",
+      "version": "1.7.3",
+      "path": "D:\\DS-160\\node_modules\\b4a"
+    },
+    {
+      "name": "asynckit",
+      "version": "0.4.0",
+      "path": "D:\\DS-160\\node_modules\\asynckit"
+    },
+    {
+      "name": "ast-types",
+      "version": "0.13.4",
+      "path": "D:\\DS-160\\node_modules\\ast-types"
+    },
+    {
+      "name": "argparse",
+      "version": "2.0.1",
+      "path": "D:\\DS-160\\node_modules\\argparse"
+    },
+    {
+      "name": "arabic-reshaper",
+      "version": "1.1.0",
+      "path": "D:\\DS-160\\node_modules\\arabic-reshaper"
+    },
+    {
+      "name": "ansi-styles",
+      "version": "4.3.0",
+      "path": "D:\\DS-160\\node_modules\\ansi-styles"
+    },
+    {
+      "name": "ansi-regex",
+      "version": "5.0.1",
+      "path": "D:\\DS-160\\node_modules\\ansi-regex"
+    },
+    {
+      "name": "ansi-escapes",
+      "version": "7.2.0",
+      "path": "D:\\DS-160\\node_modules\\ansi-escapes"
+    },
+    {
+      "name": "ajv",
+      "version": "6.12.6",
+      "path": "D:\\DS-160\\node_modules\\ajv"
+    },
+    {
+      "name": "agent-base",
+      "version": "6.0.2",
+      "path": "D:\\DS-160\\node_modules\\agent-base"
+    },
+    {
+      "name": "acorn-jsx",
+      "version": "5.3.2",
+      "path": "D:\\DS-160\\node_modules\\acorn-jsx"
+    },
+    {
+      "name": "acorn",
+      "version": "8.15.0",
+      "path": "D:\\DS-160\\node_modules\\acorn"
+    },
+    {
+      "name": "abab",
+      "version": "2.0.6",
+      "path": "D:\\DS-160\\node_modules\\abab"
+    },
+    {
+      "name": "@ungap/structured-clone",
+      "version": "1.3.0",
+      "path": "D:\\DS-160\\node_modules\\@ungap\\structured-clone"
+    },
+    {
+      "name": "@types/yauzl",
+      "version": "2.10.3",
+      "path": "D:\\DS-160\\node_modules\\@types\\yauzl"
+    },
+    {
+      "name": "@types/node",
+      "version": "24.10.4",
+      "path": "D:\\DS-160\\node_modules\\@types\\node"
+    },
+    {
+      "name": "@tootallnate/quickjs-emscripten",
+      "version": "0.23.0",
+      "path": "D:\\DS-160\\node_modules\\@tootallnate\\quickjs-emscripten"
+    },
+    {
+      "name": "@tootallnate/once",
+      "version": "2.0.0",
+      "path": "D:\\DS-160\\node_modules\\@tootallnate\\once"
+    },
+    {
+      "name": "@puppeteer/browsers",
+      "version": "2.11.0",
+      "path": "D:\\DS-160\\node_modules\\@puppeteer\\browsers"
+    },
+    {
+      "name": "@pkgjs/parseargs",
+      "version": "0.11.0",
+      "path": "D:\\DS-160\\node_modules\\@pkgjs\\parseargs"
+    },
+    {
+      "name": "@nodelib/fs.walk",
+      "version": "1.2.8",
+      "path": "D:\\DS-160\\node_modules\\@nodelib\\fs.walk"
+    },
+    {
+      "name": "@nodelib/fs.stat",
+      "version": "2.0.5",
+      "path": "D:\\DS-160\\node_modules\\@nodelib\\fs.stat"
+    },
+    {
+      "name": "@nodelib/fs.scandir",
+      "version": "2.1.5",
+      "path": "D:\\DS-160\\node_modules\\@nodelib\\fs.scandir"
+    },
+    {
+      "name": "@isaacs/cliui",
+      "version": "8.0.2",
+      "path": "D:\\DS-160\\node_modules\\@isaacs\\cliui"
+    },
+    {
+      "name": "strip-ansi",
+      "version": "7.1.2",
+      "path": "D:\\DS-160\\node_modules\\@isaacs\\cliui\\node_modules\\strip-ansi"
+    },
+    {
+      "name": "ansi-regex",
+      "version": "6.2.2",
+      "path": "D:\\DS-160\\node_modules\\@isaacs\\cliui\\node_modules\\ansi-regex"
+    },
+    {
+      "name": "@humanwhocodes/object-schema",
+      "version": "2.0.3",
+      "path": "D:\\DS-160\\node_modules\\@humanwhocodes\\object-schema"
+    },
+    {
+      "name": "@humanwhocodes/module-importer",
+      "version": "1.0.1",
+      "path": "D:\\DS-160\\node_modules\\@humanwhocodes\\module-importer"
+    },
+    {
+      "name": "@humanwhocodes/config-array",
+      "version": "0.13.0",
+      "path": "D:\\DS-160\\node_modules\\@humanwhocodes\\config-array"
+    },
+    {
+      "name": "@html-validate/stylish",
+      "version": "4.3.0",
+      "path": "D:\\DS-160\\node_modules\\@html-validate\\stylish"
+    },
+    {
+      "name": "@eslint/js",
+      "version": "8.57.1",
+      "path": "D:\\DS-160\\node_modules\\@eslint\\js"
+    },
+    {
+      "name": "@eslint/eslintrc",
+      "version": "2.1.4",
+      "path": "D:\\DS-160\\node_modules\\@eslint\\eslintrc"
+    },
+    {
+      "name": "@eslint-community/regexpp",
+      "version": "4.12.2",
+      "path": "D:\\DS-160\\node_modules\\@eslint-community\\regexpp"
+    },
+    {
+      "name": "@eslint-community/eslint-utils",
+      "version": "4.9.0",
+      "path": "D:\\DS-160\\node_modules\\@eslint-community\\eslint-utils"
+    },
+    {
+      "name": "@babel/helper-validator-identifier",
+      "version": "7.28.5",
+      "path": "D:\\DS-160\\node_modules\\@babel\\helper-validator-identifier"
+    },
+    {
+      "name": "@babel/code-frame",
+      "version": "7.27.1",
+      "path": "D:\\DS-160\\node_modules\\@babel\\code-frame"
+    }
+  ],
+  "added": 372,
+  "audited": 0,
+  "change": [],
+  "changed": 0,
+  "funding": 0,
+  "remove": [],
+  "removed": 0
+}
