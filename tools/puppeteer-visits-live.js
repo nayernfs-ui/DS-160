@@ -1,16 +1,45 @@
 const puppeteer = require('puppeteer');
 
+process.on('unhandledRejection', (err) => {
+  console.error('UNHANDLED REJECTION:', err && (err.stack || err.message || err));
+});
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION:', err && (err.stack || err.message || err));
+});
+
 (async () => {
-  const url = 'https://ds-160-jet.vercel.app/';
+  const url = process.env.TARGET_URL || 'https://ds-160-jet.vercel.app/';
+  console.log('Target URL:', url);
   console.log('Visiting:', url);
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'], dumpio: true });
+  console.log('Browser launched. Creating new page...');
   const page = await browser.newPage();
+  console.log('New page created.');
+  browser.on('disconnected', () => console.error('Browser disconnected event fired'));
+  page.on('error', (err) => console.error('Page error:', err && (err.stack || err.message || err)));
+  page.on('pageerror', (err) =>
+    console.error('Page runtime error:', err && (err.stack || err.message || err))
+  );
+  page.on('requestfailed', (req) => {
+    try {
+      const f = req.failure && req.failure();
+      console.error('Request failed:', {
+        url: req.url(),
+        method: req.method(),
+        resourceType: req.resourceType(),
+        errorText: f && f.errorText,
+        status: req.response && req.response().status(),
+      });
+    } catch (err) {
+      console.error('Error logging requestfailed:', err && err.message ? err.message : err);
+    }
+  });
   page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
 
   try {
-    console.log('Navigating to URL...');
-    await page.goto(url, { waitUntil: 'load', timeout: 30000 });
-    console.log('Navigation succeeded.');
+    console.log('Navigating to URL (soft load)...');
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    console.log('Navigation completed (domcontentloaded).');
   } catch (e) {
     console.error('Navigation failed:', e && e.message ? e.message : e);
     await browser.close();
@@ -24,6 +53,7 @@ const puppeteer = require('puppeteer');
     console.log('Clicking Yes radio to reveal visits...');
     await page.click('input[name="US_Visited"][value="Yes"]');
     await page.waitForTimeout(400);
+    console.log('After clicking Yes radio and waiting.');
   } catch (e) {
     console.error('Interaction failed:', e && e.message ? e.message : e);
     await browser.close();
@@ -31,20 +61,28 @@ const puppeteer = require('puppeteer');
   }
 
   // Click add up to 6 times, record entries count
+  console.log('Starting add-entry loop...');
   const results = [];
   for (let i = 0; i < 6; i++) {
+    console.log('Loop iteration', i);
     const entries = await page.$$eval('.visit-entry', (nodes) => nodes.length);
+    console.log('Entries currently:', entries);
     results.push(`before-click entries=${entries}`);
     const add = await page.$('.add-visit');
     if (!add) {
+      console.log('Add control not found; breaking loop');
       results.push('add control not found');
       break;
     }
     await add.click();
     await page.waitForTimeout(200);
     const after = await page.$$eval('.visit-entry', (nodes) => nodes.length);
+    console.log('Entries after click:', after);
     results.push(`after-click entries=${after}`);
-    if (after === entries) break;
+    if (after === entries) {
+      console.log('No change after click; stopping loop');
+      break;
+    }
   }
 
   console.log('LIVE PUPPETEER RESULTS:\n' + results.join('\n'));
