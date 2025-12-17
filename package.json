@@ -18,7 +18,7 @@
     "test": "npm run test:visits && npm run test:military && npm run test:education && npm run test:country-mapping",
     "prepare": "husky install",
     "check-env": "node tools/check-env.js",
-    "live-smoke": "node tools/puppeteer-visits-live.js"
+    "live-smoke": "node tests/e2e/puppeteer-visits-live.js"
   },
   "dependencies": {
     "arabic-reshaper": "^1.1.0",
