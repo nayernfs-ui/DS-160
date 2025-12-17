@@ -12,7 +12,10 @@
     "format": "prettier --write .",
     "prettier:check": "prettier --check .",
     "test:visits": "node test/visits.test.js",
-    "test": "npm run test:visits",
+    "test:military": "node test/military.test.js",
+    "test:education": "node test/education.test.js",
+    "test:country-mapping": "node test/country-mapping.test.js",
+    "test": "npm run test:visits && npm run test:military && npm run test:education && npm run test:country-mapping",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -34,8 +37,8 @@
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "jszip": "^3.10.1",
+    "puppeteer": "^24.33.0",
     "lint-staged": "^16.2.7",
-    "prettier": "^2.8.8",
-    "puppeteer": "^24.33.0"
+    "prettier": "^2.8.8"
   }
 }

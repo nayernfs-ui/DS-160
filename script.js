@@ -77,23 +77,25 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           }
         });
 
-        // Ensure the duplicated education fields (suffix _2) are always present in the
-        // submitted JSON (so the server-side generator can pick them up even when empty).
-        const ensureEducation2Keys = [
-          'Education_InstitutionName_2',
-          'Education_Address_2',
-          'Education_QualificationName_2',
-          'Education_QualificationMajor_2',
-          'Education_StudyStartDate_Day_2',
-          'Education_StudyStartDate_Month_2',
-          'Education_StudyStartDate_Year_2',
-          'Education_StudyEndDate_Day_2',
-          'Education_StudyEndDate_Month_2',
-          'Education_StudyEndDate_Year_2',
-        ];
-        ensureEducation2Keys.forEach((k) => {
-          if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
-        });
+        // Ensure the duplicated education fields (suffix _2.._5) are always present in
+        // the submitted JSON (so the server-side generator can pick them up even when empty).
+        for (let idx = 2; idx <= 5; idx++) {
+          const keys = [
+            `Education_InstitutionName_${idx}`,
+            `Education_Address_${idx}`,
+            `Education_QualificationName_${idx}`,
+            `Education_QualificationMajor_${idx}`,
+            `Education_StudyStartDate_Day_${idx}`,
+            `Education_StudyStartDate_Month_${idx}`,
+            `Education_StudyStartDate_Year_${idx}`,
+            `Education_StudyEndDate_Day_${idx}`,
+            `Education_StudyEndDate_Month_${idx}`,
+            `Education_StudyEndDate_Year_${idx}`,
+          ];
+          keys.forEach((k) => {
+            if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
+          });
+        }
 
         // Ensure military fields are always present in the JSON (even when hidden)
         const ensureMilitaryKeys = [
@@ -253,10 +255,6 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   const initialVisitTemplate = visitEntries ? visitEntries.querySelector('.visit-entry') : null;
   const visitTemplateNode = initialVisitTemplate ? initialVisitTemplate.cloneNode(true) : null;
 
-  // debug: surface the configured max visits for easier troubleshooting in browser console
-  console.log('visits: maxVisits =', maxVisits);
-  console.log('visits: visitedRadios length =', visitedRadios.length);
-
   function setVisitRequired(index, required) {
     const year = document.getElementById(`USVisit_${index}_DateArrived_Year`);
     const day = document.getElementById(`USVisit_${index}_DateArrived_Day`);
@@ -308,12 +306,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
 
         if (addBtn && clickDelegateRoot.contains(addBtn)) {
           e.preventDefault();
-          const current = Array.from(visitEntries.querySelectorAll('.visit-entry')).filter(
-            (el) => window.getComputedStyle(el).display !== 'none'
-          ).length;
-          console.info('add-click: current visible entries =', current);
+          const current = visitEntries.querySelectorAll('.visit-entry').length;
+          console.info('add-click: current entries =', current);
           if (current >= maxVisits) {
-            console.info('add-click: maxVisits reached, no-op');
             return;
           }
           // use an existing entry as template, or fall back to the stored template node
@@ -366,11 +361,6 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           visitEntries.appendChild(clone);
           // also ensure required flags via DOM lookup for consistency
           setVisitRequired(newIndex, shouldRequire);
-
-          console.info(
-            'add-click: appended clone, new entries =',
-            visitEntries.querySelectorAll('.visit-entry').length
-          );
           updateAddControls();
         }
 
@@ -384,10 +374,6 @@ document.addEventListener('DOMContentLoaded', (_event) => {
             entry.remove();
             // clear any required attributes for safety
             for (let i = 1; i <= maxVisits; i++) setVisitRequired(i, false);
-            console.info(
-              'remove-click: last entry removed, entries now =',
-              visitEntries.querySelectorAll('.visit-entry').length
-            );
             updateAddControls();
 
             // If there are now zero entries and the user still has US_Visited=Yes, toggle to No
@@ -419,7 +405,6 @@ document.addEventListener('DOMContentLoaded', (_event) => {
                     .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`);
               });
             });
-            console.info('remove-click: entries after removal =', remaining.length);
             updateAddControls();
           }
         }
@@ -445,6 +430,125 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       }
     });
     console.log(`Visits check: ${entries} of 5 entries present.`);
+  }
+
+  // Section 12: Education History repeatable entries (up to 5)
+  const educationRadios = document.querySelectorAll('input[name="HasOtherEducation"]');
+  const educationContainer = document.getElementById('Education_Container');
+  const educationEntries = document.getElementById('educationEntries');
+  const maxEducation = 5;
+
+  function setEducationRequired(index, required) {
+    const inst = document.getElementById(`Education_${index}_InstitutionName`);
+    const qual = document.getElementById(`Education_${index}_QualificationName`);
+    [inst, qual].forEach((el) => {
+      if (!el) return;
+      if (required) el.setAttribute('required', 'required');
+      else el.removeAttribute('required');
+    });
+  }
+
+  if (educationRadios && educationRadios.length) {
+    if (!window.__ds160EducationInit) {
+      window.__ds160EducationInit = true;
+
+      educationRadios.forEach((radio) => {
+        radio.addEventListener('change', function () {
+          if (!educationContainer) return;
+          if (this.value === 'Yes') {
+            educationContainer.style.display = 'block';
+            educationContainer.style.animation = 'fadeIn 0.5s';
+            educationContainer.setAttribute('aria-expanded', 'true');
+            educationContainer.setAttribute('aria-hidden', 'false');
+            const currentCount = educationEntries
+              ? educationEntries.querySelectorAll('.edu-entry').length
+              : 0;
+            for (let i = 1; i <= currentCount; i++) setEducationRequired(i, true);
+          } else {
+            educationContainer.style.display = 'none';
+            educationContainer.setAttribute('aria-expanded', 'false');
+            educationContainer.setAttribute('aria-hidden', 'true');
+            for (let i = 1; i <= maxEducation; i++) setEducationRequired(i, false);
+          }
+        });
+      });
+
+      const eduDelegateRoot = educationContainer || educationEntries;
+      if (eduDelegateRoot) {
+        eduDelegateRoot.addEventListener('click', function (e) {
+          const addBtn = e.target.closest && e.target.closest('.add-education');
+          const remBtn = e.target.closest && e.target.closest('.remove-education');
+
+          if (addBtn && eduDelegateRoot.contains(addBtn)) {
+            e.preventDefault();
+            const current = educationEntries.querySelectorAll('.edu-entry').length;
+            if (current >= maxEducation) return;
+            const template = educationEntries.querySelector('.edu-entry');
+            if (!template) return;
+            const clone = template.cloneNode(true);
+            const newIndex = current + 1;
+            clone.setAttribute('data-index', String(newIndex));
+
+            clone.querySelectorAll('[id]').forEach((el) => {
+              el.id = el.id.replace(/Education_\d+_/g, `Education_${newIndex}_`);
+              if (el.name) el.name = el.name.replace(/Education_\d+_/g, `Education_${newIndex}_`);
+              if (el.tagName === 'INPUT') el.value = '';
+              if (el.tagName === 'SELECT') el.selectedIndex = 0;
+            });
+            clone.querySelectorAll('label').forEach((lbl) => {
+              if (lbl.htmlFor)
+                lbl.htmlFor = lbl.htmlFor.replace(/Education_\d+_/g, `Education_${newIndex}_`);
+            });
+
+            const shouldRequire = window.getComputedStyle(educationContainer).display !== 'none';
+            clone.querySelectorAll('input, select').forEach((el) => {
+              if (shouldRequire) el.setAttribute('required', 'required');
+              else el.removeAttribute('required');
+            });
+
+            educationEntries.appendChild(clone);
+            setEducationRequired(newIndex, shouldRequire);
+          }
+
+          if (remBtn && educationEntries.contains(remBtn)) {
+            e.preventDefault();
+            const entry = remBtn.closest('.edu-entry');
+            if (!entry) return;
+            const entries = educationEntries.querySelectorAll('.edu-entry');
+            if (entries.length === 1) {
+              entry.remove();
+              for (let i = 1; i <= maxEducation; i++) setEducationRequired(i, false);
+              const remaining = educationEntries.querySelectorAll('.edu-entry').length;
+              if (remaining === 0) {
+                const yesRadio = document.querySelector(
+                  'input[name="HasOtherEducation"][value="Yes"]'
+                );
+                const noRadio = document.querySelector(
+                  'input[name="HasOtherEducation"][value="No"]'
+                );
+                if (yesRadio && yesRadio.checked && noRadio) {
+                  noRadio.checked = true;
+                  noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+              }
+            } else {
+              entry.remove();
+              // renumber remaining entries
+              const remaining = educationEntries.querySelectorAll('.edu-entry');
+              remaining.forEach((el, idx) => {
+                const newIdx = idx + 1;
+                el.setAttribute('data-index', String(newIdx));
+                el.querySelectorAll('[id]').forEach((node) => {
+                  if (node.id) node.id = node.id.replace(/Education_\d+_/g, `Education_${newIdx}_`);
+                  if (node.name)
+                    node.name = node.name.replace(/Education_\d+_/g, `Education_${newIdx}_`);
+                });
+              });
+            }
+          }
+        });
+      }
+    }
   }
 
   // 4. Other Nationality Logic (new)
