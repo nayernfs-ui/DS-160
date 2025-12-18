@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const JSZip = require('jszip');
 const ReshaperModule = require('arabic-reshaper');
-const submit = require('./api/submit.js');
+const submit = require('../api/submit.js');
 
 const sampleFormData = {
   FullName: 'محمد علي',

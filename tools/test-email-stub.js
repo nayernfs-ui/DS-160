@@ -29,7 +29,7 @@ Sib.TransactionalEmailsApi.prototype.sendTransacEmailWithHttpInfo = async functi
   return this.sendTransacEmail(payload);
 };
 
-const handler = require('./api/submit.js');
+const handler = require('../api/submit.js');
 
 const req = {
   method: 'POST',

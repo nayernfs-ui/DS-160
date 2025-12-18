@@ -17,7 +17,7 @@
   - Added `aria` attributes to the toggled containers for assistive tech clarity.
     **Testing / Stability**
 - **New tests:**
-  - `test/military.test.js` — validates initial collapsed state of `militaryFields` (hidden, `aria-expanded="false"`, `aria-hidden="true"`, no required attributes), toggling to `Yes` sets visible state and required attributes (e.g., `Military_Branch`, `Military_ServiceFrom_Year`), and toggling to `No` hides the container and removes required attributes.
-  - Updated existing `test/visits.test.js` to reflect `US_Visited` naming and the add/remove behavior (including removing last visit node and auto-switching to `No`).
+- `tests/unit/military.test.js` — validates initial collapsed state of `militaryFields` (hidden, `aria-expanded="false"`, `aria-hidden="true"`, no required attributes), toggling to `Yes` sets visible state and required attributes (e.g., `Military_Branch`, `Military_ServiceFrom_Year`), and toggling to `No` hides the container and removes required attributes.
+- Updated existing `tests/unit/visits.test.js` to reflect `US_Visited` naming and the add/remove behavior (including removing last visit node and auto-switching to `No`).
 - **Test results:** Ran full test suite via `npm test`; all tests passed (see test runner output).
   All tests have passed; the `feature/military-us-visits-accessibility` branch is ready for review and merge.

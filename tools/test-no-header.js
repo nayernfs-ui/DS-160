@@ -1,4 +1,4 @@
-const submit = require('./api/submit.js');
+const submit = require('../api/submit.js');
 const JSZip = require('jszip');
 
 (async () => {
