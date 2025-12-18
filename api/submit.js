@@ -60,6 +60,12 @@ const FIELD_MAP = {
   // Example for Conditional Fields
   Other_Nationality: 'Other Nationality (If Applicable)',
   Other_PassportNumber: 'Second Passport Number',
+  // Lost / Stolen Passport fields
+  LostPassport: 'Lost Passport - Ever Lost or Stolen',
+  LostPassport_PassportNumber: 'Passport/Travel Document Number (Lost/Stolen)',
+  LostPassport_DoNotKnow: 'Lost Passport - Do Not Know',
+  LostPassport_Country: 'Country/Authority that Issued Passport/Travel Document',
+  LostPassport_Explain: 'Lost Passport - Explanation',
   Spouse_DOB_Day: 'Spouse Date of Birth (Day)',
   Spouse_DOB_Month: 'Spouse Date of Birth (Month)',
   Spouse_DOB_Year: 'Spouse Date of Birth (Year)',

@@ -651,7 +651,66 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     });
   });
 
-  // 6. Military Service Logic
+  // 6. Lost/ Stolen Passport Logic
+  const lostPassportRadios = document.querySelectorAll('input[name="LostPassport"]');
+  const lostPassportFields = document.getElementById('lostPassportFields');
+  const lostPassportNumber = document.getElementById('lostPassportNumber');
+  const lostPassportDoNotKnow = document.getElementById('lostPassportDoNotKnow');
+  const lostPassportCountry = document.getElementById('lostPassportCountry');
+
+  // Populate the lost passport country select from the main nationality list
+  const _mainNationalitySelect = document.getElementById('nationality');
+  if (lostPassportCountry && _mainNationalitySelect) {
+    lostPassportCountry.innerHTML = _mainNationalitySelect.innerHTML;
+  }
+
+  function setLostPassportRequired(is_required) {
+    if (!lostPassportFields) return;
+    const controls = lostPassportFields.querySelectorAll('input, select, textarea');
+    controls.forEach((c) => {
+      if (is_required) {
+        c.setAttribute('required', '');
+      } else {
+        c.removeAttribute('required');
+      }
+    });
+  }
+
+  lostPassportRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (!lostPassportFields) return;
+      if (this.value === 'Yes') {
+        lostPassportFields.style.display = 'block';
+        lostPassportFields.style.animation = 'fadeIn 0.5s';
+        lostPassportFields.setAttribute('aria-expanded', 'true');
+        lostPassportFields.setAttribute('aria-hidden', 'false');
+        setLostPassportRequired(true);
+        // If user already checked Do Not Know, make sure number is not required
+        if (lostPassportDoNotKnow && lostPassportDoNotKnow.checked) {
+          lostPassportNumber && lostPassportNumber.removeAttribute('required');
+        }
+      } else {
+        lostPassportFields.style.display = 'none';
+        lostPassportFields.setAttribute('aria-expanded', 'false');
+        lostPassportFields.setAttribute('aria-hidden', 'true');
+        setLostPassportRequired(false);
+        if (lostPassportDoNotKnow) lostPassportDoNotKnow.checked = false;
+      }
+    });
+  });
+
+  if (lostPassportDoNotKnow) {
+    lostPassportDoNotKnow.addEventListener('change', function () {
+      if (!lostPassportNumber) return;
+      if (this.checked) {
+        lostPassportNumber.removeAttribute('required');
+      } else if (lostPassportFields && lostPassportFields.style.display !== 'none') {
+        lostPassportNumber.setAttribute('required', '');
+      }
+    });
+  }
+
+  // 7. Military Service Logic
   const militaryRadios = document.querySelectorAll('input[name="Military_Served"]');
   const militaryFields = document.getElementById('militaryFields');
 
