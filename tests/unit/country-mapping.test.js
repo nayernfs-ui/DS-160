@@ -7,7 +7,7 @@ const { JSDOM } = require('jsdom');
   console.log('country-mapping.test.js: starting');
   const root = process.cwd();
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const script = fs.readFileSync(path.join(root, 'script.js'), 'utf8');
+  const script = fs.readFileSync(path.join(root, 'public', 'js', 'script.js'), 'utf8');
 
   const dom = new JSDOM(html);
   const doc = dom.window.document;
