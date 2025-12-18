@@ -149,11 +149,17 @@ const { JSDOM } = require('jsdom');
     'US_Visits_Container should keep aria-hidden="false" after adding an entry'
   );
 
-  // Remove the newly added entry and ensure aria attributes still reflect visible state
+  // Keyboard accessibility: newly added entry should be focusable via programmatic focus
   const entriesNow = visitEntries();
   const last = entriesNow[entriesNow.length - 1];
+  const firstInput = last.querySelector('input, select, textarea');
+  assert(firstInput, 'newly added visit should contain a focusable control');
+  firstInput.focus();
+  assert.strictEqual(doc.activeElement, firstInput, 'New entry first control should receive focus');
+
   const remBtn = last.querySelector('.remove-visit');
   assert(remBtn, 'remove-visit button should exist on newly added entry');
+  assert.strictEqual(remBtn.getAttribute('tabindex'), '0', 'remove button should be in tab order');
   remBtn.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
   await new Promise((r) => setTimeout(r, 20));
 

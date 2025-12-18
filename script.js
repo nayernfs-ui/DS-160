@@ -38,7 +38,22 @@ document.addEventListener('DOMContentLoaded', (_event) => {
               errorSpan.textContent = 'هذا الحقل مطلوب.';
             }
           } else {
-            field.classList.remove('is-invalid');
+            // Additional pattern validation for the start year
+            if (field.id === 'startDateCurrent') {
+              const yr = field.value.toString().trim();
+              if (!/^[0-9]{4}$/.test(yr)) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                const errorSpan = document.getElementById(`error-${field.id}`);
+                if (errorSpan) errorSpan.textContent = 'الرجاء إدخال سنة صحيحة مكونة من 4 أرقام.';
+              } else {
+                field.classList.remove('is-invalid');
+                const errorSpan = document.getElementById(`error-${field.id}`);
+                if (errorSpan) errorSpan.textContent = '';
+              }
+            } else {
+              field.classList.remove('is-invalid');
+            }
           }
         }
       });
@@ -456,6 +471,22 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     console.log(`Visits check: ${entries} of 5 entries present.`);
   }
 
+  // Control visibility for education add buttons
+  function updateEducationAddControls() {
+    const entries = educationEntries ? educationEntries.querySelectorAll('.edu-entry').length : 0;
+    const addButtons = document.querySelectorAll('.add-education');
+    addButtons.forEach((btn) => {
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('tabindex', '0');
+      if (!btn.getAttribute('aria-label')) btn.setAttribute('aria-label', 'Add institution');
+      if (entries >= maxEducation) {
+        btn.style.setProperty('display', 'none', 'important');
+      } else {
+        btn.style.display = 'inline-block';
+      }
+    });
+  }
+
   // Section 12: Education History repeatable entries (up to 5)
   const educationRadios = document.querySelectorAll('input[name="HasOtherEducation"]');
   const educationContainer = document.getElementById('Education_Container');
@@ -530,8 +561,16 @@ document.addEventListener('DOMContentLoaded', (_event) => {
               else el.removeAttribute('required');
             });
 
+            // make remove controls accessible and labeled
+            clone.querySelectorAll('.remove-education').forEach((btn) => {
+              btn.setAttribute('role', 'button');
+              btn.setAttribute('tabindex', '0');
+              btn.setAttribute('aria-label', `Remove institution ${newIndex}`);
+            });
+
             educationEntries.appendChild(clone);
             setEducationRequired(newIndex, shouldRequire);
+            updateEducationAddControls();
           }
 
           if (remBtn && educationEntries.contains(remBtn)) {
@@ -567,11 +606,15 @@ document.addEventListener('DOMContentLoaded', (_event) => {
                   if (node.name)
                     node.name = node.name.replace(/Education_\d+_/g, `Education_${newIdx}_`);
                 });
+                const rem = el.querySelector('.remove-education');
+                if (rem) rem.setAttribute('aria-label', `Remove institution ${newIdx}`);
               });
+              updateEducationAddControls();
             }
           }
         });
       }
+      updateEducationAddControls();
     }
   }
 

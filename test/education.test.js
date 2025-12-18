@@ -92,6 +92,23 @@ const { JSDOM } = require('jsdom');
     assert.strictEqual(entries.length, expected, `Expected ${expected} education entries`);
   }
 
+  // Keyboard accessibility: newly added education entry should be focusable
+  const entriesNow = doc.querySelectorAll('.edu-entry');
+  const last = entriesNow[entriesNow.length - 1];
+  const firstInput = last.querySelector('input, select, textarea');
+  assert(firstInput, 'newly added education entry should contain a focusable control');
+  firstInput.focus();
+  assert.strictEqual(
+    doc.activeElement,
+    firstInput,
+    'New education entry first control should receive focus'
+  );
+  const remBtnNew = last.querySelector('.remove-education');
+  assert(
+    remBtnNew && remBtnNew.getAttribute('tabindex') === '0',
+    'remove-education should be in tab order'
+  );
+
   // add control hidden at 5
   const addAfterFive = doc.querySelector('.add-education');
   assert(

@@ -1531,13 +1531,20 @@
           </legend>
           <div class="question-group">
             <label for="jobTitleCurrent">المسمى الوظيفي:</label
-            ><input
-              type="text"
-              id="jobTitleCurrent"
-              name="Current_JobTitle"
-              required
-              style="direction: auto"
-            /><span class="error-message" id="error-jobTitleCurrent"></span>
+            ><select id="jobTitleCurrent" name="Current_JobTitle" required>
+              <option value="">-- اختر المهنة --</option>
+              <option value="Business">Business</option>
+              <option value="Communications">Communications</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Education">Education</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Finance">Finance</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Law">Law</option>
+              <option value="Media">Media</option>
+              <option value="Other">Other</option>
+            </select>
+            <span class="error-message" id="error-jobTitleCurrent"></span>
           </div>
           <div class="question-group">
             <label for="workplaceCurrent">مكان العمل:</label
@@ -1618,6 +1625,8 @@
                 name="Current_StartDate_Year"
                 placeholder="YYYY"
                 required
+                pattern="^[0-9]{4}$"
+                inputmode="numeric"
                 style="width: 110px"
               />
             </div>
@@ -1625,6 +1634,13 @@
             <span class="error-message" id="error-startDateCurrentMonth"></span>
             <span class="error-message" id="error-startDateCurrent"></span>
           </div>
+
+          <div class="question-group">
+            <label for="currentDuties">المهام / الواجبات:</label
+            ><textarea id="currentDuties" name="Current_Duties" required rows="3" style="direction: auto"></textarea>
+            <span class="error-message" id="error-currentDuties"></span>
+          </div>
+
           <div class="question-group">
             <label for="phoneWorkCurrent">تليفون العمل:</label
             ><input

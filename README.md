@@ -10,11 +10,13 @@ Contains:
 
 Notable UI changes:
 
-- **U.S. Visits** section now supports up to **5 entries** (repeatable visit history).
+- **U.S. Visits** section now supports up to **5 entries** (repeatable visit history) and is fully implemented; keyboard navigation and add/remove behavior are verified by the live CI smoke test.
 
 Deployment & server email forwarding (Vercel + SendinBlue)
 
 - Recipient email: `nayer.nfs@gmail.com`
+
+A GitHub Actions workflow (`.github/workflows/e2e.yml`) runs a live smoke test on push to `main` that exercises the U.S. Visits UI (add/remove up to 5 entries and keyboard navigation).
 
 This project includes a serverless endpoint at `api/submit` that forwards form submissions to an email address via SendinBlue. To enable it on Vercel:
 
