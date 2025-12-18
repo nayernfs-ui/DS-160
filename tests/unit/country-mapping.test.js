@@ -9,7 +9,9 @@ const { JSDOM } = require('jsdom');
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const script = fs.readFileSync(path.join(root, 'public', 'js', 'script.js'), 'utf8');
 
-  const dom = new JSDOM(html);
+  // Remove external script tag so JSDOM won't attempt to fetch it
+  const cleanedHtml = html.replace(/<script[^>]*src="[^"]*script\.js[^"]*"[^>]*><\/script>/, '');
+  const dom = new JSDOM(cleanedHtml);
   const doc = dom.window.document;
 
   // Gather all select option values that represent countries (ignore empty values)

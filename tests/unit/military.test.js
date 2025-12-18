@@ -9,7 +9,8 @@ const { JSDOM } = require('jsdom');
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const script = fs.readFileSync(path.join(root, 'public', 'js', 'script.js'), 'utf8');
 
-  const combined = html.replace('</body>', `<script>${script}</script></body>`);
+  const cleanedHtml = html.replace(/<script[^>]*src="[^"]*script\.js[^"]*"[^>]*><\/script>/, '');
+  const combined = cleanedHtml.replace('</body>', `<script>${script}</script></body>`);
   const dom = new JSDOM(combined, {
     runScripts: 'dangerously',
     resources: 'usable',

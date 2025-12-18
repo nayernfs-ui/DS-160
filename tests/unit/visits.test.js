@@ -9,8 +9,10 @@ const { JSDOM } = require('jsdom');
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const script = fs.readFileSync(path.join(root, 'public', 'js', 'script.js'), 'utf8');
 
+  // Remove any external script tag that references script.js so JSDOM won't attempt to fetch it
+  const cleanedHtml = html.replace(/<script[^>]*src="[^"]*script\.js[^"]*"[^>]*><\/script>/, '');
   // Inject the application script into the page so behavior is available to JSDOM
-  const combined = html.replace('</body>', `<script>${script}</script></body>`);
+  const combined = cleanedHtml.replace('</body>', `<script>${script}</script></body>`);
   const dom = new JSDOM(combined, {
     runScripts: 'dangerously',
     resources: 'usable',
