@@ -53,6 +53,12 @@ process.on('uncaughtException', (err) => {
     await page.type('#Relative_3_Surnames', 'GAMMA');
     await page.type('#Relative_3_GivenNames', 'THREE');
 
+    // Select the "other relatives" question = Yes
+    const otherYes = await page.$('input[name="US_OtherRelatives"][value="Yes"]');
+    if (!otherYes) throw new Error('US_OtherRelatives Yes radio not found');
+    await page.evaluate((el) => el.click(), otherYes);
+    await page.waitForTimeout(100);
+
     // Gather form JSON in page context
     const payload = await page.evaluate(() => {
       const form = document.querySelector('form');
@@ -83,6 +89,13 @@ process.on('uncaughtException', (err) => {
       );
       await browser.close();
       process.exit(4);
+    }
+
+    // Verify other relatives is captured
+    if (payload['US_OtherRelatives'] !== 'Yes') {
+      console.error('Payload did not include US_OtherRelatives=Yes', payload['US_OtherRelatives']);
+      await browser.close();
+      process.exit(5);
     }
 
     console.log('Relatives smoke test: PASS');

@@ -64,6 +64,11 @@ const { JSDOM } = require('jsdom');
     'initial remove-relative should have an aria-label'
   );
 
+  // other relatives question exists (simple Yes/No)
+  const otherYes = doc.querySelector('input[name="US_OtherRelatives"][value="Yes"]');
+  const otherNo = doc.querySelector('input[name="US_OtherRelatives"][value="No"]');
+  assert(otherYes && otherNo, 'US_OtherRelatives radios should exist');
+
   // required attributes are set on visible entry
   assert(
     doc.getElementById('Relative_1_Surnames') &&
