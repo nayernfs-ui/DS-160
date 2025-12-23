@@ -129,6 +129,19 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
         });
 
+        // Ensure immediate relatives fields are always present (even when hidden or not used)
+        for (let idx = 1; idx <= 10; idx++) {
+          const keys = [
+            `Relative_${idx}_Surnames`,
+            `Relative_${idx}_GivenNames`,
+            `Relative_${idx}_Relationship`,
+            `Relative_${idx}_Status`,
+          ];
+          keys.forEach((k) => {
+            if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
+          });
+        }
+
         event.preventDefault();
         fetch(form.action, {
           method: 'POST',
@@ -469,6 +482,192 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       }
     });
     console.log(`Visits check: ${entries} of 5 entries present.`);
+  }
+
+  // ---------- Immediate Relatives in US (repeatable entries up to 10) ----------
+  const relativesRadios = document.querySelectorAll('input[name="US_ImmediateRelatives"]');
+  const relativesContainer = document.getElementById('US_Relatives_Container');
+  const relativeEntries = document.getElementById('relativeEntries');
+  const maxRelatives = 10;
+  const initialRelativeTemplate = relativeEntries
+    ? relativeEntries.querySelector('.relative-entry')
+    : null;
+  const relativeTemplateNode = initialRelativeTemplate
+    ? initialRelativeTemplate.cloneNode(true)
+    : null;
+
+  // Ensure existing remove buttons are labeled for accessibility on initial load
+  if (relativeEntries) {
+    relativeEntries.querySelectorAll('.relative-entry').forEach((el, idx) => {
+      const rem = el.querySelector('.remove-relative');
+      if (rem) rem.setAttribute('aria-label', `Remove relative ${idx + 1}`);
+    });
+  }
+
+  function setRelativeRequired(index, required) {
+    const surnames = document.getElementById(`Relative_${index}_Surnames`);
+    const given = document.getElementById(`Relative_${index}_GivenNames`);
+    const rel = document.getElementById(`Relative_${index}_Relationship`);
+    const stat = document.getElementById(`Relative_${index}_Status`);
+    [surnames, given, rel, stat].forEach((el) => {
+      if (!el) return;
+      if (required) el.setAttribute('required', 'required');
+      else el.removeAttribute('required');
+    });
+  }
+
+  if (relativesRadios && relativesRadios.length) {
+    if (!window.__ds160RelativesInit) {
+      window.__ds160RelativesInit = true;
+
+      relativesRadios.forEach((radio) => {
+        radio.addEventListener('change', function () {
+          if (!relativesContainer) return;
+          if (this.value === 'Yes') {
+            relativesContainer.style.display = 'block';
+            relativesContainer.style.animation = 'fadeIn 0.5s';
+            relativesContainer.setAttribute('aria-expanded', 'true');
+            relativesContainer.setAttribute('aria-hidden', 'false');
+            const currentCount = relativeEntries
+              ? relativeEntries.querySelectorAll('.relative-entry').length
+              : 0;
+            for (let i = 1; i <= currentCount; i++) setRelativeRequired(i, true);
+          } else {
+            relativesContainer.style.display = 'none';
+            relativesContainer.setAttribute('aria-expanded', 'false');
+            relativesContainer.setAttribute('aria-hidden', 'true');
+            for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
+          }
+        });
+      });
+
+      const clickDelegateRoot = relativesContainer || relativeEntries;
+      if (clickDelegateRoot) {
+        clickDelegateRoot.addEventListener('click', function (e) {
+          const addBtn = e.target.closest && e.target.closest('.add-relative');
+          const remBtn = e.target.closest && e.target.closest('.remove-relative');
+
+          if (addBtn && clickDelegateRoot.contains(addBtn)) {
+            e.preventDefault();
+            const current = relativeEntries.querySelectorAll('.relative-entry').length;
+            if (current >= maxRelatives) return;
+            const template =
+              relativeEntries.querySelector('.relative-entry') || relativeTemplateNode;
+            if (!template) return;
+            const clone = template.cloneNode(true);
+            const newIndex = current + 1;
+            clone.setAttribute('data-index', String(newIndex));
+
+            // Update ids, names and labels inside cloned node
+            clone.querySelectorAll('[id]').forEach((el) => {
+              el.id = el.id
+                .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+                .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+              if (el.name)
+                el.name = el.name
+                  .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+                  .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+              if (el.tagName === 'INPUT') el.value = '';
+              if (el.tagName === 'SELECT') el.selectedIndex = 0;
+            });
+            clone.querySelectorAll('label').forEach((lbl) => {
+              if (lbl.htmlFor)
+                lbl.htmlFor = lbl.htmlFor
+                  .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+                  .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+            });
+
+            clone.querySelectorAll('[aria-describedby]').forEach((el) => {
+              const v = el.getAttribute('aria-describedby');
+              if (!v) return;
+              el.setAttribute(
+                'aria-describedby',
+                v
+                  .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+                  .replace(/Relative_\d+$/g, `Relative_${newIndex}`)
+              );
+            });
+
+            const shouldRequire = window.getComputedStyle(relativesContainer).display !== 'none';
+            clone.querySelectorAll('input, select').forEach((el) => {
+              if (shouldRequire) el.setAttribute('required', 'required');
+              else el.removeAttribute('required');
+            });
+
+            clone.querySelectorAll('.remove-relative').forEach((btn) => {
+              btn.setAttribute('role', 'button');
+              btn.setAttribute('tabindex', '0');
+              btn.setAttribute('aria-label', `Remove relative ${newIndex}`);
+            });
+
+            relativeEntries.appendChild(clone);
+            setRelativeRequired(newIndex, shouldRequire);
+            updateRelativeAddControls();
+          }
+
+          if (remBtn && relativeEntries.contains(remBtn)) {
+            e.preventDefault();
+            const entry = remBtn.closest('.relative-entry');
+            if (!entry) return;
+            const entries = relativeEntries.querySelectorAll('.relative-entry');
+            if (entries.length === 1) {
+              entry.remove();
+              for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
+              updateRelativeAddControls();
+              const yesRadio = document.querySelector(
+                'input[name="US_ImmediateRelatives"][value="Yes"]'
+              );
+              const noRadio = document.querySelector(
+                'input[name="US_ImmediateRelatives"][value="No"]'
+              );
+              if (yesRadio && yesRadio.checked && noRadio) {
+                noRadio.checked = true;
+                noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+              }
+            } else {
+              entry.remove();
+              const remaining = relativeEntries.querySelectorAll('.relative-entry');
+              remaining.forEach((el, idx) => {
+                const newIdx = idx + 1;
+                el.setAttribute('data-index', String(newIdx));
+                el.querySelectorAll('[id]').forEach((node) => {
+                  if (node.id)
+                    node.id = node.id
+                      .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+                      .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+                  if (node.name)
+                    node.name = node.name
+                      .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+                      .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+                });
+                const rem = el.querySelector('.remove-relative');
+                if (rem) rem.setAttribute('aria-label', `Remove relative ${newIdx}`);
+              });
+              updateRelativeAddControls();
+            }
+          }
+        });
+
+        updateRelativeAddControls();
+      }
+    }
+  }
+
+  function updateRelativeAddControls() {
+    const entries = relativeEntries
+      ? relativeEntries.querySelectorAll('.relative-entry').length
+      : 0;
+    const addButtons = document.querySelectorAll('.add-relative');
+    addButtons.forEach((btn) => {
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('tabindex', '0');
+      if (!btn.getAttribute('aria-label')) btn.setAttribute('aria-label', 'Add relative');
+      if (entries >= maxRelatives) {
+        btn.style.setProperty('display', 'none', 'important');
+      } else {
+        btn.style.display = 'inline-block';
+      }
+    });
   }
 
   // Control visibility for education add buttons

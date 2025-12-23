@@ -634,7 +634,71 @@
               <span class="error-message" id="error-otherPermanentResidentSelect"></span>
             </div>
           </fieldset>
-        </fieldset>
+
+          <div class="question-group">
+            <label>هل لديك أي أقارب مباشرين (غير الوالدين) في الولايات المتحدة؟</label>
+            <label
+              ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" />
+              نعم</label
+            >
+            <label
+              ><input type="radio" name="US_ImmediateRelatives" value="No" id="relativesNo" checked />
+              لا</label
+            >
+          </div>
+
+          <fieldset id="US_Relatives_Container" class="conditional-fields" style="display: none" aria-expanded="false" aria-hidden="true">
+            <legend>
+              <span class="section-icon" aria-hidden="true"
+                ><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#dc3545" /><path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z" /></svg></span
+              >يرجى تقديم المعلومات التالية:
+            </legend>
+
+            <div id="relativeEntries">
+              <div class="relative-entry" data-index="1">
+                <div class="question-group">
+                  <label for="Relative_1_Surnames">اللقب (Surnames):</label>
+                  <input type="text" id="Relative_1_Surnames" name="Relative_1_Surnames" required style="direction: auto" />
+                  <span class="error-message" id="error-Relative_1_Surnames"></span>
+                </div>
+
+                <div class="question-group">
+                  <label for="Relative_1_GivenNames">الأسماء (Given Names):</label>
+                  <input type="text" id="Relative_1_GivenNames" name="Relative_1_GivenNames" required style="direction: auto" />
+                  <span class="error-message" id="error-Relative_1_GivenNames"></span>
+                </div>
+
+                <div class="question-group">
+                  <label for="Relative_1_Relationship">العلاقة بك (Relationship to You):</label>
+                  <select id="Relative_1_Relationship" name="Relative_1_Relationship" required>
+                    <option value="">- اختر -</option>
+                    <option value="Spouse">زوج/زوجة (Spouse)</option>
+                    <option value="Child">ابن/ابنة (Child)</option>
+                    <option value="Sibling">أخ/أخت (Sibling)</option>
+                    <option value="Other">آخر (Other)</option>
+                  </select>
+                </div>
+
+                <div class="question-group">
+                  <label for="Relative_1_Status">حالة القريب (Relative's Status):</label>
+                  <select id="Relative_1_Status" name="Relative_1_Status" required>
+                    <option value="">- اختر -</option>
+                    <option value="US_Citizen">مواطن أمريكي (U.S. Citizen)</option>
+                    <option value="Permanent_Resident">مقيم دائم (Permanent Resident)</option>
+                    <option value="Other">آخر (Other)</option>
+                  </select>
+                </div>
+
+                <div class="question-group">
+                  <a href="#" class="remove-relative" style="margin-left: 8px" role="button" tabindex="0" aria-label="Remove relative 1 (إزالة)">- إزالة</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="question-group" id="relativeControls">
+              <a href="#" class="add-relative" role="button" tabindex="0" aria-label="Add relative (إضافة)">+ إضافة</a>
+            </div>
+          </fieldset>
 
         <fieldset id="marriedFields" class="conditional-fields" style="display: none">
           <legend>
