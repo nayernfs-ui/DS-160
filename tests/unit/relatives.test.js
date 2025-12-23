@@ -117,6 +117,29 @@ const { JSDOM } = require('jsdom');
     'After adding, there should be 2 relative entries'
   );
 
+  // Select other relatives = Yes and verify it's present in the serialized form payload
+  const otherYesRadio = doc.querySelector('input[name="US_OtherRelatives"][value="Yes"]');
+  assert(otherYesRadio, 'US_OtherRelatives Yes radio not found');
+  otherYesRadio.checked = true;
+  otherYesRadio.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+
+  const formEl = doc.querySelector('form');
+  const fd = new dom.window.FormData(formEl);
+  const payload = {};
+  fd.forEach((v, k) => {
+    if (Object.prototype.hasOwnProperty.call(payload, k)) {
+      if (!Array.isArray(payload[k])) payload[k] = [payload[k]];
+      payload[k].push(v);
+    } else {
+      payload[k] = v;
+    }
+  });
+  assert.strictEqual(
+    payload['US_OtherRelatives'],
+    'Yes',
+    'US_OtherRelatives should be included in serialized payload'
+  );
+
   // add until max (10) and ensure add control hides when reached
   for (let expected = 3; expected <= 10; expected++) {
     const add = doc.querySelector('.add-relative');
