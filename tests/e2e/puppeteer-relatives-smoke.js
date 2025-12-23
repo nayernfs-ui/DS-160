@@ -10,8 +10,47 @@ process.on('uncaughtException', (err) => {
 (async () => {
   const url = process.env.TARGET_URL || 'http://localhost:3000';
   console.log('Target URL:', url);
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  console.log('puppeteer product:', puppeteer.product);
+  try {
+    console.log(
+      'Puppeteer executable path:',
+      typeof puppeteer.executablePath === 'function' ? puppeteer.executablePath() : 'N/A'
+    );
+  } catch (e) {
+    console.log('Could not determine executablePath:', e && e.message);
+  }
+
+  let browser;
+  try {
+    console.log('Launching Puppeteer (headless) with --no-sandbox and --disable-setuid-sandbox');
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+    console.log('Puppeteer launched successfully (headless)');
+  } catch (err) {
+    console.error(
+      'Failed to launch Puppeteer in headless mode:',
+      err && (err.stack || err.message || err)
+    );
+    console.log('Retrying launch with headless:false to gather more diagnostic information...');
+    try {
+      browser = await puppeteer.launch({ headless: false });
+      console.log('Puppeteer launched successfully (non-headless)');
+    } catch (err2) {
+      console.error(
+        'Retry failed. Cannot launch Puppeteer:',
+        err2 && (err2.stack || err2.message || err2)
+      );
+      process.exit(2);
+    }
+  }
+
   const page = await browser.newPage();
+  // Polyfill for older Puppeteer versions that do not implement page.waitForTimeout
+  if (typeof page.waitForTimeout !== 'function') {
+    page.waitForTimeout = (ms) => new Promise((r) => setTimeout(r, ms));
+  }
 
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
