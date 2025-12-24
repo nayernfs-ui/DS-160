@@ -79,6 +79,7 @@ dist
 # Generated test outputs and logs
 *.txt
 *.log
+*.docx
 npm-*.log
 
 # Misc
