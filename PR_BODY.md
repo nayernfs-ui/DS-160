@@ -27,3 +27,8 @@
 - Removed generated artifacts (`*.txt`, `*.log`, `served.html` if empty) and deleted obsolete `test/` folder that duplicated `tests/unit/` files.
 - Rewrote `.gitignore` to include common build artifacts, logs, and generated test outputs to prevent committing transient files.
 - Ran `eslint --fix` and ensured linting passes; re-ran full test suite to confirm no regressions.
+
+- Added `xmldom` (dev) to satisfy `tools/` scripts that parse DOCX XML.
+- Ran `depcheck` and confirmed no unused production dependencies; some dev tools remain intentionally installed (eslint, prettier, html-validate, lint-staged).
+- Smoke tests for DOCX/email ran; the email send attempt returned 401 (Unauthorized) because the Sendinblue/Brevo API key is not set in the environment — this is expected unless credentials are provided.
+
