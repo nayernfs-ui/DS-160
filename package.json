@@ -11,6 +11,7 @@
     "lint:html": "html-validate index.html",
     "format": "prettier --write .",
     "prettier:check": "prettier --check .",
+    "depcheck": "depcheck --specials=bin --json",
     "test:visits": "node tests/unit/visits.test.js",
     "test:military": "node tests/unit/military.test.js",
     "test:education": "node tests/unit/education.test.js",
