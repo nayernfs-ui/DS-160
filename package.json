@@ -11,6 +11,7 @@
     "lint:html": "html-validate index.html",
     "format": "prettier --write .",
     "prettier:check": "prettier --check .",
+    "depcheck": "depcheck --specials=bin --json",
     "test:visits": "node tests/unit/visits.test.js",
     "test:military": "node tests/unit/military.test.js",
     "test:education": "node tests/unit/education.test.js",
@@ -34,6 +35,7 @@
     ]
   },
   "devDependencies": {
+    "depcheck": "^1.4.7",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -41,8 +43,9 @@
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "jszip": "^3.10.1",
-    "puppeteer": "^24.33.0",
     "lint-staged": "^16.2.7",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "puppeteer": "^24.33.0",
+    "xmldom": "^0.6.0"
   }
 }
