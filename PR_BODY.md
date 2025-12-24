@@ -21,3 +21,9 @@
 - Updated existing `tests/unit/visits.test.js` to reflect `US_Visited` naming and the add/remove behavior (including removing last visit node and auto-switching to `No`).
 - **Test results:** Ran full test suite via `npm test`; all tests passed (see test runner output).
   All tests have passed; the `feature/military-us-visits-accessibility` branch is ready for review and merge.
+
+**Maintenance / Cleanup**
+
+- Removed generated artifacts (`*.txt`, `*.log`, `served.html` if empty) and deleted obsolete `test/` folder that duplicated `tests/unit/` files.
+- Rewrote `.gitignore` to include common build artifacts, logs, and generated test outputs to prevent committing transient files.
+- Ran `eslint --fix` and ensured linting passes; re-ran full test suite to confirm no regressions.
