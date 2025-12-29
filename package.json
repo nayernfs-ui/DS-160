@@ -17,8 +17,9 @@
     "test:education": "node tests/unit/education.test.js",
     "test:country-mapping": "node tests/unit/country-mapping.test.js",
     "test:work-info": "node tests/unit/work-info.test.js",
+    "test:family": "node tests/unit/family.test.js",
     "test:api-health": "node tests/unit/api-health.test.js",
-    "test": "npm run test:visits && npm run test:military && npm run test:education && npm run test:country-mapping && npm run test:work-info && npm run test:api-health",
+    "test": "npm run test:visits && npm run test:military && npm run test:education && npm run test:country-mapping && npm run test:work-info && npm run test:family && npm run test:api-health",
     "prepare": "husky install",
     "check-env": "node tools/check-env.js",
     "live-smoke": "node tests/e2e/puppeteer-visits-live.js"

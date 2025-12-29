@@ -274,6 +274,75 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     });
   }
 
+  // Parent presence and status logic (show status select only when 'Yes' selected)
+  const fatherRadios = document.querySelectorAll('input[name="Father_In_US"]');
+  const fatherStatusGroup = document.getElementById('fatherStatusGroup');
+  const fatherStatusSelect = document.getElementById('fatherStatus');
+
+  function updateFatherStatusVisibility(value) {
+    if (!fatherStatusGroup || !fatherStatusSelect) return;
+    if (value === 'Yes') {
+      fatherStatusGroup.style.display = 'block';
+      fatherStatusGroup.style.animation = 'fadeIn 0.5s';
+      fatherStatusGroup.setAttribute('aria-expanded', 'true');
+      fatherStatusGroup.setAttribute('aria-hidden', 'false');
+      fatherStatusSelect.setAttribute('required', 'required');
+    } else {
+      fatherStatusGroup.style.display = 'none';
+      fatherStatusGroup.setAttribute('aria-expanded', 'false');
+      fatherStatusGroup.setAttribute('aria-hidden', 'true');
+      fatherStatusSelect.removeAttribute('required');
+      fatherStatusSelect.classList.remove('is-invalid');
+      const err = document.getElementById('error-fatherStatus');
+      if (err) err.textContent = '';
+    }
+  }
+
+  if (fatherRadios && fatherRadios.length) {
+    fatherRadios.forEach((radio) => {
+      radio.addEventListener('change', function () {
+        updateFatherStatusVisibility(this.value);
+      });
+    });
+    // initialize based on default checked value
+    const checkedFather = document.querySelector('input[name="Father_In_US"]:checked');
+    if (checkedFather) updateFatherStatusVisibility(checkedFather.value);
+  }
+
+  const motherRadios = document.querySelectorAll('input[name="Mother_In_US"]');
+  const motherStatusGroup = document.getElementById('motherStatusGroup');
+  const motherStatusSelect = document.getElementById('motherStatus');
+
+  function updateMotherStatusVisibility(value) {
+    if (!motherStatusGroup || !motherStatusSelect) return;
+    if (value === 'Yes') {
+      motherStatusGroup.style.display = 'block';
+      motherStatusGroup.style.animation = 'fadeIn 0.5s';
+      motherStatusGroup.setAttribute('aria-expanded', 'true');
+      motherStatusGroup.setAttribute('aria-hidden', 'false');
+      motherStatusSelect.setAttribute('required', 'required');
+    } else {
+      motherStatusGroup.style.display = 'none';
+      motherStatusGroup.setAttribute('aria-expanded', 'false');
+      motherStatusGroup.setAttribute('aria-hidden', 'true');
+      motherStatusSelect.removeAttribute('required');
+      motherStatusSelect.classList.remove('is-invalid');
+      const err = document.getElementById('error-motherStatus');
+      if (err) err.textContent = '';
+    }
+  }
+
+  if (motherRadios && motherRadios.length) {
+    motherRadios.forEach((radio) => {
+      radio.addEventListener('change', function () {
+        updateMotherStatusVisibility(this.value);
+      });
+    });
+    // initialize based on default checked value
+    const checkedMother = document.querySelector('input[name="Mother_In_US"]:checked');
+    if (checkedMother) updateMotherStatusVisibility(checkedMother.value);
+  }
+
   // 4b. Previous U.S. Visits (show when US_Visited = Yes)
   const visitedRadios = document.querySelectorAll('input[name="US_Visited"]');
   const previousUSVisits = document.getElementById('US_Visits_Container');

@@ -1634,6 +1634,25 @@
             <span class="error-message" id="error-fatherDOBMonth"></span>
             <span class="error-message" id="error-fatherDOBYear"></span>
           </div>
+
+          <div class="question-group">
+            <label>هل الاب في الولايات المتحدة؟</label>
+            <label><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes" /> نعم</label>
+            <label><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked /> لا</label>
+          </div>
+
+          <div class="question-group" id="fatherStatusGroup" style="display: none" aria-expanded="false" aria-hidden="true">
+            <label for="fatherStatus">حالة الاب (Father's Status):</label>
+            <select id="fatherStatus" name="Father_Status">
+              <option value="">- اختر -</option>
+              <option value="US_Citizen">مواطن أمريكي (U.S. CITIZEN)</option>
+              <option value="LPR">مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))</option>
+              <option value="Nonimmigrant">غير مهاجر (NONIMMIGRANT)</option>
+              <option value="Other">آخر/لا أعرف (OTHER/I DON'T KNOW)</option>
+            </select>
+            <span class="error-message" id="error-fatherStatus"></span>
+          </div>
+
           <div class="question-group">
             <label for="motherName">اسم الام بالكامل:</label
             ><input
@@ -1708,6 +1727,24 @@
             <span class="error-message" id="error-motherDOBMonth"></span>
             <span class="error-message" id="error-motherDOBYear"></span>
           </div>
+
+          <div class="question-group">
+            <label>هل الام في الولايات المتحدة؟</label>
+            <label><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes" /> نعم</label>
+            <label><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked /> لا</label>
+          </div>
+
+          <div class="question-group" id="motherStatusGroup" style="display: none" aria-expanded="false" aria-hidden="true">
+            <label for="motherStatus">حالة الام (Mother's Status):</label>
+            <select id="motherStatus" name="Mother_Status">
+              <option value="">- اختر -</option>
+              <option value="US_Citizen">مواطن أمريكي (U.S. CITIZEN)</option>
+              <option value="LPR">مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))</option>
+              <option value="Nonimmigrant">غير مهاجر (NONIMMIGRANT)</option>
+              <option value="Other">آخر/لا أعرف (OTHER/I DON'T KNOW)</option>
+            </select>
+            <span class="error-message" id="error-motherStatus"></span>
+          </div>
         </fieldset>
 
         <fieldset>
@@ -1731,19 +1768,7 @@
           </legend>
           <div class="question-group">
             <label for="jobTitleCurrent">المسمى الوظيفي:</label
-            ><select id="jobTitleCurrent" name="Current_JobTitle" required>
-              <option value="">-- اختر المهنة --</option>
-              <option value="Business">Business</option>
-              <option value="Communications">Communications</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Education">Education</option>
-              <option value="Engineering">Engineering</option>
-              <option value="Finance">Finance</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Law">Law</option>
-              <option value="Media">Media</option>
-              <option value="Other">Other</option>
-            </select>
+            ><input type="text" id="jobTitleCurrent" name="Current_JobTitle" required style="direction: auto" />
             <span class="error-message" id="error-jobTitleCurrent"></span>
           </div>
           <div class="question-group">
@@ -1835,17 +1860,7 @@
             <span class="error-message" id="error-startDateCurrent"></span>
           </div>
 
-          <div class="question-group">
-            <label for="currentDuties">المهام / الواجبات:</label
-            ><textarea
-              id="currentDuties"
-              name="Current_Duties"
-              required
-              rows="3"
-              style="direction: auto"
-            ></textarea>
-            <span class="error-message" id="error-currentDuties"></span>
-          </div>
+
 
           <div class="question-group">
             <label for="phoneWorkCurrent">تليفون العمل:</label

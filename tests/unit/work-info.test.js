@@ -24,18 +24,14 @@ const { JSDOM } = require('jsdom');
   await new Promise((r) => setTimeout(r, 50));
   const doc = dom.window.document;
 
-  // 1) Occupation select and Duties textarea exist and are required
+  // 1) Occupation input exists and Duties textarea removed
   const occupation = doc.getElementById('jobTitleCurrent');
-  assert(occupation, 'jobTitleCurrent select not found');
-  assert.strictEqual(occupation.tagName, 'SELECT', 'jobTitleCurrent should be a SELECT element');
-  assert(
-    occupation.options && occupation.options.length >= 10,
-    'jobTitleCurrent should contain options'
-  );
+  assert(occupation, 'jobTitleCurrent input not found');
+  assert.strictEqual(occupation.tagName, 'INPUT', 'jobTitleCurrent should be an INPUT element');
+  assert.strictEqual(occupation.type, 'text', 'jobTitleCurrent should be type="text"');
 
   const duties = doc.getElementById('currentDuties');
-  assert(duties, 'currentDuties textarea not found');
-  assert(duties.hasAttribute('required'), 'currentDuties should have required attribute');
+  assert.strictEqual(duties, null, 'currentDuties should have been removed');
 
   // Helper removed because it was unused — kept test focused on the stated assertions
 
