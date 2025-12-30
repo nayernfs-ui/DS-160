@@ -60,6 +60,244 @@
             <span class="error-message" id="error-maritalStatus"></span>
           </div>
 
+          <!-- Conditional marital detail blocks were moved here so they appear directly under the marital status field -->
+          <fieldset id="marriedFields" class="conditional-fields" style="display: none">
+            <legend>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path
+                    fill="#fff"
+                    d="M12 7a3 3 0 100-6 3 3 0 000 6zm0 3c-2.33 0-7 1.17-7 3.5V17h14v-3.5C19 11.17 14.33 10 12 10z"
+                  /></svg></span
+              >تفاصيل الزواج
+            </legend>
+            <div class="question-group">
+              <label for="spouseName">اسم الزوج/الزوجة بالكامل:</label
+              ><input type="text" id="spouseName" name="Spouse_FullName" style="direction: auto" />
+            </div>
+            <div class="question-group">
+              <label>تاريخ الميلاد:</label>
+              <div class="date-row">
+                <select id="spouseDOBDay" name="Spouse_DOB_Day" required>
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="spouseDOBMonth" name="Spouse_DOB_Month" required>
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input
+                  type="text"
+                  id="spouseDOBYear"
+                  name="Spouse_DOB_Year"
+                  placeholder="YYYY"
+                  required
+                  style="width: 110px"
+                />
+              </div>
+              <span class="error-message" id="error-spouseDOBDay"></span>
+              <span class="error-message" id="error-spouseDOBMonth"></span>
+              <span class="error-message" id="error-spouseDOBYear"></span>
+            </div>
+            <div class="question-group">
+              <label for="spousePOB">محافظة وبلد الميلاد:</label
+              ><input type="text" id="spousePOB" name="Spouse_POB" style="direction: auto" />
+            </div>
+          </fieldset>
+
+          <fieldset id="widowedFields" class="conditional-fields" style="display: none">
+            <legend>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path
+                    fill="#fff"
+                    d="M12 21s-6.716-4.948-9-8c-1.35-1.666-1.02-4 1.5-5.5C8.598 6.456 11.5 9 12 9s3.402-2.544 7.5-1.5c2.52 1.5 2.85 3.834 1.5 5.5-2.284 3.052-9 8-9 8z"
+                  /></svg></span
+              >تفاصيل الأرملة/الأرمل
+            </legend>
+            <div class="question-group">
+              <label for="deceasedName">اسم الزوج/الزوجة بالكامل:</label
+              ><input
+                type="text"
+                id="deceasedName"
+                name="Deceased_FullName"
+                style="direction: auto"
+              />
+            </div>
+            <div class="question-group">
+              <label>تاريخ الوفاة:</label>
+              <div class="date-row">
+                <select id="dateOfDeathDay" name="Deceased_DOD_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="dateOfDeathMonth" name="Deceased_DOD_Month">
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input
+                  type="text"
+                  id="dateOfDeathYear"
+                  name="Deceased_DOD_Year"
+                  placeholder="YYYY"
+                  style="width: 110px"
+                />
+              </div>
+              <span class="error-message" id="error-dateOfDeathDay"></span>
+              <span class="error-message" id="error-dateOfDeathMonth"></span>
+              <span class="error-message" id="error-dateOfDeathYear"></span>
+            </div>
+            <div class="question-group">
+              <label for="deceasedPOB">محافظة وبلد الميلاد:</label
+              ><input type="text" id="deceasedPOB" name="Deceased_POB" style="direction: auto" />
+            </div>
+          </fieldset>
+
+          <fieldset id="divorcedFields" class="conditional-fields" style="display: none">
+            <legend>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path
+                    fill="#fff"
+                    d="M19 3l-7 8L5 3l-1 1 7 8-7 8 1 1 7-8 7 8 1-1-7-8 7-8-1-1z"
+                  /></svg></span
+              >تفاصيل الطلاق
+            </legend>
+            <div class="question-group">
+              <label for="exName">اسم الزوج/الزوجة السابقة بالكامل:</label
+              ><input type="text" id="exName" name="ExSpouse_FullName" style="direction: auto" />
+            </div>
+            <div class="question-group">
+              <label>تاريخ الطلاق:</label>
+              <div class="date-row">
+                <select id="dateOfDivorceDay" name="ExSpouse_DODDivorce_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+
           <!-- Nationality / other nationality question (added) -->
           <div class="question-group">
             <label for="nationality">بلد/منطقة المنشأ (الجنسية):</label>
@@ -784,240 +1022,7 @@
           </div>
         </fieldset>
 
-        <fieldset id="marriedFields" class="conditional-fields" style="display: none">
-          <legend>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path
-                  fill="#fff"
-                  d="M12 7a3 3 0 100-6 3 3 0 000 6zm0 3c-2.33 0-7 1.17-7 3.5V17h14v-3.5C19 11.17 14.33 10 12 10z"
-                /></svg></span
-            >تفاصيل الزواج
-          </legend>
-          <div class="question-group">
-            <label for="spouseName">اسم الزوج/الزوجة بالكامل:</label
-            ><input type="text" id="spouseName" name="Spouse_FullName" style="direction: auto" />
-          </div>
-          <div class="question-group">
-            <label>تاريخ الميلاد:</label>
-            <div class="date-row">
-              <select id="spouseDOBDay" name="Spouse_DOB_Day" required>
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="spouseDOBMonth" name="Spouse_DOB_Month" required>
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
-                type="text"
-                id="spouseDOBYear"
-                name="Spouse_DOB_Year"
-                placeholder="YYYY"
-                required
-                style="width: 110px"
-              />
-            </div>
-            <span class="error-message" id="error-spouseDOBDay"></span>
-            <span class="error-message" id="error-spouseDOBMonth"></span>
-            <span class="error-message" id="error-spouseDOBYear"></span>
-          </div>
-          <div class="question-group">
-            <label for="spousePOB">محافظة وبلد الميلاد:</label
-            ><input type="text" id="spousePOB" name="Spouse_POB" style="direction: auto" />
-          </div>
-        </fieldset>
-
-        <fieldset id="widowedFields" class="conditional-fields" style="display: none">
-          <legend>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path
-                  fill="#fff"
-                  d="M12 21s-6.716-4.948-9-8c-1.35-1.666-1.02-4 1.5-5.5C8.598 6.456 11.5 9 12 9s3.402-2.544 7.5-1.5c2.52 1.5 2.85 3.834 1.5 5.5-2.284 3.052-9 8-9 8z"
-                /></svg></span
-            >تفاصيل الأرملة/الأرمل
-          </legend>
-          <div class="question-group">
-            <label for="deceasedName">اسم الزوج/الزوجة بالكامل:</label
-            ><input
-              type="text"
-              id="deceasedName"
-              name="Deceased_FullName"
-              style="direction: auto"
-            />
-          </div>
-          <div class="question-group">
-            <label>تاريخ الوفاة:</label>
-            <div class="date-row">
-              <select id="dateOfDeathDay" name="Deceased_DOD_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="dateOfDeathMonth" name="Deceased_DOD_Month">
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
-                type="text"
-                id="dateOfDeathYear"
-                name="Deceased_DOD_Year"
-                placeholder="YYYY"
-                style="width: 110px"
-              />
-            </div>
-            <span class="error-message" id="error-dateOfDeathDay"></span>
-            <span class="error-message" id="error-dateOfDeathMonth"></span>
-            <span class="error-message" id="error-dateOfDeathYear"></span>
-          </div>
-          <div class="question-group">
-            <label for="deceasedPOB">محافظة وبلد الميلاد:</label
-            ><input type="text" id="deceasedPOB" name="Deceased_POB" style="direction: auto" />
-          </div>
-        </fieldset>
-
-        <fieldset id="divorcedFields" class="conditional-fields" style="display: none">
-          <legend>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path
-                  fill="#fff"
-                  d="M19 3l-7 8L5 3l-1 1 7 8-7 8 1 1 7-8 7 8 1-1-7-8 7-8-1-1z"
-                /></svg></span
-            >تفاصيل الطلاق
-          </legend>
-          <div class="question-group">
-            <label for="exName">اسم الزوج/الزوجة السابقة بالكامل:</label
-            ><input type="text" id="exName" name="ExSpouse_FullName" style="direction: auto" />
-          </div>
-          <div class="question-group">
-            <label>تاريخ الطلاق:</label>
-            <div class="date-row">
-              <select id="dateOfDivorceDay" name="ExSpouse_DODDivorce_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
+        <!-- marital/widowed/divorced details were moved to appear directly beneath the maritalStatus select -->
                 <option value="15">15</option>
                 <option value="16">16</option>
                 <option value="17">17</option>

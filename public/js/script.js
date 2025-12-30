@@ -177,10 +177,40 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   }
 
   function hideAllMaritalFields() {
-    if (marriedFields) marriedFields.style.display = 'none';
-    if (widowedFields) widowedFields.style.display = 'none';
-    if (divorcedFields) divorcedFields.style.display = 'none';
+    [marriedFields, widowedFields, divorcedFields].forEach((f) => {
+      if (f) {
+        f.style.display = 'none';
+        f.style.animation = '';
+        f.setAttribute('aria-hidden', 'true');
+        f.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
+
+  // helper to show a conditional fieldset, scroll it into view and focus its first input
+  function showConditionalFieldset(fieldset) {
+    if (!fieldset) return;
+    fieldset.style.display = 'block';
+    fieldset.style.animation = 'fadeIn 0.5s';
+    fieldset.setAttribute('aria-hidden', 'false');
+    fieldset.setAttribute('aria-expanded', 'true');
+
+    // focus first form control and scroll into view after a short delay to allow layout
+    const firstControl = fieldset.querySelector('input, select, textarea, button, a');
+    setTimeout(() => {
+      if (firstControl && typeof firstControl.focus === 'function') {
+        firstControl.focus({ preventScroll: true });
+      }
+      try {
+        fieldset.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (e) {
+        /* ignore */
+      }
+    }, 50);
+  }
+
+  // ensure ARIA attributes are set correctly at load
+  hideAllMaritalFields();
 
   if (maritalStatusSelect) {
     maritalStatusSelect.addEventListener('change', function () {
@@ -188,14 +218,11 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       const status = this.value;
 
       if (status === 'Married') {
-        marriedFields.style.display = 'block';
-        marriedFields.style.animation = 'fadeIn 0.5s';
+        showConditionalFieldset(marriedFields);
       } else if (status === 'Widowed') {
-        widowedFields.style.display = 'block';
-        widowedFields.style.animation = 'fadeIn 0.5s';
+        showConditionalFieldset(widowedFields);
       } else if (status === 'Divorced') {
-        divorcedFields.style.display = 'block';
-        divorcedFields.style.animation = 'fadeIn 0.5s';
+        showConditionalFieldset(divorcedFields);
       }
     });
   }
