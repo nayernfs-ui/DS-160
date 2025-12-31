@@ -185,6 +185,25 @@ document.addEventListener('DOMContentLoaded', (_event) => {
         f.setAttribute('aria-expanded', 'false');
       }
     });
+
+    // make spouse current address not required when the marital sections are hidden
+    const spouseAddr = document.getElementById('spouseCurrentAddress');
+    if (spouseAddr) spouseAddr.removeAttribute('required');
+  }
+
+  // helper to set spouse address required state
+  function setSpouseAddressRequired(isRequired) {
+    const spouseAddr = document.getElementById('spouseCurrentAddress');
+    const errSpan = document.getElementById('error-Spouse_CurrentAddress');
+    if (!spouseAddr) return;
+    if (isRequired) {
+      spouseAddr.setAttribute('required', 'required');
+      if (errSpan) errSpan.textContent = '';
+    } else {
+      spouseAddr.removeAttribute('required');
+      if (errSpan) errSpan.textContent = '';
+      spouseAddr.classList.remove('is-invalid');
+    }
   }
 
   // helper to show a conditional fieldset, scroll it into view and focus its first input
@@ -194,6 +213,11 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     fieldset.style.animation = 'fadeIn 0.5s';
     fieldset.setAttribute('aria-hidden', 'false');
     fieldset.setAttribute('aria-expanded', 'true');
+
+    // If we're showing the married fields, make the spouse address required
+    if (fieldset === marriedFields) {
+      setSpouseAddressRequired(true);
+    }
 
     // focus first form control and scroll into view after a short delay to allow layout
     const firstControl = fieldset.querySelector('input, select, textarea, button, a');
@@ -213,6 +237,16 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   hideAllMaritalFields();
 
   if (maritalStatusSelect) {
+    // initialize based on current value (in case form is pre-filled)
+    const initialStatus = maritalStatusSelect.value;
+    if (initialStatus === 'Married') {
+      showConditionalFieldset(marriedFields);
+    } else if (initialStatus === 'Widowed') {
+      showConditionalFieldset(widowedFields);
+    } else if (initialStatus === 'Divorced') {
+      showConditionalFieldset(divorcedFields);
+    }
+
     maritalStatusSelect.addEventListener('change', function () {
       hideAllMaritalFields();
       const status = this.value;
