@@ -153,10 +153,12 @@
               <label for="spousePOB">محافظة وبلد الميلاد:</label
               ><input type="text" id="spousePOB" name="Spouse_POB" style="direction: auto" />
             </div>
-          </fieldset>
 
-          <fieldset id="widowedFields" class="conditional-fields" style="display: none">
-            <legend>
+          <div class="question-group">
+            <label for="spouseCurrentAddress">عنوان الإقامة الحالي للزوج/الزوجة:</label
+            ><input type="text" id="spouseCurrentAddress" name="Spouse_CurrentAddress" placeholder="العنوان الكامل" style="direction: auto" />
+            <span class="error-message" id="error-Spouse_CurrentAddress"></span>
+          </div>
               <span class="section-icon" aria-hidden="true"
                 ><svg
                   width="20"

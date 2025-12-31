@@ -28,6 +28,8 @@
 - Rewrote `.gitignore` to include common build artifacts, logs, and generated test outputs to prevent committing transient files.
 - Ran `eslint --fix` and ensured linting passes; re-ran full test suite to confirm no regressions.
 
+- HTML cleanup: fixed structural issues in `index.html` (removed duplicate `otherNationalitySelect`, removed Ex‑spouse Place of Birth field where requested, corrected mis-nested and unclosed tags), added `html-validate` to `lint-staged` for `index.html`, and verified `html-validate` reports no errors for both `index.html` and `public/index.html` locally.
+
 - Added `xmldom` (dev) to satisfy `tools/` scripts that parse DOCX XML.
 - Ran `depcheck` and confirmed no unused production dependencies; some dev tools remain intentionally installed (eslint, prettier, html-validate, lint-staged).
 - Smoke tests for DOCX/email ran; the email send attempt returned 401 (Unauthorized) because the Sendinblue/Brevo API key is not set in the environment — this is expected unless credentials are provided.

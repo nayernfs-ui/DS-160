@@ -36,6 +36,10 @@
     ],
     "*.{css,md,json}": [
       "prettier --write"
+    ],
+    "index.html": [
+      "prettier --write",
+      "npm run lint:html"
     ]
   },
   "devDependencies": {
