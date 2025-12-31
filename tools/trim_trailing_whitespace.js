@@ -12,3 +12,4 @@ if (out === orig.replace(/\r\n/g, '\n')) {
 fs.writeFileSync(file + '.bak', orig, 'utf8');
 fs.writeFileSync(file, out, 'utf8');
 console.log('Trimmed trailing whitespace in index.html and wrote backup index.html.bak');
+// lint-staged test: no-op change
