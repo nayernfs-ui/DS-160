@@ -33,6 +33,13 @@
     "*.js": [
       "prettier --write",
       "eslint --fix"
+    ],
+    "*.html": [
+      "prettier --write",
+      "html-validate"
+    ],
+    "*.{css,md,json}": [
+      "prettier --write"
     ]
   },
   "devDependencies": {
