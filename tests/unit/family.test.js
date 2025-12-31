@@ -157,5 +157,67 @@ const { JSDOM } = require('jsdom');
     'motherStatus should not be required when mother in US is No'
   );
 
+  // Spouse fields (marital status)
+  const maritalStatus = doc.getElementById('maritalStatus');
+  assert(maritalStatus, 'maritalStatus select not found');
+  const marriedGroup = doc.getElementById('marriedFields');
+  assert(marriedGroup, 'marriedFields container not found');
+  const spouseAddr = doc.getElementById('spouseCurrentAddress');
+  assert(spouseAddr, 'spouseCurrentAddress input not found');
+
+  // Initially hidden and not required
+  assert.strictEqual(
+    dom.window.getComputedStyle(marriedGroup).display,
+    'none',
+    'marriedFields should be hidden initially'
+  );
+  assert.strictEqual(
+    marriedGroup.getAttribute('aria-expanded'),
+    'false',
+    'marriedFields should have aria-expanded=false initially'
+  );
+  assert(
+    !spouseAddr.hasAttribute('required'),
+    'spouseCurrentAddress should not be required initially'
+  );
+
+  // Show when Married selected
+  maritalStatus.value = 'Married';
+  maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  assert.notStrictEqual(
+    dom.window.getComputedStyle(marriedGroup).display,
+    'none',
+    'marriedFields should be visible after selecting Married'
+  );
+  assert.strictEqual(
+    marriedGroup.getAttribute('aria-expanded'),
+    'true',
+    'marriedFields should have aria-expanded=true when visible'
+  );
+  assert(
+    spouseAddr.hasAttribute('required'),
+    'spouseCurrentAddress should be required when married'
+  );
+
+  // Hide when Single selected
+  maritalStatus.value = 'Single';
+  maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  assert.strictEqual(
+    dom.window.getComputedStyle(marriedGroup).display,
+    'none',
+    'marriedFields should be hidden after selecting Single'
+  );
+  assert.strictEqual(
+    marriedGroup.getAttribute('aria-expanded'),
+    'false',
+    'marriedFields should have aria-expanded=false when hidden'
+  );
+  assert(
+    !spouseAddr.hasAttribute('required'),
+    'spouseCurrentAddress should not be required when not married'
+  );
+
   console.log('family.test.js: passed');
 })();
