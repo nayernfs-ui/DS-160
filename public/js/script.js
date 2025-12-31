@@ -248,15 +248,58 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     }
 
     maritalStatusSelect.addEventListener('change', function () {
-      hideAllMaritalFields();
+      // Explicit behavior: show the requested section and ensure others are hidden
       const status = this.value;
 
       if (status === 'Married') {
+        // show spouse details, hide widowed/divorced
         showConditionalFieldset(marriedFields);
+        if (widowedFields) {
+          widowedFields.style.display = 'none';
+          widowedFields.style.animation = '';
+          widowedFields.setAttribute('aria-hidden', 'true');
+          widowedFields.setAttribute('aria-expanded', 'false');
+        }
+        if (divorcedFields) {
+          divorcedFields.style.display = 'none';
+          divorcedFields.style.animation = '';
+          divorcedFields.setAttribute('aria-hidden', 'true');
+          divorcedFields.setAttribute('aria-expanded', 'false');
+        }
       } else if (status === 'Widowed') {
+        // show widowed details, hide spouse/divorced
         showConditionalFieldset(widowedFields);
+        setSpouseAddressRequired(false);
+        if (marriedFields) {
+          marriedFields.style.display = 'none';
+          marriedFields.style.animation = '';
+          marriedFields.setAttribute('aria-hidden', 'true');
+          marriedFields.setAttribute('aria-expanded', 'false');
+        }
+        if (divorcedFields) {
+          divorcedFields.style.display = 'none';
+          divorcedFields.style.animation = '';
+          divorcedFields.setAttribute('aria-hidden', 'true');
+          divorcedFields.setAttribute('aria-expanded', 'false');
+        }
       } else if (status === 'Divorced') {
+        // show divorced details, hide spouse/widowed
         showConditionalFieldset(divorcedFields);
+        if (marriedFields) {
+          marriedFields.style.display = 'none';
+          marriedFields.style.animation = '';
+          marriedFields.setAttribute('aria-hidden', 'true');
+          marriedFields.setAttribute('aria-expanded', 'false');
+        }
+        if (widowedFields) {
+          widowedFields.style.display = 'none';
+          widowedFields.style.animation = '';
+          widowedFields.setAttribute('aria-hidden', 'true');
+          widowedFields.setAttribute('aria-expanded', 'false');
+        }
+      } else {
+        // default: hide all
+        hideAllMaritalFields();
       }
     });
   }

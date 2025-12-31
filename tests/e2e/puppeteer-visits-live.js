@@ -67,6 +67,41 @@ process.on('uncaughtException', (err) => {
     await page.click('input[name="US_Visited"][value="Yes"]');
     await new Promise((r) => setTimeout(r, 400));
     console.log('After clicking Yes radio and waiting.');
+
+    // --- New e2e check: marital visibility when selecting Married ---
+    try {
+      console.log('Waiting for marital status select...');
+      await page.waitForSelector('#maritalStatus', { timeout: 10000 });
+      console.log('Selecting Married from marital status...');
+      await page.select('#maritalStatus', 'Married');
+      // allow time for DOM updates
+      await new Promise((r) => setTimeout(r, 200));
+
+      const widowedDisplay = await page.$eval('#widowedFields', (el) =>
+        window.getComputedStyle(el).display
+      );
+      const marriedDisplay = await page.$eval('#marriedFields', (el) =>
+        window.getComputedStyle(el).display
+      );
+
+      if (widowedDisplay !== 'none') {
+        console.error('E2E: widowedFields should be hidden when Married is selected; got', widowedDisplay);
+        await browser.close();
+        process.exit(4);
+      }
+
+      if (marriedDisplay === 'none') {
+        console.error('E2E: marriedFields should be visible when Married is selected; got', marriedDisplay);
+        await browser.close();
+        process.exit(5);
+      }
+
+      console.log('E2E: marital visibility check passed (Married shows spouse, hides widowed)');
+    } catch (err) {
+      console.error('E2E marital visibility check failed:', err && err.message ? err.message : err);
+      await browser.close();
+      process.exit(3);
+    }
   } catch (e) {
     console.error('Interaction failed:', e && e.message ? e.message : e);
     await browser.close();
