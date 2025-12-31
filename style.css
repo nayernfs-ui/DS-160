@@ -52,7 +52,23 @@ label {
 }
 .question-group {
   margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
+.question-group label {
+  width: 220px;
+  flex: 0 0 220px;
+  margin: 0;
+  text-align: right; /* keep label aligned to the right in RTL */
+}
+.question-group input,
+.question-group select,
+.question-group textarea {
+  flex: 1 1 auto;
+  width: auto; /* allow flexbox to control width */
+} 
 
 /* Screen-reader-only label helper */
 .sr-only {
@@ -155,9 +171,15 @@ legend {
   margin: 0;
 }
 .date-row input {
-  max-width: 220px;
+  max-width: 110px;
+  flex: 0 0 110px;
   text-align: center;
 }
+
+/* Ensure error messages appear below and span full width */
+.question-group .error-message {
+  flex-basis: 100%;
+} 
 
 /* Ensure Education History 2 year inputs match main Education styles */
 #educationHistory2 .date-row input {
@@ -247,7 +269,23 @@ select.is-invalid {
     width: 100%;
     max-width: none;
   }
-}
+
+  /* Stack question groups on small screens */
+  .question-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .question-group label {
+    width: auto;
+    text-align: right;
+  }
+  .question-group input,
+  .question-group select,
+  .question-group textarea {
+    width: 100%;
+    max-width: none;
+  }
+} 
 
 /* Keyframe for a slight fade-in effect (used by JS) */
 @keyframes fadeIn {
