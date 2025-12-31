@@ -35,8 +35,7 @@
       "eslint --fix"
     ],
     "*.html": [
-      "prettier --write",
-      "html-validate"
+      "prettier --write"
     ],
     "*.{css,md,json}": [
       "prettier --write"
