@@ -33,4 +33,3 @@
 - Added `xmldom` (dev) to satisfy `tools/` scripts that parse DOCX XML.
 - Ran `depcheck` and confirmed no unused production dependencies; some dev tools remain intentionally installed (eslint, prettier, html-validate, lint-staged).
 - Smoke tests for DOCX/email ran; the email send attempt returned 401 (Unauthorized) because the Sendinblue/Brevo API key is not set in the environment — this is expected unless credentials are provided.
-

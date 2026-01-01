@@ -77,28 +77,28 @@ process.on('uncaughtException', (err) => {
       // allow time for DOM updates
       await new Promise((r) => setTimeout(r, 200));
 
-      const widowedDisplay = await page.$eval(
-        '#widowedFields',
+      const widowDisplay = await page.$eval(
+        '#widowInfo',
         (el) => window.getComputedStyle(el).display
       );
-      const marriedDisplay = await page.$eval(
-        '#marriedFields',
+      const spouseDisplay = await page.$eval(
+        '#spouseInfo',
         (el) => window.getComputedStyle(el).display
       );
 
-      if (widowedDisplay !== 'none') {
+      if (widowDisplay !== 'none') {
         console.error(
-          'E2E: widowedFields should be hidden when Married is selected; got',
-          widowedDisplay
+          'E2E: widowInfo should be hidden when Married is selected; got',
+          widowDisplay
         );
         await browser.close();
         process.exit(4);
       }
 
-      if (marriedDisplay === 'none') {
+      if (spouseDisplay === 'none') {
         console.error(
-          'E2E: marriedFields should be visible when Married is selected; got',
-          marriedDisplay
+          'E2E: spouseInfo should be visible when Married is selected; got',
+          spouseDisplay
         );
         await browser.close();
         process.exit(5);

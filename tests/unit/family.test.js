@@ -160,8 +160,8 @@ const { JSDOM } = require('jsdom');
   // Spouse fields (marital status)
   const maritalStatus = doc.getElementById('maritalStatus');
   assert(maritalStatus, 'maritalStatus select not found');
-  const marriedGroup = doc.getElementById('marriedFields');
-  assert(marriedGroup, 'marriedFields container not found');
+  const marriedGroup = doc.getElementById('spouseInfo');
+  assert(marriedGroup, 'spouseInfo container not found');
   const spouseAddr = doc.getElementById('spouseCurrentAddress');
   assert(spouseAddr, 'spouseCurrentAddress input not found');
 
@@ -169,12 +169,12 @@ const { JSDOM } = require('jsdom');
   assert.strictEqual(
     dom.window.getComputedStyle(marriedGroup).display,
     'none',
-    'marriedFields should be hidden initially'
+    'spouseInfo should be hidden initially'
   );
   assert.strictEqual(
     marriedGroup.getAttribute('aria-expanded'),
     'false',
-    'marriedFields should have aria-expanded=false initially'
+    'spouseInfo should have aria-expanded=false initially'
   );
   assert(
     !spouseAddr.hasAttribute('required'),
@@ -188,12 +188,12 @@ const { JSDOM } = require('jsdom');
   assert.notStrictEqual(
     dom.window.getComputedStyle(marriedGroup).display,
     'none',
-    'marriedFields should be visible after selecting Married'
+    'spouseInfo should be visible after selecting Married'
   );
   assert.strictEqual(
     marriedGroup.getAttribute('aria-expanded'),
     'true',
-    'marriedFields should have aria-expanded=true when visible'
+    'spouseInfo should have aria-expanded=true when visible'
   );
   assert(
     spouseAddr.hasAttribute('required'),
@@ -207,12 +207,12 @@ const { JSDOM } = require('jsdom');
   assert.strictEqual(
     dom.window.getComputedStyle(marriedGroup).display,
     'none',
-    'marriedFields should be hidden after selecting Single'
+    'spouseInfo should be hidden after selecting Single'
   );
   assert.strictEqual(
     marriedGroup.getAttribute('aria-expanded'),
     'false',
-    'marriedFields should have aria-expanded=false when hidden'
+    'spouseInfo should have aria-expanded=false when hidden'
   );
   assert(
     !spouseAddr.hasAttribute('required'),
@@ -220,7 +220,7 @@ const { JSDOM } = require('jsdom');
   );
 
   // Selecting Widowed should show the widowed details and not require spouse address
-  const widowedGroup = doc.getElementById('widowedFields');
+  const widowedGroup = doc.getElementById('widowInfo');
   maritalStatus.value = 'Widowed';
   maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
   await new Promise((r) => setTimeout(r, 20));
@@ -246,7 +246,7 @@ const { JSDOM } = require('jsdom');
   assert.strictEqual(
     dom.window.getComputedStyle(widowedGroup).display,
     'none',
-    'widowedFields should be hidden when Married selected'
+    'widowInfo should be hidden when Married selected'
   );
 
   // spouse DOB fields should be required when married

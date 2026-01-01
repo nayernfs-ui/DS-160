@@ -63,7 +63,7 @@
           </div>
 
           <!-- Conditional marital detail blocks were moved here so they appear directly under the marital status field -->
-          <fieldset id="marriedFields" class="conditional-fields" style="display: none">
+          <fieldset id="spouseInfo" class="conditional-fields" style="display: none">
             <legend>
               <span class="section-icon" aria-hidden="true"
                 ><svg
@@ -157,12 +157,18 @@
 
             <div class="question-group">
               <label for="spouseCurrentAddress">عنوان الإقامة الحالي للزوج/الزوجة:</label
-              ><input type="text" id="spouseCurrentAddress" name="Spouse_CurrentAddress" placeholder="العنوان الكامل" style="direction: auto" />
+              ><input
+                type="text"
+                id="spouseCurrentAddress"
+                name="Spouse_CurrentAddress"
+                placeholder="العنوان الكامل"
+                style="direction: auto"
+              />
               <span class="error-message" id="error-Spouse_CurrentAddress"></span>
             </div>
           </fieldset>
 
-          <fieldset id="widowedFields" class="conditional-fields" style="display: none">
+          <fieldset id="widowInfo" class="conditional-fields" style="display: none">
             <legend>
               <span class="section-icon" aria-hidden="true"
                 ><svg
@@ -381,247 +387,254 @@
                 />
               </div>
             </div>
-        </fieldset>
+          </fieldset>
 
-        <!-- Lost / Stolen Passport question (Arabic) -->
-        <div class="question-group">
-          <label>هل سبق وفقدت جواز سفر أو سُرق منك؟</label>
-          <label
-            ><input type="radio" name="LostPassport" value="Yes" id="lostPassportYes" /> نعم</label
-          >
-          <label
-            ><input type="radio" name="LostPassport" value="No" id="lostPassportNo" checked />
-            لا</label
-          >
-        </div>
+          <!-- Lost / Stolen Passport question (Arabic) -->
+          <div class="question-group">
+            <label>هل سبق وفقدت جواز سفر أو سُرق منك؟</label>
+            <label
+              ><input type="radio" name="LostPassport" value="Yes" id="lostPassportYes" />
+              نعم</label
+            >
+            <label
+              ><input type="radio" name="LostPassport" value="No" id="lostPassportNo" checked />
+              لا</label
+            >
+          </div>
 
-        <fieldset
-          id="lostPassportFields"
-          class="conditional-fields"
-          style="display: none"
-          aria-expanded="false"
-          aria-hidden="true"
-        >
-          <legend>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
+          <fieldset
+            id="lostPassportFields"
+            class="conditional-fields"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
+            <legend>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z" /></svg></span
+              >يرجى تقديم المعلومات التالية:
+            </legend>
+
+            <div class="question-group">
+              <label for="lostPassportNumber">Passport/Travel Document Number</label>
+              <input
+                type="text"
+                id="lostPassportNumber"
+                name="LostPassport_PassportNumber"
+                style="direction: ltr"
+              />
+              <label style="margin-left: 10px"
+                ><input
+                  type="checkbox"
+                  id="lostPassportDoNotKnow"
+                  name="LostPassport_DoNotKnow"
+                  value="true"
+                />
+                لا أعرف</label
               >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z" /></svg></span
-            >يرجى تقديم المعلومات التالية:
-          </legend>
+            </div>
+
+            <div class="question-group">
+              <label for="lostPassportCountry">الدولة/السلطة التي أصدرت جواز/وثيقة السفر:</label>
+              <select id="lostPassportCountry" name="LostPassport_Country"></select>
+            </div>
+
+            <div class="question-group">
+              <label for="lostPassportExplain">اشرح:</label>
+              <textarea id="lostPassportExplain" name="LostPassport_Explain" rows="4"></textarea>
+            </div>
+
+            <span class="error-message" id="error-lostPassportNumber"></span>
+          </fieldset>
+
+          <!-- Permanent resident question (added in Arabic) -->
+          <div class="question-group">
+            <label
+              >هل أنت مقيم دائم في دولة/منطقة أخرى غير بلد/منطقة المنشأ (الجنسية) الموضحة
+              أعلاه؟</label
+            >
+            <label
+              ><input type="radio" name="HasOtherPermanentResident" value="Yes" id="permResYes" />
+              نعم</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="HasOtherPermanentResident"
+                value="No"
+                id="permResNo"
+                checked
+              />
+              لا</label
+            >
+          </div>
+
+          <fieldset
+            id="otherPermanentResidentFields"
+            class="conditional-fields"
+            style="display: none"
+          >
+            <legend>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z" /></svg></span
+              >يرجى تقديم المعلومات التالية:
+            </legend>
+            <div class="question-group">
+              <label for="otherPermanentResidentSelect">الدولة/المنطقة المقيم الدائم الأخرى:</label>
+              <select id="otherPermanentResidentSelect" name="Other_PermanentResident" required>
+                <!-- options will be populated from the main nationality list -->
+              </select>
+              <span class="error-message" id="error-otherPermanentResidentSelect"></span>
+            </div>
+          </fieldset>
 
           <div class="question-group">
-            <label for="lostPassportNumber">Passport/Travel Document Number</label>
-            <input
-              type="text"
-              id="lostPassportNumber"
-              name="LostPassport_PassportNumber"
-              style="direction: ltr"
-            />
-            <label style="margin-left: 10px"
+            <label>هل لديك أي أقارب مباشرين (غير الوالدين) في الولايات المتحدة؟</label>
+            <label
+              ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" />
+              نعم</label
+            >
+            <label
               ><input
-                type="checkbox"
-                id="lostPassportDoNotKnow"
-                name="LostPassport_DoNotKnow"
-                value="true"
+                type="radio"
+                name="US_ImmediateRelatives"
+                value="No"
+                id="relativesNo"
+                checked
               />
-              لا أعرف</label
+              لا</label
             >
           </div>
 
           <div class="question-group">
-            <label for="lostPassportCountry">الدولة/السلطة التي أصدرت جواز/وثيقة السفر:</label>
-            <select id="lostPassportCountry" name="LostPassport_Country"></select>
+            <label>هل لديك أي أقارب آخرين في الولايات المتحدة؟</label>
+            <label
+              ><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes" />
+              نعم</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="US_OtherRelatives"
+                value="No"
+                id="otherRelativesNo"
+                checked
+              />
+              لا</label
+            >
           </div>
 
-          <div class="question-group">
-            <label for="lostPassportExplain">اشرح:</label>
-            <textarea id="lostPassportExplain" name="LostPassport_Explain" rows="4"></textarea>
-          </div>
-
-          <span class="error-message" id="error-lostPassportNumber"></span>
-        </fieldset>
-
-        <!-- Permanent resident question (added in Arabic) -->
-        <div class="question-group">
-          <label
-            >هل أنت مقيم دائم في دولة/منطقة أخرى غير بلد/منطقة المنشأ (الجنسية) الموضحة
-            أعلاه؟</label
+          <fieldset
+            id="US_Relatives_Container"
+            class="conditional-fields"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
           >
-          <label
-            ><input type="radio" name="HasOtherPermanentResident" value="Yes" id="permResYes" />
-            نعم</label
-          >
-          <label
-            ><input
-              type="radio"
-              name="HasOtherPermanentResident"
-              value="No"
-              id="permResNo"
-              checked
-            />
-            لا</label
-          >
-        </div>
-
-        <fieldset
-          id="otherPermanentResidentFields"
-          class="conditional-fields"
-          style="display: none"
-        >
-          <legend>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z" /></svg></span
-            >يرجى تقديم المعلومات التالية:
-          </legend>
-          <div class="question-group">
-            <label for="otherPermanentResidentSelect">الدولة/المنطقة المقيم الدائم الأخرى:</label>
-            <select id="otherPermanentResidentSelect" name="Other_PermanentResident" required>
-              <!-- options will be populated from the main nationality list -->
-            </select>
-            <span class="error-message" id="error-otherPermanentResidentSelect"></span>
-          </div>
-        </fieldset>
-
-        <div class="question-group">
-          <label>هل لديك أي أقارب مباشرين (غير الوالدين) في الولايات المتحدة؟</label>
-          <label
-            ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" />
-            نعم</label
-          >
-          <label
-            ><input type="radio" name="US_ImmediateRelatives" value="No" id="relativesNo" checked />
-            لا</label
-          >
-        </div>
-
-        <div class="question-group">
-          <label>هل لديك أي أقارب آخرين في الولايات المتحدة؟</label>
-          <label
-            ><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes" />
-            نعم</label
-          >
-          <label
-            ><input
-              type="radio"
-              name="US_OtherRelatives"
-              value="No"
-              id="otherRelativesNo"
-              checked
-            />
-            لا</label
-          >
-        </div>
-
-        <fieldset
-          id="US_Relatives_Container"
-          class="conditional-fields"
-          style="display: none"
-          aria-expanded="false"
-          aria-hidden="true"
-        >
-          <legend>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z" /></svg></span
-            >يرجى تقديم المعلومات التالية:
-          </legend>
-
-          <div id="relativeEntries">
-            <div class="relative-entry" data-index="1">
-              <div class="question-group">
-                <label for="Relative_1_Surnames">اللقب (Surnames):</label>
-                <input
-                  type="text"
-                  id="Relative_1_Surnames"
-                  name="Relative_1_Surnames"
-                  required
-                  style="direction: auto"
-                />
-                <span class="error-message" id="error-Relative_1_Surnames"></span>
-              </div>
-
-              <div class="question-group">
-                <label for="Relative_1_GivenNames">الأسماء (Given Names):</label>
-                <input
-                  type="text"
-                  id="Relative_1_GivenNames"
-                  name="Relative_1_GivenNames"
-                  required
-                  style="direction: auto"
-                />
-                <span class="error-message" id="error-Relative_1_GivenNames"></span>
-              </div>
-
-              <div class="question-group">
-                <label for="Relative_1_Relationship">العلاقة بك (Relationship to You):</label>
-                <select id="Relative_1_Relationship" name="Relative_1_Relationship" required>
-                  <option value="">- اختر -</option>
-                  <option value="Spouse">زوج/زوجة (Spouse)</option>
-                  <option value="Child">ابن/ابنة (Child)</option>
-                  <option value="Sibling">أخ/أخت (Sibling)</option>
-                  <option value="Other">آخر (Other)</option>
-                </select>
-              </div>
-
-              <div class="question-group">
-                <label for="Relative_1_Status">حالة القريب (Relative's Status):</label>
-                <select id="Relative_1_Status" name="Relative_1_Status" required>
-                  <option value="">- اختر -</option>
-                  <option value="US_Citizen">مواطن أمريكي (U.S. Citizen)</option>
-                  <option value="Permanent_Resident">مقيم دائم (Permanent Resident)</option>
-                  <option value="Other">آخر (Other)</option>
-                </select>
-              </div>
-
-              <div class="question-group">
-                <button
-                  type="button"
-                  class="remove-relative"
-                  style="margin-left: 8px"
-                  aria-label="Remove relative 1 (إزالة)"
+            <legend>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
                 >
-                  - إزالة
-                </button>
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z" /></svg></span
+              >يرجى تقديم المعلومات التالية:
+            </legend>
+
+            <div id="relativeEntries">
+              <div class="relative-entry" data-index="1">
+                <div class="question-group">
+                  <label for="Relative_1_Surnames">اللقب (Surnames):</label>
+                  <input
+                    type="text"
+                    id="Relative_1_Surnames"
+                    name="Relative_1_Surnames"
+                    required
+                    style="direction: auto"
+                  />
+                  <span class="error-message" id="error-Relative_1_Surnames"></span>
+                </div>
+
+                <div class="question-group">
+                  <label for="Relative_1_GivenNames">الأسماء (Given Names):</label>
+                  <input
+                    type="text"
+                    id="Relative_1_GivenNames"
+                    name="Relative_1_GivenNames"
+                    required
+                    style="direction: auto"
+                  />
+                  <span class="error-message" id="error-Relative_1_GivenNames"></span>
+                </div>
+
+                <div class="question-group">
+                  <label for="Relative_1_Relationship">العلاقة بك (Relationship to You):</label>
+                  <select id="Relative_1_Relationship" name="Relative_1_Relationship" required>
+                    <option value="">- اختر -</option>
+                    <option value="Spouse">زوج/زوجة (Spouse)</option>
+                    <option value="Child">ابن/ابنة (Child)</option>
+                    <option value="Sibling">أخ/أخت (Sibling)</option>
+                    <option value="Other">آخر (Other)</option>
+                  </select>
+                </div>
+
+                <div class="question-group">
+                  <label for="Relative_1_Status">حالة القريب (Relative's Status):</label>
+                  <select id="Relative_1_Status" name="Relative_1_Status" required>
+                    <option value="">- اختر -</option>
+                    <option value="US_Citizen">مواطن أمريكي (U.S. Citizen)</option>
+                    <option value="Permanent_Resident">مقيم دائم (Permanent Resident)</option>
+                    <option value="Other">آخر (Other)</option>
+                  </select>
+                </div>
+
+                <div class="question-group">
+                  <button
+                    type="button"
+                    class="remove-relative"
+                    style="margin-left: 8px"
+                    aria-label="Remove relative 1 (إزالة)"
+                  >
+                    - إزالة
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="question-group" id="relativeControls">
-            <button type="button" class="add-relative" aria-label="Add relative (إضافة)">
-              + إضافة
-            </button>
-          </div>
-        </fieldset>
+            <div class="question-group" id="relativeControls">
+              <button type="button" class="add-relative" aria-label="Add relative (إضافة)">
+                + إضافة
+              </button>
+            </div>
+          </fieldset>
 
-        <!-- duplicate divorce date fragment removed -->
+          <!-- duplicate divorce date fragment removed -->
 
           <!-- Nationality / other nationality question (added) -->
           <div class="question-group">
@@ -672,7 +685,9 @@
               <option value="Cuba">Cuba</option>
               <option value="Cyprus">Cyprus</option>
               <option value="Czechia">Czechia</option>
-              <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+              <option value="Democratic Republic of the Congo">
+                Democratic Republic of the Congo
+              </option>
               <option value="Denmark">Denmark</option>
               <option value="Djibouti">Djibouti</option>
               <option value="Dominica">Dominica</option>
@@ -774,7 +789,9 @@
               <option value="Rwanda">Rwanda</option>
               <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
               <option value="Saint Lucia">Saint Lucia</option>
-              <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+              <option value="Saint Vincent and the Grenadines">
+                Saint Vincent and the Grenadines
+              </option>
               <option value="Samoa">Samoa</option>
               <option value="San Marino">San Marino</option>
               <option value="Sao Tome and Principe">Sao Tome and Principe</option>
@@ -904,7 +921,9 @@
                 <option value="Cuba">Cuba</option>
                 <option value="Cyprus">Cyprus</option>
                 <option value="Czechia">Czechia</option>
-                <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                <option value="Democratic Republic of the Congo">
+                  Democratic Republic of the Congo
+                </option>
                 <option value="Denmark">Denmark</option>
                 <option value="Djibouti">Djibouti</option>
                 <option value="Dominica">Dominica</option>
@@ -917,7 +936,9 @@
                 <option value="Estonia">Estonia</option>
                 <option value="Eswatini">Eswatini</option>
                 <option value="Ethiopia">Ethiopia</option>
-                <option value="Federated States of Micronesia">Federated States of Micronesia</option>
+                <option value="Federated States of Micronesia">
+                  Federated States of Micronesia
+                </option>
                 <option value="Fiji">Fiji</option>
                 <option value="Finland">Finland</option>
                 <option value="France">France</option>
@@ -1005,7 +1026,9 @@
                 <option value="Rwanda">Rwanda</option>
                 <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
                 <option value="Saint Lucia">Saint Lucia</option>
-                <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                <option value="Saint Vincent and the Grenadines">
+                  Saint Vincent and the Grenadines
+                </option>
                 <option value="Samoa">Samoa</option>
                 <option value="San Marino">San Marino</option>
                 <option value="Sao Tome and Principe">Sao Tome and Principe</option>
@@ -1058,70 +1081,65 @@
               </select>
             </div>
 
-          <div class="question-group">
-            <label>تاريخ الميلاد:</label>
-            <div class="date-row">
-              <select id="exDOBDay" name="ExSpouse_DOB_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="exDOBMonth" name="ExSpouse_DOB_Month">
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
-                type="text"
-                id="exDOBYear"
-                name="ExSpouse_DOB_Year"
-                placeholder="YYYY"
-              />
+            <div class="question-group">
+              <label>تاريخ الميلاد:</label>
+              <div class="date-row">
+                <select id="exDOBDay" name="ExSpouse_DOB_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="exDOBMonth" name="ExSpouse_DOB_Month">
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input type="text" id="exDOBYear" name="ExSpouse_DOB_Year" placeholder="YYYY" />
+              </div>
+              <span class="error-message" id="error-exDOBDay"></span>
+              <span class="error-message" id="error-exDOBMonth"></span>
+              <span class="error-message" id="error-exDOBYear"></span>
             </div>
-            <span class="error-message" id="error-exDOBDay"></span>
-            <span class="error-message" id="error-exDOBMonth"></span>
-            <span class="error-message" id="error-exDOBYear"></span>
-          </div>
-        </fieldset>
+          </fieldset>
         </fieldset>
 
         <fieldset>
@@ -1488,12 +1506,7 @@
                   <option value="Nov">Nov</option>
                   <option value="Dec">Dec</option>
                 </select>
-                <input
-                  type="text"
-                  id="visaYear"
-                  name="Visa_Last_Issue_Year"
-                  placeholder="YYYY"
-                />
+                <input type="text" id="visaYear" name="Visa_Last_Issue_Year" placeholder="YYYY" />
               </div>
               <span class="error-message" id="error-visaDate"></span>
             </div>
@@ -1605,12 +1618,7 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input
-                type="text"
-                id="fatherDOBYear"
-                name="Father_DOB_Year"
-                placeholder="YYYY"
-              />
+              <input type="text" id="fatherDOBYear" name="Father_DOB_Year" placeholder="YYYY" />
             </div>
             <span class="error-message" id="error-fatherDOBDay"></span>
             <span class="error-message" id="error-fatherDOBMonth"></span>
@@ -1619,16 +1627,29 @@
 
           <div class="question-group">
             <label>هل الاب في الولايات المتحدة؟</label>
-            <label><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes" /> نعم</label>
-            <label><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked /> لا</label>
+            <label
+              ><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes" /> نعم</label
+            >
+            <label
+              ><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked />
+              لا</label
+            >
           </div>
 
-          <div class="question-group" id="fatherStatusGroup" style="display: none" aria-expanded="false" aria-hidden="true">
+          <div
+            class="question-group"
+            id="fatherStatusGroup"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
             <label for="fatherStatus">حالة الاب (Father's Status):</label>
             <select id="fatherStatus" name="Father_Status">
               <option value="">- اختر -</option>
               <option value="US_Citizen">مواطن أمريكي (U.S. CITIZEN)</option>
-              <option value="LPR">مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))</option>
+              <option value="LPR">
+                مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))
+              </option>
               <option value="Nonimmigrant">غير مهاجر (NONIMMIGRANT)</option>
               <option value="Other">آخر/لا أعرف (OTHER/I DON'T KNOW)</option>
             </select>
@@ -1712,16 +1733,29 @@
 
           <div class="question-group">
             <label>هل الام في الولايات المتحدة؟</label>
-            <label><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes" /> نعم</label>
-            <label><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked /> لا</label>
+            <label
+              ><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes" /> نعم</label
+            >
+            <label
+              ><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked />
+              لا</label
+            >
           </div>
 
-          <div class="question-group" id="motherStatusGroup" style="display: none" aria-expanded="false" aria-hidden="true">
+          <div
+            class="question-group"
+            id="motherStatusGroup"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
             <label for="motherStatus">حالة الام (Mother's Status):</label>
             <select id="motherStatus" name="Mother_Status">
               <option value="">- اختر -</option>
               <option value="US_Citizen">مواطن أمريكي (U.S. CITIZEN)</option>
-              <option value="LPR">مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))</option>
+              <option value="LPR">
+                مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))
+              </option>
               <option value="Nonimmigrant">غير مهاجر (NONIMMIGRANT)</option>
               <option value="Other">آخر/لا أعرف (OTHER/I DON'T KNOW)</option>
             </select>
@@ -1750,7 +1784,13 @@
           </legend>
           <div class="question-group">
             <label for="jobTitleCurrent">المسمى الوظيفي:</label
-            ><input type="text" id="jobTitleCurrent" name="Current_JobTitle" required style="direction: auto" />
+            ><input
+              type="text"
+              id="jobTitleCurrent"
+              name="Current_JobTitle"
+              required
+              style="direction: auto"
+            />
             <span class="error-message" id="error-jobTitleCurrent"></span>
           </div>
           <div class="question-group">
@@ -1841,8 +1881,6 @@
             <span class="error-message" id="error-startDateCurrentMonth"></span>
             <span class="error-message" id="error-startDateCurrent"></span>
           </div>
-
-
 
           <div class="question-group">
             <label for="phoneWorkCurrent">تليفون العمل:</label

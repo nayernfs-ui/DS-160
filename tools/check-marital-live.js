@@ -19,8 +19,8 @@ const puppeteer = require('puppeteer');
     await new Promise((r) => setTimeout(r, 300));
     // Inspect whether the expected fieldsets exist and their display values.
     const info = await page.evaluate(() => {
-      const widowedEl = document.getElementById('widowedFields');
-      const marriedEl = document.getElementById('marriedFields');
+      const widowedEl = document.getElementById('widowInfo');
+      const marriedEl = document.getElementById('spouseInfo');
       const allIds = Array.from(document.querySelectorAll('[id]')).map((el) => el.id);
       const conditional = Array.from(document.querySelectorAll('.conditional-fields')).map(
         (el) => ({ id: el.id, display: window.getComputedStyle(el).display })

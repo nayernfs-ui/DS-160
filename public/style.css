@@ -68,7 +68,7 @@ label {
 .question-group textarea {
   flex: 1 1 auto;
   width: auto; /* allow flexbox to control width */
-} 
+}
 
 /* Screen-reader-only label helper */
 .sr-only {
@@ -179,7 +179,7 @@ legend {
 /* Ensure error messages appear below and span full width */
 .question-group .error-message {
   flex-basis: 100%;
-} 
+}
 
 /* Ensure Education History 2 year inputs match main Education styles */
 #educationHistory2 .date-row input {
