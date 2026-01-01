@@ -219,5 +219,35 @@ const { JSDOM } = require('jsdom');
     'spouseCurrentAddress should not be required when not married'
   );
 
+  // Selecting Widowed should show the widowed details and not require spouse address
+  const widowedGroup = doc.getElementById('widowedFields');
+  maritalStatus.value = 'Widowed';
+  maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  assert.notStrictEqual(
+    dom.window.getComputedStyle(widowedGroup).display,
+    'none',
+    'widowedFields should be visible after selecting Widowed'
+  );
+  assert.strictEqual(
+    widowedGroup.getAttribute('aria-expanded'),
+    'true',
+    'widowedFields should have aria-expanded=true when visible'
+  );
+  assert(
+    !spouseAddr.hasAttribute('required'),
+    'spouseCurrentAddress should not be required when widowed'
+  );
+
+  // Selecting Married should explicitly hide the widowed details
+  maritalStatus.value = 'Married';
+  maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  assert.strictEqual(
+    dom.window.getComputedStyle(widowedGroup).display,
+    'none',
+    'widowedFields should be hidden when Married selected'
+  );
+
   console.log('family.test.js: passed');
 })();
