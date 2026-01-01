@@ -251,6 +251,98 @@
             </div>
           </div>
 
+          <fieldset
+            id="divorcedFields"
+            class="conditional-fields"
+            style="display: none"
+            aria-hidden="true"
+            aria-expanded="false"
+          >
+            <legend>
+              <span class="section-icon" aria-hidden="true">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                </svg>
+              </span>
+              Former Spouse Information / معلومات عن الزوج السابق
+            </legend>
+
+            <div class="question-group">
+              <label for="exName">اسم الزوج السابق / Former spouse name</label>
+              <input type="text" id="exName" name="ExSpouse_FullName" />
+            </div>
+
+            <div class="question-group">
+              <label>Date of Divorce</label>
+              <div class="date-row">
+                <input
+                  type="text"
+                  id="dateOfDivorceYear"
+                  name="ExSpouse_DODDivorce_Year"
+                  placeholder="YYYY"
+                />
+              </div>
+              <span class="error-message" id="error-dateOfDivorceYear"></span>
+            </div>
+
+            <div class="question-group">
+              <label for="exNationality">Nationality</label>
+              <select id="exNationality" name="ExSpouse_Nationality">
+                <option value="">-- Select --</option>
+              </select>
+            </div>
+
+            <div class="question-group">
+              <label for="formerSpouseCount">Number of Former Spouses</label>
+              <input
+                type="number"
+                id="formerSpouseCount"
+                name="FormerSpouse_Count"
+                min="0"
+                max="5"
+                value="1"
+              />
+            </div>
+
+            <div id="formerSpousesContainer">
+              <div class="former-spouse entry" data-index="1">
+                <div class="question-group">
+                  <label for="formerSurnames_1">Surnames</label>
+                  <input
+                    type="text"
+                    id="formerSurnames_1"
+                    name="FormerSpouse_1_Surnames"
+                    required
+                  />
+                </div>
+                <div class="question-group">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary add-former-spouse"
+                    aria-label="Add former spouse"
+                  >
+                    + Add
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger remove-former-spouse"
+                    aria-label="Remove former spouse"
+                  >
+                    - Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
           <!-- Nationality / other nationality question (added) -->
           <div class="question-group">
             <label for="nationality">بلد/منطقة المنشأ (الجنسية):</label>

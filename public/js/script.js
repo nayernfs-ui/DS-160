@@ -64,6 +64,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
         return;
       }
 
+      // DEBUG: validation passed and proceeding with submit logic
+      console.log('DEBUG submit: validation passed');
+
       // If the action is external (different origin), allow the normal form submission
       // to proceed (this avoids CORS issues with Fetch on services like formsubmit.co).
       // If you explicitly want AJAX, set `data-use-ajax="true"` on the form and
@@ -415,6 +418,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
         if (t.classList && t.classList.contains('add-former-spouse')) {
           ev.preventDefault();
           const entries = formerContainer.querySelectorAll('.former-spouse.entry');
+          console.log('DEBUG add-former-spouse: entries before', entries.length);
           const max = 5; // limit to 5 former spouses
           if (entries.length >= max) return;
           const first = entries[0];

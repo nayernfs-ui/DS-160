@@ -11,10 +11,8 @@ const { JSDOM } = require('jsdom');
 
   // Remove remote resources to keep JSDOM self-contained
   let cleanedHtml = html.replace(/<link\b[^>]*href=['"][^'"]*style\.css[^'"]*['"][^>]*>/gi, '');
-  cleanedHtml = cleanedHtml.replace(
-    /<script\b[^>]*src=['"][^'"].*script\.js[^'"]*['"][^>]*>(?:<\/script>)?/gi,
-    ''
-  );
+  // Remove any external script tags so JSDOM won't fetch or run them; we'll inject the script inline
+  cleanedHtml = cleanedHtml.replace(/<script\b[^>]*src=[^>]*>(?:<\/script>)?/gi, '');
   const combined = cleanedHtml.replace('</body>', `<script>${script}</script></body>`);
 
   const dom = new JSDOM(combined, {
@@ -25,6 +23,12 @@ const { JSDOM } = require('jsdom');
 
   await new Promise((r) => setTimeout(r, 50));
   const doc = dom.window.document;
+  // debug: script tags loaded
+  console.log(
+    'DEBUG scripts:',
+    doc.querySelectorAll('script').length,
+    Array.from(doc.querySelectorAll('script')).map((s) => (s.src ? s.src : 'inline'))
+  );
   // ensure DOMContentLoaded handlers run
   doc.dispatchEvent(new dom.window.Event('DOMContentLoaded', { bubbles: true }));
   await new Promise((r) => setTimeout(r, 20));
@@ -77,20 +81,37 @@ const { JSDOM } = require('jsdom');
   // Now fill the required fields and attempt submission again; mock fetch to avoid network
   exName.value = 'Jane Doe';
   divYear.value = '2015';
-  nationality.value = 'United States';
+  // set any nationality selects (there may be duplicates in root/public copies)
+  doc.querySelectorAll('#nationality').forEach((el) => {
+    const opt = doc.createElement('option');
+    opt.value = 'United States';
+    opt.text = 'United States';
+    el.appendChild(opt);
+    el.value = 'United States';
+  });
+  console.log(
+    'DEBUG nationality count',
+    doc.querySelectorAll('#nationality').length,
+    Array.from(doc.querySelectorAll('#nationality')).map((e) => e.value)
+  );
+
+  // Remove unrelated required attributes so only divorced-specific fields block submission in this unit test
+  form.querySelectorAll('[required]').forEach((el) => {
+    if (!['exName', 'dateOfDivorceYear', 'nationality'].includes(el.id))
+      el.removeAttribute('required');
+  });
 
   form.setAttribute('data-use-ajax', 'true');
-  dom.window.fetch = async () => ({ ok: true });
+  let fetchCalled = false;
+  dom.window.fetch = async () => {
+    fetchCalled = true;
+    return { ok: true };
+  };
 
-  const res2 = form.dispatchEvent(
-    new dom.window.Event('submit', { bubbles: true, cancelable: true })
-  );
-  // When validation passes, dispatchEvent should return true (not canceled)
-  assert.strictEqual(
-    res2,
-    true,
-    'Form submission should proceed when divorced required fields are filled'
-  );
+  form.dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }));
+  // wait briefly for async handler to run
+  await new Promise((r) => setTimeout(r, 120));
+  assert(fetchCalled, 'fetch should be called when form submission proceeds');
 
   // Test add/remove former spouse behavior: add until 5 entries and ensure add control disables
   const container = doc.getElementById('formerSpousesContainer');
@@ -99,7 +120,7 @@ const { JSDOM } = require('jsdom');
 
   // add 4 times to reach 5 entries (initially there is 1)
   for (let i = 2; i <= 5; i++) {
-    addBtn.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    addBtn.click();
     await new Promise((r) => setTimeout(r, 20));
     assert.strictEqual(
       container.querySelectorAll('.former-spouse.entry').length,
@@ -119,7 +140,7 @@ const { JSDOM } = require('jsdom');
   const lastRem = container.querySelector(
     '.former-spouse.entry:last-of-type .remove-former-spouse'
   );
-  lastRem.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+  lastRem.click();
   await new Promise((r) => setTimeout(r, 20));
   assert.strictEqual(
     container.querySelectorAll('.former-spouse.entry').length,
