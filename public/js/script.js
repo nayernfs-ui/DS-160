@@ -196,8 +196,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   function forceVisibilityReset() {
     const married = document.getElementById('marriedFields');
     const widowed = document.getElementById('widowedFields');
+    const divorced = document.getElementById('divorcedFields');
 
-    // Hide BOTH first using inline !important
+    // Hide ALL first using inline !important
     if (married) {
       married.style.setProperty('display', 'none', 'important');
       married.style.animation = '';
@@ -209,6 +210,12 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       widowed.style.animation = '';
       widowed.setAttribute('aria-hidden', 'true');
       widowed.setAttribute('aria-expanded', 'false');
+    }
+    if (divorced) {
+      divorced.style.setProperty('display', 'none', 'important');
+      divorced.style.animation = '';
+      divorced.setAttribute('aria-hidden', 'true');
+      divorced.setAttribute('aria-expanded', 'false');
     }
   }
 
@@ -333,6 +340,13 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       widowedDiv.setAttribute('aria-expanded', 'true');
       // widowed: ensure spouse address is not required
       setSpouseAddressRequired(false);
+    } else if (status === 'Divorced' && divorcedFields) {
+      // Show divorced block and ensure others remain hidden
+      divorcedFields.style.setProperty('display', 'block', 'important');
+      divorcedFields.setAttribute('aria-hidden', 'false');
+      divorcedFields.setAttribute('aria-expanded', 'true');
+      // divorced: ensure spouse address is not required
+      setSpouseAddressRequired(false);
     }
   }
 
@@ -347,6 +361,50 @@ document.addEventListener('DOMContentLoaded', (_event) => {
      *   document.getElementById('maritalStatus').dispatchEvent(new Event('change'))
      * This is documentation only and not executed at runtime.
      */
+
+    // Former spouse add/remove controls (simple cloning UI)
+    const formerContainer = document.getElementById('formerSpousesContainer');
+    if (formerContainer) {
+      formerContainer.addEventListener('click', (ev) => {
+        const t = ev.target;
+        if (t.classList && t.classList.contains('add-former-spouse')) {
+          ev.preventDefault();
+          const entries = formerContainer.querySelectorAll('.former-spouse.entry');
+          const max = 10;
+          if (entries.length >= max) return;
+          const first = entries[0];
+          if (!first) return;
+          const clone = first.cloneNode(true);
+          const newIndex = entries.length + 1;
+          clone.setAttribute('data-index', String(newIndex));
+          // Update ids and names by replacing suffix _1 with _N
+          clone.querySelectorAll('[id]').forEach((el) => {
+            el.id = el.id.replace(/_1(?!\d)/, `_${newIndex}`);
+            if (el.name) el.name = el.name.replace(/_1(?!\d)/, `_${newIndex}`);
+            if (el.type === 'text' || el.tagName.toLowerCase() === 'textarea') el.value = '';
+            if (el.type === 'checkbox') el.checked = false;
+            if (el.tagName.toLowerCase() === 'select') el.selectedIndex = 0;
+          });
+          formerContainer.appendChild(clone);
+        }
+
+        if (t.classList && t.classList.contains('remove-former-spouse')) {
+          ev.preventDefault();
+          const entry = t.closest('.former-spouse.entry');
+          if (!entry) return;
+          const entries = formerContainer.querySelectorAll('.former-spouse.entry');
+          if (entries.length === 1) {
+            // clear fields rather than removing the last one
+            entry.querySelectorAll('input, textarea, select').forEach((el) => {
+              if (el.type === 'checkbox') el.checked = false;
+              else el.value = '';
+            });
+            return;
+          }
+          entry.remove();
+        }
+      });
+    }
   }
 
   // 2. Travel Companion Logic
