@@ -88,3 +88,10 @@ npm-ci-*.log
 
 # Serving file
 served.html
+
+# Local server logs and temporary files
+http-server.err
+http-server.out
+tmp_live_script.js
+tmp_live_script.js
+
