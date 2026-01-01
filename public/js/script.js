@@ -179,7 +179,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   function hideAllMaritalFields() {
     [marriedFields, widowedFields, divorcedFields].forEach((f) => {
       if (f) {
-        f.style.display = 'none';
+        // Use setProperty with !important so explicit CSS rules can't override JS
+        f.style.setProperty('display', 'none', 'important');
         f.style.animation = '';
         f.setAttribute('aria-hidden', 'true');
         f.setAttribute('aria-expanded', 'false');
@@ -194,7 +195,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   // helper to hide only the widowed fields and clean up any required flags/errors
   function hideWidowedFields() {
     if (!widowedFields) return;
-    widowedFields.style.display = 'none';
+    // Use setProperty with !important so explicit CSS rules can't override JS
+    widowedFields.style.setProperty('display', 'none', 'important');
     widowedFields.style.animation = '';
     widowedFields.setAttribute('aria-hidden', 'true');
     widowedFields.setAttribute('aria-expanded', 'false');
@@ -210,7 +212,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   // helper to hide only the married fields and clean up any required flags/errors
   function hideMarriedFields() {
     if (!marriedFields) return;
-    marriedFields.style.display = 'none';
+    // Use setProperty with !important so explicit CSS rules can't override JS
+    marriedFields.style.setProperty('display', 'none', 'important');
     marriedFields.style.animation = '';
     marriedFields.setAttribute('aria-hidden', 'true');
     marriedFields.setAttribute('aria-expanded', 'false');
@@ -245,7 +248,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     // Hide all other marital sections first to avoid multiple visible sections
     hideAllMaritalFields();
 
-    fieldset.style.display = 'block';
+    // Use setProperty with !important so inline intent overrides stylesheet !important
+    fieldset.style.setProperty('display', 'block', 'important');
     fieldset.style.animation = 'fadeIn 0.5s';
     fieldset.setAttribute('aria-hidden', 'false');
     fieldset.setAttribute('aria-expanded', 'true');
