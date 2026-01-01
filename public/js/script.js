@@ -192,6 +192,26 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     if (spouseAddr) spouseAddr.removeAttribute('required');
   }
 
+  // force hide canonical marital containers using inline !important (fail-proof)
+  function forceVisibilityReset() {
+    const married = document.getElementById('marriedFields');
+    const widowed = document.getElementById('widowedFields');
+
+    // Hide BOTH first using inline !important
+    if (married) {
+      married.style.setProperty('display', 'none', 'important');
+      married.style.animation = '';
+      married.setAttribute('aria-hidden', 'true');
+      married.setAttribute('aria-expanded', 'false');
+    }
+    if (widowed) {
+      widowed.style.setProperty('display', 'none', 'important');
+      widowed.style.animation = '';
+      widowed.setAttribute('aria-hidden', 'true');
+      widowed.setAttribute('aria-expanded', 'false');
+    }
+  }
+
   // helper to hide only the widowed fields and clean up any required flags/errors
   function hideWidowedFields() {
     if (!widowedFields) return;
@@ -290,18 +310,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     const widowedDiv = document.getElementById('widowedFields');
 
     // 1. Force Reset: hide everything first (use !important to override stylesheet)
-    if (marriedDiv) {
-      marriedDiv.style.setProperty('display', 'none', 'important');
-      marriedDiv.style.animation = '';
-      marriedDiv.setAttribute('aria-hidden', 'true');
-      marriedDiv.setAttribute('aria-expanded', 'false');
-    }
-    if (widowedDiv) {
-      widowedDiv.style.setProperty('display', 'none', 'important');
-      widowedDiv.style.animation = '';
-      widowedDiv.setAttribute('aria-hidden', 'true');
-      widowedDiv.setAttribute('aria-expanded', 'false');
-    }
+    forceVisibilityReset();
 
     // Remove required/error flags from both sections to ensure a clean state
     hideMarriedFields();
