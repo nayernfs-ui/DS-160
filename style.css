@@ -194,6 +194,12 @@ legend {
   margin-top: 6px;
 }
 
+/* Ensure canonical marital containers are hidden by default and share the conditional style */
+#marriedFields,
+#widowedFields {
+  display: none;
+}
+
 /* Styling for the Submission Confirmation Message */
 #confirmationMessage {
   display: none;

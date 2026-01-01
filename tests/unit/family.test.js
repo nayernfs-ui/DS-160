@@ -16,10 +16,12 @@ const { JSDOM } = require('jsdom');
     resources: 'usable',
     url: `file://${root.replace(/\\/g, '/')}/index.html`,
   });
+  console.log('DOM created');
 
   dom.window.addEventListener('error', (ev) => {
     console.error('JSDOM window error:', ev.error || ev.message || ev);
   });
+  dom.window.addEventListener('load', () => console.log('DOM load event'));
   dom.window.addEventListener('unhandledrejection', (ev) => {
     console.error('JSDOM unhandledrejection:', ev.reason || ev);
   });
