@@ -311,6 +311,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   }
 
   // helper to show a conditional fieldset, scroll it into view and focus its first input
+  // eslint-disable-next-line no-unused-vars
   function showConditionalFieldset(fieldset) {
     if (!fieldset) return;
 
