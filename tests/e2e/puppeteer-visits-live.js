@@ -138,6 +138,59 @@ process.on('uncaughtException', (err) => {
       console.log(
         'E2E: marital visibility & ARIA checks passed (Married shows spouse, hides widowed)'
       );
+
+      // --- New check: Divorced selection should show former-spouse fields and hide others ---
+      try {
+        console.log('Testing Divorced selection...');
+        await page.select('#maritalStatus', 'Divorced');
+        await new Promise((r) => setTimeout(r, 200));
+
+        const divorcedDisplay = await getDisplay(['#divorcedFields']);
+        if (divorcedDisplay === 'none') {
+          console.error(
+            'E2E: divorcedFields should be visible when Divorced is selected; got',
+            divorcedDisplay
+          );
+          await browser.close();
+          process.exit(8);
+        }
+
+        const divorcedAria = await page.evaluate(() => {
+          const el = document.getElementById('divorcedFields');
+          return el
+            ? { hidden: el.getAttribute('aria-hidden'), expanded: el.getAttribute('aria-expanded') }
+            : null;
+        });
+
+        const marriedAriaAfter = await page.evaluate(() => {
+          const el = document.getElementById('marriedFields');
+          return el ? el.getAttribute('aria-hidden') : null;
+        });
+
+        if (!divorcedAria || divorcedAria.hidden !== 'false' || divorcedAria.expanded !== 'true') {
+          console.error('E2E: divorcedFields ARIA mismatch:', divorcedAria);
+          await browser.close();
+          process.exit(9);
+        }
+
+        if (marriedAriaAfter !== 'true') {
+          console.error(
+            'E2E: marriedFields should be hidden when Divorced is selected; got',
+            marriedAriaAfter
+          );
+          await browser.close();
+          process.exit(10);
+        }
+
+        console.log('E2E: Divorced visibility & ARIA checks passed');
+      } catch (err) {
+        console.error(
+          'E2E divorced visibility check failed:',
+          err && err.message ? err.message : err
+        );
+        await browser.close();
+        process.exit(3);
+      }
     } catch (err) {
       console.error('E2E marital visibility check failed:', err && err.message ? err.message : err);
       await browser.close();

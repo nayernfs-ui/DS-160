@@ -196,8 +196,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   function forceVisibilityReset() {
     const married = document.getElementById('marriedFields');
     const widowed = document.getElementById('widowedFields');
+    const divorced = document.getElementById('divorcedFields');
 
-    // Hide BOTH first using inline !important
+    // Hide ALL first using inline !important
     if (married) {
       married.style.setProperty('display', 'none', 'important');
       married.style.animation = '';
@@ -209,6 +210,12 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       widowed.style.animation = '';
       widowed.setAttribute('aria-hidden', 'true');
       widowed.setAttribute('aria-expanded', 'false');
+    }
+    if (divorced) {
+      divorced.style.setProperty('display', 'none', 'important');
+      divorced.style.animation = '';
+      divorced.setAttribute('aria-hidden', 'true');
+      divorced.setAttribute('aria-expanded', 'false');
     }
   }
 
@@ -258,6 +265,45 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       spouseAddr.removeAttribute('required');
       if (errSpan) errSpan.textContent = '';
       spouseAddr.classList.remove('is-invalid');
+    }
+  }
+
+  // helper to hide only the divorced fields and clean up any required flags/errors
+  function hideDivorcedFields() {
+    if (!divorcedFields) return;
+    divorcedFields.style.setProperty('display', 'none', 'important');
+    divorcedFields.style.animation = '';
+    divorcedFields.setAttribute('aria-hidden', 'true');
+    divorcedFields.setAttribute('aria-expanded', 'false');
+    // remove required and error markers from any inputs inside divorced fields
+    divorcedFields.querySelectorAll('input, select, textarea').forEach((el) => {
+      el.removeAttribute('required');
+      el.classList.remove('is-invalid');
+      const err = document.getElementById(`error-${el.id}`);
+      if (err) err.textContent = '';
+    });
+  }
+
+  // helper to set required attributes for divorced fields
+  function setDivorcedRequired(isRequired) {
+    const ids = ['exName', 'exDOBYear', 'dateOfDivorceYear', 'nationality'];
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (isRequired) el.setAttribute('required', 'required');
+      else el.removeAttribute('required');
+    });
+
+    // sync add/remove controls depending on max
+    const formerContainer = document.getElementById('formerSpousesContainer');
+    if (formerContainer) {
+      const entries = formerContainer.querySelectorAll('.former-spouse.entry').length;
+      const max = 5;
+      const addBtns = formerContainer.querySelectorAll('.add-former-spouse');
+      addBtns.forEach((b) => (b.disabled = entries >= max));
+      // ensure count input reflects actual number of entries
+      const countInput = document.getElementById('formerSpouseCount');
+      if (countInput) countInput.value = Math.max(1, entries);
     }
   }
 
@@ -312,9 +358,10 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     // 1. Force Reset: hide everything first (use !important to override stylesheet)
     forceVisibilityReset();
 
-    // Remove required/error flags from both sections to ensure a clean state
+    // Remove required/error flags from all sections to ensure a clean state
     hideMarriedFields();
     hideWidowedFields();
+    hideDivorcedFields();
 
     // 2. Exact Match Selection (case-sensitive)
     if (status === 'Married' && marriedDiv) {
@@ -333,6 +380,18 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       widowedDiv.setAttribute('aria-expanded', 'true');
       // widowed: ensure spouse address is not required
       setSpouseAddressRequired(false);
+    } else if (status === 'Divorced' && divorcedFields) {
+      // Show divorced block and ensure others remain hidden
+      divorcedFields.style.setProperty('display', 'block', 'important');
+      divorcedFields.setAttribute('aria-hidden', 'false');
+      divorcedFields.setAttribute('aria-expanded', 'true');
+      // divorced: ensure spouse address is not required
+      setSpouseAddressRequired(false);
+      // require key divorced fields
+      setDivorcedRequired(true);
+    } else {
+      // not divorced, ensure divorced-specific required attrs are cleared
+      setDivorcedRequired(false);
     }
   }
 
@@ -347,6 +406,89 @@ document.addEventListener('DOMContentLoaded', (_event) => {
      *   document.getElementById('maritalStatus').dispatchEvent(new Event('change'))
      * This is documentation only and not executed at runtime.
      */
+
+    // Former spouse add/remove controls (simple cloning UI)
+    const formerContainer = document.getElementById('formerSpousesContainer');
+    if (formerContainer) {
+      formerContainer.addEventListener('click', (ev) => {
+        const t = ev.target;
+        if (t.classList && t.classList.contains('add-former-spouse')) {
+          ev.preventDefault();
+          const entries = formerContainer.querySelectorAll('.former-spouse.entry');
+          const max = 5; // limit to 5 former spouses
+          if (entries.length >= max) return;
+          const first = entries[0];
+          if (!first) return;
+          const clone = first.cloneNode(true);
+          const newIndex = entries.length + 1;
+          clone.setAttribute('data-index', String(newIndex));
+          // Update ids, names and label for attributes by replacing trailing numeric suffix
+          clone.querySelectorAll('[id]').forEach((el) => {
+            el.id = el.id.replace(/_(\d+)$/, `_${newIndex}`);
+            if (el.name) el.name = el.name.replace(/_(\d+)$/, `_${newIndex}`);
+            if (el.type === 'text' || el.tagName.toLowerCase() === 'textarea') el.value = '';
+            if (el.type === 'checkbox') el.checked = false;
+            if (el.tagName.toLowerCase() === 'select') el.selectedIndex = 0;
+          });
+          clone.querySelectorAll('label[for]').forEach((lbl) => {
+            lbl.setAttribute('for', lbl.getAttribute('for').replace(/_(\d+)$/, `_${newIndex}`));
+          });
+          formerContainer.appendChild(clone);
+
+          // update count and disable add buttons if at max
+          const after = formerContainer.querySelectorAll('.former-spouse.entry').length;
+          const countInput = document.getElementById('formerSpouseCount');
+          if (countInput) countInput.value = after;
+          // disable add buttons if reached max
+          if (after >= max) {
+            formerContainer
+              .querySelectorAll('.add-former-spouse')
+              .forEach((b) => (b.disabled = true));
+          }
+        }
+
+        if (t.classList && t.classList.contains('remove-former-spouse')) {
+          ev.preventDefault();
+          const entry = t.closest('.former-spouse.entry');
+          if (!entry) return;
+          const entries = Array.from(formerContainer.querySelectorAll('.former-spouse.entry'));
+          if (entries.length === 1) {
+            // clear fields rather than removing the last one
+            entry.querySelectorAll('input, textarea, select').forEach((el) => {
+              if (el.type === 'checkbox') el.checked = false;
+              else el.value = '';
+            });
+            // sync count
+            const countInput = document.getElementById('formerSpouseCount');
+            if (countInput) countInput.value = 1;
+            return;
+          }
+          entry.remove();
+
+          // re-index remaining entries so ids/names remain sequential
+          const remaining = Array.from(formerContainer.querySelectorAll('.former-spouse.entry'));
+          remaining.forEach((el, idx) => {
+            const index = idx + 1;
+            el.setAttribute('data-index', String(index));
+            el.querySelectorAll('[id]').forEach((child) => {
+              child.id = child.id.replace(/_(\d+)$/, `_${index}`);
+              if (child.name) child.name = child.name.replace(/_(\d+)$/, `_${index}`);
+            });
+            el.querySelectorAll('label[for]').forEach((lbl) => {
+              lbl.setAttribute('for', lbl.getAttribute('for').replace(/_(\d+)$/, `_${index}`));
+            });
+          });
+
+          // sync count and re-enable add buttons
+          const countInput = document.getElementById('formerSpouseCount');
+          const now = formerContainer.querySelectorAll('.former-spouse.entry').length;
+          if (countInput) countInput.value = now;
+          formerContainer
+            .querySelectorAll('.add-former-spouse')
+            .forEach((b) => (b.disabled = false));
+        }
+      });
+    }
   }
 
   // 2. Travel Companion Logic

@@ -251,6 +251,240 @@
             </div>
           </div>
 
+          <fieldset
+            id="divorcedFields"
+            class="conditional-fields"
+            style="display: none"
+            aria-hidden="true"
+            aria-expanded="false"
+          >
+            <legend>
+              <span class="section-icon" aria-hidden="true">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path fill="#fff" d="M6 12a6 6 0 1112 0v6H6v-6z" />
+                </svg>
+              </span>
+              Former Spouse Information / معلومات عن الزوج السابق
+            </legend>
+
+            <div class="question-group">
+              <label for="formerSpouseCount"
+                >عدد الأزواج السابقين / Number of Former Spouses:</label
+              >
+              <input
+                type="number"
+                id="formerSpouseCount"
+                name="FormerSpouse_Count"
+                min="0"
+                max="5"
+                value="1"
+              />
+            </div>
+
+            <div id="formerSpousesContainer">
+              <div class="former-spouse entry" data-index="1">
+                <div class="question-group">
+                  <label for="formerSurnames_1">اللقب / Surnames</label>
+                  <input
+                    type="text"
+                    id="formerSurnames_1"
+                    name="FormerSpouse_1_Surnames"
+                    minlength="2"
+                    maxlength="100"
+                    required
+                  />
+                </div>
+                <div class="question-group">
+                  <label for="formerGiven_1">الاسم الأول / Given Names</label>
+                  <input
+                    type="text"
+                    id="formerGiven_1"
+                    name="FormerSpouse_1_GivenNames"
+                    minlength="2"
+                    maxlength="100"
+                    required
+                  />
+                </div>
+
+                <div class="question-group">
+                  <label>Date of Birth</label>
+                  <div class="date-row">
+                    <select id="formerDOBDay_1" name="FormerSpouse_1_DOB_Day" required>
+                      <option value="">يوم</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+                    <select id="formerDOBMonth_1" name="FormerSpouse_1_DOB_Month" required>
+                      <option value="">شهر</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+                    <input
+                      type="text"
+                      id="formerDOBYear_1"
+                      name="FormerSpouse_1_DOB_Year"
+                      pattern="^[0-9]{4}$"
+                      placeholder="YYYY"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="question-group">
+                  <label for="formerNationality_1">الجنسية / Nationality</label>
+                  <select id="formerNationality_1" name="FormerSpouse_1_Nationality" required>
+                    <option value="">- Select One -</option>
+                    <option value="Afghanistan">Afghanistan</option>
+                    <option value="Albania">Albania</option>
+                    <option value="Algeria">Algeria</option>
+                    <!-- shortened for brevity, server will accept blank/any -->
+                  </select>
+                </div>
+
+                <div class="question-group">
+                  <label>Former Spouse's Place of Birth</label>
+                  <div class="question-group">
+                    <label for="formerCity_1">المدينة / City</label>
+                    <input type="text" id="formerCity_1" name="FormerSpouse_1_POB_City" required />
+                    <label style="margin-left: 8px; font-weight: 400">Do Not Know</label>
+                    <input
+                      type="checkbox"
+                      id="formerCityUnknown_1"
+                      name="FormerSpouse_1_POB_Unknown"
+                    />
+                  </div>
+                  <div class="question-group">
+                    <label for="formerCountry_1">البلد/المنطقة / Country/Region</label>
+                    <select id="formerCountry_1" name="FormerSpouse_1_POB_Country" required>
+                      <option value="">- Select One -</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="question-group">
+                  <label for="formerDateMarriage_1">Date of Marriage</label>
+                  <div class="date-row">
+                    <select id="formerMarriageDay_1" name="FormerSpouse_1_Marriage_Day" required>
+                      <option value="">يوم</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                    <select
+                      id="formerMarriageMonth_1"
+                      name="FormerSpouse_1_Marriage_Month"
+                      required
+                    >
+                      <option value="">شهر</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                    <input
+                      type="text"
+                      id="formerMarriageYear_1"
+                      name="FormerSpouse_1_Marriage_Year"
+                      pattern="^[0-9]{4}$"
+                      placeholder="YYYY"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="question-group">
+                  <label for="formerDateEnd_1">Date Marriage Ended</label>
+                  <div class="date-row">
+                    <select id="formerEndDay_1" name="FormerSpouse_1_MarriageEnd_Day" required>
+                      <option value="">يوم</option>
+                    </select>
+                    <select id="formerEndMonth_1" name="FormerSpouse_1_MarriageEnd_Month" required>
+                      <option value="">شهر</option>
+                    </select>
+                    <input
+                      type="text"
+                      id="formerEndYear_1"
+                      name="FormerSpouse_1_MarriageEnd_Year"
+                      pattern="^[0-9]{4}$"
+                      placeholder="YYYY"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="question-group">
+                  <label for="formerHowEnded_1">كيف انتهى الزواج / How the Marriage Ended</label>
+                  <textarea
+                    id="formerHowEnded_1"
+                    name="FormerSpouse_1_HowEnded"
+                    minlength="2"
+                    maxlength="1000"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="question-group">
+                  <label for="formerCountryTerminated_1"
+                    >البلد/المنطقة التي تم فيها إنهاء الزواج / Country where Marriage was
+                    Terminated</label
+                  >
+                  <select
+                    id="formerCountryTerminated_1"
+                    name="FormerSpouse_1_TerminatedCountry"
+                    required
+                  >
+                    <option value="">- Select One -</option>
+                  </select>
+                </div>
+
+                <div class="question-group">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary add-former-spouse"
+                    aria-label="Add former spouse"
+                  >
+                    Add Another
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger remove-former-spouse"
+                    aria-label="Remove former spouse"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
           <!-- Nationality / other nationality question (added) -->
           <div class="question-group">
             <label for="nationality">بلد/منطقة المنشأ (الجنسية):</label>
