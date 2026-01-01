@@ -275,66 +275,31 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   }
 
   // ensure ARIA attributes are set correctly at load
-  hideAllMaritalFields();
+  // Use a single update function that hides all sections first then shows the requested one
+  function updateMaritalFields() {
+    const status = (document.getElementById('maritalStatus').value || '').trim().toUpperCase();
+    const married = document.getElementById('marriedFields');
+    const widowed = document.getElementById('widowedFields');
+
+    // Step 1: Hide both by default (clean ARIA and required flags)
+    hideMarriedFields();
+    hideWidowedFields();
+
+    // Step 2: Show only the relevant one
+    if (status === 'MARRIED' && married) {
+      showConditionalFieldset(married);
+    } else if (status === 'WIDOWED' && widowed) {
+      showConditionalFieldset(widowed);
+      // widowed view: ensure spouse address is not required
+      setSpouseAddressRequired(false);
+    }
+  }
 
   if (maritalStatusSelect) {
-    // initialize based on current value (in case form is pre-filled)
-    const initialStatus = (maritalStatusSelect.value || '').trim().toUpperCase();
-    if (initialStatus === 'MARRIED') {
-      showConditionalFieldset(marriedFields);
-      // be explicit: ensure widowed details are hidden when Married is selected
-      hideWidowedFields();
-      if (widowedFields) widowedFields.style.display = 'none';
-    } else if (initialStatus === 'WIDOWED') {
-      showConditionalFieldset(widowedFields);
-    } else if (initialStatus === 'DIVORCED') {
-      showConditionalFieldset(divorcedFields);
-    } else {
-      hideAllMaritalFields();
-    }
-
-    maritalStatusSelect.addEventListener('change', function () {
-      // Explicit behavior: show the requested section and ensure others are hidden
-      const status = (this.value || '').trim().toUpperCase();
-
-      if (status === 'MARRIED') {
-        // show spouse details, hide widowed/divorced explicitly
-        showConditionalFieldset(marriedFields);
-        // explicitly hide widowed container to avoid any race-condition
-        if (widowedFields) {
-          widowedFields.style.display = 'none';
-          widowedFields.style.animation = '';
-          widowedFields.setAttribute('aria-hidden', 'true');
-          widowedFields.setAttribute('aria-expanded', 'false');
-        }
-        hideWidowedFields();
-        if (divorcedFields) {
-          divorcedFields.style.display = 'none';
-          divorcedFields.style.animation = '';
-          divorcedFields.setAttribute('aria-hidden', 'true');
-          divorcedFields.setAttribute('aria-expanded', 'false');
-        }
-      } else if (status === 'WIDOWED') {
-        // show widowed details, hide spouse/divorced explicitly using helpers
-        showConditionalFieldset(widowedFields);
-        setSpouseAddressRequired(false);
-        hideMarriedFields();
-        if (divorcedFields) {
-          divorcedFields.style.display = 'none';
-          divorcedFields.style.animation = '';
-          divorcedFields.setAttribute('aria-hidden', 'true');
-          divorcedFields.setAttribute('aria-expanded', 'false');
-        }
-      } else if (status === 'DIVORCED') {
-        // show divorced details, hide spouse/widowed explicitly
-        showConditionalFieldset(divorcedFields);
-        hideMarriedFields();
-        hideWidowedFields();
-      } else {
-        // default: hide all
-        hideAllMaritalFields();
-      }
-    });
+    // initialize the UI
+    updateMaritalFields();
+    // attach a single listener
+    maritalStatusSelect.addEventListener('change', updateMaritalFields);
   }
 
   // 2. Travel Companion Logic

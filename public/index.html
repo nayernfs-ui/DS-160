@@ -167,8 +167,14 @@
             </div>
           </fieldset>
 
-          <fieldset id="widowedFields" class="conditional-fields" style="display: none">
-            <legend>
+          <div
+            id="widowedFields"
+            class="conditional-fields"
+            style="display: none"
+            aria-hidden="true"
+            aria-expanded="false"
+          >
+            <h3 class="fieldset-legend">
               <span class="section-icon" aria-hidden="true"
                 ><svg
                   width="20"
@@ -185,7 +191,7 @@
                     d="M12 21s-6.716-4.948-9-8c-1.35-1.666-1.02-4 1.5-5.5C8.598 6.456 11.5 9 12 9s3.402-2.544 7.5-1.5c2.52 1.5 2.85 3.834 1.5 5.5-2.284 3.052-9 8-9 8z"
                   /></svg></span
               >تفاصيل الأرملة/الأرمل
-            </legend>
+            </h3>
             <div class="question-group">
               <label for="deceasedName">اسم الزوج/الزوجة بالكامل:</label
               ><input
@@ -243,7 +249,7 @@
               <label for="deceasedPOB">محافظة وبلد الميلاد:</label
               ><input type="text" id="deceasedPOB" name="Deceased_POB" style="direction: auto" />
             </div>
-          </fieldset>
+          </div>
 
           <!-- Nationality / other nationality question (added) -->
           <div class="question-group">

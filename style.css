@@ -197,7 +197,7 @@ legend {
 /* Ensure canonical marital containers are hidden by default and share the conditional style */
 #marriedFields,
 #widowedFields {
-  display: none;
+  display: none !important; /* Force hide unless overridden by JS inline style */
 }
 
 /* Styling for the Submission Confirmation Message */
