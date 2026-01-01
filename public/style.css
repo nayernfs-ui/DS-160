@@ -264,6 +264,37 @@ select.is-invalid {
   opacity: 0.95;
 }
 
+/* Small button helpers (Bootstrap-like look) */
+.btn {
+  display: inline-block;
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: #fff;
+}
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+}
+.btn-outline-secondary {
+  color: #374151;
+  background: #fff;
+  border-color: #cbd5e1;
+}
+.btn-outline-secondary:hover {
+  background: #f8fafc;
+}
+.btn-outline-danger {
+  color: #dc3545;
+  background: #fff;
+  border-color: #fda4af;
+}
+.btn-outline-danger:hover {
+  background: #fff5f6;
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .container {
