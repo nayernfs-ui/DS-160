@@ -1,11 +1,13 @@
 const fs = require('fs');
+const path = require('path');
 const { JSDOM } = require('jsdom');
 const html = fs.readFileSync('../index.html', 'utf8');
 const dom = new JSDOM(html);
 const opts = [...dom.window.document.querySelectorAll('select option')]
   .map((o) => o.value)
   .filter(Boolean);
-const script = fs.readFileSync('../script.js', 'utf8');
+const scriptPath = path.join(__dirname, '..', 'public', 'js', 'script.js');
+const script = fs.readFileSync(scriptPath, 'utf8');
 const m = script.match(/const countryNamesArabic\s*=\s*({[\s\S]*?});/m);
 if (!m) {
   console.error('country mapping not found');

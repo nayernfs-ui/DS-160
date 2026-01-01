@@ -16,10 +16,12 @@ const { JSDOM } = require('jsdom');
     resources: 'usable',
     url: `file://${root.replace(/\\/g, '/')}/index.html`,
   });
+  console.log('DOM created');
 
   dom.window.addEventListener('error', (ev) => {
     console.error('JSDOM window error:', ev.error || ev.message || ev);
   });
+  dom.window.addEventListener('load', () => console.log('DOM load event'));
   dom.window.addEventListener('unhandledrejection', (ev) => {
     console.error('JSDOM unhandledrejection:', ev.reason || ev);
   });
@@ -217,6 +219,62 @@ const { JSDOM } = require('jsdom');
   assert(
     !spouseAddr.hasAttribute('required'),
     'spouseCurrentAddress should not be required when not married'
+  );
+
+  // Selecting Widowed should show the widowed details and not require spouse address
+  const widowedGroup = doc.getElementById('widowedFields');
+  maritalStatus.value = 'Widowed';
+  maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  assert.notStrictEqual(
+    dom.window.getComputedStyle(widowedGroup).display,
+    'none',
+    'widowedFields should be visible after selecting Widowed'
+  );
+  assert.strictEqual(
+    widowedGroup.getAttribute('aria-expanded'),
+    'true',
+    'widowedFields should have aria-expanded=true when visible'
+  );
+  assert(
+    !spouseAddr.hasAttribute('required'),
+    'spouseCurrentAddress should not be required when widowed'
+  );
+
+  // Selecting Married should explicitly hide the widowed details
+  maritalStatus.value = 'Married';
+  maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  assert.strictEqual(
+    dom.window.getComputedStyle(widowedGroup).display,
+    'none',
+    'widowedFields should be hidden when Married selected'
+  );
+
+  // spouse DOB fields should be required when married
+  const spouseDOBDay = doc.getElementById('spouseDOBDay');
+  const spouseDOBMonth = doc.getElementById('spouseDOBMonth');
+  const spouseDOBYear = doc.getElementById('spouseDOBYear');
+  assert(
+    spouseDOBDay && spouseDOBDay.hasAttribute('required'),
+    'spouseDOBDay should be required when married'
+  );
+  assert(
+    spouseDOBMonth && spouseDOBMonth.hasAttribute('required'),
+    'spouseDOBMonth should be required when married'
+  );
+  assert(
+    spouseDOBYear && spouseDOBYear.hasAttribute('required'),
+    'spouseDOBYear should be required when married'
+  );
+
+  // When Widowed is selected, spouse DOBs should not be required
+  maritalStatus.value = 'Widowed';
+  maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  assert(
+    !spouseDOBDay.hasAttribute('required'),
+    'spouseDOBDay should not be required when widowed'
   );
 
   console.log('family.test.js: passed');

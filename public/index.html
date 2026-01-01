@@ -154,11 +154,27 @@
               ><input type="text" id="spousePOB" name="Spouse_POB" style="direction: auto" />
             </div>
 
-          <div class="question-group">
-            <label for="spouseCurrentAddress">عنوان الإقامة الحالي للزوج/الزوجة:</label
-            ><input type="text" id="spouseCurrentAddress" name="Spouse_CurrentAddress" placeholder="العنوان الكامل" style="direction: auto" />
-            <span class="error-message" id="error-Spouse_CurrentAddress"></span>
-          </div>
+            <div class="question-group">
+              <label for="spouseCurrentAddress">عنوان الإقامة الحالي للزوج/الزوجة:</label
+              ><input
+                type="text"
+                id="spouseCurrentAddress"
+                name="Spouse_CurrentAddress"
+                placeholder="العنوان الكامل"
+                style="direction: auto"
+              />
+              <span class="error-message" id="error-Spouse_CurrentAddress"></span>
+            </div>
+          </fieldset>
+
+          <div
+            id="widowedFields"
+            class="conditional-fields"
+            style="display: none"
+            aria-hidden="true"
+            aria-expanded="false"
+          >
+            <h3 class="fieldset-legend">
               <span class="section-icon" aria-hidden="true"
                 ><svg
                   width="20"
@@ -175,7 +191,7 @@
                     d="M12 21s-6.716-4.948-9-8c-1.35-1.666-1.02-4 1.5-5.5C8.598 6.456 11.5 9 12 9s3.402-2.544 7.5-1.5c2.52 1.5 2.85 3.834 1.5 5.5-2.284 3.052-9 8-9 8z"
                   /></svg></span
               >تفاصيل الأرملة/الأرمل
-            </legend>
+            </h3>
             <div class="question-group">
               <label for="deceasedName">اسم الزوج/الزوجة بالكامل:</label
               ><input
@@ -233,7 +249,7 @@
               <label for="deceasedPOB">محافظة وبلد الميلاد:</label
               ><input type="text" id="deceasedPOB" name="Deceased_POB" style="direction: auto" />
             </div>
-          </fieldset>
+          </div>
 
           <!-- Nationality / other nationality question (added) -->
           <div class="question-group">
@@ -940,28 +956,22 @@
               </div>
 
               <div class="question-group">
-                <a
-                  href="#"
+                <button
+                  type="button"
                   class="remove-relative"
                   style="margin-left: 8px"
-                  role="button"
-                  tabindex="0"
                   aria-label="Remove relative 1 (إزالة)"
-                  >- إزالة</a
                 >
+                  - إزالة
+                </button>
               </div>
             </div>
           </div>
 
           <div class="question-group" id="relativeControls">
-            <a
-              href="#"
-              class="add-relative"
-              role="button"
-              tabindex="0"
-              aria-label="Add relative (إضافة)"
-              >+ إضافة</a
-            >
+            <button type="button" class="add-relative" aria-label="Add relative (إضافة)">
+              + إضافة
+            </button>
           </div>
         </fieldset>
 
@@ -970,7 +980,6 @@
         <!-- widowedFields moved earlier -->
 
         <!-- divorcedFields moved earlier -->
-        
 
         <fieldset>
           <legend>
@@ -1336,12 +1345,7 @@
                   <option value="Nov">Nov</option>
                   <option value="Dec">Dec</option>
                 </select>
-                <input
-                  type="text"
-                  id="visaYear"
-                  name="Visa_Last_Issue_Year"
-                  placeholder="YYYY"
-                />
+                <input type="text" id="visaYear" name="Visa_Last_Issue_Year" placeholder="YYYY" />
               </div>
               <span class="error-message" id="error-visaDate"></span>
             </div>
@@ -1453,12 +1457,7 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input
-                type="text"
-                id="fatherDOBYear"
-                name="Father_DOB_Year"
-                placeholder="YYYY"
-              />
+              <input type="text" id="fatherDOBYear" name="Father_DOB_Year" placeholder="YYYY" />
             </div>
             <span class="error-message" id="error-fatherDOBDay"></span>
             <span class="error-message" id="error-fatherDOBMonth"></span>
@@ -1467,16 +1466,29 @@
 
           <div class="question-group">
             <label>هل الاب في الولايات المتحدة؟</label>
-            <label><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes" /> نعم</label>
-            <label><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked /> لا</label>
+            <label
+              ><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes" /> نعم</label
+            >
+            <label
+              ><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked />
+              لا</label
+            >
           </div>
 
-          <div class="question-group" id="fatherStatusGroup" style="display: none" aria-expanded="false" aria-hidden="true">
+          <div
+            class="question-group"
+            id="fatherStatusGroup"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
             <label for="fatherStatus">حالة الاب (Father's Status):</label>
             <select id="fatherStatus" name="Father_Status">
               <option value="">- اختر -</option>
               <option value="US_Citizen">مواطن أمريكي (U.S. CITIZEN)</option>
-              <option value="LPR">مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))</option>
+              <option value="LPR">
+                مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))
+              </option>
               <option value="Nonimmigrant">غير مهاجر (NONIMMIGRANT)</option>
               <option value="Other">آخر/لا أعرف (OTHER/I DON'T KNOW)</option>
             </select>
@@ -1560,16 +1572,29 @@
 
           <div class="question-group">
             <label>هل الام في الولايات المتحدة؟</label>
-            <label><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes" /> نعم</label>
-            <label><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked /> لا</label>
+            <label
+              ><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes" /> نعم</label
+            >
+            <label
+              ><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked />
+              لا</label
+            >
           </div>
 
-          <div class="question-group" id="motherStatusGroup" style="display: none" aria-expanded="false" aria-hidden="true">
+          <div
+            class="question-group"
+            id="motherStatusGroup"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
             <label for="motherStatus">حالة الام (Mother's Status):</label>
             <select id="motherStatus" name="Mother_Status">
               <option value="">- اختر -</option>
               <option value="US_Citizen">مواطن أمريكي (U.S. CITIZEN)</option>
-              <option value="LPR">مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))</option>
+              <option value="LPR">
+                مقيم دائم قانونياً في الولايات المتحدة (U.S. LEGAL PERMANENT RESIDENT (LPR))
+              </option>
               <option value="Nonimmigrant">غير مهاجر (NONIMMIGRANT)</option>
               <option value="Other">آخر/لا أعرف (OTHER/I DON'T KNOW)</option>
             </select>
@@ -1598,7 +1623,13 @@
           </legend>
           <div class="question-group">
             <label for="jobTitleCurrent">المسمى الوظيفي:</label
-            ><input type="text" id="jobTitleCurrent" name="Current_JobTitle" required style="direction: auto" />
+            ><input
+              type="text"
+              id="jobTitleCurrent"
+              name="Current_JobTitle"
+              required
+              style="direction: auto"
+            />
             <span class="error-message" id="error-jobTitleCurrent"></span>
           </div>
           <div class="question-group">
@@ -1689,8 +1720,6 @@
             <span class="error-message" id="error-startDateCurrentMonth"></span>
             <span class="error-message" id="error-startDateCurrent"></span>
           </div>
-
-
 
           <div class="question-group">
             <label for="phoneWorkCurrent">تليفون العمل:</label

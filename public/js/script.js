@@ -179,7 +179,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   function hideAllMaritalFields() {
     [marriedFields, widowedFields, divorcedFields].forEach((f) => {
       if (f) {
-        f.style.display = 'none';
+        // Use setProperty with !important so explicit CSS rules can't override JS
+        f.style.setProperty('display', 'none', 'important');
         f.style.animation = '';
         f.setAttribute('aria-hidden', 'true');
         f.setAttribute('aria-expanded', 'false');
@@ -189,6 +190,60 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     // make spouse current address not required when the marital sections are hidden
     const spouseAddr = document.getElementById('spouseCurrentAddress');
     if (spouseAddr) spouseAddr.removeAttribute('required');
+  }
+
+  // force hide canonical marital containers using inline !important (fail-proof)
+  function forceVisibilityReset() {
+    const married = document.getElementById('marriedFields');
+    const widowed = document.getElementById('widowedFields');
+
+    // Hide BOTH first using inline !important
+    if (married) {
+      married.style.setProperty('display', 'none', 'important');
+      married.style.animation = '';
+      married.setAttribute('aria-hidden', 'true');
+      married.setAttribute('aria-expanded', 'false');
+    }
+    if (widowed) {
+      widowed.style.setProperty('display', 'none', 'important');
+      widowed.style.animation = '';
+      widowed.setAttribute('aria-hidden', 'true');
+      widowed.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  // helper to hide only the widowed fields and clean up any required flags/errors
+  function hideWidowedFields() {
+    if (!widowedFields) return;
+    // Use setProperty with !important so explicit CSS rules can't override JS
+    widowedFields.style.setProperty('display', 'none', 'important');
+    widowedFields.style.animation = '';
+    widowedFields.setAttribute('aria-hidden', 'true');
+    widowedFields.setAttribute('aria-expanded', 'false');
+    // remove required and error markers from any inputs inside widowed fields
+    widowedFields.querySelectorAll('input, select, textarea').forEach((el) => {
+      el.removeAttribute('required');
+      el.classList.remove('is-invalid');
+      const err = document.getElementById(`error-${el.id}`);
+      if (err) err.textContent = '';
+    });
+  }
+
+  // helper to hide only the married fields and clean up any required flags/errors
+  function hideMarriedFields() {
+    if (!marriedFields) return;
+    // Use setProperty with !important so explicit CSS rules can't override JS
+    marriedFields.style.setProperty('display', 'none', 'important');
+    marriedFields.style.animation = '';
+    marriedFields.setAttribute('aria-hidden', 'true');
+    marriedFields.setAttribute('aria-expanded', 'false');
+    // remove required and error markers from any inputs inside married fields
+    marriedFields.querySelectorAll('input, select, textarea').forEach((el) => {
+      el.removeAttribute('required');
+      el.classList.remove('is-invalid');
+      const err = document.getElementById(`error-${el.id}`);
+      if (err) err.textContent = '';
+    });
   }
 
   // helper to set spouse address required state
@@ -213,14 +268,20 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     // Hide all other marital sections first to avoid multiple visible sections
     hideAllMaritalFields();
 
-    fieldset.style.display = 'block';
+    // Use setProperty with !important so inline intent overrides stylesheet !important
+    fieldset.style.setProperty('display', 'block', 'important');
     fieldset.style.animation = 'fadeIn 0.5s';
     fieldset.setAttribute('aria-hidden', 'false');
     fieldset.setAttribute('aria-expanded', 'true');
 
-    // If we're showing the married fields, make the spouse address required
+    // If we're showing the married fields, make the spouse address and key spouse DOB fields required
     if (fieldset === marriedFields) {
       setSpouseAddressRequired(true);
+      // require specific spouse DOB controls by ID to avoid broad class overlaps
+      ['spouseDOBDay', 'spouseDOBMonth', 'spouseDOBYear'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.setAttribute('required', 'required');
+      });
     }
 
     // focus first form control and scroll into view after a short delay to allow layout
@@ -238,74 +299,54 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   }
 
   // ensure ARIA attributes are set correctly at load
-  hideAllMaritalFields();
+  // Use a single update function that hides all sections first then shows the requested one
+  function updateMaritalFields() {
+    const select = document.getElementById('maritalStatus');
+    if (!select) return;
+
+    // preserve exact casing from the select value (e.g., "Married", "Widowed")
+    const status = (select.value || '').trim();
+    const marriedDiv = document.getElementById('marriedFields');
+    const widowedDiv = document.getElementById('widowedFields');
+
+    // 1. Force Reset: hide everything first (use !important to override stylesheet)
+    forceVisibilityReset();
+
+    // Remove required/error flags from both sections to ensure a clean state
+    hideMarriedFields();
+    hideWidowedFields();
+
+    // 2. Exact Match Selection (case-sensitive)
+    if (status === 'Married' && marriedDiv) {
+      marriedDiv.style.setProperty('display', 'block', 'important');
+      marriedDiv.setAttribute('aria-hidden', 'false');
+      marriedDiv.setAttribute('aria-expanded', 'true');
+      // ensure spouse address and spouse DOB controls are required
+      setSpouseAddressRequired(true);
+      ['spouseDOBDay', 'spouseDOBMonth', 'spouseDOBYear'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.setAttribute('required', 'required');
+      });
+    } else if (status === 'Widowed' && widowedDiv) {
+      widowedDiv.style.setProperty('display', 'block', 'important');
+      widowedDiv.setAttribute('aria-hidden', 'false');
+      widowedDiv.setAttribute('aria-expanded', 'true');
+      // widowed: ensure spouse address is not required
+      setSpouseAddressRequired(false);
+    }
+  }
 
   if (maritalStatusSelect) {
-    // initialize based on current value (in case form is pre-filled)
-    const initialStatus = maritalStatusSelect.value;
-    if (initialStatus === 'Married') {
-      showConditionalFieldset(marriedFields);
-    } else if (initialStatus === 'Widowed') {
-      showConditionalFieldset(widowedFields);
-    } else if (initialStatus === 'Divorced') {
-      showConditionalFieldset(divorcedFields);
-    }
+    // initialize the UI and attach a single listener that uses exact matches
+    updateMaritalFields();
+    maritalStatusSelect.addEventListener('change', updateMaritalFields);
 
-    maritalStatusSelect.addEventListener('change', function () {
-      // Explicit behavior: show the requested section and ensure others are hidden
-      const status = this.value;
-
-      if (status === 'Married') {
-        // show spouse details, hide widowed/divorced
-        showConditionalFieldset(marriedFields);
-        if (widowedFields) {
-          widowedFields.style.display = 'none';
-          widowedFields.style.animation = '';
-          widowedFields.setAttribute('aria-hidden', 'true');
-          widowedFields.setAttribute('aria-expanded', 'false');
-        }
-        if (divorcedFields) {
-          divorcedFields.style.display = 'none';
-          divorcedFields.style.animation = '';
-          divorcedFields.setAttribute('aria-hidden', 'true');
-          divorcedFields.setAttribute('aria-expanded', 'false');
-        }
-      } else if (status === 'Widowed') {
-        // show widowed details, hide spouse/divorced
-        showConditionalFieldset(widowedFields);
-        setSpouseAddressRequired(false);
-        if (marriedFields) {
-          marriedFields.style.display = 'none';
-          marriedFields.style.animation = '';
-          marriedFields.setAttribute('aria-hidden', 'true');
-          marriedFields.setAttribute('aria-expanded', 'false');
-        }
-        if (divorcedFields) {
-          divorcedFields.style.display = 'none';
-          divorcedFields.style.animation = '';
-          divorcedFields.setAttribute('aria-hidden', 'true');
-          divorcedFields.setAttribute('aria-expanded', 'false');
-        }
-      } else if (status === 'Divorced') {
-        // show divorced details, hide spouse/widowed
-        showConditionalFieldset(divorcedFields);
-        if (marriedFields) {
-          marriedFields.style.display = 'none';
-          marriedFields.style.animation = '';
-          marriedFields.setAttribute('aria-hidden', 'true');
-          marriedFields.setAttribute('aria-expanded', 'false');
-        }
-        if (widowedFields) {
-          widowedFields.style.display = 'none';
-          widowedFields.style.animation = '';
-          widowedFields.setAttribute('aria-hidden', 'true');
-          widowedFields.setAttribute('aria-expanded', 'false');
-        }
-      } else {
-        // default: hide all
-        hideAllMaritalFields();
-      }
-    });
+    /**
+     * Manual testing note (documentation only):
+     * To trigger the marital update immediately in the browser console run:
+     *   document.getElementById('maritalStatus').dispatchEvent(new Event('change'))
+     * This is documentation only and not executed at runtime.
+     */
   }
 
   // 2. Travel Companion Logic

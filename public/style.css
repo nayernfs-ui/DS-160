@@ -68,7 +68,7 @@ label {
 .question-group textarea {
   flex: 1 1 auto;
   width: auto; /* allow flexbox to control width */
-} 
+}
 
 /* Screen-reader-only label helper */
 .sr-only {
@@ -179,7 +179,7 @@ legend {
 /* Ensure error messages appear below and span full width */
 .question-group .error-message {
   flex-basis: 100%;
-} 
+}
 
 /* Ensure Education History 2 year inputs match main Education styles */
 #educationHistory2 .date-row input {
@@ -192,6 +192,12 @@ legend {
   max-height: 1000px;
   overflow: hidden;
   margin-top: 6px;
+}
+
+/* Ensure canonical marital containers are hidden by default and share the conditional style */
+#marriedFields,
+#widowedFields {
+  display: none !important; /* Force hide unless overridden by JS inline style */
 }
 
 /* Styling for the Submission Confirmation Message */
