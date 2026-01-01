@@ -1,0 +1,18 @@
+# Normalize line endings for all text files
+* text=auto
+
+# Ensure common script files use LF
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+
+# Allow binary files to be binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
