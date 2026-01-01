@@ -279,14 +279,15 @@ document.addEventListener('DOMContentLoaded', (_event) => {
 
   if (maritalStatusSelect) {
     // initialize based on current value (in case form is pre-filled)
-    const initialStatus = (maritalStatusSelect.value || '').trim();
-    if (initialStatus === 'Married') {
+    const initialStatus = (maritalStatusSelect.value || '').trim().toUpperCase();
+    if (initialStatus === 'MARRIED') {
       showConditionalFieldset(marriedFields);
       // be explicit: ensure widowed details are hidden when Married is selected
       hideWidowedFields();
-    } else if (initialStatus === 'Widowed') {
+      if (widowedFields) widowedFields.style.display = 'none';
+    } else if (initialStatus === 'WIDOWED') {
       showConditionalFieldset(widowedFields);
-    } else if (initialStatus === 'Divorced') {
+    } else if (initialStatus === 'DIVORCED') {
       showConditionalFieldset(divorcedFields);
     } else {
       hideAllMaritalFields();
@@ -294,11 +295,18 @@ document.addEventListener('DOMContentLoaded', (_event) => {
 
     maritalStatusSelect.addEventListener('change', function () {
       // Explicit behavior: show the requested section and ensure others are hidden
-      const status = (this.value || '').trim();
+      const status = (this.value || '').trim().toUpperCase();
 
-      if (status === 'Married') {
+      if (status === 'MARRIED') {
         // show spouse details, hide widowed/divorced explicitly
         showConditionalFieldset(marriedFields);
+        // explicitly hide widowed container to avoid any race-condition
+        if (widowedFields) {
+          widowedFields.style.display = 'none';
+          widowedFields.style.animation = '';
+          widowedFields.setAttribute('aria-hidden', 'true');
+          widowedFields.setAttribute('aria-expanded', 'false');
+        }
         hideWidowedFields();
         if (divorcedFields) {
           divorcedFields.style.display = 'none';
@@ -306,7 +314,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           divorcedFields.setAttribute('aria-hidden', 'true');
           divorcedFields.setAttribute('aria-expanded', 'false');
         }
-      } else if (status === 'Widowed') {
+      } else if (status === 'WIDOWED') {
         // show widowed details, hide spouse/divorced explicitly using helpers
         showConditionalFieldset(widowedFields);
         setSpouseAddressRequired(false);
@@ -317,7 +325,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           divorcedFields.setAttribute('aria-hidden', 'true');
           divorcedFields.setAttribute('aria-expanded', 'false');
         }
-      } else if (status === 'Divorced') {
+      } else if (status === 'DIVORCED') {
         // show divorced details, hide spouse/widowed explicitly
         showConditionalFieldset(divorcedFields);
         hideMarriedFields();
