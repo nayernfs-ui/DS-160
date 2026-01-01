@@ -9,7 +9,7 @@ process.on('uncaughtException', (err) => {
 });
 
 (async () => {
-  const url = process.env.TARGET_URL || 'https://ds-160-jet.vercel.app/';
+  const url = process.env.TARGET_URL || 'https://ds-160-fresh.vercel.app/';
   console.log('Target URL:', url);
   console.log('Visiting:', url);
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'], dumpio: true });

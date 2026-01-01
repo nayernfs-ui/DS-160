@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 (async () => {
-  const url = process.env.TARGET_URL || 'https://ds-160-jet.vercel.app/';
+  const url = process.env.TARGET_URL || 'https://ds-160-fresh.vercel.app/';
   console.log('Checking URL:', url);
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'], dumpio: true });
   const page = await browser.newPage();
