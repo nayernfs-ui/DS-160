@@ -91,6 +91,7 @@ process.on('uncaughtException', (err) => {
       const widowDisplay = await getDisplay(['#widowedFields']);
       const spouseDisplay = await getDisplay(['#marriedFields']);
 
+      // Visual display checks
       if (widowDisplay !== 'none') {
         console.error(
           'E2E: widowedFields should be hidden when Married is selected; got',
@@ -109,7 +110,34 @@ process.on('uncaughtException', (err) => {
         process.exit(5);
       }
 
-      console.log('E2E: marital visibility check passed (Married shows spouse, hides widowed)');
+      // Accessibility assertions: verify aria-hidden / aria-expanded values
+      const widowAria = await page.evaluate(() => {
+        const el = document.getElementById('widowedFields');
+        return el
+          ? { hidden: el.getAttribute('aria-hidden'), expanded: el.getAttribute('aria-expanded') }
+          : null;
+      });
+      const spouseAria = await page.evaluate(() => {
+        const el = document.getElementById('marriedFields');
+        return el
+          ? { hidden: el.getAttribute('aria-hidden'), expanded: el.getAttribute('aria-expanded') }
+          : null;
+      });
+
+      if (!widowAria || widowAria.hidden !== 'true' || widowAria.expanded !== 'false') {
+        console.error('E2E: widowedFields ARIA mismatch:', widowAria);
+        await browser.close();
+        process.exit(6);
+      }
+      if (!spouseAria || spouseAria.hidden !== 'false' || spouseAria.expanded !== 'true') {
+        console.error('E2E: marriedFields ARIA mismatch:', spouseAria);
+        await browser.close();
+        process.exit(7);
+      }
+
+      console.log(
+        'E2E: marital visibility & ARIA checks passed (Married shows spouse, hides widowed)'
+      );
     } catch (err) {
       console.error('E2E marital visibility check failed:', err && err.message ? err.message : err);
       await browser.close();

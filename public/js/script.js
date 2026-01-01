@@ -281,29 +281,63 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   // ensure ARIA attributes are set correctly at load
   // Use a single update function that hides all sections first then shows the requested one
   function updateMaritalFields() {
-    const status = (document.getElementById('maritalStatus').value || '').trim().toUpperCase();
-    const married = document.getElementById('marriedFields');
-    const widowed = document.getElementById('widowedFields');
+    const select = document.getElementById('maritalStatus');
+    if (!select) return;
 
-    // Step 1: Hide both by default (clean ARIA and required flags)
+    // preserve exact casing from the select value (e.g., "Married", "Widowed")
+    const status = (select.value || '').trim();
+    const marriedDiv = document.getElementById('marriedFields');
+    const widowedDiv = document.getElementById('widowedFields');
+
+    // 1. Force Reset: hide everything first (use !important to override stylesheet)
+    if (marriedDiv) {
+      marriedDiv.style.setProperty('display', 'none', 'important');
+      marriedDiv.style.animation = '';
+      marriedDiv.setAttribute('aria-hidden', 'true');
+      marriedDiv.setAttribute('aria-expanded', 'false');
+    }
+    if (widowedDiv) {
+      widowedDiv.style.setProperty('display', 'none', 'important');
+      widowedDiv.style.animation = '';
+      widowedDiv.setAttribute('aria-hidden', 'true');
+      widowedDiv.setAttribute('aria-expanded', 'false');
+    }
+
+    // Remove required/error flags from both sections to ensure a clean state
     hideMarriedFields();
     hideWidowedFields();
 
-    // Step 2: Show only the relevant one
-    if (status === 'MARRIED' && married) {
-      showConditionalFieldset(married);
-    } else if (status === 'WIDOWED' && widowed) {
-      showConditionalFieldset(widowed);
-      // widowed view: ensure spouse address is not required
+    // 2. Exact Match Selection (case-sensitive)
+    if (status === 'Married' && marriedDiv) {
+      marriedDiv.style.setProperty('display', 'block', 'important');
+      marriedDiv.setAttribute('aria-hidden', 'false');
+      marriedDiv.setAttribute('aria-expanded', 'true');
+      // ensure spouse address and spouse DOB controls are required
+      setSpouseAddressRequired(true);
+      ['spouseDOBDay', 'spouseDOBMonth', 'spouseDOBYear'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.setAttribute('required', 'required');
+      });
+    } else if (status === 'Widowed' && widowedDiv) {
+      widowedDiv.style.setProperty('display', 'block', 'important');
+      widowedDiv.setAttribute('aria-hidden', 'false');
+      widowedDiv.setAttribute('aria-expanded', 'true');
+      // widowed: ensure spouse address is not required
       setSpouseAddressRequired(false);
     }
   }
 
   if (maritalStatusSelect) {
-    // initialize the UI
+    // initialize the UI and attach a single listener that uses exact matches
     updateMaritalFields();
-    // attach a single listener
     maritalStatusSelect.addEventListener('change', updateMaritalFields);
+
+    /**
+     * Manual testing note (documentation only):
+     * To trigger the marital update immediately in the browser console run:
+     *   document.getElementById('maritalStatus').dispatchEvent(new Event('change'))
+     * This is documentation only and not executed at runtime.
+     */
   }
 
   // 2. Travel Companion Logic
