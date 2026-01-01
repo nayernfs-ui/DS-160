@@ -77,14 +77,19 @@ process.on('uncaughtException', (err) => {
       // allow time for DOM updates
       await new Promise((r) => setTimeout(r, 200));
 
-      const widowDisplay = await page.$eval(
-        '#widowInfo',
-        (el) => window.getComputedStyle(el).display
-      );
-      const spouseDisplay = await page.$eval(
-        '#spouseInfo',
-        (el) => window.getComputedStyle(el).display
-      );
+      // helper: try multiple selectors and return computed display or 'none' if not found
+      const getDisplay = async (selectors) => {
+        for (const s of selectors) {
+          const el = await page.$(s);
+          if (el) {
+            return await page.evaluate((el) => window.getComputedStyle(el).display, el);
+          }
+        }
+        return 'none';
+      };
+
+      const widowDisplay = await getDisplay(['#widowInfo', '#widowedFields']);
+      const spouseDisplay = await getDisplay(['#spouseInfo', '#marriedFields']);
 
       if (widowDisplay !== 'none') {
         console.error(
