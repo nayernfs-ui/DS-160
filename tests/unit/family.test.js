@@ -249,5 +249,31 @@ const { JSDOM } = require('jsdom');
     'widowedFields should be hidden when Married selected'
   );
 
+  // spouse DOB fields should be required when married
+  const spouseDOBDay = doc.getElementById('spouseDOBDay');
+  const spouseDOBMonth = doc.getElementById('spouseDOBMonth');
+  const spouseDOBYear = doc.getElementById('spouseDOBYear');
+  assert(
+    spouseDOBDay && spouseDOBDay.hasAttribute('required'),
+    'spouseDOBDay should be required when married'
+  );
+  assert(
+    spouseDOBMonth && spouseDOBMonth.hasAttribute('required'),
+    'spouseDOBMonth should be required when married'
+  );
+  assert(
+    spouseDOBYear && spouseDOBYear.hasAttribute('required'),
+    'spouseDOBYear should be required when married'
+  );
+
+  // When Widowed is selected, spouse DOBs should not be required
+  maritalStatus.value = 'Widowed';
+  maritalStatus.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+  await new Promise((r) => setTimeout(r, 20));
+  assert(
+    !spouseDOBDay.hasAttribute('required'),
+    'spouseDOBDay should not be required when widowed'
+  );
+
   console.log('family.test.js: passed');
 })();
