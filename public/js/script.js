@@ -209,6 +209,10 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   // helper to show a conditional fieldset, scroll it into view and focus its first input
   function showConditionalFieldset(fieldset) {
     if (!fieldset) return;
+
+    // Hide all other marital sections first to avoid multiple visible sections
+    hideAllMaritalFields();
+
     fieldset.style.display = 'block';
     fieldset.style.animation = 'fadeIn 0.5s';
     fieldset.setAttribute('aria-hidden', 'false');
