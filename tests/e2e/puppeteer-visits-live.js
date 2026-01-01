@@ -88,12 +88,12 @@ process.on('uncaughtException', (err) => {
         return 'none';
       };
 
-      const widowDisplay = await getDisplay(['#widowInfo', '#widowedFields']);
-      const spouseDisplay = await getDisplay(['#spouseInfo', '#marriedFields']);
+      const widowDisplay = await getDisplay(['#widowedFields']);
+      const spouseDisplay = await getDisplay(['#marriedFields']);
 
       if (widowDisplay !== 'none') {
         console.error(
-          'E2E: widowInfo should be hidden when Married is selected; got',
+          'E2E: widowedFields should be hidden when Married is selected; got',
           widowDisplay
         );
         await browser.close();
@@ -102,7 +102,7 @@ process.on('uncaughtException', (err) => {
 
       if (spouseDisplay === 'none') {
         console.error(
-          'E2E: spouseInfo should be visible when Married is selected; got',
+          'E2E: marriedFields should be visible when Married is selected; got',
           spouseDisplay
         );
         await browser.close();

@@ -19,15 +19,15 @@ const puppeteer = require('puppeteer');
     await new Promise((r) => setTimeout(r, 300));
     // Inspect whether the expected fieldsets exist and their display values.
     const info = await page.evaluate(() => {
-      const widowedEl = document.querySelector('#widowInfo, #widowedFields');
-      const marriedEl = document.querySelector('#spouseInfo, #marriedFields');
+      const widowedEl = document.querySelector('#widowedFields');
+      const marriedEl = document.querySelector('#marriedFields');
       const allIds = Array.from(document.querySelectorAll('[id]')).map((el) => el.id);
       const conditional = Array.from(document.querySelectorAll('.conditional-fields')).map(
         (el) => ({ id: el.id, display: window.getComputedStyle(el).display })
       );
       const spouseAddr =
         document.getElementById('spouseCurrentAddress') ||
-        document.querySelector('[name="spouseCurrentAddress"]');
+        document.querySelector('[name="Spouse_CurrentAddress"], [name="spouseCurrentAddress"]');
       return {
         widowedExists: !!widowedEl,
         widowedDisplay: widowedEl ? window.getComputedStyle(widowedEl).display : null,

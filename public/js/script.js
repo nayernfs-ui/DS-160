@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', (_event) => {
   // 1. Marital Status Logic
   const maritalStatusSelect = document.getElementById('maritalStatus');
-  const marriedFields = document.getElementById('spouseInfo');
-  const widowedFields = document.getElementById('widowInfo');
+  const marriedFields = document.getElementById('marriedFields');
+  const widowedFields = document.getElementById('widowedFields');
   const divorcedFields = document.getElementById('divorcedFields');
 
   // --- NEW / MODIFIED SUBMISSION LOGIC WITH INLINE ERRORS ---
