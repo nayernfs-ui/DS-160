@@ -60,6 +60,74 @@ process.on('uncaughtException', (err) => {
     process.exit(2);
   }
 
+  // --- Verify nationality visibility & divorced exNationality behavior ---
+  try {
+    const statuses = ['Single', 'Married', 'Divorced'];
+    for (const s of statuses) {
+      await page.evaluate((val) => {
+        const sel = document.getElementById('maritalStatus');
+        if (sel) {
+          sel.value = val;
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }, s);
+
+      await page.waitForTimeout(400);
+
+      const natVisible = await page.evaluate(() => {
+        const el =
+          document.querySelector('#nationality') ||
+          document.querySelector('label[for="nationality"]');
+        if (!el) return false;
+        const style = window.getComputedStyle(el);
+        const rect = el.getBoundingClientRect
+          ? el.getBoundingClientRect()
+          : { width: 0, height: 0 };
+        return !(
+          style.display === 'none' ||
+          style.visibility === 'hidden' ||
+          (rect.width === 0 && rect.height === 0)
+        );
+      });
+
+      console.log(`[${s}] nationality visible?`, natVisible);
+      if (natVisible) {
+        console.error('Nationality field is visible when it should be hidden for', s);
+        await browser.close();
+        process.exit(6);
+      }
+
+      if (s === 'Divorced') {
+        const exNatOK = await page.evaluate(() => {
+          const el = document.getElementById('exNationality');
+          if (!el) return false;
+          const style = window.getComputedStyle(el);
+          const rect = el.getBoundingClientRect
+            ? el.getBoundingClientRect()
+            : { width: 0, height: 0 };
+          const visible = !(
+            style.display === 'none' ||
+            style.visibility === 'hidden' ||
+            (rect.width === 0 && rect.height === 0)
+          );
+          const required = el.hasAttribute('required');
+          return visible && required;
+        });
+        if (!exNatOK) {
+          console.error('exNationality is not visible and required when Divorced is selected');
+          await browser.close();
+          process.exit(7);
+        }
+      }
+    }
+
+    console.log('Nationality visibility check: PASS');
+  } catch (err) {
+    console.error('Nationality check failed:', err && err.message ? err.message : err);
+    await browser.close();
+    process.exit(6);
+  }
+
   try {
     // Wait for the relatives question
     await page.waitForSelector('input[name="US_ImmediateRelatives"][value="Yes"]', {
