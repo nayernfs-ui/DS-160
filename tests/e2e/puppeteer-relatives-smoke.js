@@ -99,7 +99,10 @@ process.on('uncaughtException', (err) => {
 
       if (s === 'Divorced') {
         const exNatOK = await page.evaluate(() => {
-          const el = document.getElementById('exNationality');
+          // The public build uses per-former-spouse selects (e.g., formerNationality_1)
+          const el =
+            document.querySelector('select[id^="formerNationality"]') ||
+            document.getElementById('exNationality');
           if (!el) return false;
           const style = window.getComputedStyle(el);
           const rect = el.getBoundingClientRect
@@ -114,7 +117,25 @@ process.on('uncaughtException', (err) => {
           return visible && required;
         });
         if (!exNatOK) {
-          console.error('exNationality is not visible and required when Divorced is selected');
+          // Log detailed diagnostics
+          const diag = await page.evaluate(() => {
+            const el =
+              document.querySelector('select[id^="formerNationality"]') ||
+              document.getElementById('exNationality');
+            const df = document.getElementById('divorcedFields');
+            return {
+              selectorFound: !!(
+                document.querySelector('select[id^="formerNationality"]') ||
+                document.getElementById('exNationality')
+              ),
+              exExists: !!el,
+              exRequired: el ? el.hasAttribute('required') : false,
+              exVisibility: el ? window.getComputedStyle(el).display : 'missing',
+              exRect: el ? el.getBoundingClientRect() : null,
+              divorcedDisplay: df ? window.getComputedStyle(df).display : 'missing',
+            };
+          });
+          console.error('exNationality/formerNationality diagnostics:', diag);
           await browser.close();
           process.exit(7);
         }

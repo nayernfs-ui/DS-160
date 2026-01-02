@@ -297,6 +297,17 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       else el.removeAttribute('required');
     });
 
+    // Also support the public build where former spouse nationality controls use per-entry IDs
+    if (divorcedFields) {
+      const formerSelects = divorcedFields.querySelectorAll(
+        'select[id^="formerNationality"], select[name*="FormerSpouse_"]'
+      );
+      formerSelects.forEach((el) => {
+        if (isRequired) el.setAttribute('required', 'required');
+        else el.removeAttribute('required');
+      });
+    }
+
     // sync add/remove controls depending on max
     const formerContainer = document.getElementById('formerSpousesContainer');
     if (formerContainer) {
