@@ -336,3 +336,9 @@ select.is-invalid {
     transform: translateY(0);
   }
 }
+
+/* Permanent removal of nationality from the first section (class-based for legacy browser support) */
+.hidden-nationality-group,
+#nationality {
+  display: none !important;
+}

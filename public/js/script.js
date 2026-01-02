@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
 
   // helper to set required attributes for divorced fields
   function setDivorcedRequired(isRequired) {
-    const ids = ['exName', 'exDOBYear', 'dateOfDivorceYear', 'nationality'];
+    const ids = ['exName', 'exDOBYear', 'dateOfDivorceYear', 'exNationality'];
     ids.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
@@ -311,6 +311,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   }
 
   // helper to show a conditional fieldset, scroll it into view and focus its first input
+  // eslint-disable-next-line no-unused-vars
   function showConditionalFieldset(fieldset) {
     if (!fieldset) return;
 
