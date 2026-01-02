@@ -95,3 +95,6 @@ http-server.out
 tmp_live_script.js
 tmp_live_script.js
 
+# E2E trace output (generated artifacts)
+/tests/e2e/trace-output/
+

@@ -1,0 +1,35 @@
+name: E2E Trace Artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      TARGET_URL:
+        description: 'Target URL to run traces against'
+        required: false
+        default: 'https://ds-160-fresh.vercel.app/'
+
+jobs:
+  run-trace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run relatives trace
+        id: run-trace
+        run: |
+          mkdir -p tests/e2e/trace-output
+          export TARGET_URL="${{ github.event.inputs.TARGET_URL }}"
+          node tests/e2e/puppeteer-relatives-trace.js || true
+        env:
+          TARGET_URL: ${{ github.event.inputs.TARGET_URL }}
+      - name: Upload trace artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-trace-output
+          path: tests/e2e/trace-output/**
