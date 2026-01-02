@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
 
   // helper to set required attributes for divorced fields
   function setDivorcedRequired(isRequired) {
-    const ids = ['exName', 'exDOBYear', 'dateOfDivorceYear', 'nationality'];
+    const ids = ['exName', 'exDOBYear', 'dateOfDivorceYear', 'exNationality'];
     ids.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;

@@ -305,3 +305,9 @@ select.is-invalid {
     transform: translateY(0);
   }
 }
+
+/* Permanent removal of nationality from the first section */
+.question-group:has(label[for='nationality']),
+#nationality {
+  display: none !important;
+}

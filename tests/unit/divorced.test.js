@@ -53,15 +53,15 @@ const { JSDOM } = require('jsdom');
   // Key fields should be required when divorced is selected
   const exName = doc.getElementById('exName');
   const divYear = doc.getElementById('dateOfDivorceYear');
-  const nationality = doc.getElementById('nationality');
+  const exNationality = doc.getElementById('exNationality');
   assert(exName && exName.hasAttribute('required'), 'exName should be required when divorced');
   assert(
     divYear && divYear.hasAttribute('required'),
     'dateOfDivorceYear should be required when divorced'
   );
   assert(
-    nationality && nationality.hasAttribute('required'),
-    'nationality should be required when divorced'
+    exNationality && exNationality.hasAttribute('required'),
+    'exNationality should be required when divorced'
   );
 
   // If required fields are empty, the form submission should be blocked by client-side validation
@@ -81,8 +81,8 @@ const { JSDOM } = require('jsdom');
   // Now fill the required fields and attempt submission again; mock fetch to avoid network
   exName.value = 'Jane Doe';
   divYear.value = '2015';
-  // set any nationality selects (there may be duplicates in root/public copies)
-  doc.querySelectorAll('#nationality').forEach((el) => {
+  // set exNationality option so form can be submitted
+  doc.querySelectorAll('#exNationality').forEach((el) => {
     const opt = doc.createElement('option');
     opt.value = 'United States';
     opt.text = 'United States';
@@ -90,14 +90,14 @@ const { JSDOM } = require('jsdom');
     el.value = 'United States';
   });
   console.log(
-    'DEBUG nationality count',
-    doc.querySelectorAll('#nationality').length,
-    Array.from(doc.querySelectorAll('#nationality')).map((e) => e.value)
+    'DEBUG exNationality count',
+    doc.querySelectorAll('#exNationality').length,
+    Array.from(doc.querySelectorAll('#exNationality')).map((e) => e.value)
   );
 
   // Remove unrelated required attributes so only divorced-specific fields block submission in this unit test
   form.querySelectorAll('[required]').forEach((el) => {
-    if (!['exName', 'dateOfDivorceYear', 'nationality'].includes(el.id))
+    if (!['exName', 'dateOfDivorceYear', 'exNationality'].includes(el.id))
       el.removeAttribute('required');
   });
 
