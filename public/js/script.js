@@ -234,6 +234,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     widowedFields.querySelectorAll('input, select, textarea').forEach((el) => {
       el.removeAttribute('required');
       el.classList.remove('is-invalid');
+      // disable to prevent hidden fields from being submitted
+      el.disabled = true;
       const err = document.getElementById(`error-${el.id}`);
       if (err) err.textContent = '';
     });
@@ -251,6 +253,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     marriedFields.querySelectorAll('input, select, textarea').forEach((el) => {
       el.removeAttribute('required');
       el.classList.remove('is-invalid');
+      // disable to prevent hidden fields from being submitted
+      el.disabled = true;
       const err = document.getElementById(`error-${el.id}`);
       if (err) err.textContent = '';
     });
@@ -282,6 +286,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     divorcedFields.querySelectorAll('input, select, textarea').forEach((el) => {
       el.removeAttribute('required');
       el.classList.remove('is-invalid');
+      // disable to prevent hidden fields from being submitted
+      el.disabled = true;
       const err = document.getElementById(`error-${el.id}`);
       if (err) err.textContent = '';
     });
@@ -389,12 +395,20 @@ document.addEventListener('DOMContentLoaded', (_event) => {
         const el = document.getElementById(id);
         if (el) el.setAttribute('required', 'required');
       });
+      // enable controls inside married block (was disabled when hidden)
+      marriedDiv.querySelectorAll('input, select, textarea').forEach((el) => {
+        el.disabled = false;
+      });
     } else if (status === 'Widowed' && widowedDiv) {
       widowedDiv.style.setProperty('display', 'block', 'important');
       widowedDiv.setAttribute('aria-hidden', 'false');
       widowedDiv.setAttribute('aria-expanded', 'true');
       // widowed: ensure spouse address is not required
       setSpouseAddressRequired(false);
+      // enable controls inside widowed block
+      widowedDiv.querySelectorAll('input, select, textarea').forEach((el) => {
+        el.disabled = false;
+      });
     } else if (status === 'Divorced' && divorcedFields) {
       // Show divorced block and ensure others remain hidden
       divorcedFields.style.setProperty('display', 'block', 'important');
@@ -402,6 +416,10 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       divorcedFields.setAttribute('aria-expanded', 'true');
       // divorced: ensure spouse address is not required
       setSpouseAddressRequired(false);
+      // enable controls inside divorced block
+      divorcedFields.querySelectorAll('input, select, textarea').forEach((el) => {
+        el.disabled = false;
+      });
       // require key divorced fields
       setDivorcedRequired(true);
     } else {
