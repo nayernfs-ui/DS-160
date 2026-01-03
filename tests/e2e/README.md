@@ -16,3 +16,8 @@ Notes:
 
 - We keep `tests/e2e/trace-output/` ignored in the repository to avoid committing binary artifacts. The workflow uploads artifacts as a build artifact for review.
 - If you prefer artifacts stored externally (e.g., S3, GCS), we can extend the workflow to upload them there instead of actions artifacts.
+
+Visual baselines and comparisons:
+
+- The options-row visual test writes screenshots to `tests/e2e/trace-output/options-row/` and a comparator (`tests/e2e/compare-options-row.js`) compares them to baselines in `tests/e2e/baseline/options-row/` using `pixelmatch`.
+- To update baselines: run the visual script locally or via CI to generate artifacts, then copy the images from `tests/e2e/trace-output/options-row/` into `tests/e2e/baseline/options-row/` and commit the updated baselines. The compare script will warn (but not fail) when baselines are missing on first run.
