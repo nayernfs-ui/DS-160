@@ -182,11 +182,15 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   function hideAllMaritalFields() {
     [marriedFields, widowedFields, divorcedFields].forEach((f) => {
       if (f) {
-        // Use setProperty with !important so explicit CSS rules can't override JS
-        f.style.setProperty('display', 'none', 'important');
+        // Use class-based visibility
+        f.classList.remove('is-visible');
         f.style.animation = '';
         f.setAttribute('aria-hidden', 'true');
         f.setAttribute('aria-expanded', 'false');
+        // Disable all inputs when hidden
+        f.querySelectorAll('input, select, textarea').forEach((el) => {
+          el.disabled = true;
+        });
       }
     });
 
@@ -1589,4 +1593,49 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   if (otherNationalityFields) otherNationalityFields.style.display = 'none';
   if (otherPassportField) otherPassportField.style.display = 'none';
   if (otherPermanentResidentFields) otherPermanentResidentFields.style.display = 'none';
+
+  // --- Progress bar logic ---
+  function updateProgressBar() {
+    try {
+      const bars = document.querySelectorAll('form > fieldset');
+      if (!bars || !bars.length) return;
+      const mid = window.innerHeight / 2;
+      let activeIndex = 0;
+      bars.forEach((fs, idx) => {
+        const r = fs.getBoundingClientRect();
+        if (r.top <= mid && r.bottom >= mid) activeIndex = idx;
+      });
+      // fallback: if none contain mid, pick closest by top distance
+      if (activeIndex === 0) {
+        let minDist = Infinity;
+        bars.forEach((fs, idx) => {
+          const r = fs.getBoundingClientRect();
+          const dist = Math.abs(r.top - mid);
+          if (dist < minDist) {
+            minDist = dist;
+            activeIndex = idx;
+          }
+        });
+      }
+      const pct = Math.round(((activeIndex + 1) / bars.length) * 100);
+      const bar = document.querySelector('.progress-bar');
+      const role = document.querySelector('.progress');
+      if (bar) bar.style.width = pct + '%';
+      if (role) role.setAttribute('aria-valuenow', pct);
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  // Call it on key interactions / scroll
+  window.addEventListener('scroll', updateProgressBar, { passive: true });
+  document.addEventListener('focusin', updateProgressBar);
+  // ensure initial measurement
+  setTimeout(updateProgressBar, 150);
+
+  // Ensure progress updates after any marital visibility change
+  if (typeof updateMaritalFields === 'function') {
+    const marSelect = document.getElementById('maritalStatus');
+    if (marSelect) marSelect.addEventListener('change', updateProgressBar);
+  }
 });

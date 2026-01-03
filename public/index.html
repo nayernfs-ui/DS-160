@@ -1,14 +1,22 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DS-160 Client Survey</title>
+    <!-- Google Font: Cairo for improved Arabic typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="/assets/ds160_header.png" />
   </head>
   <body>
     <div class="container">
+      <!-- Progress Bar: updates as the user moves through sections -->
+      <div class="progress-wrap" aria-hidden="false">
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+    
       <h1>DS-160 Client Survey</h1>
       <p>
         يرجى ملء النموذج التالي بعناية. سيتم إرسال البيانات إلى خدمة الاستلام الخارجية في نافذة
@@ -63,7 +71,7 @@
           </div>
 
           <!-- Conditional marital detail blocks were moved here so they appear directly under the marital status field -->
-          <fieldset id="marriedFields" class="conditional-fields" style="display: none">
+          <fieldset id="marriedFields" class="conditional-fields">
             <legend>
               <span class="section-icon" aria-hidden="true"
                 ><svg
@@ -171,7 +179,7 @@
           <div
             id="widowedFields"
             class="conditional-fields"
-            style="display: none"
+           
             aria-hidden="true"
             aria-expanded="false"
           >
@@ -255,7 +263,7 @@
           <fieldset
             id="divorcedFields"
             class="conditional-fields"
-            style="display: none"
+           
             aria-hidden="true"
             aria-expanded="false"
           >
@@ -501,7 +509,7 @@
             >
           </div>
 
-          <fieldset id="otherNationalityFields" class="conditional-fields" style="display: none">
+          <fieldset id="otherNationalityFields" class="conditional-fields">
             <legend>
               <span class="section-icon" aria-hidden="true"
                 ><svg
@@ -750,7 +758,7 @@
               >
             </div>
 
-            <div id="otherPassportField" class="conditional-fields" style="display: none">
+            <div id="otherPassportField" class="conditional-fields">
               <div class="question-group">
                 <label for="otherPassportNumber">رقم جواز السفر:</label
                 ><input
@@ -781,7 +789,7 @@
         <fieldset
           id="lostPassportFields"
           class="conditional-fields"
-          style="display: none"
+         
           aria-expanded="false"
           aria-hidden="true"
         >
@@ -858,7 +866,7 @@
         <fieldset
           id="otherPermanentResidentFields"
           class="conditional-fields"
-          style="display: none"
+         
         >
           <legend>
             <span class="section-icon" aria-hidden="true"
@@ -917,7 +925,7 @@
         <fieldset
           id="US_Relatives_Container"
           class="conditional-fields"
-          style="display: none"
+         
           aria-expanded="false"
           aria-hidden="true"
         >
@@ -1108,7 +1116,7 @@
               لا</label
             >
           </div>
-          <div id="travelCompanionFields" class="conditional-fields" style="display: none">
+          <div id="travelCompanionFields" class="conditional-fields">
             <div class="question-group">
               <label for="companionsNames"
                 >اسم الشخص بالكامل (إذا كان هناك أكثر من شخص يرجى ذكرهم):</label
@@ -1160,7 +1168,7 @@
           <fieldset
             id="US_Visits_Container"
             class="conditional-fields"
-            style="display: none"
+           
             aria-live="polite"
             aria-expanded="false"
             aria-hidden="true"
@@ -1303,7 +1311,7 @@
             </div>
           </fieldset>
 
-          <fieldset id="previousUSVisas" class="conditional-fields" style="display: none">
+          <fieldset id="previousUSVisas" class="conditional-fields">
             <legend>
               <span class="section-icon" aria-hidden="true"
                 ><svg
@@ -1396,7 +1404,7 @@
               ><input type="radio" name="USVisaDenied" value="No" id="deniedNo" checked /> لا</label
             >
           </div>
-          <div id="denialTimeField" class="conditional-fields" style="display: none">
+          <div id="denialTimeField" class="conditional-fields">
             <div class="question-group">
               <label for="denialTime"
                 >إذا تم الرفض، يرجى ذكر الوقت الذي تم فيه الرفض (السنة/الشهر):</label
@@ -1507,7 +1515,7 @@
           <div
             class="question-group"
             id="fatherStatusGroup"
-            style="display: none"
+           
             aria-expanded="false"
             aria-hidden="true"
           >
@@ -1613,7 +1621,7 @@
           <div
             class="question-group"
             id="motherStatusGroup"
-            style="display: none"
+           
             aria-expanded="false"
             aria-hidden="true"
           >
@@ -2356,7 +2364,7 @@
           <fieldset
             id="Education_Container"
             class="conditional-fields"
-            style="display: none"
+           
             aria-live="polite"
             aria-expanded="false"
             aria-hidden="true"
@@ -2780,7 +2788,7 @@
           <div
             id="militaryFields"
             class="conditional-fields"
-            style="display: none"
+           
             aria-expanded="false"
             aria-hidden="true"
             aria-live="polite"
@@ -2945,3 +2953,4 @@
     <script src="js/script.js" defer></script>
   </body>
 </html>
+

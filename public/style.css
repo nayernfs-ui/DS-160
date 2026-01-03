@@ -1,12 +1,29 @@
 /* Global styles and RTL setup */
+/* Theme variables */
+:root {
+  --color-primary: #003366; /* Navy Blue */
+  --color-accent: #D4AF37; /* Gold/Accent */
+  --color-muted: #6b7280;
+  --card-bg: #ffffff;
+  --focus-ring: rgba(0, 51, 102, 0.12);
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
   background-color: #f4f6f8;
   direction: rtl;
   text-align: right;
   color: #222;
   margin: 0;
   padding: 24px;
+}
+
+/* Typography and color tweaks */
+h1, legend, .container h3 {
+  color: var(--color-primary);
+}
+.legend-accent {
+  color: var(--color-accent);
 }
 
 .container {
@@ -325,18 +342,93 @@ select.is-invalid {
   }
 }
 
-/* Keyframe for a slight fade-in effect (used by JS) */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+/* Progress bar */
+.progress-wrap {
+  margin-bottom: 12px;
+}
+.progress {
+  height: 8px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02));
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  transition: width 300ms ease-in-out;
+}
+
+/* Floating label-ish focus via focus-within */
+.question-group {
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.question-group label {
+  width: 220px;
+  flex: 0 0 220px;
+  margin: 0;
+  text-align: right; /* keep label aligned to the right in RTL */
+  transition: transform 200ms ease, color 200ms ease, font-size 200ms ease;
+}
+.question-group:focus-within label {
+  transform: translateY(-8px) scale(0.93);
+  color: var(--color-primary);
+}
+
+/* Input styling */
+.question-group input,
+.question-group select,
+.question-group textarea {
+  flex: 1 1 auto;
+  width: auto;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 12px;
+  transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
+  background: #fff;
+}
+.question-group input:focus,
+.question-group select:focus,
+.question-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 6px 18px var(--focus-ring);
+}
+
+/* Card style for marital containers */
+#marriedFields, #widowedFields, #divorcedFields {
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 10px 24px rgba(8,20,40,0.06);
+  padding: 14px;
+}
+
+/* Responsive grid layout for larger screens */
+@media (min-width: 720px) {
+  .question-group {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    align-items: center;
+    gap: 12px;
   }
 }
 
+/* Small screens: stack */
+@media (max-width: 640px) {
+  .question-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .question-group label {
+    width: auto;
+    text-align: right;
+  }
+}
 /* Permanent removal of nationality from the first section (class-based for legacy browser support) */
 .hidden-nationality-group,
 #nationality {
