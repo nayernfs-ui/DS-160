@@ -1,22 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DS-160 Client Survey</title>
     <!-- Google Font: Cairo for improved Arabic typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
       <!-- Progress Bar: updates as the user moves through sections -->
       <div class="progress-wrap" aria-hidden="false">
-        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <div class="progress-bar" style="width: 0%"></div>
-        </div>
+        <progress
+          class="progress"
+          value="0"
+          max="100"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></progress>
       </div>
-    
+
       <h1>DS-160 Client Survey</h1>
       <p>
         يرجى ملء النموذج التالي بعناية. سيتم إرسال البيانات إلى خدمة الاستلام الخارجية في نافذة
@@ -176,13 +183,7 @@
             </div>
           </fieldset>
 
-          <div
-            id="widowedFields"
-            class="conditional-fields"
-           
-            aria-hidden="true"
-            aria-expanded="false"
-          >
+          <div id="widowedFields" class="conditional-fields" aria-expanded="false">
             <h3 class="fieldset-legend">
               <span class="section-icon" aria-hidden="true"
                 ><svg
@@ -260,13 +261,7 @@
             </div>
           </div>
 
-          <fieldset
-            id="divorcedFields"
-            class="conditional-fields"
-           
-            aria-hidden="true"
-            aria-expanded="false"
-          >
+          <fieldset id="divorcedFields" class="conditional-fields" aria-expanded="false">
             <legend>
               <span class="section-icon" aria-hidden="true">
                 <svg
@@ -494,7 +489,7 @@
             </div>
           </fieldset>
 
-          <div class="question-group hidden-nationality-group" aria-hidden="true"></div>
+          <div class="question-group hidden-nationality-group"></div>
           <!-- nationality removed from Personal Information section -->
 
           <div class="question-group">
@@ -786,13 +781,7 @@
           >
         </div>
 
-        <fieldset
-          id="lostPassportFields"
-          class="conditional-fields"
-         
-          aria-expanded="false"
-          aria-hidden="true"
-        >
+        <fieldset id="lostPassportFields" class="conditional-fields" aria-expanded="false">
           <legend>
             <span class="section-icon" aria-hidden="true"
               ><svg
@@ -863,11 +852,7 @@
           >
         </div>
 
-        <fieldset
-          id="otherPermanentResidentFields"
-          class="conditional-fields"
-         
-        >
+        <fieldset id="otherPermanentResidentFields" class="conditional-fields">
           <legend>
             <span class="section-icon" aria-hidden="true"
               ><svg
@@ -922,13 +907,7 @@
           >
         </div>
 
-        <fieldset
-          id="US_Relatives_Container"
-          class="conditional-fields"
-         
-          aria-expanded="false"
-          aria-hidden="true"
-        >
+        <fieldset id="US_Relatives_Container" class="conditional-fields" aria-expanded="false">
           <legend>
             <span class="section-icon" aria-hidden="true"
               ><svg
@@ -1168,10 +1147,8 @@
           <fieldset
             id="US_Visits_Container"
             class="conditional-fields"
-           
             aria-live="polite"
             aria-expanded="false"
-            aria-hidden="true"
           >
             <legend>
               <span class="section-icon" aria-hidden="true"
@@ -1512,13 +1489,7 @@
             >
           </div>
 
-          <div
-            class="question-group"
-            id="fatherStatusGroup"
-           
-            aria-expanded="false"
-            aria-hidden="true"
-          >
+          <div class="question-group" id="fatherStatusGroup" aria-expanded="false">
             <label for="fatherStatus">حالة الاب (Father's Status):</label>
             <select id="fatherStatus" name="Father_Status">
               <option value="">- اختر -</option>
@@ -1618,13 +1589,7 @@
             >
           </div>
 
-          <div
-            class="question-group"
-            id="motherStatusGroup"
-           
-            aria-expanded="false"
-            aria-hidden="true"
-          >
+          <div class="question-group" id="motherStatusGroup" aria-expanded="false">
             <label for="motherStatus">حالة الام (Mother's Status):</label>
             <select id="motherStatus" name="Mother_Status">
               <option value="">- اختر -</option>
@@ -2364,10 +2329,8 @@
           <fieldset
             id="Education_Container"
             class="conditional-fields"
-           
             aria-live="polite"
             aria-expanded="false"
-            aria-hidden="true"
           >
             <legend>Provide up to five additional institutions (حتى خمسة مؤسسات إضافية)</legend>
             <div id="educationEntries">
@@ -2788,9 +2751,7 @@
           <div
             id="militaryFields"
             class="conditional-fields"
-           
             aria-expanded="false"
-            aria-hidden="true"
             aria-live="polite"
           >
             <div class="question-group">
@@ -2953,4 +2914,3 @@
     <script src="js/script.js" defer></script>
   </body>
 </html>
-

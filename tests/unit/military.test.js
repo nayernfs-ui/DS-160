@@ -40,11 +40,17 @@ const { JSDOM } = require('jsdom');
     'false',
     'militaryFields should have aria-expanded="false" initially'
   );
+  // aria-hidden removed in favor of aria-expanded + disabling inputs to avoid hidden-focusable lint
   assert.strictEqual(
     militaryFields.getAttribute('aria-hidden'),
-    'true',
-    'militaryFields should have aria-hidden="true" initially'
+    null,
+    'militaryFields should not have aria-hidden attribute initially'
   );
+
+  // Inputs inside hidden sections should be disabled initially
+  controls.forEach((c) => {
+    assert(c.disabled, `Control ${c.id || c.name} should be disabled initially`);
+  });
 
   // No inputs should be required initially
   const controls = militaryFields.querySelectorAll('input, select, textarea');
@@ -73,9 +79,14 @@ const { JSDOM } = require('jsdom');
   );
   assert.strictEqual(
     militaryFields.getAttribute('aria-hidden'),
-    'false',
-    'militaryFields should have aria-hidden="false" when visible'
+    null,
+    'militaryFields should not have aria-hidden attribute when visible'
   );
+
+  // Inputs should be enabled when visible
+  controls.forEach((c) => {
+    assert(!c.disabled, `Control ${c.id || c.name} should be enabled when visible`);
+  });
 
   // Ensure common fields are required when visible
   const branch = doc.getElementById('militaryBranch');
@@ -107,9 +118,14 @@ const { JSDOM } = require('jsdom');
   );
   assert.strictEqual(
     militaryFields.getAttribute('aria-hidden'),
-    'true',
-    'militaryFields should have aria-hidden="true" after hiding'
+    null,
+    'militaryFields should not have aria-hidden attribute after hiding'
   );
+
+  // Ensure inputs are disabled after hiding
+  controls.forEach((c) => {
+    assert(c.disabled, `Control ${c.id || c.name} should be disabled after hiding`);
+  });
 
   // Ensure required attributes removed
   controls.forEach((c) => {

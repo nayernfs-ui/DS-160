@@ -93,11 +93,24 @@ const { JSDOM } = require('jsdom');
     'US_Relatives_Container should be hidden after selecting No'
   );
   assert.strictEqual(relativesField.getAttribute('aria-expanded'), 'false');
-  assert.strictEqual(relativesField.getAttribute('aria-hidden'), 'true');
+  assert.strictEqual(
+    relativesField.getAttribute('aria-hidden'),
+    null,
+    'US_Relatives_Container should not have aria-hidden attribute when hidden'
+  );
   assert(
     !doc.getElementById('Relative_1_Surnames')?.hasAttribute('required'),
     'Relative_1_Surnames should not be required when hidden'
   );
+
+  // ensure inputs are disabled when hidden
+  doc
+    .querySelectorAll(
+      '#US_Relatives_Container input, #US_Relatives_Container select, #US_Relatives_Container textarea'
+    )
+    .forEach((c) => {
+      assert(c.disabled, `Control ${c.id || c.name} should be disabled when hidden`);
+    });
 
   // Re-select Yes and add an entry
   yesRadio.checked = true;

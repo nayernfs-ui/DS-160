@@ -1,8 +1,10 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DS-160 Client Survey</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
@@ -13,20 +15,38 @@
       </p>
 
       <header class="form-header-image">
-        <img src="./assets/ds160_header.png" alt="DS-160 Form: Online Nonimmigrant Visa Application Form" loading="lazy" style="width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto">
+        <img
+          src="./assets/ds160_header.png"
+          alt="DS-160 Form: Online Nonimmigrant Visa Application Form"
+          loading="lazy"
+          style="width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto"
+        />
       </header>
 
       <form action="/api/submit" method="POST" id="ds160Form" novalidate="">
         <!-- lint-staged test: prettier will run on staged HTML -->
         <fieldset id="educationHistory2">
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M12 12a3 3 0 100-6 3 3 0 000 6zm6 8a6 6 0 10-12 0v1h12v-1z"></path></svg></span>1. Personal Information (المعلومات الشخصية)
+                <path
+                  fill="#fff"
+                  d="M12 12a3 3 0 100-6 3 3 0 000 6zm6 8a6 6 0 10-12 0v1h12v-1z"
+                ></path></svg></span
+            >1. Personal Information (المعلومات الشخصية)
           </legend>
           <div class="question-group">
             <label for="fullName">الاسم بالكامل:</label>
-            <input type="text" id="fullName" name="FullName" required="" style="direction: auto">
+            <input type="text" id="fullName" name="FullName" required="" style="direction: auto" />
             <span class="error-message" id="error-fullName"></span>
           </div>
           <div class="question-group">
@@ -42,14 +62,34 @@
           </div>
 
           <!-- Conditional marital detail blocks were moved here so they appear directly under the marital status field -->
-          <fieldset id="marriedFields" class="conditional-fields" style="display: none !important;" aria-hidden="true" aria-expanded="false">
+          <fieldset
+            id="marriedFields"
+            class="conditional-fields"
+            style="display: none !important"
+            aria-hidden="true"
+            aria-expanded="false"
+          >
             <legend>
-              <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
                   <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                  <path fill="#fff" d="M12 7a3 3 0 100-6 3 3 0 000 6zm0 3c-2.33 0-7 1.17-7 3.5V17h14v-3.5C19 11.17 14.33 10 12 10z"></path></svg></span>تفاصيل الزواج
+                  <path
+                    fill="#fff"
+                    d="M12 7a3 3 0 100-6 3 3 0 000 6zm0 3c-2.33 0-7 1.17-7 3.5V17h14v-3.5C19 11.17 14.33 10 12 10z"
+                  ></path></svg></span
+              >تفاصيل الزواج
             </legend>
             <div class="question-group">
-              <label for="spouseName">اسم الزوج/الزوجة بالكامل:</label><input type="text" id="spouseName" name="Spouse_FullName" style="direction: auto">
+              <label for="spouseName">اسم الزوج/الزوجة بالكامل:</label
+              ><input type="text" id="spouseName" name="Spouse_FullName" style="direction: auto" />
             </div>
             <div class="question-group">
               <label>تاريخ الميلاد:</label>
@@ -103,30 +143,63 @@
                   <option value="11">11</option>
                   <option value="12">12</option>
                 </select>
-                <input type="text" id="spouseDOBYear" name="Spouse_DOB_Year" placeholder="YYYY">
+                <input type="text" id="spouseDOBYear" name="Spouse_DOB_Year" placeholder="YYYY" />
               </div>
               <span class="error-message" id="error-spouseDOBDay"></span>
               <span class="error-message" id="error-spouseDOBMonth"></span>
               <span class="error-message" id="error-spouseDOBYear"></span>
             </div>
             <div class="question-group">
-              <label for="spousePOB">محافظة وبلد الميلاد:</label><input type="text" id="spousePOB" name="Spouse_POB" style="direction: auto">
+              <label for="spousePOB">محافظة وبلد الميلاد:</label
+              ><input type="text" id="spousePOB" name="Spouse_POB" style="direction: auto" />
             </div>
 
             <div class="question-group">
-              <label for="spouseCurrentAddress">عنوان الإقامة الحالي للزوج/الزوجة:</label><input type="text" id="spouseCurrentAddress" name="Spouse_CurrentAddress" placeholder="العنوان الكامل" style="direction: auto">
+              <label for="spouseCurrentAddress">عنوان الإقامة الحالي للزوج/الزوجة:</label
+              ><input
+                type="text"
+                id="spouseCurrentAddress"
+                name="Spouse_CurrentAddress"
+                placeholder="العنوان الكامل"
+                style="direction: auto"
+              />
               <span class="error-message" id="error-Spouse_CurrentAddress"></span>
             </div>
           </fieldset>
 
-          <div id="widowedFields" class="conditional-fields" style="display: none !important;" aria-hidden="true" aria-expanded="false">
+          <div
+            id="widowedFields"
+            class="conditional-fields"
+            style="display: none !important"
+            aria-hidden="true"
+            aria-expanded="false"
+          >
             <h3 class="fieldset-legend">
-              <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
                   <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                  <path fill="#fff" d="M12 21s-6.716-4.948-9-8c-1.35-1.666-1.02-4 1.5-5.5C8.598 6.456 11.5 9 12 9s3.402-2.544 7.5-1.5c2.52 1.5 2.85 3.834 1.5 5.5-2.284 3.052-9 8-9 8z"></path></svg></span>تفاصيل الأرملة/الأرمل
+                  <path
+                    fill="#fff"
+                    d="M12 21s-6.716-4.948-9-8c-1.35-1.666-1.02-4 1.5-5.5C8.598 6.456 11.5 9 12 9s3.402-2.544 7.5-1.5c2.52 1.5 2.85 3.834 1.5 5.5-2.284 3.052-9 8-9 8z"
+                  ></path></svg></span
+              >تفاصيل الأرملة/الأرمل
             </h3>
             <div class="question-group">
-              <label for="deceasedName">اسم الزوج/الزوجة بالكامل:</label><input type="text" id="deceasedName" name="Deceased_FullName" style="direction: auto">
+              <label for="deceasedName">اسم الزوج/الزوجة بالكامل:</label
+              ><input
+                type="text"
+                id="deceasedName"
+                name="Deceased_FullName"
+                style="direction: auto"
+              />
             </div>
             <div class="question-group">
               <label>تاريخ الوفاة:</label>
@@ -161,21 +234,41 @@
                   <option value="11">11</option>
                   <option value="12">12</option>
                 </select>
-                <input type="text" id="dateOfDeathYear" name="Deceased_DOD_Year" placeholder="YYYY">
+                <input
+                  type="text"
+                  id="dateOfDeathYear"
+                  name="Deceased_DOD_Year"
+                  placeholder="YYYY"
+                />
               </div>
               <span class="error-message" id="error-dateOfDeathDay"></span>
               <span class="error-message" id="error-dateOfDeathMonth"></span>
               <span class="error-message" id="error-dateOfDeathYear"></span>
             </div>
             <div class="question-group">
-              <label for="deceasedPOB">محافظة وبلد الميلاد:</label><input type="text" id="deceasedPOB" name="Deceased_POB" style="direction: auto">
+              <label for="deceasedPOB">محافظة وبلد الميلاد:</label
+              ><input type="text" id="deceasedPOB" name="Deceased_POB" style="direction: auto" />
             </div>
           </div>
 
-          <fieldset id="divorcedFields" class="conditional-fields" style="display: none !important;" aria-hidden="true" aria-expanded="false">
+          <fieldset
+            id="divorcedFields"
+            class="conditional-fields"
+            style="display: none !important"
+            aria-hidden="true"
+            aria-expanded="false"
+          >
             <legend>
               <span class="section-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
                   <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
                   <path fill="#fff" d="M6 12a6 6 0 1112 0v6H6v-6z"></path>
                 </svg>
@@ -184,19 +277,40 @@
             </legend>
 
             <div class="question-group">
-              <label for="formerSpouseCount">عدد الأزواج السابقين / Number of Former Spouses:</label>
-              <input type="number" id="formerSpouseCount" name="FormerSpouse_Count" min="0" max="5" value="1">
+              <label for="formerSpouseCount"
+                >عدد الأزواج السابقين / Number of Former Spouses:</label
+              >
+              <input
+                type="number"
+                id="formerSpouseCount"
+                name="FormerSpouse_Count"
+                min="0"
+                max="5"
+                value="1"
+              />
             </div>
 
             <div id="formerSpousesContainer">
               <div class="former-spouse entry" data-index="1">
                 <div class="question-group">
                   <label for="formerSurnames_1">اللقب / Surnames</label>
-                  <input type="text" id="formerSurnames_1" name="FormerSpouse_1_Surnames" minlength="2" maxlength="100">
+                  <input
+                    type="text"
+                    id="formerSurnames_1"
+                    name="FormerSpouse_1_Surnames"
+                    minlength="2"
+                    maxlength="100"
+                  />
                 </div>
                 <div class="question-group">
                   <label for="formerGiven_1">الاسم الأول / Given Names</label>
-                  <input type="text" id="formerGiven_1" name="FormerSpouse_1_GivenNames" minlength="2" maxlength="100">
+                  <input
+                    type="text"
+                    id="formerGiven_1"
+                    name="FormerSpouse_1_GivenNames"
+                    minlength="2"
+                    maxlength="100"
+                  />
                 </div>
 
                 <div class="question-group">
@@ -232,7 +346,13 @@
                       <option value="11">11</option>
                       <option value="12">12</option>
                     </select>
-                    <input type="text" id="formerDOBYear_1" name="FormerSpouse_1_DOB_Year" pattern="^[0-9]{4}$" placeholder="YYYY">
+                    <input
+                      type="text"
+                      id="formerDOBYear_1"
+                      name="FormerSpouse_1_DOB_Year"
+                      pattern="^[0-9]{4}$"
+                      placeholder="YYYY"
+                    />
                   </div>
                 </div>
 
@@ -251,9 +371,13 @@
                   <label>Former Spouse's Place of Birth</label>
                   <div class="question-group">
                     <label for="formerCity_1">المدينة / City</label>
-                    <input type="text" id="formerCity_1" name="FormerSpouse_1_POB_City">
+                    <input type="text" id="formerCity_1" name="FormerSpouse_1_POB_City" />
                     <label style="margin-left: 8px; font-weight: 400">Do Not Know</label>
-                    <input type="checkbox" id="formerCityUnknown_1" name="FormerSpouse_1_POB_Unknown">
+                    <input
+                      type="checkbox"
+                      id="formerCityUnknown_1"
+                      name="FormerSpouse_1_POB_Unknown"
+                    />
                   </div>
                   <div class="question-group">
                     <label for="formerCountry_1">البلد/المنطقة / Country/Region</label>
@@ -278,7 +402,13 @@
                       <option value="2">2</option>
                       <option value="3">3</option>
                     </select>
-                    <input type="text" id="formerMarriageYear_1" name="FormerSpouse_1_Marriage_Year" pattern="^[0-9]{4}$" placeholder="YYYY">
+                    <input
+                      type="text"
+                      id="formerMarriageYear_1"
+                      name="FormerSpouse_1_Marriage_Year"
+                      pattern="^[0-9]{4}$"
+                      placeholder="YYYY"
+                    />
                   </div>
                 </div>
 
@@ -291,28 +421,49 @@
                     <select id="formerEndMonth_1" name="FormerSpouse_1_MarriageEnd_Month">
                       <option value="">شهر</option>
                     </select>
-                    <input type="text" id="formerEndYear_1" name="FormerSpouse_1_MarriageEnd_Year" pattern="^[0-9]{4}$" placeholder="YYYY">
+                    <input
+                      type="text"
+                      id="formerEndYear_1"
+                      name="FormerSpouse_1_MarriageEnd_Year"
+                      pattern="^[0-9]{4}$"
+                      placeholder="YYYY"
+                    />
                   </div>
                 </div>
 
                 <div class="question-group">
                   <label for="formerHowEnded_1">كيف انتهى الزواج / How the Marriage Ended</label>
-                  <textarea id="formerHowEnded_1" name="FormerSpouse_1_HowEnded" minlength="2" maxlength="1000"></textarea>
+                  <textarea
+                    id="formerHowEnded_1"
+                    name="FormerSpouse_1_HowEnded"
+                    minlength="2"
+                    maxlength="1000"
+                  ></textarea>
                 </div>
 
                 <div class="question-group">
-                  <label for="formerCountryTerminated_1">البلد/المنطقة التي تم فيها إنهاء الزواج / Country where Marriage was
-                    Terminated</label>
+                  <label for="formerCountryTerminated_1"
+                    >البلد/المنطقة التي تم فيها إنهاء الزواج / Country where Marriage was
+                    Terminated</label
+                  >
                   <select id="formerCountryTerminated_1" name="FormerSpouse_1_TerminatedCountry">
                     <option value="">- Select One -</option>
                   </select>
                 </div>
 
                 <div class="question-group">
-                  <button type="button" class="btn btn-outline-secondary add-former-spouse" aria-label="Add former spouse">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary add-former-spouse"
+                    aria-label="Add former spouse"
+                  >
                     Add Another
                   </button>
-                  <button type="button" class="btn btn-outline-danger remove-former-spouse" aria-label="Remove former spouse">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger remove-former-spouse"
+                    aria-label="Remove former spouse"
+                  >
                     Remove
                   </button>
                 </div>
@@ -527,17 +678,37 @@
 
           <div class="question-group">
             <label>هل لديك/هل امتلكت جنسية أخرى غير المذكورة أعلاه؟</label>
-            <label><input type="radio" name="HasOtherNationality" value="Yes" id="otherNatYes">
-              نعم</label>
-            <label><input type="radio" name="HasOtherNationality" value="No" id="otherNatNo" checked="">
-              لا</label>
+            <label
+              ><input type="radio" name="HasOtherNationality" value="Yes" id="otherNatYes" />
+              نعم</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="HasOtherNationality"
+                value="No"
+                id="otherNatNo"
+                checked=""
+              />
+              لا</label
+            >
           </div>
 
           <fieldset id="otherNationalityFields" class="conditional-fields" style="display: none">
             <legend>
-              <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
                   <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                  <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"></path></svg></span>يرجى تقديم المعلومات التالية:
+                  <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"></path></svg></span
+              >يرجى تقديم المعلومات التالية:
             </legend>
             <div class="question-group">
               <label for="otherNationalitySelect">البلد/منطقة المنشأ الأخرى (الجنسية):</label>
@@ -587,7 +758,9 @@
                 <option value="Cuba">كوبا</option>
                 <option value="Cyprus">قبرص</option>
                 <option value="Czechia">التشيك</option>
-                <option value="Democratic Republic of the Congo">جمهورية الكونغو الديمقراطية</option>
+                <option value="Democratic Republic of the Congo">
+                  جمهورية الكونغو الديمقراطية
+                </option>
                 <option value="Denmark">الدنمارك</option>
                 <option value="Djibouti">جيبوتي</option>
                 <option value="Dominica">دومينيكا</option>
@@ -745,15 +918,37 @@
 
             <div class="question-group">
               <label>هل بحوزتك جواز سفر للبلد/الجنسبة الأخرى؟</label>
-              <label><input type="radio" name="Other_Nationality_Passport" value="Yes" id="otherPassYes">
-                نعم</label>
-              <label><input type="radio" name="Other_Nationality_Passport" value="No" id="otherPassNo" checked="">
-                لا</label>
+              <label
+                ><input
+                  type="radio"
+                  name="Other_Nationality_Passport"
+                  value="Yes"
+                  id="otherPassYes"
+                />
+                نعم</label
+              >
+              <label
+                ><input
+                  type="radio"
+                  name="Other_Nationality_Passport"
+                  value="No"
+                  id="otherPassNo"
+                  checked=""
+                />
+                لا</label
+              >
             </div>
 
             <div id="otherPassportField" class="conditional-fields" style="display: none">
               <div class="question-group">
-                <label for="otherPassportNumber">رقم جواز السفر:</label><input type="text" id="otherPassportNumber" name="Other_PassportNumber" required="" style="direction: ltr">
+                <label for="otherPassportNumber">رقم جواز السفر:</label
+                ><input
+                  type="text"
+                  id="otherPassportNumber"
+                  name="Other_PassportNumber"
+                  required=""
+                  style="direction: ltr"
+                />
               </div>
               <span class="error-message" id="error-otherPassportNumber"></span>
             </div>
@@ -763,23 +958,55 @@
         <!-- Lost / Stolen Passport question (Arabic) -->
         <div class="question-group">
           <label>هل سبق وفقدت جواز سفر أو سُرق منك؟</label>
-          <label><input type="radio" name="LostPassport" value="Yes" id="lostPassportYes"> نعم</label>
-          <label><input type="radio" name="LostPassport" value="No" id="lostPassportNo" checked="">
-            لا</label>
+          <label
+            ><input type="radio" name="LostPassport" value="Yes" id="lostPassportYes" /> نعم</label
+          >
+          <label
+            ><input type="radio" name="LostPassport" value="No" id="lostPassportNo" checked="" />
+            لا</label
+          >
         </div>
 
-        <fieldset id="lostPassportFields" class="conditional-fields" style="display: none" aria-expanded="false" aria-hidden="true">
+        <fieldset
+          id="lostPassportFields"
+          class="conditional-fields"
+          style="display: none"
+          aria-expanded="false"
+          aria-hidden="true"
+        >
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"></path></svg></span>يرجى تقديم المعلومات التالية:
+                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"></path></svg></span
+            >يرجى تقديم المعلومات التالية:
           </legend>
 
           <div class="question-group">
             <label for="lostPassportNumber">Passport/Travel Document Number</label>
-            <input type="text" id="lostPassportNumber" name="LostPassport_PassportNumber" style="direction: ltr">
-            <label style="margin-left: 10px"><input type="checkbox" id="lostPassportDoNotKnow" name="LostPassport_DoNotKnow" value="true">
-              لا أعرف</label>
+            <input
+              type="text"
+              id="lostPassportNumber"
+              name="LostPassport_PassportNumber"
+              style="direction: ltr"
+            />
+            <label style="margin-left: 10px"
+              ><input
+                type="checkbox"
+                id="lostPassportDoNotKnow"
+                name="LostPassport_DoNotKnow"
+                value="true"
+              />
+              لا أعرف</label
+            >
           </div>
 
           <div class="question-group">
@@ -999,19 +1226,45 @@
 
         <!-- Permanent resident question (added in Arabic) -->
         <div class="question-group">
-          <label>هل أنت مقيم دائم في دولة/منطقة أخرى غير بلد/منطقة المنشأ (الجنسية) الموضحة
-            أعلاه؟</label>
-          <label><input type="radio" name="HasOtherPermanentResident" value="Yes" id="permResYes">
-            نعم</label>
-          <label><input type="radio" name="HasOtherPermanentResident" value="No" id="permResNo" checked="">
-            لا</label>
+          <label
+            >هل أنت مقيم دائم في دولة/منطقة أخرى غير بلد/منطقة المنشأ (الجنسية) الموضحة
+            أعلاه؟</label
+          >
+          <label
+            ><input type="radio" name="HasOtherPermanentResident" value="Yes" id="permResYes" />
+            نعم</label
+          >
+          <label
+            ><input
+              type="radio"
+              name="HasOtherPermanentResident"
+              value="No"
+              id="permResNo"
+              checked=""
+            />
+            لا</label
+          >
         </div>
 
-        <fieldset id="otherPermanentResidentFields" class="conditional-fields" style="display: none">
+        <fieldset
+          id="otherPermanentResidentFields"
+          class="conditional-fields"
+          style="display: none"
+        >
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"></path></svg></span>يرجى تقديم المعلومات التالية:
+                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"></path></svg></span
+            >يرجى تقديم المعلومات التالية:
           </legend>
           <div class="question-group">
             <label for="otherPermanentResidentSelect">الدولة/المنطقة المقيم الدائم الأخرى:</label>
@@ -1220,44 +1473,96 @@
 
         <div class="question-group">
           <label>هل لديك أي أقارب مباشرين (غير الوالدين) في الولايات المتحدة؟</label>
-          <label><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes">
-            نعم</label>
-          <label><input type="radio" name="US_ImmediateRelatives" value="No" id="relativesNo" checked="">
-            لا</label>
+          <label
+            ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" />
+            نعم</label
+          >
+          <label
+            ><input
+              type="radio"
+              name="US_ImmediateRelatives"
+              value="No"
+              id="relativesNo"
+              checked=""
+            />
+            لا</label
+          >
         </div>
 
         <div class="question-group">
           <label>هل لديك أي أقارب آخرين في الولايات المتحدة؟</label>
-          <label><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes">
-            نعم</label>
-          <label><input type="radio" name="US_OtherRelatives" value="No" id="otherRelativesNo" checked="">
-            لا</label>
+          <label
+            ><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes" />
+            نعم</label
+          >
+          <label
+            ><input
+              type="radio"
+              name="US_OtherRelatives"
+              value="No"
+              id="otherRelativesNo"
+              checked=""
+            />
+            لا</label
+          >
         </div>
 
-        <fieldset id="US_Relatives_Container" class="conditional-fields" style="display: block; animation: 0.5s ease 0s 1 normal none running fadeIn;" aria-expanded="true" aria-hidden="false">
+        <fieldset
+          id="US_Relatives_Container"
+          class="conditional-fields"
+          style="display: block; animation: 0.5s ease 0s 1 normal none running fadeIn"
+          aria-expanded="true"
+          aria-hidden="false"
+        >
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"></path></svg></span>يرجى تقديم المعلومات التالية:
+                <path fill="#fff" d="M11 9h2v6h-2V9zm0-4h2v2h-2V5z"></path></svg></span
+            >يرجى تقديم المعلومات التالية:
           </legend>
 
           <div id="relativeEntries">
             <div class="relative-entry" data-index="1">
               <div class="question-group">
                 <label for="Relative_1_Surnames">اللقب (Surnames):</label>
-                <input type="text" id="Relative_1_Surnames" name="Relative_1_Surnames" required="required" style="direction: auto">
+                <input
+                  type="text"
+                  id="Relative_1_Surnames"
+                  name="Relative_1_Surnames"
+                  required="required"
+                  style="direction: auto"
+                />
                 <span class="error-message" id="error-Relative_1_Surnames"></span>
               </div>
 
               <div class="question-group">
                 <label for="Relative_1_GivenNames">الأسماء (Given Names):</label>
-                <input type="text" id="Relative_1_GivenNames" name="Relative_1_GivenNames" required="required" style="direction: auto">
+                <input
+                  type="text"
+                  id="Relative_1_GivenNames"
+                  name="Relative_1_GivenNames"
+                  required="required"
+                  style="direction: auto"
+                />
                 <span class="error-message" id="error-Relative_1_GivenNames"></span>
               </div>
 
               <div class="question-group">
                 <label for="Relative_1_Relationship">العلاقة بك (Relationship to You):</label>
-                <select id="Relative_1_Relationship" name="Relative_1_Relationship" required="required">
+                <select
+                  id="Relative_1_Relationship"
+                  name="Relative_1_Relationship"
+                  required="required"
+                >
                   <option value="">- اختر -</option>
                   <option value="Spouse">زوج/زوجة (Spouse)</option>
                   <option value="Child">ابن/ابنة (Child)</option>
@@ -1277,27 +1582,48 @@
               </div>
 
               <div class="question-group">
-                <button type="button" class="remove-relative" style="margin-left: 8px" aria-label="Remove relative 1">
+                <button
+                  type="button"
+                  class="remove-relative"
+                  style="margin-left: 8px"
+                  aria-label="Remove relative 1"
+                >
                   - إزالة
                 </button>
               </div>
             </div>
-          <div class="relative-entry" data-index="2">
+            <div class="relative-entry" data-index="2">
               <div class="question-group">
                 <label for="Relative_2_Surnames">اللقب (Surnames):</label>
-                <input type="text" id="Relative_2_Surnames" name="Relative_2_Surnames" required="required" style="direction: auto">
+                <input
+                  type="text"
+                  id="Relative_2_Surnames"
+                  name="Relative_2_Surnames"
+                  required="required"
+                  style="direction: auto"
+                />
                 <span class="error-message" id="error-Relative_2_Surnames"></span>
               </div>
 
               <div class="question-group">
                 <label for="Relative_2_GivenNames">الأسماء (Given Names):</label>
-                <input type="text" id="Relative_2_GivenNames" name="Relative_2_GivenNames" required="required" style="direction: auto">
+                <input
+                  type="text"
+                  id="Relative_2_GivenNames"
+                  name="Relative_2_GivenNames"
+                  required="required"
+                  style="direction: auto"
+                />
                 <span class="error-message" id="error-Relative_2_GivenNames"></span>
               </div>
 
               <div class="question-group">
                 <label for="Relative_2_Relationship">العلاقة بك (Relationship to You):</label>
-                <select id="Relative_2_Relationship" name="Relative_2_Relationship" required="required">
+                <select
+                  id="Relative_2_Relationship"
+                  name="Relative_2_Relationship"
+                  required="required"
+                >
                   <option value="">- اختر -</option>
                   <option value="Spouse">زوج/زوجة (Spouse)</option>
                   <option value="Child">ابن/ابنة (Child)</option>
@@ -1317,26 +1643,50 @@
               </div>
 
               <div class="question-group">
-                <button type="button" class="remove-relative" style="margin-left: 8px" aria-label="Remove relative 2" role="button" tabindex="0">
+                <button
+                  type="button"
+                  class="remove-relative"
+                  style="margin-left: 8px"
+                  aria-label="Remove relative 2"
+                  role="button"
+                  tabindex="0"
+                >
                   - إزالة
                 </button>
               </div>
-            </div><div class="relative-entry" data-index="3">
+            </div>
+            <div class="relative-entry" data-index="3">
               <div class="question-group">
                 <label for="Relative_3_Surnames">اللقب (Surnames):</label>
-                <input type="text" id="Relative_3_Surnames" name="Relative_3_Surnames" required="required" style="direction: auto">
+                <input
+                  type="text"
+                  id="Relative_3_Surnames"
+                  name="Relative_3_Surnames"
+                  required="required"
+                  style="direction: auto"
+                />
                 <span class="error-message" id="error-Relative_3_Surnames"></span>
               </div>
 
               <div class="question-group">
                 <label for="Relative_3_GivenNames">الأسماء (Given Names):</label>
-                <input type="text" id="Relative_3_GivenNames" name="Relative_3_GivenNames" required="required" style="direction: auto">
+                <input
+                  type="text"
+                  id="Relative_3_GivenNames"
+                  name="Relative_3_GivenNames"
+                  required="required"
+                  style="direction: auto"
+                />
                 <span class="error-message" id="error-Relative_3_GivenNames"></span>
               </div>
 
               <div class="question-group">
                 <label for="Relative_3_Relationship">العلاقة بك (Relationship to You):</label>
-                <select id="Relative_3_Relationship" name="Relative_3_Relationship" required="required">
+                <select
+                  id="Relative_3_Relationship"
+                  name="Relative_3_Relationship"
+                  required="required"
+                >
                   <option value="">- اختر -</option>
                   <option value="Spouse">زوج/زوجة (Spouse)</option>
                   <option value="Child">ابن/ابنة (Child)</option>
@@ -1356,14 +1706,29 @@
               </div>
 
               <div class="question-group">
-                <button type="button" class="remove-relative" style="margin-left: 8px" aria-label="Remove relative 3" role="button" tabindex="0">
+                <button
+                  type="button"
+                  class="remove-relative"
+                  style="margin-left: 8px"
+                  aria-label="Remove relative 3"
+                  role="button"
+                  tabindex="0"
+                >
                   - إزالة
                 </button>
               </div>
-            </div></div>
+            </div>
+          </div>
 
           <div class="question-group" id="relativeControls">
-            <button type="button" class="add-relative" aria-label="Add relative (إضافة)" role="button" tabindex="0" style="display: inline-block;">
+            <button
+              type="button"
+              class="add-relative"
+              aria-label="Add relative (إضافة)"
+              role="button"
+              tabindex="0"
+              style="display: inline-block"
+            >
               + إضافة
             </button>
           </div>
@@ -1377,80 +1742,198 @@
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M4 4h4l2 3-3 2 3 3 3-1 3 3v4h-3l-3-3-3 1-3-3 3-3-2-3H4V4z"></path></svg></span>2. Contact Information (معلومات التواصل)
+                <path
+                  fill="#fff"
+                  d="M4 4h4l2 3-3 2 3 3 3-1 3 3v4h-3l-3-3-3 1-3-3 3-3-2-3H4V4z"
+                ></path></svg></span
+            >2. Contact Information (معلومات التواصل)
           </legend>
           <div class="question-group">
-            <label for="address">عنوان الإقامة الحالي بالتفصيل:</label><textarea id="address" name="Current_Address" rows="3" required="" style="direction: auto"></textarea><span class="error-message" id="error-address"></span>
+            <label for="address">عنوان الإقامة الحالي بالتفصيل:</label
+            ><textarea
+              id="address"
+              name="Current_Address"
+              rows="3"
+              required=""
+              style="direction: auto"
+            ></textarea
+            ><span class="error-message" id="error-address"></span>
           </div>
           <div class="question-group">
-            <label for="phonePrimary">رقم التليفون الأساسي:</label><input type="tel" id="phonePrimary" name="Phone_Primary" required="" style="direction: ltr"><span class="error-message" id="error-phonePrimary"></span>
+            <label for="phonePrimary">رقم التليفون الأساسي:</label
+            ><input
+              type="tel"
+              id="phonePrimary"
+              name="Phone_Primary"
+              required=""
+              style="direction: ltr"
+            /><span class="error-message" id="error-phonePrimary"></span>
           </div>
           <div class="question-group">
-            <label for="phoneSecondary">رقم التليفون الاحتياطي:</label><input type="tel" id="phoneSecondary" name="Phone_Secondary" style="direction: ltr">
+            <label for="phoneSecondary">رقم التليفون الاحتياطي:</label
+            ><input type="tel" id="phoneSecondary" name="Phone_Secondary" style="direction: ltr" />
           </div>
           <div class="question-group">
-            <label for="phoneWork">رقم تليفون العمل:</label><input type="tel" id="phoneWork" name="Phone_Work" style="direction: ltr">
+            <label for="phoneWork">رقم تليفون العمل:</label
+            ><input type="tel" id="phoneWork" name="Phone_Work" style="direction: ltr" />
           </div>
           <div class="question-group">
-            <label for="email">البريد الإلكتروني:</label><input type="email" id="email" name="Email" required="" style="direction: ltr"><span class="error-message" id="error-email"></span>
+            <label for="email">البريد الإلكتروني:</label
+            ><input type="email" id="email" name="Email" required="" style="direction: ltr" /><span
+              class="error-message"
+              id="error-email"
+            ></span>
           </div>
           <div class="question-group">
-            <label for="facebookLink">لينك صفحة الفيسبوك (مثال: https://www.facebook.com/...):</label><input type="url" id="facebookLink" name="Facebook_Link" placeholder="https://www.facebook.com/..." style="direction: ltr">
+            <label for="facebookLink"
+              >لينك صفحة الفيسبوك (مثال: https://www.facebook.com/...):</label
+            ><input
+              type="url"
+              id="facebookLink"
+              name="Facebook_Link"
+              placeholder="https://www.facebook.com/..."
+              style="direction: ltr"
+            />
           </div>
         </fieldset>
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M16 11a3 3 0 100-6 3 3 0 000 6zM8 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM16 20v-1a4 4 0 00-8 0v1h8z"></path></svg></span>3. Travel Companions (مرافقو السفر)
+                <path
+                  fill="#fff"
+                  d="M16 11a3 3 0 100-6 3 3 0 000 6zM8 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM16 20v-1a4 4 0 00-8 0v1h8z"
+                ></path></svg></span
+            >3. Travel Companions (مرافقو السفر)
           </legend>
           <div class="question-group">
             <label>هل هناك أشخاص يسافرون معك في هذه الرحلة؟</label>
-            <label><input type="radio" name="TravellingWithOthers" value="Yes" id="travelYes">
-              نعم</label>
-            <label><input type="radio" name="TravellingWithOthers" value="No" id="travelNo" checked="">
-              لا</label>
+            <label
+              ><input type="radio" name="TravellingWithOthers" value="Yes" id="travelYes" />
+              نعم</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="TravellingWithOthers"
+                value="No"
+                id="travelNo"
+                checked=""
+              />
+              لا</label
+            >
           </div>
           <div id="travelCompanionFields" class="conditional-fields" style="display: none">
             <div class="question-group">
-              <label for="companionsNames">اسم الشخص بالكامل (إذا كان هناك أكثر من شخص يرجى ذكرهم):</label><textarea id="companionsNames" name="Companions_Names" rows="2" style="direction: auto"></textarea>
+              <label for="companionsNames"
+                >اسم الشخص بالكامل (إذا كان هناك أكثر من شخص يرجى ذكرهم):</label
+              ><textarea
+                id="companionsNames"
+                name="Companions_Names"
+                rows="2"
+                style="direction: auto"
+              ></textarea>
             </div>
             <div class="question-group">
-              <label for="companionsRelation">علاقتك الاجتماعية به:</label><input type="text" id="companionsRelation" name="Companions_Relation" style="direction: auto">
+              <label for="companionsRelation">علاقتك الاجتماعية به:</label
+              ><input
+                type="text"
+                id="companionsRelation"
+                name="Companions_Relation"
+                style="direction: auto"
+              />
             </div>
           </div>
         </fieldset>
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M5 3v18h2V3H5zm2 3l9 3-9 3V6z"></path></svg></span>4. US History (سجل السفر إلى أمريكا)
+                <path fill="#fff" d="M5 3v18h2V3H5zm2 3l9 3-9 3V6z"></path></svg></span
+            >4. US History (سجل السفر إلى أمريكا)
           </legend>
           <div class="question-group">
-            <label>Have you ever been in the U.S.? (هل زرت الولايات المتحدة من قبل؟)</label><label><input type="radio" name="US_Visited" value="Yes"> نعم</label><label><input type="radio" name="US_Visited" value="No" checked=""> لا</label>
+            <label>Have you ever been in the U.S.? (هل زرت الولايات المتحدة من قبل؟)</label
+            ><label><input type="radio" name="US_Visited" value="Yes" /> نعم</label
+            ><label><input type="radio" name="US_Visited" value="No" checked="" /> لا</label>
           </div>
           <div class="question-group">
-            <label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label><label><input type="radio" name="HadUSVisaBefore" value="Yes"> نعم</label><label><input type="radio" name="HadUSVisaBefore" value="No" checked=""> لا</label>
+            <label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label
+            ><label><input type="radio" name="HadUSVisaBefore" value="Yes" /> نعم</label
+            ><label><input type="radio" name="HadUSVisaBefore" value="No" checked="" /> لا</label>
           </div>
-          <fieldset id="US_Visits_Container" class="conditional-fields" style="display: none" aria-live="polite" aria-expanded="false" aria-hidden="true">
+          <fieldset
+            id="US_Visits_Container"
+            class="conditional-fields"
+            style="display: none"
+            aria-live="polite"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
             <legend>
-              <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
                   <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                  <path fill="#fff" d="M12 12a3 3 0 100-6 3 3 0 000 6zM5 11a3 3 0 100-6 3 3 0 000 6zM19 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM14 20v-1a4 4 0 00-8 0v1h8z"></path></svg></span>Provide information on your last five U.S. visits (آخر خمسة زيارات إلى الولايات
+                  <path
+                    fill="#fff"
+                    d="M12 12a3 3 0 100-6 3 3 0 000 6zM5 11a3 3 0 100-6 3 3 0 000 6zM19 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM14 20v-1a4 4 0 00-8 0v1h8z"
+                  ></path></svg></span
+              >Provide information on your last five U.S. visits (آخر خمسة زيارات إلى الولايات
               المتحدة)
             </legend>
 
             <div id="visitEntries">
               <div class="visit-entry" data-index="1">
                 <div class="question-group">
-                  <label id="label-USVisit_1_DateArrived">تاريخ الوصول (التنسيق: يوم-شهر-سنة):</label>
+                  <label id="label-USVisit_1_DateArrived"
+                    >تاريخ الوصول (التنسيق: يوم-شهر-سنة):</label
+                  >
                   <div class="date-row" role="group" aria-labelledby="label-USVisit_1_DateArrived">
                     <label class="sr-only" for="USVisit_1_DateArrived_Day">يوم</label>
-                    <select name="USVisit_1_DateArrived_Day" id="USVisit_1_DateArrived_Day" aria-describedby="label-USVisit_1_DateArrived">
+                    <select
+                      name="USVisit_1_DateArrived_Day"
+                      id="USVisit_1_DateArrived_Day"
+                      aria-describedby="label-USVisit_1_DateArrived"
+                    >
                       <option value="">Day</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -1485,7 +1968,11 @@
                       <option value="31">31</option>
                     </select>
                     <label class="sr-only" for="USVisit_1_DateArrived_Month">شهر</label>
-                    <select name="USVisit_1_DateArrived_Month" id="USVisit_1_DateArrived_Month" aria-describedby="label-USVisit_1_DateArrived">
+                    <select
+                      name="USVisit_1_DateArrived_Month"
+                      id="USVisit_1_DateArrived_Month"
+                      aria-describedby="label-USVisit_1_DateArrived"
+                    >
                       <option value="">شهر</option>
                       <option value="Jan">يناير</option>
                       <option value="Feb">فبراير</option>
@@ -1501,7 +1988,13 @@
                       <option value="Dec">ديسمبر</option>
                     </select>
                     <label class="sr-only" for="USVisit_1_DateArrived_Year">سنة</label>
-                    <input type="text" name="USVisit_1_DateArrived_Year" id="USVisit_1_DateArrived_Year" placeholder="YYYY" aria-describedby="label-USVisit_1_DateArrived">
+                    <input
+                      type="text"
+                      name="USVisit_1_DateArrived_Year"
+                      id="USVisit_1_DateArrived_Year"
+                      placeholder="YYYY"
+                      aria-describedby="label-USVisit_1_DateArrived"
+                    />
                   </div>
                   <span class="error-message" id="error-USVisit_1_DateArrived"></span>
                 </div>
@@ -1509,9 +2002,19 @@
                 <div class="question-group">
                   <label id="label-USVisit_1_Length">مدة الإقامة:</label>
                   <label class="sr-only" for="USVisit_1_Length">المدة</label>
-                  <input type="text" name="USVisit_1_Length" id="USVisit_1_Length" style="width: 120px" aria-describedby="label-USVisit_1_Length">
+                  <input
+                    type="text"
+                    name="USVisit_1_Length"
+                    id="USVisit_1_Length"
+                    style="width: 120px"
+                    aria-describedby="label-USVisit_1_Length"
+                  />
                   <label class="sr-only" for="USVisit_1_Unit">وحدة</label>
-                  <select name="USVisit_1_Unit" id="USVisit_1_Unit" aria-describedby="label-USVisit_1_Length">
+                  <select
+                    name="USVisit_1_Unit"
+                    id="USVisit_1_Unit"
+                    aria-describedby="label-USVisit_1_Length"
+                  >
                     <option value="">-اختر-</option>
                     <option value="Days">أيام</option>
                     <option value="Weeks">أسابيع</option>
@@ -1520,22 +2023,49 @@
                 </div>
 
                 <div class="question-group">
-                  <button type="button" class="remove-visit" style="margin-left: 8px" aria-label="Remove visit 1">
+                  <button
+                    type="button"
+                    class="remove-visit"
+                    style="margin-left: 8px"
+                    aria-label="Remove visit 1"
+                  >
                     - إزالة
                   </button>
                 </div>
               </div>
             </div>
             <div class="question-group" id="visitControls">
-              <button type="button" class="add-visit" aria-label="Add visit" role="button" tabindex="0" style="display: inline-block;">+ إضافة</button>
+              <button
+                type="button"
+                class="add-visit"
+                aria-label="Add visit"
+                role="button"
+                tabindex="0"
+                style="display: inline-block"
+              >
+                + إضافة
+              </button>
             </div>
           </fieldset>
 
           <fieldset id="previousUSVisas" class="conditional-fields" style="display: none">
             <legend>
-              <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
                   <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                  <path fill="#fff" d="M6 2h8a2 2 0 012 2v16h-2l-1-2H7a2 2 0 01-2-2V4a2 2 0 012-2zM8 8a4 4 0 100 8 4 4 0 000-8z"></path></svg></span>السجلات السابقة لتأشيرات الولايات المتحدة
+                  <path
+                    fill="#fff"
+                    d="M6 2h8a2 2 0 012 2v16h-2l-1-2H7a2 2 0 01-2-2V4a2 2 0 012-2zM8 8a4 4 0 100 8 4 4 0 000-8z"
+                  ></path></svg></span
+              >السجلات السابقة لتأشيرات الولايات المتحدة
             </legend>
             <div class="question-group">
               <label>تاريخ إصدار آخر فيزا (التنسيق: يوم-شهر-سنة):</label>
@@ -1589,39 +2119,66 @@
                   <option value="Nov">Nov</option>
                   <option value="Dec">Dec</option>
                 </select>
-                <input type="text" id="visaYear" name="Visa_Last_Issue_Year" placeholder="YYYY">
+                <input type="text" id="visaYear" name="Visa_Last_Issue_Year" placeholder="YYYY" />
               </div>
               <span class="error-message" id="error-visaDate"></span>
             </div>
 
             <div class="question-group">
               <label for="visaNumber">رقم التأشيرة:</label>
-              <input type="text" id="visaNumber" name="Visa_Number" style="direction: ltr">
-              <label><input type="checkbox" id="visaNumberUnknown" name="Visa_Number_Unknown"> لا
-                أعرف</label>
+              <input type="text" id="visaNumber" name="Visa_Number" style="direction: ltr" />
+              <label
+                ><input type="checkbox" id="visaNumberUnknown" name="Visa_Number_Unknown" /> لا
+                أعرف</label
+              >
               <span class="error-message" id="error-visaNumber"></span>
             </div>
           </fieldset>
           <div class="question-group">
             <label>هل تم رفضك قبل ذلك في التقديم على تأشيرة أمريكا؟</label>
-            <label><input type="radio" name="USVisaDenied" value="Yes" id="deniedYes"> نعم</label>
-            <label><input type="radio" name="USVisaDenied" value="No" id="deniedNo" checked=""> لا</label>
+            <label><input type="radio" name="USVisaDenied" value="Yes" id="deniedYes" /> نعم</label>
+            <label
+              ><input type="radio" name="USVisaDenied" value="No" id="deniedNo" checked="" />
+              لا</label
+            >
           </div>
           <div id="denialTimeField" class="conditional-fields" style="display: none">
             <div class="question-group">
-              <label for="denialTime">إذا تم الرفض، يرجى ذكر الوقت الذي تم فيه الرفض (السنة/الشهر):</label><input type="text" id="denialTime" name="Denial_Time" style="direction: auto">
+              <label for="denialTime"
+                >إذا تم الرفض، يرجى ذكر الوقت الذي تم فيه الرفض (السنة/الشهر):</label
+              ><input type="text" id="denialTime" name="Denial_Time" style="direction: auto" />
             </div>
           </div>
         </fieldset>
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M12 12a3 3 0 100-6 3 3 0 000 6zM5 11a3 3 0 100-6 3 3 0 000 6zM19 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM14 20v-1a4 4 0 00-8 0v1h8z"></path></svg></span>5. Family Data (البيانات العائلية)
+                <path
+                  fill="#fff"
+                  d="M12 12a3 3 0 100-6 3 3 0 000 6zM5 11a3 3 0 100-6 3 3 0 000 6zM19 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM14 20v-1a4 4 0 00-8 0v1h8z"
+                ></path></svg></span
+            >5. Family Data (البيانات العائلية)
           </legend>
           <div class="question-group">
-            <label for="fatherName">اسم الاب بالكامل:</label><input type="text" id="fatherName" name="Father_FullName" required="" style="direction: auto"><span class="error-message" id="error-fatherName"></span>
+            <label for="fatherName">اسم الاب بالكامل:</label
+            ><input
+              type="text"
+              id="fatherName"
+              name="Father_FullName"
+              required=""
+              style="direction: auto"
+            /><span class="error-message" id="error-fatherName"></span>
           </div>
           <div class="question-group">
             <label>تاريخ ميلاد الاب:</label>
@@ -1675,7 +2232,7 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="fatherDOBYear" name="Father_DOB_Year" placeholder="YYYY">
+              <input type="text" id="fatherDOBYear" name="Father_DOB_Year" placeholder="YYYY" />
             </div>
             <span class="error-message" id="error-fatherDOBDay"></span>
             <span class="error-message" id="error-fatherDOBMonth"></span>
@@ -1684,12 +2241,22 @@
 
           <div class="question-group">
             <label>هل الاب في الولايات المتحدة؟</label>
-            <label><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes"> نعم</label>
-            <label><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked="">
-              لا</label>
+            <label
+              ><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes" /> نعم</label
+            >
+            <label
+              ><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked="" />
+              لا</label
+            >
           </div>
 
-          <div class="question-group" id="fatherStatusGroup" style="display: none" aria-expanded="false" aria-hidden="true">
+          <div
+            class="question-group"
+            id="fatherStatusGroup"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
             <label for="fatherStatus">حالة الاب (Father's Status):</label>
             <select id="fatherStatus" name="Father_Status">
               <option value="">- اختر -</option>
@@ -1704,7 +2271,14 @@
           </div>
 
           <div class="question-group">
-            <label for="motherName">اسم الام بالكامل:</label><input type="text" id="motherName" name="Mother_FullName" required="" style="direction: auto"><span class="error-message" id="error-motherName"></span>
+            <label for="motherName">اسم الام بالكامل:</label
+            ><input
+              type="text"
+              id="motherName"
+              name="Mother_FullName"
+              required=""
+              style="direction: auto"
+            /><span class="error-message" id="error-motherName"></span>
           </div>
           <div class="question-group">
             <label>تاريخ ميلاد الام:</label>
@@ -1758,7 +2332,13 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="motherDOBYear" name="Mother_DOB_Year" placeholder="YYYY" style="width: 110px">
+              <input
+                type="text"
+                id="motherDOBYear"
+                name="Mother_DOB_Year"
+                placeholder="YYYY"
+                style="width: 110px"
+              />
             </div>
             <span class="error-message" id="error-motherDOBDay"></span>
             <span class="error-message" id="error-motherDOBMonth"></span>
@@ -1767,12 +2347,22 @@
 
           <div class="question-group">
             <label>هل الام في الولايات المتحدة؟</label>
-            <label><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes"> نعم</label>
-            <label><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked="">
-              لا</label>
+            <label
+              ><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes" /> نعم</label
+            >
+            <label
+              ><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked="" />
+              لا</label
+            >
           </div>
 
-          <div class="question-group" id="motherStatusGroup" style="display: none" aria-expanded="false" aria-hidden="true">
+          <div
+            class="question-group"
+            id="motherStatusGroup"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
             <label for="motherStatus">حالة الام (Mother's Status):</label>
             <select id="motherStatus" name="Mother_Status">
               <option value="">- اختر -</option>
@@ -1789,19 +2379,54 @@
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path></svg></span>6. Current Employment (الوظيفة الحالية)
+                <path
+                  fill="#fff"
+                  d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
+                ></path></svg></span
+            >6. Current Employment (الوظيفة الحالية)
           </legend>
           <div class="question-group">
-            <label for="jobTitleCurrent">المسمى الوظيفي:</label><input type="text" id="jobTitleCurrent" name="Current_JobTitle" required="" style="direction: auto">
+            <label for="jobTitleCurrent">المسمى الوظيفي:</label
+            ><input
+              type="text"
+              id="jobTitleCurrent"
+              name="Current_JobTitle"
+              required=""
+              style="direction: auto"
+            />
             <span class="error-message" id="error-jobTitleCurrent"></span>
           </div>
           <div class="question-group">
-            <label for="workplaceCurrent">مكان العمل:</label><input type="text" id="workplaceCurrent" name="Current_Workplace" required="" style="direction: auto"><span class="error-message" id="error-workplaceCurrent"></span>
+            <label for="workplaceCurrent">مكان العمل:</label
+            ><input
+              type="text"
+              id="workplaceCurrent"
+              name="Current_Workplace"
+              required=""
+              style="direction: auto"
+            /><span class="error-message" id="error-workplaceCurrent"></span>
           </div>
           <div class="question-group">
-            <label for="addressWorkCurrent">عنوان العمل بالتفصيل:</label><textarea id="addressWorkCurrent" name="Current_WorkAddress" rows="2" required="" style="direction: auto"></textarea><span class="error-message" id="error-addressWorkCurrent"></span>
+            <label for="addressWorkCurrent">عنوان العمل بالتفصيل:</label
+            ><textarea
+              id="addressWorkCurrent"
+              name="Current_WorkAddress"
+              rows="2"
+              required=""
+              style="direction: auto"
+            ></textarea
+            ><span class="error-message" id="error-addressWorkCurrent"></span>
           </div>
           <div class="question-group">
             <label>تاريخ التعيين:</label>
@@ -1855,7 +2480,16 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="startDateCurrent" name="Current_StartDate_Year" placeholder="YYYY" required="" pattern="^[0-9]{4}$" inputmode="numeric" style="width: 110px">
+              <input
+                type="text"
+                id="startDateCurrent"
+                name="Current_StartDate_Year"
+                placeholder="YYYY"
+                required=""
+                pattern="^[0-9]{4}$"
+                inputmode="numeric"
+                style="width: 110px"
+              />
             </div>
             <span class="error-message" id="error-startDateCurrentDay"></span>
             <span class="error-message" id="error-startDateCurrentMonth"></span>
@@ -1863,32 +2497,78 @@
           </div>
 
           <div class="question-group">
-            <label for="phoneWorkCurrent">تليفون العمل:</label><input type="tel" id="phoneWorkCurrent" name="Current_WorkPhone" style="direction: ltr">
+            <label for="phoneWorkCurrent">تليفون العمل:</label
+            ><input
+              type="tel"
+              id="phoneWorkCurrent"
+              name="Current_WorkPhone"
+              style="direction: ltr"
+            />
           </div>
           <div class="question-group">
-            <label for="salaryCurrent">الراتب الشهري:</label><input type="number" id="salaryCurrent" name="Current_Salary" style="direction: ltr">
+            <label for="salaryCurrent">الراتب الشهري:</label
+            ><input type="number" id="salaryCurrent" name="Current_Salary" style="direction: ltr" />
           </div>
         </fieldset>
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M12 1a11 11 0 1011 11A11 11 0 0012 1zm1 12V8h2v6h-3z"></path></svg></span>7. Previous Employment (الوظائف السابقة)
+                <path
+                  fill="#fff"
+                  d="M12 1a11 11 0 1011 11A11 11 0 0012 1zm1 12V8h2v6h-3z"
+                ></path></svg></span
+            >7. Previous Employment (الوظائف السابقة)
           </legend>
           <h3>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path></svg></span>الوظيفة السابقة (1)
+                <path
+                  fill="#fff"
+                  d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
+                ></path></svg></span
+            >الوظيفة السابقة (1)
           </h3>
           <div class="question-group">
-            <label for="jobTitlePrev1">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev1" name="PrevJob1_Title" style="direction: auto">
+            <label for="jobTitlePrev1">المسمى الوظيفي:</label
+            ><input type="text" id="jobTitlePrev1" name="PrevJob1_Title" style="direction: auto" />
           </div>
           <div class="question-group">
-            <label for="workplacePrev1">مكان العمل:</label><input type="text" id="workplacePrev1" name="PrevJob1_Workplace" style="direction: auto">
+            <label for="workplacePrev1">مكان العمل:</label
+            ><input
+              type="text"
+              id="workplacePrev1"
+              name="PrevJob1_Workplace"
+              style="direction: auto"
+            />
           </div>
           <div class="question-group">
-            <label for="addressWorkPrev1">عنوان العمل بالتفصيل:</label><textarea id="addressWorkPrev1" name="PrevJob1_WorkAddress" rows="2" style="direction: auto"></textarea>
+            <label for="addressWorkPrev1">عنوان العمل بالتفصيل:</label
+            ><textarea
+              id="addressWorkPrev1"
+              name="PrevJob1_WorkAddress"
+              rows="2"
+              style="direction: auto"
+            ></textarea>
           </div>
           <div class="date-row">
             <div class="date-group">
@@ -1942,7 +2622,12 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="startDatePrev1Year" name="PrevJob1_StartDate_Year" placeholder="YYYY">
+              <input
+                type="text"
+                id="startDatePrev1Year"
+                name="PrevJob1_StartDate_Year"
+                placeholder="YYYY"
+              />
             </div>
             <div class="date-group">
               <label>تاريخ الانتهاء:</label>
@@ -1995,30 +2680,73 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="endDatePrev1Year" name="PrevJob1_EndDate_Year" placeholder="YYYY">
+              <input
+                type="text"
+                id="endDatePrev1Year"
+                name="PrevJob1_EndDate_Year"
+                placeholder="YYYY"
+              />
             </div>
           </div>
           <div class="question-group">
-            <label for="phoneWorkPrev1">تليفون العمل:</label><input type="tel" id="phoneWorkPrev1" name="PrevJob1_WorkPhone" style="direction: ltr">
+            <label for="phoneWorkPrev1">تليفون العمل:</label
+            ><input
+              type="tel"
+              id="phoneWorkPrev1"
+              name="PrevJob1_WorkPhone"
+              style="direction: ltr"
+            />
           </div>
           <div class="question-group">
-            <label for="managerNamePrev1">اسم المدير المسئول:</label><input type="text" id="managerNamePrev1" name="PrevJob1_ManagerName" style="direction: auto">
+            <label for="managerNamePrev1">اسم المدير المسئول:</label
+            ><input
+              type="text"
+              id="managerNamePrev1"
+              name="PrevJob1_ManagerName"
+              style="direction: auto"
+            />
           </div>
           <span class="error-message" id="error-managerNamePrev1"></span>
 
           <h3>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path></svg></span>الوظيفة السابقة (2)
+                <path
+                  fill="#fff"
+                  d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
+                ></path></svg></span
+            >الوظيفة السابقة (2)
           </h3>
           <div class="question-group">
-            <label for="jobTitlePrev2">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev2" name="PrevJob2_Title" style="direction: auto">
+            <label for="jobTitlePrev2">المسمى الوظيفي:</label
+            ><input type="text" id="jobTitlePrev2" name="PrevJob2_Title" style="direction: auto" />
           </div>
           <div class="question-group">
-            <label for="workplacePrev2">مكان العمل:</label><input type="text" id="workplacePrev2" name="PrevJob2_Workplace" style="direction: auto">
+            <label for="workplacePrev2">مكان العمل:</label
+            ><input
+              type="text"
+              id="workplacePrev2"
+              name="PrevJob2_Workplace"
+              style="direction: auto"
+            />
           </div>
           <div class="question-group">
-            <label for="addressWorkPrev2">عنوان العمل بالتفصيل:</label><textarea id="addressWorkPrev2" name="PrevJob2_WorkAddress" rows="2" style="direction: auto"></textarea>
+            <label for="addressWorkPrev2">عنوان العمل بالتفصيل:</label
+            ><textarea
+              id="addressWorkPrev2"
+              name="PrevJob2_WorkAddress"
+              rows="2"
+              style="direction: auto"
+            ></textarea>
           </div>
           <div class="date-row">
             <div class="date-group">
@@ -2072,7 +2800,12 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="startDatePrev2Year" name="PrevJob2_StartDate_Year" placeholder="YYYY">
+              <input
+                type="text"
+                id="startDatePrev2Year"
+                name="PrevJob2_StartDate_Year"
+                placeholder="YYYY"
+              />
             </div>
             <div class="date-group">
               <label>تاريخ الانتهاء:</label>
@@ -2125,30 +2858,73 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="endDatePrev2Year" name="PrevJob2_EndDate_Year" placeholder="YYYY">
+              <input
+                type="text"
+                id="endDatePrev2Year"
+                name="PrevJob2_EndDate_Year"
+                placeholder="YYYY"
+              />
             </div>
           </div>
           <div class="question-group">
-            <label for="phoneWorkPrev2">تليفون العمل:</label><input type="tel" id="phoneWorkPrev2" name="PrevJob2_WorkPhone" style="direction: ltr">
+            <label for="phoneWorkPrev2">تليفون العمل:</label
+            ><input
+              type="tel"
+              id="phoneWorkPrev2"
+              name="PrevJob2_WorkPhone"
+              style="direction: ltr"
+            />
           </div>
           <div class="question-group">
-            <label for="managerNamePrev2">اسم المدير المسئول:</label><input type="text" id="managerNamePrev2" name="PrevJob2_ManagerName" style="direction: auto">
+            <label for="managerNamePrev2">اسم المدير المسئول:</label
+            ><input
+              type="text"
+              id="managerNamePrev2"
+              name="PrevJob2_ManagerName"
+              style="direction: auto"
+            />
           </div>
           <span class="error-message" id="error-managerNamePrev2"></span>
 
           <h3>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"></path></svg></span>الوظيفة السابقة (3)
+                <path
+                  fill="#fff"
+                  d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
+                ></path></svg></span
+            >الوظيفة السابقة (3)
           </h3>
           <div class="question-group">
-            <label for="jobTitlePrev3">المسمى الوظيفي:</label><input type="text" id="jobTitlePrev3" name="PrevJob3_Title" style="direction: auto">
+            <label for="jobTitlePrev3">المسمى الوظيفي:</label
+            ><input type="text" id="jobTitlePrev3" name="PrevJob3_Title" style="direction: auto" />
           </div>
           <div class="question-group">
-            <label for="workplacePrev3">مكان العمل:</label><input type="text" id="workplacePrev3" name="PrevJob3_Workplace" style="direction: auto">
+            <label for="workplacePrev3">مكان العمل:</label
+            ><input
+              type="text"
+              id="workplacePrev3"
+              name="PrevJob3_Workplace"
+              style="direction: auto"
+            />
           </div>
           <div class="question-group">
-            <label for="addressWorkPrev3">عنوان العمل بالتفصيل:</label><textarea id="addressWorkPrev3" name="PrevJob3_WorkAddress" rows="2" style="direction: auto"></textarea>
+            <label for="addressWorkPrev3">عنوان العمل بالتفصيل:</label
+            ><textarea
+              id="addressWorkPrev3"
+              name="PrevJob3_WorkAddress"
+              rows="2"
+              style="direction: auto"
+            ></textarea>
           </div>
           <div class="date-row">
             <div class="date-group">
@@ -2202,7 +2978,12 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="startDatePrev3Year" name="PrevJob3_StartDate_Year" placeholder="YYYY">
+              <input
+                type="text"
+                id="startDatePrev3Year"
+                name="PrevJob3_StartDate_Year"
+                placeholder="YYYY"
+              />
             </div>
             <div class="date-group">
               <label>تاريخ الانتهاء:</label>
@@ -2255,46 +3036,98 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="endDatePrev3Year" name="PrevJob3_EndDate_Year" placeholder="YYYY" style="width: 110px">
+              <input
+                type="text"
+                id="endDatePrev3Year"
+                name="PrevJob3_EndDate_Year"
+                placeholder="YYYY"
+                style="width: 110px"
+              />
             </div>
           </div>
           <div class="question-group">
-            <label for="phoneWorkPrev3">تليفون العمل:</label><input type="tel" id="phoneWorkPrev3" name="PrevJob3_WorkPhone" style="direction: ltr">
+            <label for="phoneWorkPrev3">تليفون العمل:</label
+            ><input
+              type="tel"
+              id="phoneWorkPrev3"
+              name="PrevJob3_WorkPhone"
+              style="direction: ltr"
+            />
           </div>
           <div class="question-group">
-            <label for="managerNamePrev3">اسم المدير المسئول:</label><input type="text" id="managerNamePrev3" name="PrevJob3_ManagerName" style="direction: auto">
+            <label for="managerNamePrev3">اسم المدير المسئول:</label
+            ><input
+              type="text"
+              id="managerNamePrev3"
+              name="PrevJob3_ManagerName"
+              style="direction: auto"
+            />
           </div>
           <span class="error-message" id="error-managerNamePrev3"></span>
         </fieldset>
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M12 3L1 9l11 6 11-6-11-6zm0 9l-8-4 8 4 8-4-8 4z"></path></svg></span>8. Education History (المؤهلات العلمية)
+                <path
+                  fill="#fff"
+                  d="M12 3L1 9l11 6 11-6-11-6zm0 9l-8-4 8 4 8-4-8 4z"
+                ></path></svg></span
+            >8. Education History (المؤهلات العلمية)
           </legend>
           <div class="question-group">
-            <label for="institutionName">اسم المؤسسة التعليمية:</label><input type="text" id="institutionName" name="Education_InstitutionName" style="direction: auto">
+            <label for="institutionName">اسم المؤسسة التعليمية:</label
+            ><input
+              type="text"
+              id="institutionName"
+              name="Education_InstitutionName"
+              style="direction: auto"
+            />
           </div>
 
           <!-- Section 12: Repeated Education History (allow up to five institutions) -->
           <div class="question-group">
             <label>هل لديك مؤسسات تعليمية أخرى؟</label>
-            <label><input type="radio" name="HasOtherEducation" value="Yes"> نعم</label>
-            <label><input type="radio" name="HasOtherEducation" value="No" checked=""> لا</label>
+            <label><input type="radio" name="HasOtherEducation" value="Yes" /> نعم</label>
+            <label><input type="radio" name="HasOtherEducation" value="No" checked="" /> لا</label>
           </div>
 
-          <fieldset id="Education_Container" class="conditional-fields" style="display: none" aria-live="polite" aria-expanded="false" aria-hidden="true">
+          <fieldset
+            id="Education_Container"
+            class="conditional-fields"
+            style="display: none"
+            aria-live="polite"
+            aria-expanded="false"
+            aria-hidden="true"
+          >
             <legend>Provide up to five additional institutions (حتى خمسة مؤسسات إضافية)</legend>
             <div id="educationEntries">
               <div class="edu-entry" data-index="1">
                 <div class="question-group">
                   <label for="Education_1_InstitutionName">اسم المؤسسة:</label>
-                  <input type="text" id="Education_1_InstitutionName" name="Education_1_InstitutionName">
+                  <input
+                    type="text"
+                    id="Education_1_InstitutionName"
+                    name="Education_1_InstitutionName"
+                  />
                 </div>
                 <div class="question-group">
                   <label for="Education_1_QualificationName">المؤهل:</label>
-                  <input type="text" id="Education_1_QualificationName" name="Education_1_QualificationName">
+                  <input
+                    type="text"
+                    id="Education_1_QualificationName"
+                    name="Education_1_QualificationName"
+                  />
                 </div>
                 <div class="question-group">
                   <button type="button" class="remove-education" aria-label="Remove institution">
@@ -2304,19 +3137,44 @@
               </div>
             </div>
             <div class="question-group">
-              <button type="button" class="add-education" aria-label="Add institution" role="button" tabindex="0" style="display: inline-block;">
+              <button
+                type="button"
+                class="add-education"
+                aria-label="Add institution"
+                role="button"
+                tabindex="0"
+                style="display: inline-block"
+              >
                 + إضافة مؤسسة
               </button>
             </div>
           </fieldset>
           <div class="question-group">
-            <label for="institutionAddress">عنوانها:</label><textarea id="institutionAddress" name="Education_Address" rows="2" style="direction: auto"></textarea>
+            <label for="institutionAddress">عنوانها:</label
+            ><textarea
+              id="institutionAddress"
+              name="Education_Address"
+              rows="2"
+              style="direction: auto"
+            ></textarea>
           </div>
           <div class="question-group">
-            <label for="qualificationName">اسم المؤهل:</label><input type="text" id="qualificationName" name="Education_QualificationName" style="direction: auto">
+            <label for="qualificationName">اسم المؤهل:</label
+            ><input
+              type="text"
+              id="qualificationName"
+              name="Education_QualificationName"
+              style="direction: auto"
+            />
           </div>
           <div class="question-group">
-            <label for="qualificationMajor">شعبة المؤهل:</label><input type="text" id="qualificationMajor" name="Education_QualificationMajor" style="direction: auto">
+            <label for="qualificationMajor">شعبة المؤهل:</label
+            ><input
+              type="text"
+              id="qualificationMajor"
+              name="Education_QualificationMajor"
+              style="direction: auto"
+            />
           </div>
           <div class="date-row">
             <div class="date-group">
@@ -2370,7 +3228,12 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="studyStartDateYear" name="Education_StudyStartDate_Year" placeholder="YYYY">
+              <input
+                type="text"
+                id="studyStartDateYear"
+                name="Education_StudyStartDate_Year"
+                placeholder="YYYY"
+              />
             </div>
             <div class="date-group">
               <label>تاريخ نهاية الدراسة:</label>
@@ -2423,39 +3286,77 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="studyEndDateYear" name="Education_StudyEndDate_Year" placeholder="YYYY">
+              <input
+                type="text"
+                id="studyEndDateYear"
+                name="Education_StudyEndDate_Year"
+                placeholder="YYYY"
+              />
             </div>
           </div>
         </fieldset>
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
 
                 height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img"
                 focusable="false" aria-hidden="true" &gt;
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M12 3L1 9l11 6 11-6-11-6zm0 9l-8-4 8 4 8-4-8 4z"></path></svg></span>8b. Education History 2 (المؤهلات العلمية)
+                <path
+                  fill="#fff"
+                  d="M12 3L1 9l11 6 11-6-11-6zm0 9l-8-4 8 4 8-4-8 4z"
+                ></path></svg></span
+            >8b. Education History 2 (المؤهلات العلمية)
           </legend>
           <div class="row">
             <div class="col-12 col-md-6 question-group">
               <label for="institutionName_2">اسم المؤسسة التعليمية:</label>
-              <input type="text" id="institutionName_2" name="Education_InstitutionName_2" style="direction: auto">
+              <input
+                type="text"
+                id="institutionName_2"
+                name="Education_InstitutionName_2"
+                style="direction: auto"
+              />
             </div>
             <div class="col-12 col-md-6 question-group">
               <label for="institutionAddress_2">عنوانها:</label>
-              <textarea id="institutionAddress_2" name="Education_Address_2" rows="2" style="direction: auto"></textarea>
+              <textarea
+                id="institutionAddress_2"
+                name="Education_Address_2"
+                rows="2"
+                style="direction: auto"
+              ></textarea>
             </div>
           </div>
           <div class="row">
             <div class="col-12 col-md-6 question-group">
               <label for="qualificationName_2">اسم المؤهل:</label>
-              <input type="text" id="qualificationName_2" name="Education_QualificationName_2" style="direction: auto">
+              <input
+                type="text"
+                id="qualificationName_2"
+                name="Education_QualificationName_2"
+                style="direction: auto"
+              />
             </div>
             <div class="col-12 col-md-6 question-group">
               <label for="qualificationMajor_2">شعبة المؤهل:</label>
-              <input type="text" id="qualificationMajor_2" name="Education_QualificationMajor_2" style="direction: auto">
+              <input
+                type="text"
+                id="qualificationMajor_2"
+                name="Education_QualificationMajor_2"
+                style="direction: auto"
+              />
             </div>
           </div>
           <div class="date-row">
@@ -2510,7 +3411,12 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="studyStartDateYear_2" name="Education_StudyStartDate_Year_2" placeholder="YYYY">
+              <input
+                type="text"
+                id="studyStartDateYear_2"
+                name="Education_StudyStartDate_Year_2"
+                placeholder="YYYY"
+              />
             </div>
             <div class="date-group">
               <label>تاريخ نهاية الدراسة:</label>
@@ -2563,46 +3469,111 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="studyEndDateYear_2" name="Education_StudyEndDate_Year_2" placeholder="YYYY">
+              <input
+                type="text"
+                id="studyEndDateYear_2"
+                name="Education_StudyEndDate_Year_2"
+                placeholder="YYYY"
+              />
             </div>
           </div>
         </fieldset>
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M2 17l5-1 7-7-1-2-3 1L9 6 18 4l2 3-6 4 3 3 3 1-2 2-4-1-5 1z"></path></svg></span>9. Travel History (تاريخ السفر)
+                <path
+                  fill="#fff"
+                  d="M2 17l5-1 7-7-1-2-3 1L9 6 18 4l2 3-6 4 3 3 3 1-2 2-4-1-5 1z"
+                ></path></svg></span
+            >9. Travel History (تاريخ السفر)
           </legend>
           <div class="question-group">
-            <label for="prevTravelCountries">اذكر البلاد التي سافرت إليها خلال الخمس سنوات الماضية (افصل بينها بفاصلة):</label><textarea id="prevTravelCountries" name="Previous_Travel_Countries" rows="4" style="direction: auto"></textarea>
+            <label for="prevTravelCountries"
+              >اذكر البلاد التي سافرت إليها خلال الخمس سنوات الماضية (افصل بينها بفاصلة):</label
+            ><textarea
+              id="prevTravelCountries"
+              name="Previous_Travel_Countries"
+              rows="4"
+              style="direction: auto"
+            ></textarea>
           </div>
         </fieldset>
 
         <fieldset>
           <legend>
-            <span class="section-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true">
+            <span class="section-icon" aria-hidden="true"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="10" fill="#dc3545"></circle>
-                <path fill="#fff" d="M12 3L1 9l11 6 11-6-11-6zm0 9l-8-4 8 4 8-4-8 4z"></path></svg></span>10. Military Service (الخدمة العسكرية)
+                <path
+                  fill="#fff"
+                  d="M12 3L1 9l11 6 11-6-11-6zm0 9l-8-4 8 4 8-4-8 4z"
+                ></path></svg></span
+            >10. Military Service (الخدمة العسكرية)
           </legend>
           <div class="question-group">
             <label>هل قمت بالخدمة الجيش؟</label>
-            <label><input type="radio" name="Military_Served" value="Yes" id="militaryYes" required="">
-              نعم</label>
-            <label><input type="radio" name="Military_Served" value="No" id="militaryNo"> لا</label>
+            <label
+              ><input
+                type="radio"
+                name="Military_Served"
+                value="Yes"
+                id="militaryYes"
+                required=""
+              />
+              نعم</label
+            >
+            <label
+              ><input type="radio" name="Military_Served" value="No" id="militaryNo" /> لا</label
+            >
           </div>
 
-          <div id="militaryFields" class="conditional-fields" style="display: none" aria-expanded="false" aria-hidden="true" aria-live="polite">
+          <div
+            id="militaryFields"
+            class="conditional-fields"
+            style="display: none"
+            aria-expanded="false"
+            aria-hidden="true"
+            aria-live="polite"
+          >
             <div class="question-group">
               <label for="militaryBranch">فرع الخدمة:</label>
-              <input type="text" id="militaryBranch" name="Military_Branch" style="direction: auto">
+              <input
+                type="text"
+                id="militaryBranch"
+                name="Military_Branch"
+                style="direction: auto"
+              />
             </div>
             <div class="question-group">
               <label for="militaryRank">الرتبة:</label>
-              <input type="text" id="militaryRank" name="Military_Rank" style="direction: auto">
+              <input type="text" id="militaryRank" name="Military_Rank" style="direction: auto" />
             </div>
             <div class="question-group">
               <label for="militarySpecialty">السلاح:</label>
-              <input type="text" id="militarySpecialty" name="Military_Specialty" style="direction: auto">
+              <input
+                type="text"
+                id="militarySpecialty"
+                name="Military_Specialty"
+                style="direction: auto"
+              />
             </div>
 
             <div class="date-row">
@@ -2658,7 +3629,12 @@
                     <option value="11">11</option>
                     <option value="12">12</option>
                   </select>
-                  <input type="text" id="milServiceFromYear" name="Military_ServiceFrom_Year" placeholder="YYYY">
+                  <input
+                    type="text"
+                    id="milServiceFromYear"
+                    name="Military_ServiceFrom_Year"
+                    placeholder="YYYY"
+                  />
                 </div>
               </div>
               <div class="date-group">
@@ -2713,7 +3689,12 @@
                     <option value="11">11</option>
                     <option value="12">12</option>
                   </select>
-                  <input type="text" id="milServiceToYear" name="Military_ServiceTo_Year" placeholder="YYYY">
+                  <input
+                    type="text"
+                    id="milServiceToYear"
+                    name="Military_ServiceTo_Year"
+                    placeholder="YYYY"
+                  />
                 </div>
               </div>
             </div>
@@ -2730,6 +3711,5 @@
     </div>
 
     <script src="js/script.js"></script>
-  
-
-</body></html>
+  </body>
+</html>

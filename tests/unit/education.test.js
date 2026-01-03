@@ -42,7 +42,11 @@ const { JSDOM } = require('jsdom');
     'Education_Container should be visible after selecting Yes'
   );
   assert.strictEqual(eduContainer.getAttribute('aria-expanded'), 'true');
-  assert.strictEqual(eduContainer.getAttribute('aria-hidden'), 'false');
+  assert.strictEqual(
+    eduContainer.getAttribute('aria-hidden'),
+    null,
+    'Education_Container should not have aria-hidden attribute when visible'
+  );
 
   // First entry should have required attributes when visible
   const firstInst = doc.getElementById('Education_1_InstitutionName');
@@ -68,7 +72,11 @@ const { JSDOM } = require('jsdom');
     'Education_Container should be hidden after selecting No'
   );
   assert.strictEqual(eduContainer.getAttribute('aria-expanded'), 'false');
-  assert.strictEqual(eduContainer.getAttribute('aria-hidden'), 'true');
+  assert.strictEqual(
+    eduContainer.getAttribute('aria-hidden'),
+    null,
+    'Education_Container should not have aria-hidden attribute when hidden'
+  );
   assert(
     !firstInst.hasAttribute('required'),
     'Education_1_InstitutionName should not be required when hidden'

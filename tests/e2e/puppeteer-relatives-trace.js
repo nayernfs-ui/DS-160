@@ -17,11 +17,15 @@ function save(name, buf) {
 
   let browser;
   try {
-    browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
 
     // Polyfill for older Puppeteer versions
-    if (typeof page.waitForTimeout !== 'function') page.waitForTimeout = (ms) => new Promise((r) => setTimeout(r, ms));
+    if (typeof page.waitForTimeout !== 'function')
+      page.waitForTimeout = (ms) => new Promise((r) => setTimeout(r, ms));
 
     page.on('console', (msg) => {
       try {
@@ -31,19 +35,26 @@ function save(name, buf) {
       }
     });
 
-    page.on('pageerror', (err) => console.error('PAGE ERROR:', err && (err.stack || err.message || err)));
+    page.on('pageerror', (err) =>
+      console.error('PAGE ERROR:', err && (err.stack || err.message || err))
+    );
 
     page.on('response', (res) => {
       try {
-        if (res.status && res.status() >= 400) console.log('PAGE RESPONSE ERROR:', res.status(), res.url());
-      } catch (e) {}
+        if (res.status && res.status() >= 400)
+          console.log('PAGE RESPONSE ERROR:', res.status(), res.url());
+      } catch (e) {
+        console.error('PAGE RESPONSE handler error', e && e.message);
+      }
     });
 
     page.on('requestfailed', (req) => {
       try {
         const f = req.failure && req.failure();
         console.log('REQUEST FAILED:', f && f.errorText, req.url());
-      } catch (e) {}
+      } catch (e) {
+        console.error('REQUEST FAILED handler error', e && e.message);
+      }
     });
 
     try {
@@ -53,7 +64,9 @@ function save(name, buf) {
       save('1-after-nav.png', await page.screenshot({ fullPage: true }));
 
       console.log('TRACE: waiting for relatives Yes radio');
-      await page.waitForSelector('input[name="US_ImmediateRelatives"][value="Yes"]', { timeout: 10000 });
+      await page.waitForSelector('input[name="US_ImmediateRelatives"][value="Yes"]', {
+        timeout: 10000,
+      });
       console.log('TRACE: clicking Yes');
       await page.click('input[name="US_ImmediateRelatives"][value="Yes"]');
       await page.waitForTimeout(500);
@@ -119,12 +132,19 @@ function save(name, buf) {
 
       fs.writeFileSync(path.join(OUT_DIR, 'payload.json'), JSON.stringify(payload, null, 2));
       console.log('TRACE: saved payload.json');
-      console.log('TRACE: Form payload keys:', Object.keys(payload).filter((k) => k.indexOf('Relative_') === 0));
+      console.log(
+        'TRACE: Form payload keys:',
+        Object.keys(payload).filter((k) => k.indexOf('Relative_') === 0)
+      );
       save('8-final-html.html', Buffer.from(await page.content(), 'utf8'));
 
       // sanity checks
       if (payload['Relative_1_Surnames'] !== 'ALFA' || payload['Relative_2_Surnames'] !== 'BETA') {
-        console.error('TRACE: Payload missing expected values', payload['Relative_1_Surnames'], payload['Relative_2_Surnames']);
+        console.error(
+          'TRACE: Payload missing expected values',
+          payload['Relative_1_Surnames'],
+          payload['Relative_2_Surnames']
+        );
         save('error-html-final.html', Buffer.from(await page.content(), 'utf8'));
         fs.writeFileSync(path.join(OUT_DIR, 'result.txt'), 'FAIL: payload-values');
         await browser.close();
@@ -156,7 +176,10 @@ function save(name, buf) {
       process.exit(7);
     }
   } catch (e) {
-    console.error('TRACE: Could not launch browser or setup page:', e && (e.stack || e.message || e));
+    console.error(
+      'TRACE: Could not launch browser or setup page:',
+      e && (e.stack || e.message || e)
+    );
     if (browser) await browser.close();
     process.exit(2);
   }
