@@ -377,6 +377,18 @@ html[dir='rtl'] .question-group .options-row > label {
   padding: 2px 4px; /* small hit area for the visual check */
 }
 
+/* Some option rows are not wrapped in .options-row (they are plain labels inside .question-group).
+   Target labels that do NOT have a `for` attribute (these are typically option labels containing inputs).
+   This keeps the radio input and its Arabic text together on one line in RTL. */
+html[dir='rtl'] .question-group > label:not([for]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap !important;
+  background: rgba(255, 0, 0, 0.02);
+  padding: 2px 4px;
+}
+
 /* Progress bar */
 .progress-wrap {
   margin-bottom: 12px;
