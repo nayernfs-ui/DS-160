@@ -21,3 +21,5 @@ Visual baselines and comparisons:
 
 - The options-row visual test writes screenshots to `tests/e2e/trace-output/options-row/` and a comparator (`tests/e2e/compare-options-row.js`) compares them to baselines in `tests/e2e/baseline/options-row/` using `pixelmatch`.
 - To update baselines: run the visual script locally or via CI to generate artifacts, then copy the images from `tests/e2e/trace-output/options-row/` into `tests/e2e/baseline/options-row/` and commit the updated baselines. The compare script will warn (but not fail) when baselines are missing on first run.
+
+- To automate baseline acceptance locally: run `npm run test:e2e:options-row` to capture images, then run `npm run test:e2e:options-row-accept` to copy those images into `tests/e2e/baseline/options-row/` for committing.

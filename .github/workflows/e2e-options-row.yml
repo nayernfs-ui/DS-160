@@ -56,3 +56,22 @@ jobs:
         with:
           name: options-row-trace
           path: tests/e2e/trace-output/options-row/**
+
+      - name: Comment on PR if visual diffs failed
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const runId = process.env.GITHUB_RUN_ID;
+            const msg = `:warning: Visual diff exceeded threshold in run ${runId}. Artifacts are uploaded as the **options-row-trace** artifact (check the Actions run Artifacts). Please review diffs in \`tests/e2e/trace-output/options-row/diffs\` and update baselines if the changes are intentional.`;
+            if (context.payload && context.payload.pull_request && context.payload.pull_request.number) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: msg,
+              });
+            } else {
+              core.info('No pull_request context; skipping comment');
+            }

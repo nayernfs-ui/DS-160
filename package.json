@@ -24,7 +24,8 @@
     "check-env": "node tools/check-env.js",
     "live-smoke": "node tests/e2e/puppeteer-visits-live.js",
     "test:e2e:options-row": "node tests/e2e/puppeteer-options-row-visual.js",
-    "test:e2e:options-row-compare": "node tests/e2e/compare-options-row.js"
+    "test:e2e:options-row-compare": "node tests/e2e/compare-options-row.js",
+    "test:e2e:options-row-accept": "node tests/e2e/update-options-row-baseline.js"
   },
   "dependencies": {
     "arabic-reshaper": "^1.1.0",
