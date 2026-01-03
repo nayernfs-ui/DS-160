@@ -343,9 +343,10 @@ select.is-invalid {
     max-width: none;
   }
 
-  /* Stack option rows on small screens */
+  /* Stack option rows on small screens: prefer inline with wrapping rather than forcing a column */
   .options-row {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
   }
 }
