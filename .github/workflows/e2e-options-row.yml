@@ -47,8 +47,22 @@ jobs:
           TARGET_URL: http://127.0.0.1:3000/
         run: npm run test:e2e:options-row
 
-      - name: Compare visual artifacts
-        run: npm run test:e2e:options-row-compare
+      - name: Compare visual artifacts (write results, non-failing)
+        run: |
+          # Run comparator in non-failing mode so we can inspect results and create a baseline PR automatically
+          FAIL_ON_DIFF=false npm run test:e2e:options-row-compare
+        id: compare
+
+      - name: Read comparator result
+        id: check
+        run: |
+          RESFILE=tests/e2e/trace-output/options-row/options-row-result.json
+          if [ -f "$RESFILE" ]; then
+            PASSED=$(node -e "console.log(require('./$RESFILE').passed ? 'true' : 'false')")
+          else
+            PASSED=false
+          fi
+          echo "passed=$PASSED" >> $GITHUB_OUTPUT
 
       - name: Upload artifacts
         if: always()
@@ -56,6 +70,26 @@ jobs:
         with:
           name: options-row-trace
           path: tests/e2e/trace-output/options-row/**
+
+      - name: Copy baselines into repo (for PR)
+        if: steps.check.outputs.passed == 'false'
+        run: node tests/e2e/update-options-row-baseline.js
+
+      - name: Create baseline update PR
+        if: steps.check.outputs.passed == 'false'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update options-row baseline images"
+          branch: "auto/update-options-row-baselines-${{ github.run_id }}"
+          title: "Update visual baselines: options-row"
+          body: "Automated baseline update from failing visual comparison in run ${{ github.run_id }}. Review diffs in the run artifacts and updated baselines in this PR."
+
+      - name: Fail if visual diffs present
+        if: steps.check.outputs.passed == 'false'
+        run: |
+          echo 'Visual diffs detected — failing job to block the PR until baselines are reviewed.'
+          exit 1
 
       - name: Comment on PR if visual diffs failed
         if: failure()

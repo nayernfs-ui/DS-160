@@ -15,8 +15,8 @@ function readPNG(filePath) {
   return PNG.sync.read(fs.readFileSync(filePath));
 }
 
+const results = { images: [], missingBaseline: false };
 let hadError = false;
-let missingBaseline = false;
 
 for (const name of images) {
   const currentPath = path.join(OUT_DIR, name);
@@ -25,14 +25,33 @@ for (const name of images) {
   const cur = readPNG(currentPath);
   const base = readPNG(basePath);
 
+  const entry = {
+    name,
+    currentPath,
+    basePath,
+    currentExists: !!cur,
+    baseExists: !!base,
+    width: cur ? cur.width : null,
+    height: cur ? cur.height : null,
+    baseWidth: base ? base.width : null,
+    baseHeight: base ? base.height : null,
+    diffPixels: 0,
+    percent: 0,
+    exceeded: false,
+    diffPath: null,
+  };
+
   if (!base) {
     console.warn(`Baseline missing for ${name}. Skipping comparison.`);
-    missingBaseline = true;
+    results.missingBaseline = true;
+    results.images.push(entry);
     continue;
   }
   if (!cur) {
     console.error(`Current image missing: ${currentPath}`);
+    entry.error = 'current_missing';
     hadError = true;
+    results.images.push(entry);
     continue;
   }
 
@@ -40,7 +59,9 @@ for (const name of images) {
     console.error(
       `Size mismatch for ${name}: current=${cur.width}x${cur.height} base=${base.width}x${base.height}`
     );
+    entry.error = 'size_mismatch';
     hadError = true;
+    results.images.push(entry);
     continue;
   }
 
@@ -53,27 +74,45 @@ for (const name of images) {
   const total = cur.width * cur.height;
   const percent = (diffPixels / total) * 100;
 
-  fs.writeFileSync(path.join(DIFF_DIR, `diff-${name}`), PNG.sync.write(diff));
+  const diffFile = path.join(DIFF_DIR, `diff-${name}`);
+  fs.writeFileSync(diffFile, PNG.sync.write(diff));
+
+  entry.diffPixels = diffPixels;
+  entry.percent = Number(percent.toFixed(6));
+  entry.exceeded = percent > 0.1;
+  entry.diffPath = diffFile;
 
   console.log(`${name}: ${diffPixels} pixels different (${percent.toFixed(4)}%)`);
 
-  // Fail if more than 0.1% of pixels differ
-  if (percent > 0.1) {
+  if (entry.exceeded) {
     console.error(`${name} exceeded diff threshold (0.1%)`);
     hadError = true;
   }
+
+  results.images.push(entry);
 }
 
-if (missingBaseline) {
+if (results.missingBaseline) {
   console.warn(
     'One or more baselines were missing. To create a baseline, copy the images in the run artifacts into tests/e2e/baseline/options-row/.'
   );
-  // Not a hard failure for first-time runs; recommend manual baseline acceptance
 }
 
-if (hadError) {
+results.passed = !hadError;
+
+// Write machine-readable result for workflow steps
+try {
+  fs.writeFileSync(path.join(OUT_DIR, 'options-row-result.json'), JSON.stringify(results, null, 2));
+  console.log('Wrote result:', path.join(OUT_DIR, 'options-row-result.json'));
+} catch (e) {
+  console.warn('Failed to write result JSON:', e);
+}
+
+const failOnDiff = (process.env.FAIL_ON_DIFF || 'true') === 'true';
+if (!results.passed) {
   console.error('Visual diff failed. See diffs in', DIFF_DIR);
-  process.exit(7);
+  if (failOnDiff) process.exit(7);
+  else process.exit(0);
 }
 
 console.log('Visual diff passed for available baselines.');

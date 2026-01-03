@@ -23,3 +23,5 @@ Visual baselines and comparisons:
 - To update baselines: run the visual script locally or via CI to generate artifacts, then copy the images from `tests/e2e/trace-output/options-row/` into `tests/e2e/baseline/options-row/` and commit the updated baselines. The compare script will warn (but not fail) when baselines are missing on first run.
 
 - To automate baseline acceptance locally: run `npm run test:e2e:options-row` to capture images, then run `npm run test:e2e:options-row-accept` to copy those images into `tests/e2e/baseline/options-row/` for committing.
+
+- CI automation: when the comparator detects diffs on a PR, the workflow will now automatically prepare a branch with the updated baseline images and open a draft PR titled "Update visual baselines: options-row" for review. The original PR will still fail the visual check so reviewers can verify and accept or reject the baseline update.
