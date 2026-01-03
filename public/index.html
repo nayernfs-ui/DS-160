@@ -494,14 +494,22 @@
 
           <div class="question-group">
             <label>هل لديك/هل امتلكت جنسية أخرى غير المذكورة أعلاه؟</label>
-            <label
-              ><input type="radio" name="HasOtherNationality" value="Yes" id="otherNatYes" />
-              نعم</label
-            >
-            <label
-              ><input type="radio" name="HasOtherNationality" value="No" id="otherNatNo" checked />
-              لا</label
-            >
+            <div class="options-row" role="radiogroup" aria-label="Has other nationality">
+              <label
+                ><input type="radio" name="HasOtherNationality" value="Yes" id="otherNatYes" />
+                نعم</label
+              >
+              <label
+                ><input
+                  type="radio"
+                  name="HasOtherNationality"
+                  value="No"
+                  id="otherNatNo"
+                  checked
+                />
+                لا</label
+              >
+            </div>
           </div>
 
           <fieldset id="otherNationalityFields" class="conditional-fields">
@@ -772,13 +780,16 @@
         <!-- Lost / Stolen Passport question (Arabic) -->
         <div class="question-group">
           <label>هل سبق وفقدت جواز سفر أو سُرق منك؟</label>
-          <label
-            ><input type="radio" name="LostPassport" value="Yes" id="lostPassportYes" /> نعم</label
-          >
-          <label
-            ><input type="radio" name="LostPassport" value="No" id="lostPassportNo" checked />
-            لا</label
-          >
+          <div class="options-row" role="radiogroup" aria-label="Lost passport">
+            <label
+              ><input type="radio" name="LostPassport" value="Yes" id="lostPassportYes" />
+              نعم</label
+            >
+            <label
+              ><input type="radio" name="LostPassport" value="No" id="lostPassportNo" checked />
+              لا</label
+            >
+          </div>
         </div>
 
         <fieldset id="lostPassportFields" class="conditional-fields" aria-expanded="false">
@@ -836,20 +847,22 @@
             >هل أنت مقيم دائم في دولة/منطقة أخرى غير بلد/منطقة المنشأ (الجنسية) الموضحة
             أعلاه؟</label
           >
-          <label
-            ><input type="radio" name="HasOtherPermanentResident" value="Yes" id="permResYes" />
-            نعم</label
-          >
-          <label
-            ><input
-              type="radio"
-              name="HasOtherPermanentResident"
-              value="No"
-              id="permResNo"
-              checked
-            />
-            لا</label
-          >
+          <div class="options-row" role="radiogroup" aria-label="Has other permanent resident">
+            <label
+              ><input type="radio" name="HasOtherPermanentResident" value="Yes" id="permResYes" />
+              نعم</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="HasOtherPermanentResident"
+                value="No"
+                id="permResNo"
+                checked
+              />
+              لا</label
+            >
+          </div>
         </div>
 
         <fieldset id="otherPermanentResidentFields" class="conditional-fields">
@@ -879,32 +892,42 @@
 
         <div class="question-group">
           <label>هل لديك أي أقارب مباشرين (غير الوالدين) في الولايات المتحدة؟</label>
-          <label
-            ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" />
-            نعم</label
-          >
-          <label
-            ><input type="radio" name="US_ImmediateRelatives" value="No" id="relativesNo" checked />
-            لا</label
-          >
+          <div class="options-row" role="radiogroup" aria-label="US immediate relatives">
+            <label
+              ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" />
+              نعم</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="US_ImmediateRelatives"
+                value="No"
+                id="relativesNo"
+                checked
+              />
+              لا</label
+            >
+          </div>
         </div>
 
         <div class="question-group">
           <label>هل لديك أي أقارب آخرين في الولايات المتحدة؟</label>
-          <label
-            ><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes" />
-            نعم</label
-          >
-          <label
-            ><input
-              type="radio"
-              name="US_OtherRelatives"
-              value="No"
-              id="otherRelativesNo"
-              checked
-            />
-            لا</label
-          >
+          <div class="options-row" role="radiogroup" aria-label="US other relatives">
+            <label
+              ><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes" />
+              نعم</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="US_OtherRelatives"
+                value="No"
+                id="otherRelativesNo"
+                checked
+              />
+              لا</label
+            >
+          </div>
         </div>
 
         <fieldset id="US_Relatives_Container" class="conditional-fields" aria-expanded="false">
@@ -1086,14 +1109,16 @@
           </legend>
           <div class="question-group">
             <label>هل هناك أشخاص يسافرون معك في هذه الرحلة؟</label>
-            <label
-              ><input type="radio" name="TravellingWithOthers" value="Yes" id="travelYes" />
-              نعم</label
-            >
-            <label
-              ><input type="radio" name="TravellingWithOthers" value="No" id="travelNo" checked />
-              لا</label
-            >
+            <div class="options-row" role="radiogroup" aria-label="Travelling with others">
+              <label
+                ><input type="radio" name="TravellingWithOthers" value="Yes" id="travelYes" />
+                نعم</label
+              >
+              <label
+                ><input type="radio" name="TravellingWithOthers" value="No" id="travelNo" checked />
+                لا</label
+              >
+            </div>
           </div>
           <div id="travelCompanionFields" class="conditional-fields">
             <div class="question-group">
@@ -1135,14 +1160,18 @@
             >4. US History (سجل السفر إلى أمريكا)
           </legend>
           <div class="question-group">
-            <label>Have you ever been in the U.S.? (هل زرت الولايات المتحدة من قبل؟)</label
-            ><label><input type="radio" name="US_Visited" value="Yes" /> نعم</label
-            ><label><input type="radio" name="US_Visited" value="No" checked /> لا</label>
+            <label>Have you ever been in the U.S.? (هل زرت الولايات المتحدة من قبل؟)</label>
+            <div class="options-row" role="radiogroup" aria-label="Visited US">
+              <label><input type="radio" name="US_Visited" value="Yes" /> نعم</label>
+              <label><input type="radio" name="US_Visited" value="No" checked /> لا</label>
+            </div>
           </div>
           <div class="question-group">
-            <label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label
-            ><label><input type="radio" name="HadUSVisaBefore" value="Yes" /> نعم</label
-            ><label><input type="radio" name="HadUSVisaBefore" value="No" checked /> لا</label>
+            <label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label>
+            <div class="options-row" role="radiogroup" aria-label="Had US visa before">
+              <label><input type="radio" name="HadUSVisaBefore" value="Yes" /> نعم</label>
+              <label><input type="radio" name="HadUSVisaBefore" value="No" checked /> لا</label>
+            </div>
           </div>
           <fieldset
             id="US_Visits_Container"
@@ -1376,10 +1405,15 @@
           </fieldset>
           <div class="question-group">
             <label>هل تم رفضك قبل ذلك في التقديم على تأشيرة أمريكا؟</label>
-            <label><input type="radio" name="USVisaDenied" value="Yes" id="deniedYes" /> نعم</label>
-            <label
-              ><input type="radio" name="USVisaDenied" value="No" id="deniedNo" checked /> لا</label
-            >
+            <div class="options-row" role="radiogroup" aria-label="US visa denied before">
+              <label
+                ><input type="radio" name="USVisaDenied" value="Yes" id="deniedYes" /> نعم</label
+              >
+              <label
+                ><input type="radio" name="USVisaDenied" value="No" id="deniedNo" checked />
+                لا</label
+              >
+            </div>
           </div>
           <div id="denialTimeField" class="conditional-fields">
             <div class="question-group">
@@ -1480,13 +1514,15 @@
 
           <div class="question-group">
             <label>هل الاب في الولايات المتحدة؟</label>
-            <label
-              ><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes" /> نعم</label
-            >
-            <label
-              ><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked />
-              لا</label
-            >
+            <div class="options-row" role="radiogroup" aria-label="Father in US">
+              <label
+                ><input type="radio" name="Father_In_US" value="Yes" id="fatherInYes" /> نعم</label
+              >
+              <label
+                ><input type="radio" name="Father_In_US" value="No" id="fatherInNo" checked />
+                لا</label
+              >
+            </div>
           </div>
 
           <div class="question-group" id="fatherStatusGroup" aria-expanded="false">
@@ -1580,13 +1616,15 @@
 
           <div class="question-group">
             <label>هل الام في الولايات المتحدة؟</label>
-            <label
-              ><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes" /> نعم</label
-            >
-            <label
-              ><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked />
-              لا</label
-            >
+            <div class="options-row" role="radiogroup" aria-label="Mother in US">
+              <label
+                ><input type="radio" name="Mother_In_US" value="Yes" id="motherInYes" /> نعم</label
+              >
+              <label
+                ><input type="radio" name="Mother_In_US" value="No" id="motherInNo" checked />
+                لا</label
+              >
+            </div>
           </div>
 
           <div class="question-group" id="motherStatusGroup" aria-expanded="false">
@@ -2322,8 +2360,10 @@
           <!-- Section 12: Repeated Education History (allow up to five institutions) -->
           <div class="question-group">
             <label>هل لديك مؤسسات تعليمية أخرى؟</label>
-            <label><input type="radio" name="HasOtherEducation" value="Yes" /> نعم</label>
-            <label><input type="radio" name="HasOtherEducation" value="No" checked /> لا</label>
+            <div class="options-row" role="radiogroup" aria-label="Has other education">
+              <label><input type="radio" name="HasOtherEducation" value="Yes" /> نعم</label>
+              <label><input type="radio" name="HasOtherEducation" value="No" checked /> لا</label>
+            </div>
           </div>
 
           <fieldset
@@ -2739,13 +2779,15 @@
           </legend>
           <div class="question-group">
             <label>هل قمت بالخدمة الجيش؟</label>
-            <label
-              ><input type="radio" name="Military_Served" value="Yes" id="militaryYes" required />
-              نعم</label
-            >
-            <label
-              ><input type="radio" name="Military_Served" value="No" id="militaryNo" /> لا</label
-            >
+            <div class="options-row" role="radiogroup" aria-label="Military served">
+              <label
+                ><input type="radio" name="Military_Served" value="Yes" id="militaryYes" required />
+                نعم</label
+              >
+              <label
+                ><input type="radio" name="Military_Served" value="No" id="militaryNo" /> لا</label
+              >
+            </div>
           </div>
 
           <div

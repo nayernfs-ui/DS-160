@@ -298,21 +298,26 @@ select.is-invalid {
     max-width: none;
   }
 
-  /* Stack question groups on small screens */
-  .question-group {
+  /* Stack option rows on small screens */
+  .options-row {
     flex-direction: column;
-    align-items: stretch;
+    gap: 12px;
   }
-  .question-group label {
-    width: auto;
-    text-align: right;
-  }
-  .question-group input,
-  .question-group select,
-  .question-group textarea {
-    width: 100%;
-    max-width: none;
-  }
+}
+
+/* Utility: horizontally align radio/option labels and respect document direction (RTL/LTR) */
+.options-row {
+  display: flex;
+  flex-direction: row; /* remain logical; will not hard-code left/right */
+  gap: 30px;
+  align-items: center;
+  direction: inherit; /* follow document direction for RTL compatibility */
+}
+.options-row > label {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
 }
 
 /* Progress bar */
