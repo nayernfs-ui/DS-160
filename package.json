@@ -22,7 +22,8 @@
     "test": "npm run test:visits && npm run test:military && npm run test:education && npm run test:country-mapping && npm run test:work-info && npm run test:family && npm run test:api-health",
     "prepare": "husky install",
     "check-env": "node tools/check-env.js",
-    "live-smoke": "node tests/e2e/puppeteer-visits-live.js"
+    "live-smoke": "node tests/e2e/puppeteer-visits-live.js",
+    "test:e2e:options-row": "node tests/e2e/puppeteer-options-row-visual.js"
   },
   "dependencies": {
     "arabic-reshaper": "^1.1.0",
