@@ -2,7 +2,7 @@
 /* Theme variables */
 :root {
   --color-primary: #003366; /* Navy Blue */
-  --color-accent: #D4AF37; /* Gold/Accent */
+  --color-accent: #d4af37; /* Gold/Accent */
   --color-muted: #6b7280;
   --card-bg: #ffffff;
   --focus-ring: rgba(0, 51, 102, 0.12);
@@ -19,7 +19,9 @@ body {
 }
 
 /* Typography and color tweaks */
-h1, legend, .container h3 {
+h1,
+legend,
+.container h3 {
   color: var(--color-primary);
 }
 .legend-accent {
@@ -348,7 +350,7 @@ select.is-invalid {
 }
 .progress {
   height: 8px;
-  background: linear-gradient(90deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.02));
   border-radius: 999px;
   overflow: hidden;
 }
@@ -401,10 +403,12 @@ select.is-invalid {
 }
 
 /* Card style for marital containers */
-#marriedFields, #widowedFields, #divorcedFields {
+#marriedFields,
+#widowedFields,
+#divorcedFields {
   border-radius: 12px;
   background: var(--card-bg);
-  box-shadow: 0 10px 24px rgba(8,20,40,0.06);
+  box-shadow: 0 10px 24px rgba(8, 20, 40, 0.06);
   padding: 14px;
 }
 
@@ -433,4 +437,24 @@ select.is-invalid {
 .hidden-nationality-group,
 #nationality {
   display: none !important;
+}
+
+/* Class-based visibility for marital and other conditional fields */
+.is-visible {
+  display: block !important;
+  opacity: 1;
+  max-height: 1000px;
+  overflow: visible;
+  animation: fadeSlideIn 0.4s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
