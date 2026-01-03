@@ -364,6 +364,7 @@ select.is-invalid {
   gap: 8px;
   align-items: center;
   margin: 0;
+  white-space: nowrap; /* keep input and its Arabic text together on one line */
 }
 
 /* Progress bar */
