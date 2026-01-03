@@ -53,8 +53,8 @@ const { JSDOM } = require('jsdom');
   );
   assert.strictEqual(
     visitsField.getAttribute('aria-hidden'),
-    'false',
-    'US_Visits_Container should have aria-hidden="false" when visible'
+    null,
+    'US_Visits_Container should not have aria-hidden attribute when visible'
   );
 
   // Accessibility: add / remove controls should include aria-labels
@@ -98,8 +98,8 @@ const { JSDOM } = require('jsdom');
   );
   assert.strictEqual(
     visitsField.getAttribute('aria-hidden'),
-    'true',
-    'US_Visits_Container should have aria-hidden="true" when hidden'
+    null,
+    'US_Visits_Container should not have aria-hidden attribute when hidden'
   );
   // ensure required attributes are removed from existing entries
   assert(
@@ -147,8 +147,8 @@ const { JSDOM } = require('jsdom');
   );
   assert.strictEqual(
     visitsField.getAttribute('aria-hidden'),
-    'false',
-    'US_Visits_Container should keep aria-hidden="false" after adding an entry'
+    null,
+    'US_Visits_Container should not have aria-hidden attribute after adding an entry'
   );
 
   // Keyboard accessibility: newly added entry should be focusable via programmatic focus

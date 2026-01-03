@@ -40,11 +40,18 @@ const { JSDOM } = require('jsdom');
     'false',
     'lostPassportFields should have aria-expanded="false" initially'
   );
+  // aria-hidden removed in favor of aria-expanded + disabling inputs to avoid hidden-focusable lint
   assert.strictEqual(
     lostFields.getAttribute('aria-hidden'),
-    'true',
-    'lostPassportFields should have aria-hidden="true" initially'
+    null,
+    'lostPassportFields should not have aria-hidden attribute initially'
   );
+
+  // ensure inputs are disabled initially
+  const controlsArray = Array.from(controls);
+  controlsArray.forEach((c) => {
+    assert(c.disabled, `Control ${c.id || c.name} should be disabled initially`);
+  });
 
   // No inputs should be required initially
   const controls = lostFields.querySelectorAll('input, select, textarea');
@@ -73,9 +80,14 @@ const { JSDOM } = require('jsdom');
   );
   assert.strictEqual(
     lostFields.getAttribute('aria-hidden'),
-    'false',
-    'lostPassportFields should have aria-hidden="false" when visible'
+    null,
+    'lostPassportFields should not have aria-hidden attribute when visible'
   );
+
+  // ensure inputs are enabled when visible
+  controlsArray.forEach((c) => {
+    assert(!c.disabled, `Control ${c.id || c.name} should be enabled when visible`);
+  });
 
   // Ensure passport number is required when visible (Do Not Know unchecked)
   const num = doc.getElementById('lostPassportNumber');
@@ -113,9 +125,14 @@ const { JSDOM } = require('jsdom');
   );
   assert.strictEqual(
     lostFields.getAttribute('aria-hidden'),
-    'true',
-    'lostPassportFields should have aria-hidden="true" after hiding'
+    null,
+    'lostPassportFields should not have aria-hidden attribute after hiding'
   );
+
+  // ensure inputs are disabled after hiding
+  controlsArray.forEach((c) => {
+    assert(c.disabled, `Control ${c.id || c.name} should be disabled after hiding`);
+  });
 
   // Ensure required attributes removed and Do Not Know unchecked
   controls.forEach((c) => {

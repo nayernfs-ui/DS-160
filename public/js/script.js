@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   const widowedFields = document.getElementById('widowedFields');
   const divorcedFields = document.getElementById('divorcedFields');
 
+  // Flag to indicate when the page's JS init has completed (used by tests/fallback)
+  window.__ds160Ready = false;
+
   // --- NEW / MODIFIED SUBMISSION LOGIC WITH INLINE ERRORS ---
   const form = document.getElementById('ds160Form');
   const confirmationMessage = document.getElementById('confirmationMessage');
@@ -185,7 +188,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
         // Use class-based visibility
         f.classList.remove('is-visible');
         f.style.animation = '';
-        f.setAttribute('aria-hidden', 'true');
+        // aria-hidden omitted to avoid hidden-focusable lint; inputs are disabled when hidden
         f.setAttribute('aria-expanded', 'false');
         // Disable all inputs when hidden
         f.querySelectorAll('input, select, textarea').forEach((el) => {
@@ -209,19 +212,19 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     if (married) {
       married.style.setProperty('display', 'none', 'important');
       married.style.animation = '';
-      married.setAttribute('aria-hidden', 'true');
+      // aria-hidden omitted to avoid hidden-focusable lint
       married.setAttribute('aria-expanded', 'false');
     }
     if (widowed) {
       widowed.style.setProperty('display', 'none', 'important');
       widowed.style.animation = '';
-      widowed.setAttribute('aria-hidden', 'true');
+      // aria-hidden omitted to avoid hidden-focusable lint
       widowed.setAttribute('aria-expanded', 'false');
     }
     if (divorced) {
       divorced.style.setProperty('display', 'none', 'important');
       divorced.style.animation = '';
-      divorced.setAttribute('aria-hidden', 'true');
+      // aria-hidden omitted to avoid hidden-focusable lint
       divorced.setAttribute('aria-expanded', 'false');
     }
   }
@@ -232,8 +235,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     // Use setProperty with !important so explicit CSS rules can't override JS
     widowedFields.style.setProperty('display', 'none', 'important');
     widowedFields.style.animation = '';
-    widowedFields.setAttribute('aria-hidden', 'true');
+    // aria-hidden omitted to avoid hidden-focusable lint
     widowedFields.setAttribute('aria-expanded', 'false');
+    widowedFields.classList.remove('is-visible');
     // remove required and error markers from any inputs inside widowed fields
     widowedFields.querySelectorAll('input, select, textarea').forEach((el) => {
       el.removeAttribute('required');
@@ -251,8 +255,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     // Use setProperty with !important so explicit CSS rules can't override JS
     marriedFields.style.setProperty('display', 'none', 'important');
     marriedFields.style.animation = '';
-    marriedFields.setAttribute('aria-hidden', 'true');
+    // aria-hidden omitted to avoid hidden-focusable lint
     marriedFields.setAttribute('aria-expanded', 'false');
+    marriedFields.classList.remove('is-visible');
     // remove required and error markers from any inputs inside married fields
     marriedFields.querySelectorAll('input, select, textarea').forEach((el) => {
       el.removeAttribute('required');
@@ -284,8 +289,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     if (!divorcedFields) return;
     divorcedFields.style.setProperty('display', 'none', 'important');
     divorcedFields.style.animation = '';
-    divorcedFields.setAttribute('aria-hidden', 'true');
+    // aria-hidden omitted to avoid hidden-focusable lint
     divorcedFields.setAttribute('aria-expanded', 'false');
+    divorcedFields.classList.remove('is-visible');
     // remove required and error markers from any inputs inside divorced fields
     divorcedFields.querySelectorAll('input, select, textarea').forEach((el) => {
       el.removeAttribute('required');
@@ -342,7 +348,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     // Use setProperty with !important so inline intent overrides stylesheet !important
     fieldset.style.setProperty('display', 'block', 'important');
     fieldset.style.animation = 'fadeIn 0.5s';
-    fieldset.setAttribute('aria-hidden', 'false');
+    // aria-hidden omitted to avoid hidden-focusable lint (fieldset shown)
     fieldset.setAttribute('aria-expanded', 'true');
 
     // If we're showing the married fields, make the spouse address and key spouse DOB fields required
@@ -391,8 +397,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     // 2. Exact Match Selection (case-sensitive)
     if (status === 'Married' && marriedDiv) {
       marriedDiv.style.setProperty('display', 'block', 'important');
-      marriedDiv.setAttribute('aria-hidden', 'false');
+      // aria-hidden omitted to avoid hidden-focusable lint (married shown)
       marriedDiv.setAttribute('aria-expanded', 'true');
+      marriedDiv.classList.add('is-visible');
       // ensure spouse address and spouse DOB controls are required
       setSpouseAddressRequired(true);
       ['spouseDOBDay', 'spouseDOBMonth', 'spouseDOBYear'].forEach((id) => {
@@ -405,8 +412,9 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       });
     } else if (status === 'Widowed' && widowedDiv) {
       widowedDiv.style.setProperty('display', 'block', 'important');
-      widowedDiv.setAttribute('aria-hidden', 'false');
+      // aria-hidden omitted to avoid hidden-focusable lint (widowed shown)
       widowedDiv.setAttribute('aria-expanded', 'true');
+      widowedDiv.classList.add('is-visible');
       // widowed: ensure spouse address is not required
       setSpouseAddressRequired(false);
       // enable controls inside widowed block
@@ -416,8 +424,10 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     } else if (status === 'Divorced' && divorcedFields) {
       // Show divorced block and ensure others remain hidden
       divorcedFields.style.setProperty('display', 'block', 'important');
-      divorcedFields.setAttribute('aria-hidden', 'false');
+      // aria-hidden omitted to avoid hidden-focusable lint (divorced shown)
       divorcedFields.setAttribute('aria-expanded', 'true');
+      divorcedFields.classList.add('is-visible');
+      console.log('[marital] Divorced shown, making fields visible');
       // divorced: ensure spouse address is not required
       setSpouseAddressRequired(false);
       // enable controls inside divorced block
@@ -614,12 +624,12 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       fatherStatusGroup.style.display = 'block';
       fatherStatusGroup.style.animation = 'fadeIn 0.5s';
       fatherStatusGroup.setAttribute('aria-expanded', 'true');
-      fatherStatusGroup.setAttribute('aria-hidden', 'false');
+      // aria-hidden omitted to avoid hidden-focusable lint (father shown)
       fatherStatusSelect.setAttribute('required', 'required');
     } else {
       fatherStatusGroup.style.display = 'none';
       fatherStatusGroup.setAttribute('aria-expanded', 'false');
-      fatherStatusGroup.setAttribute('aria-hidden', 'true');
+      // aria-hidden omitted to avoid hidden-focusable lint (father hidden)
       fatherStatusSelect.removeAttribute('required');
       fatherStatusSelect.classList.remove('is-invalid');
       const err = document.getElementById('error-fatherStatus');
@@ -648,12 +658,12 @@ document.addEventListener('DOMContentLoaded', (_event) => {
       motherStatusGroup.style.display = 'block';
       motherStatusGroup.style.animation = 'fadeIn 0.5s';
       motherStatusGroup.setAttribute('aria-expanded', 'true');
-      motherStatusGroup.setAttribute('aria-hidden', 'false');
+      // aria-hidden omitted to avoid hidden-focusable lint (mother shown)
       motherStatusSelect.setAttribute('required', 'required');
     } else {
       motherStatusGroup.style.display = 'none';
       motherStatusGroup.setAttribute('aria-expanded', 'false');
-      motherStatusGroup.setAttribute('aria-hidden', 'true');
+      // aria-hidden omitted to avoid hidden-focusable lint (mother hidden)
       motherStatusSelect.removeAttribute('required');
       motherStatusSelect.classList.remove('is-invalid');
       const err = document.getElementById('error-motherStatus');
@@ -713,7 +723,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
             previousUSVisits.style.animation = 'fadeIn 0.5s';
             // accessibility: mark expanded and visible
             previousUSVisits.setAttribute('aria-expanded', 'true');
-            previousUSVisits.setAttribute('aria-hidden', 'false');
+            // aria-hidden omitted to avoid hidden-focusable lint (previous visits shown)
             // require fields for all currently visible entries
             const currentCount = visitEntries
               ? visitEntries.querySelectorAll('.visit-entry').length
@@ -723,7 +733,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
             previousUSVisits.style.display = 'none';
             // accessibility: mark collapsed/hidden
             previousUSVisits.setAttribute('aria-expanded', 'false');
-            previousUSVisits.setAttribute('aria-hidden', 'true');
+            // aria-hidden omitted to avoid hidden-focusable lint (previous visits hidden)
             // remove required attributes from all entries
             for (let i = 1; i <= maxVisits; i++) setVisitRequired(i, false);
           }
@@ -925,7 +935,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
             relativesContainer.style.display = 'block';
             relativesContainer.style.animation = 'fadeIn 0.5s';
             relativesContainer.setAttribute('aria-expanded', 'true');
-            relativesContainer.setAttribute('aria-hidden', 'false');
+            // aria-hidden omitted to avoid hidden-focusable lint (relatives shown)
             const currentCount = relativeEntries
               ? relativeEntries.querySelectorAll('.relative-entry').length
               : 0;
@@ -933,7 +943,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           } else {
             relativesContainer.style.display = 'none';
             relativesContainer.setAttribute('aria-expanded', 'false');
-            relativesContainer.setAttribute('aria-hidden', 'true');
+            // aria-hidden omitted to avoid hidden-focusable lint (relatives hidden)
             for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
           }
         });
@@ -1111,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
             educationContainer.style.display = 'block';
             educationContainer.style.animation = 'fadeIn 0.5s';
             educationContainer.setAttribute('aria-expanded', 'true');
-            educationContainer.setAttribute('aria-hidden', 'false');
+            // aria-hidden omitted to avoid hidden-focusable lint (education shown)
             const currentCount = educationEntries
               ? educationEntries.querySelectorAll('.edu-entry').length
               : 0;
@@ -1119,7 +1129,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
           } else {
             educationContainer.style.display = 'none';
             educationContainer.setAttribute('aria-expanded', 'false');
-            educationContainer.setAttribute('aria-hidden', 'true');
+            // aria-hidden omitted to avoid hidden-focusable lint (education hidden)
             for (let i = 1; i <= maxEducation; i++) setEducationRequired(i, false);
           }
         });
@@ -1586,56 +1596,108 @@ document.addEventListener('DOMContentLoaded', (_event) => {
     });
   });
 
-  // Ensure initial state is correct (e.g., if fields were pre-filled)
-  hideAllMaritalFields();
-  if (companionFields) companionFields.style.display = 'none';
-  if (denialTimeField) denialTimeField.style.display = 'none';
-  if (otherNationalityFields) otherNationalityFields.style.display = 'none';
-  if (otherPassportField) otherPassportField.style.display = 'none';
-  if (otherPermanentResidentFields) otherPermanentResidentFields.style.display = 'none';
+  // Move initialization and listeners into exported init so test harnesses can call it
+  function initDs160() {
+    // Ensure initial state is correct (e.g., if fields were pre-filled)
+    hideAllMaritalFields();
+    if (companionFields) companionFields.style.display = 'none';
+    if (denialTimeField) denialTimeField.style.display = 'none';
+    if (otherNationalityFields) otherNationalityFields.style.display = 'none';
+    if (otherPassportField) otherPassportField.style.display = 'none';
+    if (otherPermanentResidentFields) otherPermanentResidentFields.style.display = 'none';
 
-  // --- Progress bar logic ---
-  function updateProgressBar() {
-    try {
-      const bars = document.querySelectorAll('form > fieldset');
-      if (!bars || !bars.length) return;
-      const mid = window.innerHeight / 2;
-      let activeIndex = 0;
-      bars.forEach((fs, idx) => {
-        const r = fs.getBoundingClientRect();
-        if (r.top <= mid && r.bottom >= mid) activeIndex = idx;
-      });
-      // fallback: if none contain mid, pick closest by top distance
-      if (activeIndex === 0) {
-        let minDist = Infinity;
+    // --- Progress bar logic ---
+    function updateProgressBar() {
+      try {
+        console.log('[progress] updateProgressBar: run');
+        const bars = document.querySelectorAll('form > fieldset');
+        console.log('[progress] updateProgressBar: bars found', bars ? bars.length : 0);
+        if (!bars || !bars.length) return;
+        const mid = window.innerHeight / 2;
+        console.log(
+          '[progress] updateProgressBar: window.innerHeight',
+          window.innerHeight,
+          'mid',
+          mid
+        );
+        let activeIndex = 0;
         bars.forEach((fs, idx) => {
           const r = fs.getBoundingClientRect();
-          const dist = Math.abs(r.top - mid);
-          if (dist < minDist) {
-            minDist = dist;
-            activeIndex = idx;
-          }
+          console.log(
+            '[progress] updateProgressBar: fieldset',
+            idx,
+            fs.id || null,
+            'rect',
+            r.top,
+            r.bottom,
+            r.height
+          );
+          if (r.top <= mid && r.bottom >= mid) activeIndex = idx;
         });
+        // fallback: if none contain mid, pick closest by top distance
+        if (activeIndex === 0) {
+          let minDist = Infinity;
+          bars.forEach((fs, idx) => {
+            const r = fs.getBoundingClientRect();
+            const dist = Math.abs(r.top - mid);
+            if (dist < minDist) {
+              minDist = dist;
+              activeIndex = idx;
+            }
+          });
+        }
+        const pct = Math.round(((activeIndex + 1) / bars.length) * 100);
+        console.log('[progress] updateProgressBar: activeIndex', activeIndex, 'pct', pct);
+        const bar = document.querySelector('.progress-bar');
+        const role = document.querySelector('.progress');
+        if (bar) {
+          bar.style.width = pct + '%';
+          console.log('[progress] updateProgressBar: bar width set to', pct + '%');
+        }
+        if (role) {
+          // support native <progress> or custom role-based progress
+          if (role.tagName && role.tagName.toUpperCase() === 'PROGRESS') {
+            try {
+              role.value = pct;
+              role.setAttribute('aria-valuenow', pct);
+              console.log('[progress] updateProgressBar: native <progress> value set to', pct);
+            } catch (e) {
+              role.setAttribute('aria-valuenow', pct);
+              console.log('[progress] updateProgressBar: aria-valuenow set to', pct);
+            }
+          } else {
+            role.setAttribute('aria-valuenow', pct);
+            console.log('[progress] updateProgressBar: role aria-valuenow set to', pct);
+          }
+        }
+      } catch (e) {
+        console.error('updateProgressBar: error', e);
       }
-      const pct = Math.round(((activeIndex + 1) / bars.length) * 100);
-      const bar = document.querySelector('.progress-bar');
-      const role = document.querySelector('.progress');
-      if (bar) bar.style.width = pct + '%';
-      if (role) role.setAttribute('aria-valuenow', pct);
-    } catch (e) {
-      /* ignore */
     }
+
+    // Attach listeners
+    window.addEventListener('scroll', updateProgressBar, { passive: true });
+    document.addEventListener('focusin', updateProgressBar);
+    // ensure initial measurement
+    setTimeout(updateProgressBar, 150);
+
+    // Ensure progress updates after any marital visibility change
+    if (typeof updateMaritalFields === 'function') {
+      const marSelect = document.getElementById('maritalStatus');
+      if (marSelect) marSelect.addEventListener('change', updateProgressBar);
+    }
+
+    // Expose updateProgressBar for tests/debugging
+    window.updateProgressBar = updateProgressBar;
+    // Expose marital update helper for tests
+    window.updateMaritalFields = updateMaritalFields;
+    // Mark readiness for test harnesses to detect when init completed
+    window.__ds160Ready = true;
   }
 
-  // Call it on key interactions / scroll
-  window.addEventListener('scroll', updateProgressBar, { passive: true });
-  document.addEventListener('focusin', updateProgressBar);
-  // ensure initial measurement
-  setTimeout(updateProgressBar, 150);
+  // Export init to window so setContent/injected scripts can initialize
+  window.initDs160 = initDs160;
 
-  // Ensure progress updates after any marital visibility change
-  if (typeof updateMaritalFields === 'function') {
-    const marSelect = document.getElementById('maritalStatus');
-    if (marSelect) marSelect.addEventListener('change', updateProgressBar);
-  }
+  // Run initialization
+  initDs160();
 });

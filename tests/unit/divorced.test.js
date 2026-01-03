@@ -48,7 +48,19 @@ const { JSDOM } = require('jsdom');
     'divorcedFields should be visible after selecting Divorced'
   );
   assert.strictEqual(divorced.getAttribute('aria-expanded'), 'true');
-  assert.strictEqual(divorced.getAttribute('aria-hidden'), 'false');
+  assert.strictEqual(
+    divorced.getAttribute('aria-hidden'),
+    null,
+    'divorcedFields should not have aria-hidden attribute when visible'
+  );
+
+  // Ensure inputs are enabled when visible
+  [exName, divYear, exNationality].forEach((el) => {
+    assert(
+      el && !el.disabled,
+      `${el && (el.id || el.name)} should be enabled when divorced is visible`
+    );
+  });
 
   // Key fields should be required when divorced is selected
   const exName = doc.getElementById('exName');
