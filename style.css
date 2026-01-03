@@ -322,6 +322,16 @@ select.is-invalid {
   white-space: nowrap; /* keep input and its Arabic text together on one line */
 }
 
+/* RTL-specific stronger rule + diagnostic background to verify Vercel is loading updated CSS */
+html[dir='rtl'] .question-group .options-row > label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap !important; /* diagnostic: force nowrap in case of overrides */
+  background: rgba(255, 0, 0, 0.02); /* faint red marker for verification */
+  padding: 2px 4px; /* small hit area for the visual check */
+}
+
 /* Progress bar */
 .progress-wrap {
   margin-bottom: 12px;
