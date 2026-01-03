@@ -36,7 +36,12 @@ function save(name, buf) {
       await page.evaluate(() => document.documentElement.setAttribute('dir', 'ltr'));
       await page.evaluate(() => void document.body.offsetHeight);
     }
-    await page.waitForTimeout(250);
+    // Use page.waitForTimeout when available; otherwise fall back to a JS timeout
+    if (typeof page.waitForTimeout === 'function') {
+      await page.waitForTimeout(500);
+    } else {
+      await new Promise((r) => setTimeout(r, 500));
+    }
     const screenName = `${setRTL ? 'rtl' : 'ltr'}-${suffix}.png`;
     save(screenName, await page.screenshot({ fullPage: true }));
 
@@ -69,6 +74,12 @@ function save(name, buf) {
     });
     console.log('OPTIONS-ROW: puppeteer launched');
     page = await browser.newPage();
+    // emit page console messages to the node log to aid debugging in CI
+    page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', (err) =>
+      console.error('PAGE ERROR:', err && (err.stack || err.message || err))
+    );
+    page.on('response', (r) => console.log('PAGE RESP:', r.status(), r.url().slice(0, 120)));
     console.log('OPTIONS-ROW: newPage created');
 
     // Force deterministic local fallback (avoids waiting on an external dev server)
@@ -77,9 +88,20 @@ function save(name, buf) {
     const cssPath = require('path').resolve(__dirname, '../../public/style.css');
     const jsPath = require('path').resolve(__dirname, '../../public/js/script.js');
     const html = require('fs').readFileSync(htmlPath, 'utf8');
-    await page.setContent(html);
+    console.log('OPTIONS-ROW: setContent() -> starting');
+    // avoid waiting on external resource loads; DOMContentLoaded is sufficient for our checks
+    await page.setContent(html, { waitUntil: 'domcontentloaded' });
+    console.log('OPTIONS-ROW: setContent() -> done');
+
+    console.log('OPTIONS-ROW: addStyleTag -> starting');
     await page.addStyleTag({ path: cssPath });
+    console.log('OPTIONS-ROW: addStyleTag -> done');
+
+    console.log('OPTIONS-ROW: addScriptTag -> starting');
     await page.addScriptTag({ path: jsPath });
+    console.log('OPTIONS-ROW: addScriptTag -> done');
+
+    console.log('OPTIONS-ROW: evaluate DOMContentLoaded -> starting');
     await page.evaluate(() => {
       window.dispatchEvent(new Event('DOMContentLoaded'));
       if (typeof updateProgressBar === 'function') updateProgressBar();

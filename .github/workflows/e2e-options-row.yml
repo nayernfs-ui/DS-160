@@ -1,0 +1,55 @@
+name: Visual E2E — options-row
+
+on:
+  pull_request:
+    paths:
+      - 'public/**'
+      - 'tests/e2e/**'
+      - '.github/workflows/**'
+      - 'package.json'
+  workflow_dispatch: {}
+
+jobs:
+  options-row:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start static server
+        run: |
+          node tools/static-server.js &
+          n=0
+          until curl -sSf http://127.0.0.1:3000/ >/dev/null || [ $n -gt 30 ]; do
+            sleep 1
+            n=$((n+1))
+            echo "waiting for server... $n"
+          done
+
+      - name: Run options-row visual script
+        env:
+          TARGET_URL: http://127.0.0.1:3000/
+        run: npm run test:e2e:options-row
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: options-row-trace
+          path: tests/e2e/trace-output/options-row/**
