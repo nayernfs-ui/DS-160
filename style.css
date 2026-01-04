@@ -300,7 +300,7 @@ select.is-invalid {
 
   /* Stack option rows on small screens: prefer inline with wrapping rather than forcing a column */
   .options-row {
-    flex-direction: row;
+    flex-direction: row !important;
     flex-wrap: wrap;
     gap: 12px;
   }
@@ -308,8 +308,8 @@ select.is-invalid {
 
 /* Utility: horizontally align radio/option labels and respect document direction (RTL/LTR) */
 .options-row {
-  display: flex;
-  flex-direction: row; /* remain logical; will not hard-code left/right */
+  display: flex !important;
+  flex-direction: row !important; /* remain logical; will not hard-code left/right */
   gap: 30px;
   align-items: center;
   direction: inherit; /* follow document direction for RTL compatibility */
@@ -319,7 +319,7 @@ select.is-invalid {
   gap: 8px;
   align-items: center;
   margin: 0;
-  white-space: nowrap; /* keep input and its Arabic text together on one line */
+  white-space: nowrap !important; /* keep input and its Arabic text together on one line */
 }
 
 /* RTL-specific stronger rule + diagnostic background to verify Vercel is loading updated CSS */
