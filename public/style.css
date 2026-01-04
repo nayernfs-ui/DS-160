@@ -366,6 +366,14 @@ select.is-invalid {
   margin: 0;
   white-space: nowrap !important; /* keep input and its Arabic text together on one line */
 }
+.options-row input[type='radio'],
+.options-row input[type='checkbox'] {
+  /* radios/checkboxes should not flex like text inputs */
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0;
+  margin: 0 !important;
+}
 
 /* RTL-specific stronger rule + diagnostic background to verify Vercel is loading updated CSS */
 html[dir='rtl'] .question-group .options-row > label {

@@ -314,12 +314,20 @@ select.is-invalid {
   align-items: center;
   direction: inherit; /* follow document direction for RTL compatibility */
 }
-.options-row > label {
+..options-row > label {
   display: inline-flex;
   gap: 8px;
   align-items: center;
   margin: 0;
   white-space: nowrap !important; /* keep input and its Arabic text together on one line */
+}
+.options-row input[type='radio'],
+.options-row input[type='checkbox'] {
+  /* radios/checkboxes should not flex like text inputs */
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0;
+  margin: 0 !important;
 }
 
 /* RTL-specific stronger rule + diagnostic background to verify Vercel is loading updated CSS */
