@@ -5,12 +5,22 @@ const puppeteer = require('puppeteer');
     const url = process.env.TARGET_URL || 'https://ds-160-fresh.vercel.app';
     console.log('LIVE OPTIONS-ROW CHECK: Target URL:', url);
 
-    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage','--disable-gpu'] });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+      ],
+    });
     const page = await browser.newPage();
     page.on('console', (m) => console.log('PAGE CONSOLE:', m.text()));
-    page.on('pageerror', (err) => console.error('PAGE ERROR:', err && (err.stack || err.message || err)));
+    page.on('pageerror', (err) =>
+      console.error('PAGE ERROR:', err && (err.stack || err.message || err))
+    );
 
-    async function check(viewport, dir) {
+    const check = async (viewport, dir) => {
       console.log(' - checking', viewport.width, 'x', viewport.height, 'dir=', dir);
       await page.setViewport(viewport);
       try {
@@ -49,13 +59,17 @@ const puppeteer = require('puppeteer');
                   range.setStart(lab, 0);
                 }
                 range.setEnd(lab, lab.childNodes.length);
-                const rects = range.getBoundingClientRect ? [range.getBoundingClientRect()] : Array.from(range.getClientRects());
+                const rects = range.getBoundingClientRect
+                  ? [range.getBoundingClientRect()]
+                  : Array.from(range.getClientRects());
                 textRect = rects && rects[0] ? rects[0] : null;
               } else {
                 // fallback to label text rect
                 const range = document.createRange();
                 range.selectNodeContents(lab);
-                const r = range.getBoundingClientRect ? range.getBoundingClientRect() : Array.from(range.getClientRects())[0];
+                const r = range.getBoundingClientRect
+                  ? range.getBoundingClientRect()
+                  : Array.from(range.getClientRects())[0];
                 textRect = r || null;
               }
             } catch (e) {
@@ -72,16 +86,20 @@ const puppeteer = require('puppeteer');
             return {
               html: lab.innerText.trim().slice(0, 120),
               hasInput: !!input,
-              inputRect: inputRect ? {
-                left: Math.round(inputRect.left),
-                right: Math.round(inputRect.right),
-                width: Math.round(inputRect.width),
-              } : null,
-              textRect: textRect ? {
-                left: Math.round(textRect.left),
-                right: Math.round(textRect.right),
-                width: Math.round(textRect.width),
-              } : null,
+              inputRect: inputRect
+                ? {
+                    left: Math.round(inputRect.left),
+                    right: Math.round(inputRect.right),
+                    width: Math.round(inputRect.width),
+                  }
+                : null,
+              textRect: textRect
+                ? {
+                    left: Math.round(textRect.left),
+                    right: Math.round(textRect.right),
+                    width: Math.round(textRect.width),
+                  }
+                : null,
               overlap,
               whiteSpace: getComputedStyle(lab).whiteSpace,
             };
@@ -98,7 +116,7 @@ const puppeteer = require('puppeteer');
       });
 
       return { viewport, dir, results };
-    }
+    };
 
     const checks = [];
     checks.push(await check({ width: 1200, height: 900 }, 'ltr'));

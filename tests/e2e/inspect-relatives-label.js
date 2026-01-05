@@ -7,11 +7,19 @@ console.log('inspect-relatives-label.js: start');
   try {
     const browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage','--disable-gpu','--hide-scrollbars']
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--hide-scrollbars',
+      ],
     });
     const page = await browser.newPage();
     page.on('console', (m) => console.log('PAGE:', m.text()));
-    page.on('pageerror', (err) => console.error('PAGE ERROR:', err && (err.stack || err.message || err)));
+    page.on('pageerror', (err) =>
+      console.error('PAGE ERROR:', err && (err.stack || err.message || err))
+    );
 
     console.log(' -> setting local content (deterministic)');
     const fs = require('fs');
@@ -45,7 +53,11 @@ console.log('inspect-relatives-label.js: start');
 
     await new Promise((r) => setTimeout(r, 500));
 
-    const viewports = [ { width: 1200, height: 900 }, { width: 800, height: 600 }, { width: 375, height: 812 } ];
+    const viewports = [
+      { width: 1200, height: 900 },
+      { width: 800, height: 600 },
+      { width: 375, height: 812 },
+    ];
     const results = [];
     for (const vp of viewports) {
       await page.setViewport(vp);
@@ -57,16 +69,19 @@ console.log('inspect-relatives-label.js: start');
           const lab = input.closest('label');
           const el = lab || input;
           const inputRect = input.getBoundingClientRect();
-          const labRect = el.getBoundingClientRect();
           let textNodeRect = null;
           try {
             const range = document.createRange();
             if (input && input.nextSibling) range.setStartAfter(input);
             else if (el) range.setStart(el, 0);
             range.setEnd(el, el.childNodes.length);
-            const r = range.getBoundingClientRect ? range.getBoundingClientRect() : (range.getClientRects()[0] || null);
+            const r = range.getBoundingClientRect
+              ? range.getBoundingClientRect()
+              : range.getClientRects()[0] || null;
             if (r && r.width) textNodeRect = r;
-          } catch (e) {}
+          } catch (e) {
+            /* ignore measurement errors */
+          }
 
           let overlap = false;
           if (inputRect && textNodeRect) {
@@ -81,9 +96,19 @@ console.log('inspect-relatives-label.js: start');
             labelText: lab ? lab.innerText.trim() : null,
             labelWhiteSpace: lab ? getComputedStyle(lab).whiteSpace : null,
             labelDisplay: lab ? getComputedStyle(lab).display : null,
-            inputRect: { left: Math.round(inputRect.left), right: Math.round(inputRect.right), width: Math.round(inputRect.width) },
-            textRect: textNodeRect ? { left: Math.round(textNodeRect.left), right: Math.round(textNodeRect.right), width: Math.round(textNodeRect.width) } : null,
-            overlap
+            inputRect: {
+              left: Math.round(inputRect.left),
+              right: Math.round(inputRect.right),
+              width: Math.round(inputRect.width),
+            },
+            textRect: textNodeRect
+              ? {
+                  left: Math.round(textNodeRect.left),
+                  right: Math.round(textNodeRect.right),
+                  width: Math.round(textNodeRect.width),
+                }
+              : null,
+            overlap,
           };
         }
 
@@ -94,7 +119,7 @@ console.log('inspect-relatives-label.js: start');
           otherNo: infoForInput('otherRelativesNo'),
           lostPassportDoNotKnow: infoForInput('lostPassportDoNotKnow'),
           docDir: document.documentElement.getAttribute('dir'),
-          viewport: { width: window.innerWidth, height: window.innerHeight }
+          viewport: { width: window.innerWidth, height: window.innerHeight },
         };
       });
       results.push({ viewport: vp, info });

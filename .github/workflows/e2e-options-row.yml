@@ -80,10 +80,10 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update options-row baseline images"
-          branch: "auto/update-options-row-baselines-${{ github.run_id }}"
-          title: "Update visual baselines: options-row"
-          body: "Automated baseline update from failing visual comparison in run ${{ github.run_id }}. Review diffs in the run artifacts and updated baselines in this PR."
+          commit-message: 'chore: update options-row baseline images'
+          branch: 'auto/update-options-row-baselines-${{ github.run_id }}'
+          title: 'Update visual baselines: options-row'
+          body: 'Automated baseline update from failing visual comparison in run ${{ github.run_id }}. Review diffs in the run artifacts and updated baselines in this PR.'
 
       - name: Fail if visual diffs present
         if: steps.check.outputs.passed == 'false'
