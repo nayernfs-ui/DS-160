@@ -66,13 +66,13 @@ label {
   gap: 12px;
   flex-wrap: wrap;
 }
-.question-group label {
+.question-group > label:first-child {
   width: 220px;
   flex: 0 0 220px;
   margin: 0;
   text-align: right; /* keep label aligned to the right in RTL */
 }
-..question-group input:not([type="radio"]):not([type="checkbox"]),
+.question-group input:not([type='radio']):not([type='checkbox']),
 .question-group select,
 .question-group textarea {
   flex: 1 1 auto;
@@ -314,7 +314,7 @@ select.is-invalid {
   align-items: center;
   direction: inherit; /* follow document direction for RTL compatibility */
 }
-..options-row > label {
+.options-row > label {
   display: inline-flex;
   gap: 8px;
   align-items: center;
@@ -378,14 +378,14 @@ html[dir='rtl'] .question-group > label:not([for]) {
   flex-wrap: wrap;
   position: relative;
 }
-.question-group label {
+.question-group > label:first-child {
   width: 220px;
   flex: 0 0 220px;
   margin: 0;
   text-align: right; /* keep label aligned to the right in RTL */
   transition: transform 200ms ease, color 200ms ease, font-size 200ms ease;
 }
-.question-group:focus-within label {
+.question-group:focus-within > label:first-child {
   transform: translateY(-8px) scale(0.93);
   color: var(--color-primary);
 }
@@ -434,7 +434,7 @@ html[dir='rtl'] .question-group > label:not([for]) {
     flex-direction: column;
     align-items: stretch;
   }
-  .question-group label {
+  .question-group > label:first-child {
     width: auto;
     text-align: right;
   }
