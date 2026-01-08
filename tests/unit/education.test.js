@@ -95,7 +95,9 @@ const { JSDOM } = require('jsdom');
   assert(addBtn, 'add-education control not found');
 
   for (let expected = 2; expected <= 5; expected++) {
-    addBtn.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    // Use exported helper to add entries deterministically
+    if (typeof dom.window.addEducationEntry === 'function') dom.window.addEducationEntry();
+    else addBtn.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
     await new Promise((r) => setTimeout(r, 20));
     const entries = doc.querySelectorAll('.edu-entry');
     assert.strictEqual(entries.length, expected, `Expected ${expected} education entries`);

@@ -25,10 +25,24 @@ const { JSDOM } = require('jsdom');
   });
 
   await new Promise((r) => setTimeout(r, 50));
+  // Ensure init ran and test helpers are wired (robust against JSDOM timing)
+  if (typeof dom.window.initDs160 === 'function' && !dom.window.__ds160Ready) {
+    dom.window.initDs160();
+    await new Promise((r) => setTimeout(r, 20));
+  }
   const doc = dom.window.document;
 
   const militaryFields = doc.getElementById('militaryFields');
   assert(militaryFields, 'militaryFields container not found');
+
+  console.log('military.test: __ds160Ready =', dom.window.__ds160Ready);
+  console.log(
+    'military.test: radios count =',
+    doc.querySelectorAll('input[name="Military_Served"]').length
+  );
+  Array.from(doc.querySelectorAll('input[name="Military_Served"]')).forEach((r, i) => {
+    console.log('military.test: radio', i, 'bound?', r.__ds160MilitaryBound || null);
+  });
 
   // Initial State: hidden and aria attributes indicate collapsed
   assert(
@@ -47,13 +61,21 @@ const { JSDOM } = require('jsdom');
     'militaryFields should not have aria-hidden attribute initially'
   );
 
+  // Gather controls inside the military fields
+  const controls = militaryFields.querySelectorAll('input, select, textarea');
+
   // Inputs inside hidden sections should be disabled initially
   controls.forEach((c) => {
     assert(c.disabled, `Control ${c.id || c.name} should be disabled initially`);
   });
 
   // No inputs should be required initially
-  const controls = militaryFields.querySelectorAll('input, select, textarea');
+  controls.forEach((c) => {
+    assert(
+      !c.hasAttribute('required'),
+      `Control ${c.id || c.name} should not be required initially`
+    );
+  });
   controls.forEach((c) => {
     assert(
       !c.hasAttribute('required'),

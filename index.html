@@ -420,7 +420,7 @@
                 <option value="Colombia">Colombia</option>
                 <option value="Comoros">Comoros</option>
                 <option value="Costa Rica">Costa Rica</option>
-                <option value="C�te d'Ivoire">C�te d'Ivoire</option>
+                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
                 <option value="Croatia">Croatia</option>
                 <option value="Cuba">Cuba</option>
                 <option value="Cyprus">Cyprus</option>
@@ -1134,6 +1134,7 @@
                     class="remove-visit"
                     style="margin-left: 8px"
                     aria-label="Remove visit 1"
+                    tabindex="0"
                   >
                     - ?????
                   </button>
@@ -1346,7 +1347,12 @@
             >
           </div>
 
-          <div class="question-group" id="fatherStatusGroup" aria-expanded="false">
+          <div
+            class="question-group"
+            id="fatherStatusGroup"
+            style="display: none"
+            aria-expanded="false"
+          >
             <label for="fatherStatus">???? ???? (Father's Status):</label>
             <select id="fatherStatus" name="Father_Status">
               <option value="">- ???? -</option>
@@ -1446,7 +1452,12 @@
             >
           </div>
 
-          <div class="question-group" id="motherStatusGroup" aria-expanded="false">
+          <div
+            class="question-group"
+            id="motherStatusGroup"
+            style="display: none"
+            aria-expanded="false"
+          >
             <label for="motherStatus">???? ???? (Mother's Status):</label>
             <select id="motherStatus" name="Mother_Status">
               <option value="">- ???? -</option>
@@ -2610,6 +2621,7 @@
             class="conditional-fields"
             aria-expanded="false"
             aria-live="polite"
+            style="display: none"
           >
             <div class="question-group">
               <label for="militaryBranch">??? ??????:</label>
