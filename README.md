@@ -1,5 +1,7 @@
 # nayernfs-ui
 
+[![CI](https://github.com/nayernfs-ui/DS-160/actions/workflows/ci.yml/badge.svg)](https://github.com/nayernfs-ui/DS-160/actions/workflows/ci.yml)
+
 This is the nayernfs-ui project.
 
 Contains:
