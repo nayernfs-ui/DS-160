@@ -5,7 +5,9 @@ const promote = require('../tools/vercel-promote');
 
 async function run() {
   const previewRootScope = nock('https://ds-160-fresh.vercel.app').persist();
-  previewRootScope.get('/').reply(200, '<html><head><title>outdated</title></head><body>old</body></html>');
+  previewRootScope
+    .get('/')
+    .reply(200, '<html><head><title>outdated</title></head><body>old</body></html>');
 
   const previewCssScope = nock('https://ds-160-fresh.vercel.app').persist();
   previewCssScope.get('/style.css?v=force-redeploy-20260108-2').reply(404, 'Not found');
@@ -15,7 +17,7 @@ async function run() {
     PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
     VERIFY_MARKER: 'preview force-redeploy',
     VERIFY_ONLY: '1',
-    MAX_VERIFY_RETRIES: '3'
+    MAX_VERIFY_RETRIES: '3',
   });
 
   try {

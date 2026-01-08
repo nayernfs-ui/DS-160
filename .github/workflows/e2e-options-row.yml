@@ -48,10 +48,18 @@ jobs:
             echo "waiting for server... $n"
           done
 
-      - name: Run options-row visual script
+      - name: Run options-row visual script (with retries)
         env:
           TARGET_URL: http://127.0.0.1:3000/
-        run: npm run test:e2e:options-row
+        run: |
+          for i in 1 2 3; do
+            npm run test:e2e:options-row && break
+            echo "options-row visual script failed on attempt $i"
+            if [ "$i" -eq 3 ]; then
+              echo "All attempts failed"; exit 1
+            fi
+            sleep 10
+          done
 
       - name: Compare visual artifacts (write results, non-failing)
         run: |

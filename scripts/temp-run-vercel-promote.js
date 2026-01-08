@@ -12,17 +12,24 @@ async function run() {
     .reply(200, {
       statuses: [
         { context: 'ci/circle', state: 'success' },
-        { context: 'Vercel', state: 'success', target_url: 'https://vercel.com/nayer-raouf-projects/ds-160-fresh/abc123' }
-      ]
+        {
+          context: 'Vercel',
+          state: 'success',
+          target_url: 'https://vercel.com/nayer-raouf-projects/ds-160-fresh/abc123',
+        },
+      ],
     });
 
   nock('https://api.vercel.com')
-    .post('/v1/aliases', body => !!body.alias && !!body.deploymentId)
+    .post('/v1/aliases', (body) => !!body.alias && !!body.deploymentId)
     .reply(200, { ok: true });
 
   nock('https://ds-160-fresh.vercel.app')
     .get('/')
-    .reply(200, '<html><head><title>DS-160 Client Survey — preview force-redeploy-20260108-2</title></head><body>ok</body></html>');
+    .reply(
+      200,
+      '<html><head><title>DS-160 Client Survey — preview force-redeploy-20260108-2</title></head><body>ok</body></html>'
+    );
 
   const oldEnv = Object.assign({}, process.env);
   Object.assign(process.env, {
@@ -31,7 +38,7 @@ async function run() {
     PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
     VERIFY_MARKER: 'preview force-redeploy',
     GITHUB_REPOSITORY: repo,
-    GITHUB_SHA: sha
+    GITHUB_SHA: sha,
   });
 
   try {

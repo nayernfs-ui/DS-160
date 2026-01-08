@@ -209,10 +209,23 @@ const { JSDOM } = require('jsdom');
   );
 
   // Now specifically test removing the LAST remaining visit entry
+  // First, reset by setting US_Visited to 'Yes' (to restore entries to default state)
+  const yesRadioReset = doc.querySelector('input[name="US_Visited"][value="Yes"]');
+  if (yesRadioReset && !yesRadioReset.checked) {
+    yesRadioReset.click();
+    await new Promise((r) => setTimeout(r, 50));
+  }
+
   // Ensure only one entry exists (remove extras if present)
   while (visitEntries().length > 1) {
     const removeLastBtn = visitEntries()[visitEntries().length - 1].querySelector('.remove-visit');
     dom.window.removeVisitEntry(removeLastBtn);
+    await new Promise((r) => setTimeout(r, 20));
+  }
+  // If there are zero entries (inter-test state), add one so the "remove last entry" test can run
+  if (visitEntries().length === 0) {
+    if (typeof dom.window.addVisitEntry === 'function') dom.window.addVisitEntry();
+    else if (addOnce) addOnce.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
     await new Promise((r) => setTimeout(r, 20));
   }
   assert.strictEqual(

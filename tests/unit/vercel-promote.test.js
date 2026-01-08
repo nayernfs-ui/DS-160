@@ -17,19 +17,26 @@ async function main() {
     .reply(200, {
       statuses: [
         { context: 'ci/circle', state: 'success' },
-        { context: 'Vercel', state: 'success', target_url: 'https://vercel.com/nayer-raouf-projects/ds-160-fresh/abc123' }
-      ]
+        {
+          context: 'Vercel',
+          state: 'success',
+          target_url: 'https://vercel.com/nayer-raouf-projects/ds-160-fresh/abc123',
+        },
+      ],
     });
 
   // Mock Vercel alias creation
   const vc = nock('https://api.vercel.com')
-    .post('/v1/aliases', body => !!body.alias && !!body.deploymentId)
+    .post('/v1/aliases', (body) => !!body.alias && !!body.deploymentId)
     .reply(200, { ok: true });
 
   // Mock preview fetch
   const preview = nock('https://ds-160-fresh.vercel.app')
     .get('/')
-    .reply(200, '<html><head><title>DS-160 Client Survey — preview force-redeploy-20260108-2</title></head><body>ok</body></html>');
+    .reply(
+      200,
+      '<html><head><title>DS-160 Client Survey — preview force-redeploy-20260108-2</title></head><body>ok</body></html>'
+    );
 
   // Run the script in-process with mocked network
   const promote = require('../../tools/vercel-promote');
@@ -40,7 +47,7 @@ async function main() {
     PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
     VERIFY_MARKER: 'preview force-redeploy',
     GITHUB_REPOSITORY: repo,
-    GITHUB_SHA: sha
+    GITHUB_SHA: sha,
   });
 
   const exit = await promote.run();
@@ -62,12 +69,16 @@ async function main2() {
     .reply(200, {
       statuses: [
         { context: 'ci/circle', state: 'success' },
-        { context: 'Vercel', state: 'success', target_url: 'https://vercel.com/nayer-raouf-projects/ds-160-fresh/def456' }
-      ]
+        {
+          context: 'Vercel',
+          state: 'success',
+          target_url: 'https://vercel.com/nayer-raouf-projects/ds-160-fresh/def456',
+        },
+      ],
     });
 
   const vc2 = nock('https://api.vercel.com')
-    .post('/v1/aliases', body => !!body.alias && !!body.deploymentId)
+    .post('/v1/aliases', (body) => !!body.alias && !!body.deploymentId)
     .reply(200, { ok: true });
 
   const previewRoot = nock('https://ds-160-fresh.vercel.app')
@@ -86,7 +97,7 @@ async function main2() {
     PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
     VERIFY_MARKER: 'preview force-redeploy',
     GITHUB_REPOSITORY: repo2,
-    GITHUB_SHA: sha2
+    GITHUB_SHA: sha2,
   });
 
   const exit2 = await promote.run();
@@ -102,7 +113,9 @@ async function main2() {
 // Third test: VERIFY_ONLY mode should fail (exit 2) when both marker and stylesheet are missing
 async function main3() {
   const previewRootScope = nock('https://ds-160-fresh.vercel.app').persist();
-  previewRootScope.get('/').reply(200, '<html><head><title>outdated</title></head><body>old</body></html>');
+  previewRootScope
+    .get('/')
+    .reply(200, '<html><head><title>outdated</title></head><body>old</body></html>');
 
   const previewCssScope = nock('https://ds-160-fresh.vercel.app').persist();
   previewCssScope.get('/style.css?v=force-redeploy-20260108-2').reply(404, 'Not found');
@@ -113,7 +126,7 @@ async function main3() {
     PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
     VERIFY_MARKER: 'preview force-redeploy',
     VERIFY_ONLY: '1',
-    MAX_VERIFY_RETRIES: '3'
+    MAX_VERIFY_RETRIES: '3',
   });
 
   console.log('MAX_VERIFY_RETRIES (test3):', process.env.MAX_VERIFY_RETRIES);
@@ -134,4 +147,7 @@ async function runAll() {
   await main3();
 }
 
-runAll().catch(err => { console.error(err); process.exit(4); });
+runAll().catch((err) => {
+  console.error(err);
+  process.exit(4);
+});
