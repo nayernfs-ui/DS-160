@@ -224,9 +224,17 @@ const { JSDOM } = require('jsdom');
   }
   // If there are zero entries (inter-test state), add one so the "remove last entry" test can run
   if (visitEntries().length === 0) {
+    console.log(
+      'visits.test: zero entries detected; debug:',
+      'addHelper=',
+      typeof dom.window.addVisitEntry,
+      'addOnceExists=',
+      !!addOnce
+    );
     if (typeof dom.window.addVisitEntry === 'function') dom.window.addVisitEntry();
     else if (addOnce) addOnce.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
     await new Promise((r) => setTimeout(r, 20));
+    console.log('visits.test: after attempted add, entries=', visitEntries().length);
   }
   assert.strictEqual(
     visitEntries().length,
