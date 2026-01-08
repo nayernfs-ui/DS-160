@@ -2,7 +2,7 @@ name: Vercel Auto-Promote
 
 on:
   push:
-    branches: [ 'main' ]
+    branches: ['main']
   pull_request:
     types: [closed]
   workflow_dispatch: {}

@@ -12,7 +12,7 @@ async function main() {
   // Mock GitHub statuses
   const repo = 'nayernfs-ui/DS-160';
   const sha = 'deadbeefcafefeed';
-  const gh = nock('https://api.github.com')
+  nock('https://api.github.com')
     .get(`/repos/${repo}/commits/${sha}/status`)
     .reply(200, {
       statuses: [
@@ -26,12 +26,12 @@ async function main() {
     });
 
   // Mock Vercel alias creation
-  const vc = nock('https://api.vercel.com')
+  nock('https://api.vercel.com')
     .post('/v1/aliases', (body) => !!body.alias && !!body.deploymentId)
     .reply(200, { ok: true });
 
   // Mock preview fetch
-  const preview = nock('https://ds-160-fresh.vercel.app')
+  nock('https://ds-160-fresh.vercel.app')
     .get('/')
     .reply(
       200,
@@ -64,7 +64,7 @@ async function main() {
 async function main2() {
   const repo2 = 'nayernfs-ui/DS-160';
   const sha2 = 'beadfeedcafefeed';
-  const gh2 = nock('https://api.github.com')
+  nock('https://api.github.com')
     .get(`/repos/${repo2}/commits/${sha2}/status`)
     .reply(200, {
       statuses: [
@@ -77,15 +77,15 @@ async function main2() {
       ],
     });
 
-  const vc2 = nock('https://api.vercel.com')
+  nock('https://api.vercel.com')
     .post('/v1/aliases', (body) => !!body.alias && !!body.deploymentId)
     .reply(200, { ok: true });
 
-  const previewRoot = nock('https://ds-160-fresh.vercel.app')
+  nock('https://ds-160-fresh.vercel.app')
     .get('/')
     .reply(200, '<html><head><title>Some other title</title></head><body>ok</body></html>');
 
-  const previewCss = nock('https://ds-160-fresh.vercel.app')
+  nock('https://ds-160-fresh.vercel.app')
     .get('/style.css?v=force-redeploy-20260108-2')
     .reply(200, 'html[dir="rtl"] .question-group .options-row > label { white-space: nowrap; }');
 
