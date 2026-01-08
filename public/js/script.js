@@ -1400,7 +1400,6 @@ function __ds160OnDomReady(_event) {
           const hadRemovals = mutationsList.some(
             (m) => m.removedNodes && m.removedNodes.length > 0
           );
-          const hadAdditions = mutationsList.some((m) => m.addedNodes && m.addedNodes.length > 0);
 
           if (remaining === 0) {
             if (yesRadio && yesRadio.checked && noRadio) {
