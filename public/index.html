@@ -3,13 +3,41 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DS-160 Client Survey</title>
+    <title>DS-160 Client Survey — preview force-redeploy-20260108-2</title>
     <!-- Google Font: Cairo for improved Arabic typography -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css?v=feat-options-row-test" />
+    <link rel="stylesheet" href="style.css?v=force-redeploy-20260108-2" />
+    <style>
+      /* Temporary inline RTL override to ensure preview reflects the options-row fix immediately */
+      html[dir='rtl'] .question-group .options-row > label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex-direction: row-reverse;
+        white-space: nowrap !important;
+        background: rgba(255, 0, 0, 0.02); /* diagnostic */
+        padding: 2px 4px;
+      }
+      html[dir='rtl'] .question-group > label:not([for]):not(:first-child) {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap !important;
+        background: rgba(255, 0, 0, 0.02);
+        padding: 2px 4px;
+      }
+      html[dir='rtl'] .options-row input[type='radio'],
+      html[dir='rtl'] .options-row input[type='checkbox'] {
+        margin-inline-start: 8px;
+        margin-inline-end: 4px;
+        min-width: 18px;
+        position: relative;
+        z-index: 1;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
