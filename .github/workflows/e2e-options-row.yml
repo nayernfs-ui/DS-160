@@ -1,5 +1,9 @@
 name: Visual E2E — options-row
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on:
   pull_request:
     paths:
@@ -15,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -80,6 +86,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          base: 'main'
           commit-message: 'chore: update options-row baseline images'
           branch: 'auto/update-options-row-baselines-${{ github.run_id }}'
           title: 'Update visual baselines: options-row'

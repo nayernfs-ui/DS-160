@@ -379,10 +379,21 @@ select.is-invalid {
 html[dir='rtl'] .question-group .options-row > label {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  flex-direction: row-reverse; /* ensure radio/input and text order is correct in RTL */
   white-space: nowrap !important; /* diagnostic: force nowrap in case of overrides */
   background: rgba(255, 0, 0, 0.02); /* faint red marker for verification */
   padding: 2px 4px; /* small hit area for the visual check */
+}
+
+/* Ensure radio and checkbox inputs have adequate spacing in RTL */
+html[dir='rtl'] .options-row input[type='radio'],
+html[dir='rtl'] .options-row input[type='checkbox'] {
+  margin-inline-start: 8px;
+  margin-inline-end: 4px;
+  min-width: 18px; /* make sure the input has enough visual space */
+  position: relative;
+  z-index: 1;
 }
 
 /* Some option rows are not wrapped in .options-row (they are plain labels inside .question-group).
