@@ -18,3 +18,7 @@ Testing
 
 Security
 - Use a Vercel service token with minimal privileges and rotate/revoke it if compromised.
+
+Verification and scheduled checks
+- The script supports a VERIFY_ONLY mode (set environment variable `VERIFY_ONLY=1`) which will only verify that the preview alias is serving the expected marker or contains the expected stylesheet rules; it will not attempt to (re)assign the alias.
+- A scheduled workflow `vercel-alias-check.yml` runs hourly and will run the verification; if verification fails, it will attempt to re-promote the alias automatically.

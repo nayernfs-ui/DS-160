@@ -24,6 +24,54 @@ async function run() {
 
   const previewAlias = process.env.PREVIEW_ALIAS || 'ds-160-fresh.vercel.app';
   const verifyMarker = process.env.VERIFY_MARKER || 'preview force-redeploy';
+  const verifyOnly = process.env.VERIFY_ONLY === '1' || process.env.VERIFY_ONLY === 'true';
+
+  if (verifyOnly) {
+    console.log('VERIFY_ONLY mode: only verifying that alias points to up-to-date assets.');
+    const maxVerifyRetries = 8;
+    const stylesheetPath = '/style.css?v=force-redeploy-20260108-2';
+    let verified = false;
+
+    for (let i = 0; i < maxVerifyRetries; i++) {
+      const delay = i * 3000;
+      if (delay) await new Promise(r => setTimeout(r, delay));
+      try {
+        console.log(`Verification attempt ${i + 1}/${maxVerifyRetries}: fetching https://${previewAlias}`);
+        const resp = await fetch(`https://${previewAlias}`, { headers: { 'Cache-Control': 'no-cache' } });
+        const html = await resp.text();
+        if (html.includes(verifyMarker)) {
+          console.log('Verification passed: marker found in preview HTML.');
+          verified = true;
+          break;
+        }
+        try {
+          const cssResp = await fetch(`https://${previewAlias}${stylesheetPath}`, { headers: { 'Cache-Control': 'no-cache' } });
+          if (cssResp.ok) {
+            const cssText = await cssResp.text();
+            if (cssText.includes("html[dir='rtl'] .question-group .options-row > label") || cssText.includes('white-space: nowrap')) {
+              console.log('Verification passed: expected RTL rules found in deployed stylesheet.');
+              verified = true;
+              break;
+            }
+          }
+        } catch (err) {
+          console.log('Stylesheet fetch error during verification:', err.message);
+        }
+
+        console.log('Marker and stylesheet check not satisfied; HTTP status', resp.status);
+      } catch (err) {
+        console.log('Verification fetch error:', err.message);
+      }
+    }
+
+    if (verified) {
+      console.log('Verification successful: alias is serving up-to-date assets.');
+      process.exit(0);
+    }
+
+    console.error('Verification failed: alias appears to be stale.');
+    process.exit(2);
+  }
 
   console.log(`Repository: ${repo} @ ${sha}`);
 
@@ -84,26 +132,67 @@ async function run() {
 
   console.log('Alias assigned successfully:', aliasText);
 
-  // 3) Verification: fetch the preview alias and look for the marker
-  const maxRetries = 5;
-  for (let i = 0; i < maxRetries; i++) {
-    const delay = i * 2000;
+  // 3) Verification: fetch the preview alias and check both HTML marker and stylesheet content
+  const maxVerifyRetries = 8;
+  const stylesheetPath = '/style.css?v=force-redeploy-20260108-2';
+  let verified = false;
+
+  for (let i = 0; i < maxVerifyRetries; i++) {
+    const delay = i * 3000;
     if (delay) await new Promise(r => setTimeout(r, delay));
     try {
-      console.log(`Verification attempt ${i + 1}/${maxRetries}: fetching https://${previewAlias}`);
+      console.log(`Verification attempt ${i + 1}/${maxVerifyRetries}: fetching https://${previewAlias}`);
       const resp = await fetch(`https://${previewAlias}`, { headers: { 'Cache-Control': 'no-cache' } });
       const html = await resp.text();
       if (html.includes(verifyMarker)) {
-        console.log('Verification passed: marker found in preview HTML. Promotion complete.');
-        process.exit(0);
+        console.log('Verification passed: marker found in preview HTML.');
+        verified = true;
+        break;
       }
-      console.log('Marker not found; HTTP status', resp.status);
+      // If no marker in HTML, fetch stylesheet and look for RTL rules as a secondary check
+      try {
+        const cssResp = await fetch(`https://${previewAlias}${stylesheetPath}`, { headers: { 'Cache-Control': 'no-cache' } });
+        if (cssResp.ok) {
+          const cssText = await cssResp.text();
+          if (cssText.includes("html[dir='rtl'] .question-group .options-row > label") || cssText.includes('white-space: nowrap')) {
+            console.log('Verification passed: expected RTL rules found in deployed stylesheet.');
+            verified = true;
+            break;
+          }
+        }
+      } catch (err) {
+        console.log('Stylesheet fetch error during verification:', err.message);
+      }
+
+      console.log('Marker and stylesheet check not satisfied; HTTP status', resp.status);
     } catch (err) {
       console.log('Verification fetch error:', err.message);
     }
   }
 
-  console.error('Failed to verify the preview after alias promotion — marker not found.');
+  if (verified) {
+    console.log('Verification successful: promotion complete.');
+    process.exit(0);
+  }
+
+  console.error('Failed to verify the preview after alias promotion — marker and stylesheet checks failed.');
+
+  // Create a GitHub issue to notify maintainers for manual intervention (best-effort)
+  try {
+    const issueBody = {
+      title: `Vercel auto-promote failed for ${previewAlias}`,
+      body: `The automated promotion for commit ${sha} to alias ${previewAlias} could not be verified. Please investigate. The script checked for marker: "${verifyMarker}" and stylesheet path: "${stylesheetPath}".`
+    };
+    await fetch(`https://api.github.com/repos/${repo}/issues`, {
+      method: 'POST',
+      headers: { Authorization: `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(issueBody)
+    });
+    console.log('Created GitHub issue to notify maintainers.');
+  } catch (err) {
+    console.log('Failed to create GitHub issue:', err.message);
+  }
+
   process.exit(2);
 }
 
