@@ -4,31 +4,36 @@ const { URL } = require('url');
 
 async function run() {
   const VER_CLS = process.env.VERCEL_TOKEN;
-  if (!VER_CLS) {
+  const verifyOnly = process.env.VERIFY_ONLY === '1' || process.env.VERIFY_ONLY === 'true';
+  if (!VER_CLS && !verifyOnly) {
     console.log('VERCEL_TOKEN not set — running in dry-run mode, nothing to promote.');
-    process.exit(0);
+    return 0;
   }
 
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  if (!GITHUB_TOKEN) {
-    console.error('GITHUB_TOKEN must be present in the environment (actions provides it).');
-    process.exit(1);
-  }
+  let repo;
+  let sha;
 
-  const repo = process.env.GITHUB_REPOSITORY;
-  const sha = process.env.GITHUB_SHA;
-  if (!repo || !sha) {
-    console.error('GITHUB_REPOSITORY and GITHUB_SHA must be set by the workflow.');
-    process.exit(1);
+  if (!verifyOnly) {
+    if (!GITHUB_TOKEN) {
+      console.error('GITHUB_TOKEN must be present in the environment (actions provides it).');
+      return 1;
+    }
+
+    repo = process.env.GITHUB_REPOSITORY;
+    sha = process.env.GITHUB_SHA;
+    if (!repo || !sha) {
+      console.error('GITHUB_REPOSITORY and GITHUB_SHA must be set by the workflow.');
+      return 1;
+    }
   }
 
   const previewAlias = process.env.PREVIEW_ALIAS || 'ds-160-fresh.vercel.app';
   const verifyMarker = process.env.VERIFY_MARKER || 'preview force-redeploy';
-  const verifyOnly = process.env.VERIFY_ONLY === '1' || process.env.VERIFY_ONLY === 'true';
 
   if (verifyOnly) {
     console.log('VERIFY_ONLY mode: only verifying that alias points to up-to-date assets.');
-    const maxVerifyRetries = 8;
+const maxVerifyRetries = parseInt(process.env.MAX_VERIFY_RETRIES || '8', 10);
     const stylesheetPath = '/style.css?v=force-redeploy-20260108-2';
     let verified = false;
 
@@ -66,11 +71,11 @@ async function run() {
 
     if (verified) {
       console.log('Verification successful: alias is serving up-to-date assets.');
-      process.exit(0);
+      return 0;
     }
 
     console.error('Verification failed: alias appears to be stale.');
-    process.exit(2);
+    return 2;
   }
 
   console.log(`Repository: ${repo} @ ${sha}`);
@@ -89,7 +94,7 @@ async function run() {
   const vercelStatus = statuses.find(s => (s.context || '').toLowerCase().includes('vercel') && s.target_url);
   if (!vercelStatus) {
     console.error('No Vercel status found for this commit. Statuses:', statuses.map(s=>s.context));
-    process.exit(1);
+    return 1;
   }
 
   console.log('Found Vercel status:', vercelStatus.target_url);
@@ -101,12 +106,12 @@ async function run() {
     deploymentId = parts[parts.length - 1];
   } catch (err) {
     console.error('Failed to parse target_url:', err.message);
-    process.exit(1);
+    return 1;
   }
 
   if (!deploymentId) {
     console.error('Unable to extract deploymentId from Vercel target_url:', vercelStatus.target_url);
-    process.exit(1);
+    return 1;
   }
 
   console.log('Deployment ID:', deploymentId);
@@ -127,13 +132,13 @@ async function run() {
   const aliasText = await aliasRes.text();
   if (!aliasRes.ok) {
     console.error('Vercel alias assignment failed:', aliasRes.status, aliasText);
-    process.exit(1);
+    return 1;
   }
 
   console.log('Alias assigned successfully:', aliasText);
 
   // 3) Verification: fetch the preview alias and check both HTML marker and stylesheet content
-  const maxVerifyRetries = 8;
+  const maxVerifyRetries = parseInt(process.env.MAX_VERIFY_RETRIES || '8', 10);
   const stylesheetPath = '/style.css?v=force-redeploy-20260108-2';
   let verified = false;
 
@@ -172,7 +177,7 @@ async function run() {
 
   if (verified) {
     console.log('Verification successful: promotion complete.');
-    process.exit(0);
+    return 0;
   }
 
   console.error('Failed to verify the preview after alias promotion — marker and stylesheet checks failed.');
@@ -193,10 +198,14 @@ async function run() {
     console.log('Failed to create GitHub issue:', err.message);
   }
 
-  process.exit(2);
+  return 2;
 }
 
-run().catch(err => {
-  console.error('Unhandled error:', err);
-  process.exit(1);
-});
+if (require.main === module) {
+  run().then(code => process.exit(code)).catch(err => {
+    console.error('Unhandled error:', err);
+    process.exit(1);
+  });
+}
+
+module.exports = { run };

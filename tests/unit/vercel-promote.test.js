@@ -4,7 +4,8 @@ Run locally: node tests/unit/vercel-promote.test.js
 */
 
 const nock = require('nock');
-const { spawnSync } = require('child_process');
+// Ensure tests use node-fetch so nock can intercept requests (Node native fetch uses undici)
+globalThis.fetch = require('node-fetch');
 const assert = require('assert');
 
 async function main() {
@@ -30,27 +31,27 @@ async function main() {
     .get('/')
     .reply(200, '<html><head><title>DS-160 Client Survey — preview force-redeploy-20260108-2</title></head><body>ok</body></html>');
 
-  // Run the script with env
-  const res = spawnSync('node', ['tools/vercel-promote.js'], {
-    env: Object.assign({}, process.env, {
-      VERCEL_TOKEN: 'fake-token',
-      GITHUB_TOKEN: 'fake-token',
-      PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
-      VERIFY_MARKER: 'preview force-redeploy',
-      GITHUB_REPOSITORY: repo,
-      GITHUB_SHA: sha
-    }),
-    encoding: 'utf8'
+  // Run the script in-process with mocked network
+  const promote = require('../../tools/vercel-promote');
+  const oldEnv = Object.assign({}, process.env);
+  Object.assign(process.env, {
+    VERCEL_TOKEN: 'fake-token',
+    GITHUB_TOKEN: 'fake-token',
+    PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
+    VERIFY_MARKER: 'preview force-redeploy',
+    GITHUB_REPOSITORY: repo,
+    GITHUB_SHA: sha
   });
 
-  console.log('STDOUT:\n', res.stdout);
-  console.log('STDERR:\n', res.stderr);
+  const exit = await promote.run();
 
-  assert.strictEqual(res.status, 0, 'Script should exit 0 on success');
+  // restore env
+  Object.assign(process.env, oldEnv);
+
+  assert.strictEqual(exit, 0, 'Script should exit 0 on success');
   console.log('Test passed.');
+  nock.cleanAll();
 }
-
-main().catch(err => { console.error(err); process.exit(1); });
 
 // Second test: no marker in root but stylesheet contains RTL rules
 async function main2() {
@@ -77,51 +78,60 @@ async function main2() {
     .get('/style.css?v=force-redeploy-20260108-2')
     .reply(200, 'html[dir="rtl"] .question-group .options-row > label { white-space: nowrap; }');
 
-  const res2 = spawnSync('node', ['tools/vercel-promote.js'], {
-    env: Object.assign({}, process.env, {
-      VERCEL_TOKEN: 'fake-token',
-      GITHUB_TOKEN: 'fake-token',
-      PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
-      VERIFY_MARKER: 'preview force-redeploy',
-      GITHUB_REPOSITORY: repo2,
-      GITHUB_SHA: sha2
-    }),
-    encoding: 'utf8'
+  const promote = require('../../tools/vercel-promote');
+  const oldEnv2 = Object.assign({}, process.env);
+  Object.assign(process.env, {
+    VERCEL_TOKEN: 'fake-token',
+    GITHUB_TOKEN: 'fake-token',
+    PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
+    VERIFY_MARKER: 'preview force-redeploy',
+    GITHUB_REPOSITORY: repo2,
+    GITHUB_SHA: sha2
   });
 
-  console.log('STDOUT (test2):\n', res2.stdout);
-  console.log('STDERR (test2):\n', res2.stderr);
+  const exit2 = await promote.run();
 
-  assert.strictEqual(res2.status, 0, 'Script should exit 0 on success when stylesheet has RTL rules');
+  // restore env
+  Object.assign(process.env, oldEnv2);
+
+  assert.strictEqual(exit2, 0, 'Script should exit 0 on success when stylesheet has RTL rules');
   console.log('Second test passed.');
+  nock.cleanAll();
 }
-
-main2().catch(err => { console.error(err); process.exit(2); });
 
 // Third test: VERIFY_ONLY mode should fail (exit 2) when both marker and stylesheet are missing
 async function main3() {
-  const previewRoot = nock('https://ds-160-fresh.vercel.app')
-    .get('/')
-    .reply(200, '<html><head><title>outdated</title></head><body>old</body></html>');
+  const previewRootScope = nock('https://ds-160-fresh.vercel.app').persist();
+  previewRootScope.get('/').reply(200, '<html><head><title>outdated</title></head><body>old</body></html>');
 
-  const previewCss = nock('https://ds-160-fresh.vercel.app')
-    .get('/style.css?v=force-redeploy-20260108-2')
-    .reply(404, 'Not found');
+  const previewCssScope = nock('https://ds-160-fresh.vercel.app').persist();
+  previewCssScope.get('/style.css?v=force-redeploy-20260108-2').reply(404, 'Not found');
 
-  const res3 = spawnSync('node', ['tools/vercel-promote.js'], {
-    env: Object.assign({}, process.env, {
-      PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
-      VERIFY_MARKER: 'preview force-redeploy',
-      VERIFY_ONLY: '1'
-    }),
-    encoding: 'utf8'
+  const promote = require('../../tools/vercel-promote');
+  const oldEnv3 = Object.assign({}, process.env);
+  Object.assign(process.env, {
+    PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
+    VERIFY_MARKER: 'preview force-redeploy',
+    VERIFY_ONLY: '1',
+    MAX_VERIFY_RETRIES: '3'
   });
 
-  console.log('STDOUT (test3):\n', res3.stdout);
-  console.log('STDERR (test3):\n', res3.stderr);
+  console.log('MAX_VERIFY_RETRIES (test3):', process.env.MAX_VERIFY_RETRIES);
+  const exit3 = await promote.run();
 
-  assert.strictEqual(res3.status, 2, 'Script should exit 2 when verify-only detects stale alias');
+  // restore env
+  Object.assign(process.env, oldEnv3);
+
+  assert.strictEqual(exit3, 2, 'Script should exit 2 when verify-only detects stale alias');
   console.log('Third test passed.');
+  nock.cleanAll();
 }
 
-main3().catch(err => { console.error(err); process.exit(3); });
+// Run tests sequentially to avoid nock interference
+async function runAll() {
+  await main();
+  await main2();
+  await main3();
+}
+
+runAll().catch(err => { console.error(err); process.exit(4); });
