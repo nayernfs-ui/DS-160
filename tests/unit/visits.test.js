@@ -8,11 +8,14 @@ const { JSDOM } = require('jsdom');
   const root = process.cwd();
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const script = fs.readFileSync(path.join(root, 'public', 'js', 'script.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
 
   // Remove any external script tag that references script.js so JSDOM won't attempt to fetch it
   const cleanedHtml = html.replace(/<script[^>]*src="[^"]*script\.js[^"]*"[^>]*><\/script>/, '');
+  // Inject CSS so getComputedStyle works properly
+  const withCss = cleanedHtml.replace('</head>', `<style>${css}</style></head>`);
   // Inject the application script into the page so behavior is available to JSDOM
-  const combined = cleanedHtml.replace('</body>', `<script>${script}</script></body>`);
+  const combined = withCss.replace('</body>', `<script>${script}</script></body>`);
   const dom = new JSDOM(combined, {
     runScripts: 'dangerously',
     resources: 'usable',

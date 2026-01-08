@@ -8,9 +8,11 @@ const { JSDOM } = require('jsdom');
   const root = process.cwd();
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const script = fs.readFileSync(path.join(root, 'public', 'js', 'script.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
 
   const cleanedHtml = html.replace(/<script[^>]*src="[^"]*script\.js[^"]*"[^>]*><\/script>/, '');
-  const combined = cleanedHtml.replace('</body>', `<script>${script}</script></body>`);
+  const withCss = cleanedHtml.replace('</head>', `<style>${css}</style></head>`);
+  const combined = withCss.replace('</body>', `<script>${script}</script></body>`);
   const dom = new JSDOM(combined, {
     runScripts: 'dangerously',
     resources: 'usable',
@@ -109,7 +111,6 @@ const { JSDOM } = require('jsdom');
   const toAdd = Math.min(5 - startCount, 4);
   for (let i = 1; i <= toAdd; i++) {
     const before = doc.querySelectorAll('.edu-entry').length;
-    let added = false;
     // Try up to 3 times using both programmatic helper and UI click fallback
     for (let attempt = 0; attempt < 3; attempt++) {
       if (typeof dom.window.addEducationEntry === 'function') dom.window.addEducationEntry();
@@ -117,14 +118,12 @@ const { JSDOM } = require('jsdom');
       await new Promise((r) => setTimeout(r, 30));
       const now = doc.querySelectorAll('.edu-entry').length;
       if (now === before + 1) {
-        added = true;
         break;
       }
       // try clicking as alternate attempt
       addBtn.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
       await new Promise((r) => setTimeout(r, 30));
       if (doc.querySelectorAll('.edu-entry').length === before + 1) {
-        added = true;
         break;
       }
     }
