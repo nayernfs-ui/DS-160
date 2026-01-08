@@ -1,0 +1,45 @@
+name: Vercel Auto-Promote
+
+on:
+  push:
+    branches: [ 'main' ]
+  pull_request:
+    types: [closed]
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 * * * *' # hourly (optional)
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run vercel-promote unit test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: npm run test:vercel-promote
+
+      - name: Run Vercel promote script
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          PREVIEW_ALIAS: ${{ secrets.PREVIEW_ALIAS }}
+          VERIFY_MARKER: 'preview force-redeploy'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          echo "Node version: $(node --version)"
+          node tools/vercel-promote.js

@@ -20,6 +20,8 @@
     "test:family": "node tests/unit/family.test.js",
     "test:api-health": "node tests/unit/api-health.test.js",
     "test": "npm run test:visits && npm run test:military && npm run test:education && npm run test:country-mapping && npm run test:work-info && npm run test:family && npm run test:api-health",
+    "promote:vercel": "node tools/vercel-promote.js",
+    "test:vercel-promote": "node tests/unit/vercel-promote.test.js",
     "prepare": "husky install",
     "check-env": "node tools/check-env.js",
     "live-smoke": "node tests/e2e/puppeteer-visits-live.js",
@@ -59,6 +61,7 @@
     "pngjs": "^6.0.0",
     "prettier": "^2.8.8",
     "puppeteer": "^24.33.0",
+    "nock": "^13.3.0",
     "xmldom": "^0.6.0"
   }
 }
