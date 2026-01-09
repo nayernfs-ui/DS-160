@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DS-160 Client Survey</title>
+    <title>DS-160 Client Survey — preview c4293f7</title>
     <!-- Google Font: Cairo for improved Arabic typography -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
@@ -589,25 +589,27 @@
 
             <div class="question-group">
               <label>?? ?????? ???? ??? ?????/??????? ???????</label>
-              <label
-                ><input
-                  type="radio"
-                  name="Other_Nationality_Passport"
-                  value="Yes"
-                  id="otherPassYes"
-                />
-                ???</label
-              >
-              <label
-                ><input
-                  type="radio"
-                  name="Other_Nationality_Passport"
-                  value="No"
-                  id="otherPassNo"
-                  checked
-                />
-                ??</label
-              >
+              <div class="options-row" role="radiogroup" aria-label="Other nationality passport">
+                <label
+                  ><input
+                    type="radio"
+                    name="Other_Nationality_Passport"
+                    value="Yes"
+                    id="otherPassYes"
+                  />
+                  ???</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="Other_Nationality_Passport"
+                    value="No"
+                    id="otherPassNo"
+                    checked
+                  />
+                  ??</label
+                >
+              </div>
             </div>
 
             <div id="otherPassportField" class="conditional-fields">

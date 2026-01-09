@@ -8,8 +8,8 @@ const nock = require('nock');
 globalThis.fetch = require('node-fetch');
 const assert = require('assert');
 
+// Test 1: marker present on root page -> success
 async function main() {
-  // Mock GitHub statuses
   const repo = 'nayernfs-ui/DS-160';
   const sha = 'deadbeefcafefeed';
   nock('https://api.github.com')
@@ -38,7 +38,6 @@ async function main() {
       '<html><head><title>DS-160 Client Survey — preview force-redeploy-20260108-2</title></head><body>ok</body></html>'
     );
 
-  // Run the script in-process with mocked network
   const promote = require('../../tools/vercel-promote');
   const oldEnv = Object.assign({}, process.env);
   Object.assign(process.env, {

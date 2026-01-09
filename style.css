@@ -336,16 +336,24 @@ html[dir='rtl'] .question-group .options-row > label {
   padding: 2px 4px; /* small hit area for the visual check */
 }
 
-/* Some option rows are not wrapped in .options-row (they are plain labels inside .question-group).
-   Target labels that do NOT have a `for` attribute (these are typically option labels containing inputs).
-   This keeps the radio input and its Arabic text together on one line in RTL. */
-html[dir='rtl'] .question-group > label:not([for]) {
+/* Target option labels that are direct children (not the question label). Avoid matching the *first* label which is the question text. */
+html[dir='rtl'] .question-group > label:not([for]):not(:first-child) {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  white-space: nowrap !important;
+  white-space: nowrap !important; /* keep input and its Arabic text together on one line */
   background: rgba(255, 0, 0, 0.02);
   padding: 2px 4px;
+}
+
+/* Ensure radio and checkbox inputs have adequate spacing in RTL */
+html[dir='rtl'] .options-row input[type='radio'],
+html[dir='rtl'] .options-row input[type='checkbox'] {
+  margin-inline-start: 8px;
+  margin-inline-end: 4px;
+  min-width: 18px; /* make sure the input has enough visual space */
+  position: relative;
+  z-index: 1;
 }
 
 /* Progress bar */

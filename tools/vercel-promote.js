@@ -30,11 +30,11 @@ async function run() {
 
   const previewAlias = process.env.PREVIEW_ALIAS || 'ds-160-fresh.vercel.app';
   const verifyMarker = process.env.VERIFY_MARKER || 'preview force-redeploy';
+  const stylesheetPath = '/style.css?v=force-redeploy-20260108-2';
 
   if (verifyOnly) {
     console.log('VERIFY_ONLY mode: only verifying that alias points to up-to-date assets.');
     const maxVerifyRetries = parseInt(process.env.MAX_VERIFY_RETRIES || '8', 10);
-    const stylesheetPath = '/style.css?v=force-redeploy-20260108-2';
     let verified = false;
 
     for (let i = 0; i < maxVerifyRetries; i++) {
@@ -96,7 +96,7 @@ async function run() {
   });
   if (!stRes.ok) {
     console.error('Failed to fetch commit statuses', await stRes.text());
-    process.exit(1);
+    return 1;
   }
   const statusJson = await stRes.json();
   const statuses = statusJson.statuses || [];
@@ -108,6 +108,7 @@ async function run() {
       'No Vercel status found for this commit. Statuses:',
       statuses.map((s) => s.context)
     );
+    // Fail fast if we cannot discover a Vercel deployment URL
     return 1;
   }
 
@@ -156,7 +157,6 @@ async function run() {
 
   // 3) Verification: fetch the preview alias and check both HTML marker and stylesheet content
   const maxVerifyRetries = parseInt(process.env.MAX_VERIFY_RETRIES || '8', 10);
-  const stylesheetPath = '/style.css?v=force-redeploy-20260108-2';
   let verified = false;
 
   for (let i = 0; i < maxVerifyRetries; i++) {
