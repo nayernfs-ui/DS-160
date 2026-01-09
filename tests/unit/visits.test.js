@@ -8,11 +8,14 @@ const { JSDOM } = require('jsdom');
   const root = process.cwd();
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const script = fs.readFileSync(path.join(root, 'public', 'js', 'script.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
 
   // Remove any external script tag that references script.js so JSDOM won't attempt to fetch it
   const cleanedHtml = html.replace(/<script[^>]*src="[^"]*script\.js[^"]*"[^>]*><\/script>/, '');
+  // Inject CSS so getComputedStyle works properly
+  const withCss = cleanedHtml.replace('</head>', `<style>${css}</style></head>`);
   // Inject the application script into the page so behavior is available to JSDOM
-  const combined = cleanedHtml.replace('</body>', `<script>${script}</script></body>`);
+  const combined = withCss.replace('</body>', `<script>${script}</script></body>`);
   const dom = new JSDOM(combined, {
     runScripts: 'dangerously',
     resources: 'usable',
@@ -214,11 +217,32 @@ const { JSDOM } = require('jsdom');
   );
 
   // Now specifically test removing the LAST remaining visit entry
+  // First, reset by setting US_Visited to 'Yes' (to restore entries to default state)
+  const yesRadioReset = doc.querySelector('input[name="US_Visited"][value="Yes"]');
+  if (yesRadioReset && !yesRadioReset.checked) {
+    yesRadioReset.click();
+    await new Promise((r) => setTimeout(r, 50));
+  }
+
   // Ensure only one entry exists (remove extras if present)
   while (visitEntries().length > 1) {
     const removeLastBtn = visitEntries()[visitEntries().length - 1].querySelector('.remove-visit');
     dom.window.removeVisitEntry(removeLastBtn);
     await new Promise((r) => setTimeout(r, 20));
+  }
+  // If there are zero entries (inter-test state), add one so the "remove last entry" test can run
+  if (visitEntries().length === 0) {
+    console.log(
+      'visits.test: zero entries detected; debug:',
+      'addHelper=',
+      typeof dom.window.addVisitEntry,
+      'addOnceExists=',
+      !!addOnce
+    );
+    if (typeof dom.window.addVisitEntry === 'function') dom.window.addVisitEntry();
+    else if (addOnce) addOnce.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 20));
+    console.log('visits.test: after attempted add, entries=', visitEntries().length);
   }
   assert.strictEqual(
     visitEntries().length,

@@ -1,0 +1,40 @@
+name: Vercel Alias Hourly Check
+
+on:
+  schedule:
+    - cron: '0 * * * *' # hourly
+  workflow_dispatch: {}
+
+jobs:
+  verify-and-promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Verify preview alias
+        id: verify
+        run: |
+          echo "Running verify-only check for ${PREVIEW_ALIAS}"
+          node tools/vercel-promote.js
+        env:
+          PREVIEW_ALIAS: ds-160-fresh.vercel.app
+          VERIFY_ONLY: '1'
+          VERIFY_MARKER: 'preview force-redeploy'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Re-promote if verification failed
+        if: steps.verify.conclusion != 'success'
+        run: |
+          echo "Verification failed; attempting to re-promote the alias"
+          node tools/vercel-promote.js
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PREVIEW_ALIAS: ds-160-fresh.vercel.app
+          VERIFY_MARKER: 'preview force-redeploy'
