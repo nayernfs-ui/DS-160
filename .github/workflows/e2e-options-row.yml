@@ -40,9 +40,9 @@ jobs:
 
       - name: Start static server
         run: |
-          node tools/static-server.js &
+          PORT=3001 node tools/static-server.js &
           n=0
-          until curl -sSf http://127.0.0.1:3000/ >/dev/null || [ $n -gt 30 ]; do
+          until curl -sSf http://127.0.0.1:3001/ >/dev/null || [ $n -gt 30 ]; do
             sleep 1
             n=$((n+1))
             echo "waiting for server... $n"
@@ -50,12 +50,12 @@ jobs:
 
       - name: Run options-row visual script
         env:
-          TARGET_URL: http://127.0.0.1:3000/
+          TARGET_URL: http://127.0.0.1:3001/
         run: npm run test:e2e:options-row
 
       - name: Run other-passport options-row check
         env:
-          TARGET_URL: http://127.0.0.1:3000/
+          TARGET_URL: http://127.0.0.1:3001/
         run: npm run test:e2e:other-passport-options-row
 
       - name: Compare visual artifacts (write results, non-failing)
