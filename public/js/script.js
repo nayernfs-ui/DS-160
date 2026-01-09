@@ -1233,6 +1233,26 @@ function __ds160OnDomReady(_event) {
             .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`);
       });
 
+      // update label 'for' attributes to match renumbered field ids
+      el.querySelectorAll('label').forEach((lbl) => {
+        if (lbl.htmlFor)
+          lbl.htmlFor = lbl.htmlFor
+            .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIdx}_`)
+            .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`);
+      });
+
+      // update aria-describedby attributes to match renumbered field ids
+      el.querySelectorAll('[aria-describedby]').forEach((node) => {
+        const v = node.getAttribute('aria-describedby');
+        if (!v) return;
+        node.setAttribute(
+          'aria-describedby',
+          v
+            .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIdx}_`)
+            .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`)
+        );
+      });
+
       // update remove button aria-labels for accessibility and keyboard users
       const rem = el.querySelector('.remove-visit');
       if (rem) rem.setAttribute('aria-label', `Remove visit ${newIdx}`);
@@ -1647,6 +1667,24 @@ function __ds160OnDomReady(_event) {
                       .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
                       .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
                 });
+                // update label 'for' attributes to match renumbered field ids
+                el.querySelectorAll('label').forEach((lbl) => {
+                  if (lbl.htmlFor)
+                    lbl.htmlFor = lbl.htmlFor
+                      .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+                      .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+                });
+                // update aria-describedby attributes to match renumbered field ids
+                el.querySelectorAll('[aria-describedby]').forEach((node) => {
+                  const v = node.getAttribute('aria-describedby');
+                  if (!v) return;
+                  node.setAttribute(
+                    'aria-describedby',
+                    v
+                      .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+                      .replace(/Relative_\d+$/g, `Relative_${newIdx}`)
+                  );
+                });
                 const rem = el.querySelector('.remove-relative');
                 if (rem) rem.setAttribute('aria-label', `Remove relative ${newIdx}`);
               });
@@ -1766,6 +1804,20 @@ function __ds160OnDomReady(_event) {
                   if (node.id) node.id = node.id.replace(/Education_\d+_/g, `Education_${newIdx}_`);
                   if (node.name)
                     node.name = node.name.replace(/Education_\d+_/g, `Education_${newIdx}_`);
+                });
+                // update label 'for' attributes to match renumbered field ids
+                el.querySelectorAll('label').forEach((lbl) => {
+                  if (lbl.htmlFor)
+                    lbl.htmlFor = lbl.htmlFor.replace(/Education_\d+_/g, `Education_${newIdx}_`);
+                });
+                // update aria-describedby attributes to match renumbered field ids
+                el.querySelectorAll('[aria-describedby]').forEach((node) => {
+                  const v = node.getAttribute('aria-describedby');
+                  if (!v) return;
+                  node.setAttribute(
+                    'aria-describedby',
+                    v.replace(/Education_\d+_/g, `Education_${newIdx}_`)
+                  );
                 });
                 const rem = el.querySelector('.remove-education');
                 if (rem) rem.setAttribute('aria-label', `Remove institution ${newIdx}`);
@@ -1939,6 +1991,20 @@ function __ds160OnDomReady(_event) {
                   if (node.id) node.id = node.id.replace(/Education_\d+_/g, `Education_${newIdx}_`);
                   if (node.name)
                     node.name = node.name.replace(/Education_\d+_/g, `Education_${newIdx}_`);
+                });
+                // update label 'for' attributes to match renumbered field ids
+                el.querySelectorAll('label').forEach((lbl) => {
+                  if (lbl.htmlFor)
+                    lbl.htmlFor = lbl.htmlFor.replace(/Education_\d+_/g, `Education_${newIdx}_`);
+                });
+                // update aria-describedby attributes to match renumbered field ids
+                el.querySelectorAll('[aria-describedby]').forEach((node) => {
+                  const v = node.getAttribute('aria-describedby');
+                  if (!v) return;
+                  node.setAttribute(
+                    'aria-describedby',
+                    v.replace(/Education_\d+_/g, `Education_${newIdx}_`)
+                  );
                 });
                 const rem = el.querySelector('.remove-education');
                 if (rem) rem.setAttribute('aria-label', `Remove institution ${newIdx}`);
