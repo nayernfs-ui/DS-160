@@ -27,6 +27,16 @@ const { JSDOM } = require('jsdom');
   });
 
   await new Promise((r) => setTimeout(r, 50));
+  // Ensure initialization is run to put form in expected default state
+  let _tries = 0;
+  while (typeof dom.window.initDs160 !== 'function' && _tries < 10) {
+    await new Promise((r) => setTimeout(r, 20));
+    _tries++;
+  }
+  if (typeof dom.window.initDs160 === 'function' && !dom.window.__ds160Ready) {
+    dom.window.initDs160();
+    await new Promise((r) => setTimeout(r, 20));
+  }
   const doc = dom.window.document;
 
   // Father fields
