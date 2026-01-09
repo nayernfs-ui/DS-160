@@ -22,11 +22,26 @@ process.on('uncaughtException', (err) => {
 
   let browser;
   try {
-    console.log('Launching Puppeteer (headless) with --no-sandbox and --disable-setuid-sandbox');
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    console.log('Launching Puppeteer (headless) with recommended flags');
+    const envExec = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
+    const extra = process.env.CHROME_FLAGS ? process.env.CHROME_FLAGS.split(' ') : [];
+    const args = [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--no-zygote',
+      '--single-process',
+      '--disable-software-rasterizer',
+      ...extra,
+    ];
+    const launchOpts = { headless: true, args };
+    if (envExec) launchOpts.executablePath = envExec;
+    console.log(
+      'Launch options:',
+      Object.assign({}, launchOpts, { executablePath: !!launchOpts.executablePath })
+    );
+    browser = await puppeteer.launch(launchOpts);
     console.log('Puppeteer launched successfully (headless)');
   } catch (err) {
     console.error(
