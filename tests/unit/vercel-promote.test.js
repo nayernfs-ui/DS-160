@@ -16,19 +16,31 @@ async function main() {
     .reply(200, {
       statuses: [
         { context: 'ci/circle', state: 'success' },
-        { context: 'Vercel', state: 'success', target_url: 'https://vercel.com/nayer-raouf-projects/ds-160-fresh/abc123' }
-      ]
+        {
+          context: 'Vercel',
+          state: 'success',
+          target_url: 'https://vercel.com/nayer-raouf-projects/ds-160-fresh/abc123',
+        },
+      ],
     });
 
   // Mock Vercel alias creation
   const vc = nock('https://api.vercel.com')
-    .post('/v1/aliases', body => !!body.alias && !!body.deploymentId)
+    .post('/v1/aliases', (body) => !!body.alias && !!body.deploymentId)
     .reply(200, { ok: true });
 
   // Mock preview fetch
   const preview = nock('https://ds-160-fresh.vercel.app')
     .get('/')
-    .reply(200, '<html><head><title>DS-160 Client Survey — preview force-redeploy-20260108-2</title></head><body>ok</body></html>');
+    .reply(
+      200,
+      '<html><head><title>DS-160 Client Survey — preview force-redeploy-20260108-2</title></head><body>ok</body></html>'
+    );
+
+  // Touch mocked variables to silence unused-variable warnings
+  void gh;
+  void vc;
+  void preview;
 
   // Run the script with env
   const res = spawnSync('node', ['tools/vercel-promote.js'], {
@@ -38,9 +50,9 @@ async function main() {
       PREVIEW_ALIAS: 'ds-160-fresh.vercel.app',
       VERIFY_MARKER: 'preview force-redeploy',
       GITHUB_REPOSITORY: repo,
-      GITHUB_SHA: sha
+      GITHUB_SHA: sha,
     }),
-    encoding: 'utf8'
+    encoding: 'utf8',
   });
 
   console.log('STDOUT:\n', res.stdout);
@@ -50,4 +62,7 @@ async function main() {
   console.log('Test passed.');
 }
 
-main().catch(err => { console.error(err); process.exit(1); });
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
