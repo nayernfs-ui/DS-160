@@ -356,14 +356,19 @@ select.is-invalid {
   align-items: center;
   margin: 0;
   white-space: nowrap !important; /* keep input and its Arabic text together on one line */
+  position: relative; /* ensure label sits below inputs when stacking */
+  z-index: 0;
 }
 .options-row input[type='radio'],
 .options-row input[type='checkbox'] {
   /* radios/checkboxes should not flex like text inputs */
   flex: 0 0 auto !important;
   width: auto !important;
-  min-width: 0;
+  min-width: 18px;
   margin: 0 !important;
+  position: relative; /* raise above surrounding text to prevent overlap */
+  z-index: 2;
+  margin-inline-start: 8px;
 }
 
 /* RTL-specific stronger rule + diagnostic background to verify Vercel is loading updated CSS */
