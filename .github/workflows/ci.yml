@@ -85,11 +85,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Chromium (system) and Puppeteer browser
+      - name: Install Chromium (system) and Puppeteer browser (robust)
         run: |
-          sudo apt-get update -y && sudo apt-get install -y chromium-browser || true
-          # Ensure Puppeteer downloads its own compatible Chromium binary
-          npx puppeteer install chromium || echo "puppeteer install failed; will try system Chromium"
+          sudo apt-get update -y
+          # Try multiple package names to ensure a Chromium binary is present on ubuntu-latest
+          sudo apt-get install -y chromium chromium-browser chromium-chromedriver || true
+          # Try to let Puppeteer download its compatible Chromium; tolerate failures
+          npx puppeteer install chromium --silent || echo "puppeteer install failed; will try system Chromium"
+          # Diagnostics to help debug CI failures
+          echo "Chromium detected at:" $(which chromium || which chromium-browser || true)
+          chromium --version || chromium-browser --version || true
+          node -e "try { const p = require('puppeteer'); console.log('puppeteer executablePath:', typeof p.executablePath === 'function' ? p.executablePath() : (p._preferredRevision || 'n/a')); } catch(e){ console.error('puppeteer require failed:', e && e.message); }"
 
       - name: Start static server
         run: |
