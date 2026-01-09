@@ -1,3 +1,4 @@
+// tests/unit/other-passport-jsdom.test.js — JSDOM smoke test for Other Nationality passport
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
