@@ -29,10 +29,9 @@ const { JSDOM } = require('jsdom');
 
   // give scripts time to run and register event listeners
   await new Promise((r) => setTimeout(r, 50)); // Ensure the page init and test helpers are available in JSDOM
-  if (
-    typeof dom.window.addVisitEntry !== 'function' &&
-    typeof dom.window.initDs160 === 'function'
-  ) {
+  // If the init helper is present and the page hasn't finished initialization, call it.
+  // This avoids races where wrapper helpers run before the full implementation is wired.
+  if (typeof dom.window.initDs160 === 'function' && !dom.window.__ds160Ready) {
     dom.window.initDs160();
     await new Promise((r) => setTimeout(r, 20));
   }
