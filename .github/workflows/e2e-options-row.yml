@@ -53,6 +53,11 @@ jobs:
           TARGET_URL: http://127.0.0.1:3000/
         run: npm run test:e2e:options-row
 
+      - name: Run other-passport options-row check
+        env:
+          TARGET_URL: http://127.0.0.1:3000/
+        run: npm run test:e2e:other-passport-options-row
+
       - name: Compare visual artifacts (write results, non-failing)
         run: |
           # Run comparator in non-failing mode so we can inspect results and create a baseline PR automatically
