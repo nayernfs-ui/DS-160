@@ -30,7 +30,7 @@ async function run() {
   // 1) Inspect commit statuses to find Vercel status with target_url
   const statusUrl = `https://api.github.com/repos/${repo}/commits/${sha}/status`;
   const stRes = await fetch(statusUrl, {
-    headers: { Authorization: `token ${GITHUB_TOKEN}`, 'User-Agent': 'vercel-promote-script' }
+    headers: { Authorization: `token ${GITHUB_TOKEN}`, 'User-Agent': 'vercel-promote-script' },
   });
   if (!stRes.ok) {
     console.error('Failed to fetch commit statuses', await stRes.text());
@@ -38,9 +38,14 @@ async function run() {
   }
   const statusJson = await stRes.json();
   const statuses = statusJson.statuses || [];
-  const vercelStatus = statuses.find(s => (s.context || '').toLowerCase().includes('vercel') && s.target_url);
+  const vercelStatus = statuses.find(
+    (s) => (s.context || '').toLowerCase().includes('vercel') && s.target_url
+  );
   if (!vercelStatus) {
-    console.error('No Vercel status found for this commit. Statuses:', statuses.map(s=>s.context));
+    console.error(
+      'No Vercel status found for this commit. Statuses:',
+      statuses.map((s) => s.context)
+    );
     process.exit(1);
   }
 
@@ -57,7 +62,10 @@ async function run() {
   }
 
   if (!deploymentId) {
-    console.error('Unable to extract deploymentId from Vercel target_url:', vercelStatus.target_url);
+    console.error(
+      'Unable to extract deploymentId from Vercel target_url:',
+      vercelStatus.target_url
+    );
     process.exit(1);
   }
 
@@ -71,9 +79,9 @@ async function run() {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${VER_CLS}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(aliasBody)
+    body: JSON.stringify(aliasBody),
   });
 
   const aliasText = await aliasRes.text();
@@ -88,10 +96,12 @@ async function run() {
   const maxRetries = 5;
   for (let i = 0; i < maxRetries; i++) {
     const delay = i * 2000;
-    if (delay) await new Promise(r => setTimeout(r, delay));
+    if (delay) await new Promise((r) => setTimeout(r, delay));
     try {
       console.log(`Verification attempt ${i + 1}/${maxRetries}: fetching https://${previewAlias}`);
-      const resp = await fetch(`https://${previewAlias}`, { headers: { 'Cache-Control': 'no-cache' } });
+      const resp = await fetch(`https://${previewAlias}`, {
+        headers: { 'Cache-Control': 'no-cache' },
+      });
       const html = await resp.text();
       if (html.includes(verifyMarker)) {
         console.log('Verification passed: marker found in preview HTML. Promotion complete.');
@@ -107,7 +117,7 @@ async function run() {
   process.exit(2);
 }
 
-run().catch(err => {
+run().catch((err) => {
   console.error('Unhandled error:', err);
   process.exit(1);
 });
