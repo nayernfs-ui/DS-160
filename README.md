@@ -34,6 +34,8 @@ Local development & testing 💡
 - For integration debugging without sending real emails, use `tools/test-email-stub.js` which stubs `sib-api-v3-sdk`'s `TransactionalEmailsApi.sendTransacEmail` and validates attachment contents (useful for DOCX attachment tests).
 - Unit test for the health endpoint is available via `npm run test:api-health` (it asserts `SENDINBLUE_API_KEY` and `SENDER_EMAIL` are configured).
 
+**Before committing to `main`**: run `npm run check:main` to execute the strict linter (`--max-warnings=0`) and the full unit test suite locally; fix any failures before pushing. Small, safe changes and test-only fixes may be committed directly to `main` provided this check passes locally.
+
 One-click test endpoint (safe usage)
 
 - You can enable a one-time test endpoint at `/api/test-email` by setting `TEST_EMAIL_TOKEN` (copy `TEST_EMAIL_TOKEN` into your Vercel project settings or `.env` locally).
