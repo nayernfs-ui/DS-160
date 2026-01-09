@@ -9,61 +9,10 @@
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css?v=feat-options-row-fix-20260108" />
-    <style>
-      /* Temporary inline RTL override to ensure preview reflects the options-row fix immediately */
-      html[dir='rtl'] .question-group .options-row > label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        flex-direction: row-reverse;
-        white-space: nowrap !important;
-        background: rgba(255, 0, 0, 0.02); /* diagnostic */
-        padding: 2px 4px;
-      }
-      html[dir='rtl'] .question-group > label:not([for]):not(:first-child) {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        white-space: nowrap !important;
-        background: rgba(255, 0, 0, 0.02);
-        padding: 2px 4px;
-      }
-      html[dir='rtl'] .options-row input[type='radio'],
-      html[dir='rtl'] .options-row input[type='checkbox'] {
-        margin-inline-start: 8px;
-        margin-inline-end: 4px;
-        min-width: 18px;
-        position: relative;
-        z-index: 1;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css?v=force-redeploy-20260108-2" />
   </head>
   <body>
     <div class="container">
-      <!-- DEPLOY BANNER: visible for debugging; remove before merging -->
-      <div
-        id="deploy-banner"
-        style="
-          background: #fffbeb;
-          border: 1px solid #f59e0b;
-          color: #92400e;
-          padding: 8px 12px;
-          border-radius: 6px;
-          margin-bottom: 12px;
-          font-weight: 600;
-        "
-      >
-        Preview deploy: commit <strong>c4293f7</strong> — 2026-01-08 17:35 UTC
-      </div>
-      <script>
-        (function () {
-          window.__DEPLOY_COMMIT = 'c4293f7';
-          console.info('Preview deploy commit:', window.__DEPLOY_COMMIT);
-          var el = document.getElementById('deploy-banner');
-          if (el) el.title = 'deploy:' + window.__DEPLOY_COMMIT;
-        })();
-      </script>
       <!-- Progress Bar: updates as the user moves through sections -->
       <div class="progress-wrap" aria-hidden="false">
         <progress
