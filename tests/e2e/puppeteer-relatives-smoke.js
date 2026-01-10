@@ -124,8 +124,6 @@ async function saveArtifacts(page, tag = 'error') {
     });
     try {
       ensureArtifactsDir();
-      const ts = new Date().toISOString().replace(/[:.]/g, '-');
-      const tracePath = path.join(ARTIFACTS_DIR, `trace-launch-${ts}.json`);
       await browser.newPage(); // ensure at least one page exists for tracing start
       await browser.close();
       // Re-launch quickly to attach tracing to first real page below (best-effort)

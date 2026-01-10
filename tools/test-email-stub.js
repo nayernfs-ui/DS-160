@@ -26,7 +26,6 @@ handler._sendTransacEmail = async function (payload) {
   return { ok: true };
 };
 
-
 const req = {
   method: 'POST',
   body: {

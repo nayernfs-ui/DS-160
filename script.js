@@ -517,7 +517,6 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   // 5. Other Permanent Resident Logic (Arabic question)
   const permResRadios = document.querySelectorAll('input[name="HasOtherPermanentResident"]');
   const otherPermanentResidentFields = document.getElementById('otherPermanentResidentFields');
-  const otherPermanentResidentSelect = document.getElementById('otherPermanentResidentSelect');
 
   // Populate the permanent resident select from the main nationality list to avoid duplication
   const nationalitySelect = document.getElementById('nationality');
