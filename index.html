@@ -1093,14 +1093,18 @@
 >>>>>>> 55148bd (fix: populate residency dropdown and align sub-question radios)
           </legend>
           <div class="question-group">
-            <label>Have you ever been in the U.S.? (?? ??? ???????? ??????? ?? ????)</label
-            ><label><input type="radio" name="US_Visited" value="Yes" /> ???</label
-            ><label><input type="radio" name="US_Visited" value="No" checked /> ??</label>
+            <label>Have you ever been in the U.S.? (?? ??? ???????? ??????? ?? ????)</label>
+            <div class="options-row">
+              <label><input type="radio" name="US_Visited" value="Yes" /> ???</label>
+              <label><input type="radio" name="US_Visited" value="No" checked /> ??</label>
+            </div>
           </div>
           <div class="question-group">
-            <label>?? ???? ??? ?????? ?????? ??? ?????</label
-            ><label><input type="radio" name="HadUSVisaBefore" value="Yes" /> ???</label
-            ><label><input type="radio" name="HadUSVisaBefore" value="No" checked /> ??</label>
+            <label>?? ???? ??? ?????? ?????? ??? ?????</label>
+            <div class="options-row">
+              <label><input type="radio" name="HadUSVisaBefore" value="Yes" /> ???</label>
+              <label><input type="radio" name="HadUSVisaBefore" value="No" checked /> ??</label>
+            </div>
           </div>
           <fieldset
             id="US_Visits_Container"
@@ -1402,13 +1406,23 @@
               <span class="error-message" id="error-visaNumber"></span>
             </div>
           </fieldset>
+
+          <div class="question-group">
+            <label>هل لديك رخصة قيادة صالحة؟</label>
+            <div class="options-row">
+              <label><input type="radio" name="HasDriversLicense" value="Yes" /> نعم</label>
+              <label><input type="radio" name="HasDriversLicense" value="No" checked /> لا</label>
+            </div>
+          </div>
+
           <div class="question-group">
             <label>?? ?? ???? ??? ??? ?? ??????? ??? ?????? ???????</label>
-            <label><input type="radio" name="USVisaDenied" value="Yes" id="deniedYes" /> ???</label>
-            <label
-              ><input type="radio" name="USVisaDenied" value="No" id="deniedNo" checked /> ??</label
-            >
+            <div class="options-row">
+              <label><input type="radio" name="USVisaDenied" value="Yes" id="deniedYes" /> ???</label>
+              <label><input type="radio" name="USVisaDenied" value="No" id="deniedNo" checked /> ??</label>
+            </div>
           </div>
+
           <div id="denialTimeField" class="conditional-fields">
             <div class="question-group">
               <label for="denialTime"
