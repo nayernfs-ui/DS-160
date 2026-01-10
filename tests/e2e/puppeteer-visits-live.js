@@ -1,5 +1,7 @@
 // Copied and trimmed from tools/puppeteer-visits-live.js for stable e2e baseline
 const puppeteer = require('puppeteer');
+const fs = require('fs');
+const path = require('path');
 
 process.on('unhandledRejection', (err) => {
   console.error('UNHANDLED REJECTION:', err && (err.stack || err.message || err));
@@ -8,12 +10,83 @@ process.on('uncaughtException', (err) => {
   console.error('UNCAUGHT EXCEPTION:', err && (err.stack || err.message || err));
 });
 
+const ARTIFACTS_DIR = process.env.TEST_ARTIFACTS_DIR || path.join(process.cwd(), 'test-artifacts');
+const consoleMessages = [];
+
+function ensureArtifactsDir() {
+  try {
+    fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
+  } catch (e) {
+    console.error('Failed to create artifacts dir:', e && e.message);
+  }
+}
+
+async function saveArtifacts(page, tag = 'error') {
+  try {
+    ensureArtifactsDir();
+    const ts = new Date().toISOString().replace(/[:.]/g, '-');
+    const base = path.join(ARTIFACTS_DIR, `${tag}-${ts}`);
+
+    if (page) {
+      try {
+        await page.screenshot({ path: `${base}.png`, fullPage: true });
+      } catch (e) {
+        console.error('Failed to take screenshot:', e && e.message);
+      }
+      try {
+        const html = await page.content();
+        fs.writeFileSync(`${base}.html`, html);
+      } catch (e) {
+        console.error('Failed to save page HTML:', e && e.message);
+      }
+    }
+
+    try {
+      fs.writeFileSync(`${base}.console.json`, JSON.stringify(consoleMessages, null, 2));
+    } catch (e) {
+      console.error('Failed to write console messages:', e && e.message);
+    }
+  } catch (e) {
+    console.error('saveArtifacts overall failure:', e && e.message);
+  }
+}
+
 (async () => {
   const url = process.env.TARGET_URL || 'https://ds-160-fresh.vercel.app/';
   console.log('Target URL:', url);
   console.log('Visiting:', url);
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'], dumpio: true });
-  console.log('Browser launched. Creating new page...');
+  const extra = process.env.CHROME_FLAGS ? process.env.CHROME_FLAGS.split(' ') : [];
+  const args = [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-gpu',
+    ...extra,
+  ];
+  const launchOpts = { headless: true, args, dumpio: true };
+  if (process.env.PUPPETEER_EXECUTABLE_PATH)
+    launchOpts.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+
+  let browser;
+  try {
+    // try multiple launch fallbacks
+    for (const opts of [launchOpts, Object.assign({}, launchOpts, { headless: false })]) {
+      try {
+        browser = await puppeteer.launch(opts);
+        console.log('Browser launched. Creating new page...');
+        break;
+      } catch (e) {
+        console.error('Browser launch attempt failed:', e && (e.stack || e.message || e));
+      }
+    }
+    if (!browser) {
+      throw new Error('All browser launch attempts failed');
+    }
+  } catch (e) {
+    console.error('Failed to launch Puppeteer:', e && e.message ? e.message : e);
+    await saveArtifacts(null, 'launch-failed');
+    process.exit(2);
+  }
   const page = await browser.newPage();
   console.log('New page created.');
 
@@ -28,7 +101,10 @@ process.on('uncaughtException', (err) => {
     console.error('Failed to set user agent/headers:', err && err.message ? err.message : err);
   }
 
-  browser.on('disconnected', () => console.error('Browser disconnected event fired'));
+  browser.on('disconnected', async () => {
+    console.error('Browser disconnected event fired');
+    await saveArtifacts(null, 'browser-disconnected');
+  });
   page.on('error', (err) => console.error('Page error:', err && (err.stack || err.message || err)));
   page.on('pageerror', (err) =>
     console.error('Page runtime error:', err && (err.stack || err.message || err))
@@ -47,7 +123,27 @@ process.on('uncaughtException', (err) => {
       console.error('Error logging requestfailed:', err && err.message ? err.message : err);
     }
   });
-  page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
+  page.on('console', (msg) => {
+    try {
+      consoleMessages.push({
+        type: msg.type(),
+        text: msg.text(),
+        args: msg.args().map((a) => String(a)),
+      });
+    } catch (e) {
+      console.debug && console.debug('Ignored page console parsing error:', e && e.message);
+    }
+    console.log('PAGE LOG:', msg.text());
+  });
+  page.on('requestfinished', (req) => {
+    try {
+      console.log('Request finished:', req.url());
+    } catch (e) {
+      console.debug && console.debug('Ignored page requestfinished parsing error:', e && e.message);
+    }
+  });
+  page.setDefaultTimeout(30000);
+  page.setDefaultNavigationTimeout(60000);
 
   try {
     console.log('Navigating to URL (soft load)...');
@@ -55,7 +151,12 @@ process.on('uncaughtException', (err) => {
     console.log('Navigation completed (domcontentloaded).');
   } catch (e) {
     console.error('Navigation failed:', e && e.message ? e.message : e);
-    await browser.close();
+    await saveArtifacts(page, 'navigation-failed');
+    try {
+      await browser.close();
+    } catch (e) {
+      console.debug && console.debug('Ignored error closing browser:', e && e.message);
+    }
     process.exit(2);
   }
 
@@ -97,7 +198,12 @@ process.on('uncaughtException', (err) => {
           'E2E: widowedFields should be hidden when Married is selected; got',
           widowDisplay
         );
-        await browser.close();
+        await saveArtifacts(page, 'widow-visible');
+        try {
+          await browser.close();
+        } catch (e) {
+          console.debug && console.debug('Ignored error closing browser:', e && e.message);
+        }
         process.exit(4);
       }
 
@@ -106,7 +212,12 @@ process.on('uncaughtException', (err) => {
           'E2E: marriedFields should be visible when Married is selected; got',
           spouseDisplay
         );
-        await browser.close();
+        await saveArtifacts(page, 'spouse-hidden');
+        try {
+          await browser.close();
+        } catch (e) {
+          console.debug && console.debug('Ignored error closing browser:', e && e.message);
+        }
         process.exit(5);
       }
 
@@ -126,12 +237,22 @@ process.on('uncaughtException', (err) => {
 
       if (!widowAria || widowAria.hidden !== 'true' || widowAria.expanded !== 'false') {
         console.error('E2E: widowedFields ARIA mismatch:', widowAria);
-        await browser.close();
+        await saveArtifacts(page, 'widow-aria-mismatch');
+        try {
+          await browser.close();
+        } catch (e) {
+          console.debug && console.debug('Ignored error closing browser:', e && e.message);
+        }
         process.exit(6);
       }
       if (!spouseAria || spouseAria.hidden !== 'false' || spouseAria.expanded !== 'true') {
         console.error('E2E: marriedFields ARIA mismatch:', spouseAria);
-        await browser.close();
+        await saveArtifacts(page, 'spouse-aria-mismatch');
+        try {
+          await browser.close();
+        } catch (e) {
+          console.debug && console.debug('Ignored error closing browser:', e && e.message);
+        }
         process.exit(7);
       }
 
@@ -151,7 +272,12 @@ process.on('uncaughtException', (err) => {
             'E2E: divorcedFields should be visible when Divorced is selected; got',
             divorcedDisplay
           );
-          await browser.close();
+          await saveArtifacts(page, 'divorced-hidden');
+          try {
+            await browser.close();
+          } catch (e) {
+            console.debug && console.debug('Ignored error closing browser:', e && e.message);
+          }
           process.exit(8);
         }
 
@@ -169,7 +295,12 @@ process.on('uncaughtException', (err) => {
 
         if (!divorcedAria || divorcedAria.hidden !== 'false' || divorcedAria.expanded !== 'true') {
           console.error('E2E: divorcedFields ARIA mismatch:', divorcedAria);
-          await browser.close();
+          await saveArtifacts(page, 'divorced-aria-mismatch');
+          try {
+            await browser.close();
+          } catch (e) {
+            console.debug && console.debug('Ignored error closing browser:', e && e.message);
+          }
           process.exit(9);
         }
 
@@ -178,7 +309,12 @@ process.on('uncaughtException', (err) => {
             'E2E: marriedFields should be hidden when Divorced is selected; got',
             marriedAriaAfter
           );
-          await browser.close();
+          await saveArtifacts(page, 'married-aria-after');
+          try {
+            await browser.close();
+          } catch (e) {
+            console.debug && console.debug('Ignored error closing browser:', e && e.message);
+          }
           process.exit(10);
         }
 
@@ -188,17 +324,32 @@ process.on('uncaughtException', (err) => {
           'E2E divorced visibility check failed:',
           err && err.message ? err.message : err
         );
-        await browser.close();
+        await saveArtifacts(page, 'divorced-check-failed');
+        try {
+          await browser.close();
+        } catch (e) {
+          console.debug && console.debug('Ignored error closing browser:', e && e.message);
+        }
         process.exit(3);
       }
     } catch (err) {
       console.error('E2E marital visibility check failed:', err && err.message ? err.message : err);
-      await browser.close();
+      await saveArtifacts(page, 'marital-check-failed');
+      try {
+        await browser.close();
+      } catch (e) {
+        console.debug && console.debug('Ignored error closing browser:', e && e.message);
+      }
       process.exit(3);
     }
   } catch (e) {
     console.error('Interaction failed:', e && e.message ? e.message : e);
-    await browser.close();
+    await saveArtifacts(page, 'interaction-failed');
+    try {
+      await browser.close();
+    } catch (e) {
+      console.debug && console.debug('Ignored error closing browser:', e && e.message);
+    }
     process.exit(3);
   }
 
@@ -292,6 +443,11 @@ process.on('uncaughtException', (err) => {
   }
 
   console.error('Keyboard navigation did not reach the newly generated fields (Tab check failed)');
-  await browser.close();
+  await saveArtifacts(page, 'tab-check-failed');
+  try {
+    await browser.close();
+  } catch (e) {
+    console.debug && console.debug('Ignored error closing browser:', e && e.message);
+  }
   process.exit(1);
 })();
