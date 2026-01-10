@@ -1,6 +1,6 @@
 const JSZip = require('jszip');
 
-const handler = require('./api/submit.js');
+const handler = require('../api/submit.js');
 
 // Override injected send wrapper on exported handler to avoid network calls and inspect payload
 handler._sendTransacEmail = async function (payload) {
