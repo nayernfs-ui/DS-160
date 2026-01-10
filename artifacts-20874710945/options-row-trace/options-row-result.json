@@ -1,0 +1,70 @@
+{
+  "images": [
+    {
+      "name": "ltr-desktop.png",
+      "currentPath": "/home/runner/work/DS-160/DS-160/tests/e2e/trace-output/options-row/ltr-desktop.png",
+      "basePath": "/home/runner/work/DS-160/DS-160/tests/e2e/baseline/options-row/ltr-desktop.png",
+      "currentExists": true,
+      "baseExists": true,
+      "width": 1200,
+      "height": 7959,
+      "baseWidth": 1200,
+      "baseHeight": 7958,
+      "diffPixels": 0,
+      "percent": 0,
+      "exceeded": false,
+      "diffPath": null,
+      "error": "size_mismatch"
+    },
+    {
+      "name": "ltr-mobile.png",
+      "currentPath": "/home/runner/work/DS-160/DS-160/tests/e2e/trace-output/options-row/ltr-mobile.png",
+      "basePath": "/home/runner/work/DS-160/DS-160/tests/e2e/baseline/options-row/ltr-mobile.png",
+      "currentExists": true,
+      "baseExists": true,
+      "width": 375,
+      "height": 24965,
+      "baseWidth": 375,
+      "baseHeight": 24964,
+      "diffPixels": 0,
+      "percent": 0,
+      "exceeded": false,
+      "diffPath": null,
+      "error": "size_mismatch"
+    },
+    {
+      "name": "rtl-desktop.png",
+      "currentPath": "/home/runner/work/DS-160/DS-160/tests/e2e/trace-output/options-row/rtl-desktop.png",
+      "basePath": "/home/runner/work/DS-160/DS-160/tests/e2e/baseline/options-row/rtl-desktop.png",
+      "currentExists": true,
+      "baseExists": true,
+      "width": 1200,
+      "height": 7979,
+      "baseWidth": 1200,
+      "baseHeight": 7978,
+      "diffPixels": 0,
+      "percent": 0,
+      "exceeded": false,
+      "diffPath": null,
+      "error": "size_mismatch"
+    },
+    {
+      "name": "rtl-mobile.png",
+      "currentPath": "/home/runner/work/DS-160/DS-160/tests/e2e/trace-output/options-row/rtl-mobile.png",
+      "basePath": "/home/runner/work/DS-160/DS-160/tests/e2e/baseline/options-row/rtl-mobile.png",
+      "currentExists": true,
+      "baseExists": true,
+      "width": 375,
+      "height": 25021,
+      "baseWidth": 375,
+      "baseHeight": 25020,
+      "diffPixels": 0,
+      "percent": 0,
+      "exceeded": false,
+      "diffPath": null,
+      "error": "size_mismatch"
+    }
+  ],
+  "missingBaseline": false,
+  "passed": false
+}

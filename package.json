@@ -11,6 +11,7 @@
     "lint:html": "html-validate index.html",
     "format": "prettier --write .",
     "prettier:check": "prettier --check .",
+<<<<<<< HEAD
     "depcheck": "depcheck --specials=bin --json",
     "test:visits": "node tests/unit/visits.test.js",
     "test:military": "node tests/unit/military.test.js",
@@ -30,6 +31,14 @@
     "test:e2e:options-row-accept": "node tests/e2e/update-options-row-baseline.js",
     "test:e2e:other-passport-options-row": "node tests/e2e/check-other-passport-options-row.js",
     "check:main": "npm run lint:ci && npm test"
+=======
+    "test:visits": "node test/visits.test.js",
+    "test:stub-email": "node test-email-stub.js",
+    "test:docx-arabic": "node test/docx-arabic.test.js",
+    "test:ci": "npm run lint:ci && npm run lint:html && npm run smoke-docx && npm run test:stub-email && npm run test:docx-arabic",
+    "test": "npm run test:visits",
+    "prepare": "husky install"
+>>>>>>> 55148bd (fix: populate residency dropdown and align sub-question radios)
   },
   "dependencies": {
     "arabic-reshaper": "^1.1.0",

@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.shellIntegration.decorationsEnabled": "overwrite",
+  "terminal.integrated.shellIntegration.history": 100,
+  "terminal.integrated.shellIntegration.nonce": true
+}

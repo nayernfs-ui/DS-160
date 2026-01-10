@@ -70,4 +70,9 @@ npx vercel dev
 
 Then submit the form at `http://localhost:3000` and watch the terminal logs for the serverless function output.
 
+CI & Test scripts
+
+- `npm test` runs the unit visits test (the `visits` behavior automated test).
+- `npm run test:ci` runs linter, HTML validation, the DOCX smoke test, the email stub test, and the DOCX Arabic presence test — this mirrors what our CI job runs locally.
+
 If you prefer a client-only approach without a server function, I can show the EmailJS (client) option instead.

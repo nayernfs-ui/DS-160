@@ -1,0 +1,223 @@
+LOG: TEST START
+LOG: Using target URL: http://127.0.0.1:3001/
+LOG: Launching browser
+LOG: Browser launched
+LOG: New page created
+LOG: Navigating to http://127.0.0.1:3001/
+LOG: REQ http://127.0.0.1:3001/
+LOG: RES 200 http://127.0.0.1:3001/
+LOG: REQ https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap
+LOG: REQ http://127.0.0.1:3001/style.css
+LOG: REQ http://127.0.0.1:3001/js/script.js
+LOG: RES 200 http://127.0.0.1:3001/style.css
+LOG: RES 200 http://127.0.0.1:3001/js/script.js
+LOG: RES 200 https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap
+LOG: PAGE LOG: Visits check: 1 of 5 entries present.
+LOG: PAGE LOADED
+LOG: REQ https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscRiyS.woff2
+LOG: REQ https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2
+LOG: REQ http://127.0.0.1:3001/assets/ds160_header.png
+LOG: READY FLAG AFTER NAV: true
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect 202.4375 507.4375 305
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect 614.4375 935.4375 321
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect 1241.4375 1635.4375 394
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect 1653.4375 2128.4375 475
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect 2146.4375 2311.4375 165
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect 2329.4375 3309.4375 980
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect 3327.4375 3853.4375 526
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect 3871.4375 4362.4375 491
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect 4380.4375 5908 1527.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect 5926 6702 776
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect 6720 7159 439
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect 7177 7353 176
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 7371 7810 439
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 0 pct 7
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 7
+LOG: RES 200 http://127.0.0.1:3001/assets/ds160_header.png
+LOG: RES 200 https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2
+LOG: RES 200 https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscRiyS.woff2
+LOG: Detected window.__ds160Ready === true after navigation
+LOG: REQ http://127.0.0.1:3001/favicon.ico
+LOG: RES 404 http://127.0.0.1:3001/favicon.ico
+LOG: PAGE LOG: Failed to load resource: the server responded with a status of 404 (Not Found)
+LOG: MARRITAL SELECT READY
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect -3970.5625 -3628.5625 342
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect -3494.5625 -3118.5625 376
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect -2662.5625 -2240.5625 422
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect -2222.5625 -1719.5625 503
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect -1701.5625 -1499.5625 202
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect -1481.5625 -326.5625 1155
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect -308.5625 263.4375 572
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect 281.4375 782.4375 501
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect 800.4375 2395 1594.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect 2413 3245 832
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect 3263 3721 458
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect 3739 3929 190
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 3947 4423 476
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 8 pct 64
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 64
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect -7901.5625 -7559.5625 342
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect -7425.5625 -7049.5625 376
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect -6593.5625 -6171.5625 422
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect -6153.5625 -5650.5625 503
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect -5632.5625 -5430.5625 202
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect -5412.5625 -4257.5625 1155
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect -4239.5625 -3667.5625 572
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect -3649.5625 -3148.5625 501
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect -3130.5625 -1536 1594.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect -1518 -686 832
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect -668 -210 458
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect -192 -2 190
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 16 492 476
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 13 pct 100
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 100
+LOG: PAGE LOG: [marital] Divorced shown, making fields visible
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect -8811.5625 -7559.5625 1252
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect -7425.5625 -7049.5625 376
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect -6593.5625 -6171.5625 422
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect -6153.5625 -5650.5625 503
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect -5632.5625 -5430.5625 202
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect -5412.5625 -4257.5625 1155
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect -4239.5625 -3667.5625 572
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect -3649.5625 -3148.5625 501
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect -3130.5625 -1536 1594.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect -1518 -686 832
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect -668 -210 458
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect -192 -2 190
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 16 492 476
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 13 pct 100
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 100
+LOG: PAGE LOG: [marital] Divorced shown, making fields visible
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect -8811.5625 -7559.5625 1252
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect -7425.5625 -7049.5625 376
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect -6593.5625 -6171.5625 422
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect -6153.5625 -5650.5625 503
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect -5632.5625 -5430.5625 202
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect -5412.5625 -4257.5625 1155
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect -4239.5625 -3667.5625 572
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect -3649.5625 -3148.5625 501
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect -3130.5625 -1536 1594.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect -1518 -686 832
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect -668 -210 458
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect -192 -2 190
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 16 492 476
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 13 pct 100
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 100
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect -8811.5625 -7559.5625 1252
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect -7425.5625 -7049.5625 376
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect -6593.5625 -6171.5625 422
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect -6153.5625 -5650.5625 503
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect -5632.5625 -5430.5625 202
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect -5412.5625 -4257.5625 1155
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect -4239.5625 -3667.5625 572
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect -3649.5625 -3148.5625 501
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect -3130.5625 -1536 1594.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect -1518 -686 832
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect -668 -210 458
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect -192 -2 190
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 16 492 476
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 13 pct 100
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 100
+LOG: PAGE LOG: [marital] Divorced shown, making fields visible
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect -8811.5625 -7559.5625 1252
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect -7425.5625 -7049.5625 376
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect -6593.5625 -6171.5625 422
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect -6153.5625 -5650.5625 503
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect -5632.5625 -5430.5625 202
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect -5412.5625 -4257.5625 1155
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect -4239.5625 -3667.5625 572
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect -3649.5625 -3148.5625 501
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect -3130.5625 -1536 1594.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect -1518 -686 832
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect -668 -210 458
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect -192 -2 190
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 16 492 476
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 13 pct 100
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 100
+LOG: PAGE LOG: [marital] Divorced shown, making fields visible
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect -8811.5625 -7559.5625 1252
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect -7425.5625 -7049.5625 376
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect -6593.5625 -6171.5625 422
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect -6153.5625 -5650.5625 503
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect -5632.5625 -5430.5625 202
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect -5412.5625 -4257.5625 1155
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect -4239.5625 -3667.5625 572
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect -3649.5625 -3148.5625 501
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect -3130.5625 -1536 1594.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect -1518 -686 832
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect -668 -210 458
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect -192 -2 190
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 16 492 476
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 13 pct 100
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 100
+LOG: PAGE LOG: [marital] Divorced shown, making fields visible
+LOG: PAGE LOG: [progress] updateProgressBar: run
+LOG: PAGE LOG: [progress] updateProgressBar: bars found 14
+LOG: PAGE LOG: [progress] updateProgressBar: window.innerHeight 600 mid 300
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 0 educationHistory2 rect -8811.5625 -7559.5625 1252
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 1 lostPassportFields rect -7425.5625 -7049.5625 376
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 2 otherPermanentResidentFields rect 0 0 0
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 3 US_Relatives_Container rect -6593.5625 -6171.5625 422
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 4  rect -6153.5625 -5650.5625 503
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 5  rect -5632.5625 -5430.5625 202
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 6  rect -5412.5625 -4257.5625 1155
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 7  rect -4239.5625 -3667.5625 572
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 8  rect -3649.5625 -3148.5625 501
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 9  rect -3130.5625 -1536 1594.5625
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 10  rect -1518 -686 832
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 11  rect -668 -210 458
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 12  rect -192 -2 190
+LOG: PAGE LOG: [progress] updateProgressBar: fieldset 13  rect 16 492 476
+LOG: PAGE LOG: [progress] updateProgressBar: activeIndex 13 pct 100
+LOG: PAGE LOG: [progress] updateProgressBar: native <progress> value set to 100
+LOG: {
+  "mid": {
+    "aria": 64,
+    "styleWidth": "64%",
+    "computed": "102.4px",
+    "containerWidth": "160px"
+  },
+  "full": {
+    "aria": 100,
+    "styleWidth": "100%",
+    "computed": "160px",
+    "containerWidth": "160px"
+  },
+  "divorcedInfo": {
+    "exists": true,
+    "has": true,
+    "opacity": 1
+  }
+}

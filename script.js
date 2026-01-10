@@ -1,0 +1,773 @@
+document.addEventListener('DOMContentLoaded', (_event) => {
+  // 1. Marital Status Logic
+  const maritalStatusSelect = document.getElementById('maritalStatus');
+  const marriedFields = document.getElementById('marriedFields');
+  const widowedFields = document.getElementById('widowedFields');
+  const divorcedFields = document.getElementById('divorcedFields');
+
+  // --- NEW / MODIFIED SUBMISSION LOGIC WITH INLINE ERRORS ---
+  const form = document.getElementById('ds160Form');
+  const confirmationMessage = document.getElementById('confirmationMessage');
+
+  if (form) {
+    form.addEventListener('submit', function (event) {
+      let isValid = true;
+      const allFields = form.querySelectorAll(
+        'input[required], textarea[required], select[required]'
+      );
+
+      // 1. Reset all errors
+      form.querySelectorAll('.error-message').forEach((span) => (span.textContent = ''));
+      form.querySelectorAll('.is-invalid').forEach((field) => field.classList.remove('is-invalid'));
+
+      // 2. Validation Check
+      allFields.forEach((field) => {
+        const closestFieldset = field.closest('fieldset');
+        const isVisible = closestFieldset
+          ? window.getComputedStyle(closestFieldset).display !== 'none'
+          : true;
+
+        if (field.hasAttribute('required') && isVisible) {
+          if (!field.value || !field.value.toString().trim()) {
+            isValid = false;
+            field.classList.add('is-invalid');
+
+            // Display inline error message
+            const errorSpan = document.getElementById(`error-${field.id}`);
+            if (errorSpan) {
+              errorSpan.textContent = 'هذا الحقل مطلوب.';
+            }
+          } else {
+            field.classList.remove('is-invalid');
+          }
+        }
+      });
+
+      if (!isValid) {
+        // Prevent submission when validation fails
+        event.preventDefault();
+        return;
+      }
+
+      // If the action is external (different origin), allow the normal form submission
+      // to proceed (this avoids CORS issues with Fetch on services like formsubmit.co).
+      // If you explicitly want AJAX, set `data-use-ajax="true"` on the form and
+      // the code will attempt a fetch when same-origin or when the attribute is present.
+      try {
+        const actionUrl = new URL(form.action, window.location.href);
+        const isSameOrigin = actionUrl.origin === window.location.origin;
+        const useAjax = form.getAttribute('data-use-ajax') === 'true';
+
+        if (!isSameOrigin && !useAjax) {
+          // Let the browser submit the form (target="_blank" will open a new tab).
+          return;
+        }
+
+        // Otherwise, attempt AJAX submit (for same-origin or explicit opt-in).
+        const formData = new FormData(form);
+
+        // Convert FormData to a JSON object so the serverless proxy can forward it.
+        const jsonObj = {};
+        formData.forEach((value, key) => {
+          if (Object.prototype.hasOwnProperty.call(jsonObj, key)) {
+            if (!Array.isArray(jsonObj[key])) jsonObj[key] = [jsonObj[key]];
+            jsonObj[key].push(value);
+          } else {
+            jsonObj[key] = value;
+          }
+        });
+
+        // Ensure the duplicated education fields (suffix _2) are always present in the
+        // submitted JSON (so the server-side generator can pick them up even when empty).
+        const ensureEducation2Keys = [
+          'Education_InstitutionName_2',
+          'Education_Address_2',
+          'Education_QualificationName_2',
+          'Education_QualificationMajor_2',
+          'Education_StudyStartDate_Day_2',
+          'Education_StudyStartDate_Month_2',
+          'Education_StudyStartDate_Year_2',
+          'Education_StudyEndDate_Day_2',
+          'Education_StudyEndDate_Month_2',
+          'Education_StudyEndDate_Year_2',
+        ];
+        ensureEducation2Keys.forEach((k) => {
+          if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
+        });
+
+        // Ensure military fields are always present in the JSON (even when hidden)
+        const ensureMilitaryKeys = [
+          'Military_Served',
+          'Military_Branch',
+          'Military_Rank',
+          'Military_Specialty',
+          'Military_ServiceFrom_Day',
+          'Military_ServiceFrom_Month',
+          'Military_ServiceFrom_Year',
+          'Military_ServiceTo_Day',
+          'Military_ServiceTo_Month',
+          'Military_ServiceTo_Year',
+        ];
+        ensureMilitaryKeys.forEach((k) => {
+          if (!Object.prototype.hasOwnProperty.call(jsonObj, k)) jsonObj[k] = '';
+        });
+
+        event.preventDefault();
+        fetch(form.action, {
+          method: 'POST',
+          body: JSON.stringify(jsonObj),
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              form.style.display = 'none';
+              if (confirmationMessage) {
+                confirmationMessage.style.display = 'block';
+                setTimeout(() => {
+                  confirmationMessage.style.opacity = 1;
+                  confirmationMessage.style.animation = 'fadeIn 0.5s ease-out';
+                }, 20);
+              }
+            } else {
+              alert('عفواً، حدث خطأ أثناء إرسال البيانات. الرجاء المحاولة مرة أخرى.');
+            }
+          })
+          .catch((error) => {
+            console.error('Error submitting form:', error);
+            alert('حدث خطأ في الشبكة. يرجى التحقق من اتصالك بالإنترنت.');
+          });
+      } catch (e) {
+        // If URL parsing fails for any reason, default to normal submit to avoid blocking the user.
+        return;
+      }
+    });
+  }
+
+  function hideAllMaritalFields() {
+    if (marriedFields) marriedFields.style.display = 'none';
+    if (widowedFields) widowedFields.style.display = 'none';
+    if (divorcedFields) divorcedFields.style.display = 'none';
+  }
+
+  if (maritalStatusSelect) {
+    maritalStatusSelect.addEventListener('change', function () {
+      hideAllMaritalFields();
+      const status = this.value;
+
+      if (status === 'Married') {
+        marriedFields.style.display = 'block';
+        marriedFields.style.animation = 'fadeIn 0.5s';
+      } else if (status === 'Widowed') {
+        widowedFields.style.display = 'block';
+        widowedFields.style.animation = 'fadeIn 0.5s';
+      } else if (status === 'Divorced') {
+        divorcedFields.style.display = 'block';
+        divorcedFields.style.animation = 'fadeIn 0.5s';
+      }
+    });
+  }
+
+  // 2. Travel Companion Logic
+  const travelRadios = document.querySelectorAll('input[name="TravellingWithOthers"]');
+  const companionFields = document.getElementById('travelCompanionFields');
+
+  travelRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (companionFields) {
+        if (this.value === 'Yes') {
+          companionFields.style.display = 'block';
+          companionFields.style.animation = 'fadeIn 0.5s';
+        } else {
+          companionFields.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // 3. Visa Denial Logic
+  const denialRadios = document.querySelectorAll('input[name="USVisaDenied"]');
+  const denialTimeField = document.getElementById('denialTimeField');
+
+  denialRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (denialTimeField) {
+        if (this.id === 'deniedYes') {
+          denialTimeField.style.display = 'block';
+          denialTimeField.style.animation = 'fadeIn 0.5s';
+        } else {
+          denialTimeField.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // 3b. Previous U.S. Visa details (show when HadUSVisaBefore = Yes)
+  const hadVisaRadios = document.querySelectorAll('input[name="HadUSVisaBefore"]');
+  const previousUSVisas = document.getElementById('previousUSVisas');
+  const visaNumberInput = document.getElementById('visaNumber');
+  const visaNumberUnknown = document.getElementById('visaNumberUnknown');
+
+  hadVisaRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (previousUSVisas) {
+        if (this.value === 'Yes') {
+          previousUSVisas.style.display = 'block';
+          previousUSVisas.style.animation = 'fadeIn 0.5s';
+          // make visa number required unless unknown is checked
+          if (visaNumberInput && (!visaNumberUnknown || !visaNumberUnknown.checked)) {
+            visaNumberInput.setAttribute('required', 'required');
+          }
+        } else {
+          previousUSVisas.style.display = 'none';
+          if (visaNumberInput) visaNumberInput.removeAttribute('required');
+        }
+      }
+    });
+  });
+
+  // Visa number 'Do Not Know' checkbox logic
+  if (visaNumberUnknown && visaNumberInput) {
+    visaNumberUnknown.addEventListener('change', function () {
+      if (this.checked) {
+        visaNumberInput.removeAttribute('required');
+        visaNumberInput.classList.remove('is-invalid');
+        const err = document.getElementById('error-visaNumber');
+        if (err) err.textContent = '';
+      } else {
+        // only require if previousUSVisas is visible
+        const vis = previousUSVisas && window.getComputedStyle(previousUSVisas).display !== 'none';
+        if (vis) visaNumberInput.setAttribute('required', 'required');
+      }
+    });
+  }
+
+  // 4b. Previous U.S. Visits (show when US_Visited = Yes)
+  const visitedRadios = document.querySelectorAll('input[name="US_Visited"]');
+  const previousUSVisits = document.getElementById('US_Visits_Container');
+  const visitEntries = document.getElementById('visitEntries');
+  const maxVisits = 5;
+  // keep a hidden template clone for re-creating entries when all have been removed
+  const initialVisitTemplate = visitEntries ? visitEntries.querySelector('.visit-entry') : null;
+  const visitTemplateNode = initialVisitTemplate ? initialVisitTemplate.cloneNode(true) : null;
+
+  // debug: surface the configured max visits for easier troubleshooting in browser console
+  console.log('visits: maxVisits =', maxVisits);
+  console.log('visits: visitedRadios length =', visitedRadios.length);
+
+  function setVisitRequired(index, required) {
+    const year = document.getElementById(`USVisit_${index}_DateArrived_Year`);
+    const day = document.getElementById(`USVisit_${index}_DateArrived_Day`);
+    const month = document.getElementById(`USVisit_${index}_DateArrived_Month`);
+    const length = document.getElementById(`USVisit_${index}_Length`);
+    const unit = document.getElementById(`USVisit_${index}_Unit`);
+    [year, day, month, length, unit].forEach((el) => {
+      if (!el) return;
+      if (required) el.setAttribute('required', 'required');
+      else el.removeAttribute('required');
+    });
+  }
+
+  if (!window.__ds160VisitedInit) {
+    window.__ds160VisitedInit = true;
+
+    visitedRadios.forEach((radio) => {
+      radio.addEventListener('change', function () {
+        if (previousUSVisits) {
+          if (this.value === 'Yes') {
+            previousUSVisits.style.display = 'block';
+            previousUSVisits.style.animation = 'fadeIn 0.5s';
+            // accessibility: mark expanded and visible
+            previousUSVisits.setAttribute('aria-expanded', 'true');
+            previousUSVisits.setAttribute('aria-hidden', 'false');
+            // require fields for all currently visible entries
+            const currentCount = visitEntries
+              ? visitEntries.querySelectorAll('.visit-entry').length
+              : 0;
+            for (let i = 1; i <= currentCount; i++) setVisitRequired(i, true);
+          } else {
+            previousUSVisits.style.display = 'none';
+            // accessibility: mark collapsed/hidden
+            previousUSVisits.setAttribute('aria-expanded', 'false');
+            previousUSVisits.setAttribute('aria-hidden', 'true');
+            // remove required attributes from all entries
+            for (let i = 1; i <= maxVisits; i++) setVisitRequired(i, false);
+          }
+        }
+      });
+    });
+
+    // Add / Remove visit entries (delegated)
+    const clickDelegateRoot = previousUSVisits || visitEntries;
+    if (clickDelegateRoot) {
+      clickDelegateRoot.addEventListener('click', function (e) {
+        const addBtn = e.target.closest && e.target.closest('.add-visit');
+        const remBtn = e.target.closest && e.target.closest('.remove-visit');
+
+        if (addBtn && clickDelegateRoot.contains(addBtn)) {
+          e.preventDefault();
+          const current = Array.from(visitEntries.querySelectorAll('.visit-entry')).filter(
+            (el) => window.getComputedStyle(el).display !== 'none'
+          ).length;
+          console.info('add-click: current visible entries =', current);
+          if (current >= maxVisits) {
+            console.info('add-click: maxVisits reached, no-op');
+            return;
+          }
+          // use an existing entry as template, or fall back to the stored template node
+          const template = visitEntries.querySelector('.visit-entry') || visitTemplateNode;
+          if (!template) return;
+          const clone = template.cloneNode(true);
+          const newIndex = current + 1;
+          clone.setAttribute('data-index', String(newIndex));
+
+          // Update ids, names and label 'for' inside cloned node (handle any existing index)
+          clone.querySelectorAll('[id]').forEach((el) => {
+            el.id = el.id
+              .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIndex}_`)
+              .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIndex}`);
+            if (el.name)
+              el.name = el.name
+                .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIndex}_`)
+                .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIndex}`);
+            if (el.tagName === 'INPUT') el.value = '';
+            if (el.tagName === 'SELECT') el.selectedIndex = 0;
+          });
+          clone.querySelectorAll('label').forEach((lbl) => {
+            if (lbl.htmlFor)
+              lbl.htmlFor = lbl.htmlFor
+                .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIndex}_`)
+                .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIndex}`);
+            // if labels themselves have an id (group label), it will be updated in the id loop above
+          });
+
+          // Update aria-describedby references inside cloned node (so they point to updated label ids)
+          clone.querySelectorAll('[aria-describedby]').forEach((el) => {
+            const v = el.getAttribute('aria-describedby');
+            if (!v) return;
+            el.setAttribute(
+              'aria-describedby',
+              v
+                .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIndex}_`)
+                .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIndex}`)
+            );
+          });
+
+          // ensure required attributes for new entry when visible
+          const shouldRequire = window.getComputedStyle(previousUSVisits).display !== 'none';
+          // set required attributes directly on clone so they exist once appended
+          clone.querySelectorAll('input, select').forEach((el) => {
+            if (shouldRequire) el.setAttribute('required', 'required');
+            else el.removeAttribute('required');
+          });
+
+          visitEntries.appendChild(clone);
+          // also ensure required flags via DOM lookup for consistency
+          setVisitRequired(newIndex, shouldRequire);
+
+          console.info(
+            'add-click: appended clone, new entries =',
+            visitEntries.querySelectorAll('.visit-entry').length
+          );
+          updateAddControls();
+        }
+
+        if (remBtn && visitEntries.contains(remBtn)) {
+          e.preventDefault();
+          const entry = remBtn.closest('.visit-entry');
+          if (!entry) return;
+          const entries = visitEntries.querySelectorAll('.visit-entry');
+          if (entries.length === 1) {
+            // remove the only entry entirely from DOM
+            entry.remove();
+            // clear any required attributes for safety
+            for (let i = 1; i <= maxVisits; i++) setVisitRequired(i, false);
+            console.info(
+              'remove-click: last entry removed, entries now =',
+              visitEntries.querySelectorAll('.visit-entry').length
+            );
+            updateAddControls();
+
+            // If there are now zero entries and the user still has US_Visited=Yes, toggle to No
+            const remaining = visitEntries.querySelectorAll('.visit-entry').length;
+            if (remaining === 0) {
+              const yesRadio = document.querySelector('input[name="US_Visited"][value="Yes"]');
+              const noRadio = document.querySelector('input[name="US_Visited"][value="No"]');
+              if (yesRadio && yesRadio.checked && noRadio) {
+                // programmatically switch to 'No' to reuse existing hide/cleanup logic
+                noRadio.checked = true;
+                noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+              }
+            }
+          } else {
+            entry.remove();
+            // renumber remaining entries to keep indexes contiguous
+            const remaining = visitEntries.querySelectorAll('.visit-entry');
+            remaining.forEach((el, idx) => {
+              const newIdx = idx + 1;
+              el.setAttribute('data-index', String(newIdx));
+              el.querySelectorAll('[id]').forEach((node) => {
+                if (node.id)
+                  node.id = node.id
+                    .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIdx}_`)
+                    .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`);
+                if (node.name)
+                  node.name = node.name
+                    .replace(/(?:US)?Visit_\d+_/g, `USVisit_${newIdx}_`)
+                    .replace(/(?:US)?Visit_\d+$/g, `USVisit_${newIdx}`);
+              });
+            });
+            console.info('remove-click: entries after removal =', remaining.length);
+            updateAddControls();
+          }
+        }
+      });
+      // initialize add controls visibility
+      updateAddControls();
+    }
+  }
+
+  // show/hide add controls when at max
+  function updateAddControls() {
+    const visitEntries = document.getElementById('visitEntries');
+    const entries = visitEntries ? visitEntries.querySelectorAll('.visit-entry').length : 0;
+    // Select all buttons with the class 'add-visit'
+    const addButtons = document.querySelectorAll('.add-visit');
+
+    addButtons.forEach((btn) => {
+      if (entries >= 5) {
+        // Ensure this is 5
+        btn.style.setProperty('display', 'none', 'important');
+      } else {
+        btn.style.display = 'inline-block';
+      }
+    });
+    console.log(`Visits check: ${entries} of 5 entries present.`);
+  }
+
+  // 4. Other Nationality Logic (new)
+  const otherNatRadios = document.querySelectorAll('input[name="HasOtherNationality"]');
+  const otherNationalityFields = document.getElementById('otherNationalityFields');
+  const otherPassRadios = document.querySelectorAll('input[name="Other_Nationality_Passport"]');
+  const otherPassportField = document.getElementById('otherPassportField');
+
+  otherNatRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (otherNationalityFields) {
+        if (this.value === 'Yes') {
+          otherNationalityFields.style.display = 'block';
+          otherNationalityFields.style.animation = 'fadeIn 0.5s';
+        } else {
+          otherNationalityFields.style.display = 'none';
+          if (otherPassportField) otherPassportField.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  otherPassRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (otherPassportField) {
+        if (this.value === 'Yes') {
+          otherPassportField.style.display = 'block';
+          otherPassportField.style.animation = 'fadeIn 0.5s';
+        } else {
+          otherPassportField.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // 6. Military Service Logic
+  const militaryRadios = document.querySelectorAll('input[name="Military_Served"]');
+  const militaryFields = document.getElementById('militaryFields');
+
+  function setMilitaryRequired(is_required) {
+    if (!militaryFields) return;
+    const controls = militaryFields.querySelectorAll('input, select, textarea');
+    controls.forEach((c) => {
+      if (is_required) {
+        c.setAttribute('required', '');
+      } else {
+        c.removeAttribute('required');
+      }
+    });
+  }
+
+  militaryRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (!militaryFields) return;
+      if (this.value === 'Yes') {
+        militaryFields.style.display = 'block';
+        militaryFields.style.animation = 'fadeIn 0.5s';
+        militaryFields.setAttribute('aria-expanded', 'true');
+        militaryFields.setAttribute('aria-hidden', 'false');
+        setMilitaryRequired(true);
+      } else {
+        militaryFields.style.display = 'none';
+        militaryFields.setAttribute('aria-expanded', 'false');
+        militaryFields.setAttribute('aria-hidden', 'true');
+        setMilitaryRequired(false);
+      }
+    });
+  });
+
+  // 5. Other Permanent Resident Logic (Arabic question)
+  const permResRadios = document.querySelectorAll('input[name="HasOtherPermanentResident"]');
+  const otherPermanentResidentFields = document.getElementById('otherPermanentResidentFields');
+  const otherPermanentResidentSelect = document.getElementById('otherPermanentResidentSelect');
+
+  // Populate the permanent resident select from the main nationality list to avoid duplication
+  const nationalitySelect = document.getElementById('nationality');
+
+  // --- Arabic country names mapping ---
+  const countryNamesArabic = {
+    Afghanistan: 'أفغانستان',
+    Albania: 'ألبانيا',
+    Algeria: 'الجزائر',
+    Andorra: 'أندورا',
+    Angola: 'أنغولا',
+    'Antigua and Barbuda': 'أنتيغوا وباربودا',
+    Argentina: 'الأرجنتين',
+    Armenia: 'أرمينيا',
+    Australia: 'أستراليا',
+    Austria: 'النمسا',
+    Azerbaijan: 'أذربيجان',
+    Bahamas: 'الباهاما',
+    Bahrain: 'البحرين',
+    Bangladesh: 'بنغلاديش',
+    Barbados: 'بربادوس',
+    Belarus: 'بيلاروسيا',
+    Belgium: 'بلجيكا',
+    Belize: 'بليز',
+    Benin: 'بنين',
+    Bhutan: 'بوتان',
+    Bolivia: 'بوليفيا',
+    'Bosnia and Herzegovina': 'البوسنة والهرسك',
+    Botswana: 'بتسوانا',
+    Brazil: 'البرازيل',
+    Brunei: 'بروناي',
+    Bulgaria: 'بلغاريا',
+    'Burkina Faso': 'بوركينا فاسو',
+    Burundi: 'بوروندي',
+    'Cabo Verde': 'الرأس الأخضر',
+    Cambodia: 'كمبوديا',
+    Cameroon: 'الكاميرون',
+    Canada: 'كندا',
+    'Central African Republic': 'جمهورية أفريقيا الوسطى',
+    Chad: 'تشاد',
+    Chile: 'تشيلي',
+    China: 'الصين',
+    Colombia: 'كولومبيا',
+    Comoros: 'جزر القمر',
+    'Costa Rica': 'كوستاريكا',
+    "Côte d'Ivoire": 'ساحل العاج',
+    Croatia: 'كرواتيا',
+    Cuba: 'كوبا',
+    Cyprus: 'قبرص',
+    Czechia: 'التشيك',
+    'Democratic Republic of the Congo': 'جمهورية الكونغو الديمقراطية',
+    Denmark: 'الدنمارك',
+    Djibouti: 'جيبوتي',
+    Dominica: 'دومينيكا',
+    'Dominican Republic': 'الجمهورية الدومينيكية',
+    Ecuador: 'الإكوادور',
+    Egypt: 'مصر',
+    'El Salvador': 'السلفادور',
+    'Equatorial Guinea': 'غينيا الاستوائية',
+    Eritrea: 'إريتريا',
+    Estonia: 'إستونيا',
+    Eswatini: 'إسواتيني',
+    Ethiopia: 'إثيوبيا',
+    'Federated States of Micronesia': 'ولايات ميكرونيزيا الفيدرالية',
+    Fiji: 'فيجي',
+    Finland: 'فنلندا',
+    France: 'فرنسا',
+    Gabon: 'الغابون',
+    Gambia: 'غامبيا',
+    Georgia: 'جورجيا',
+    Germany: 'ألمانيا',
+    Ghana: 'غانا',
+    Greece: 'اليونان',
+    Grenada: 'غرينادا',
+    Guatemala: 'غواتيمالا',
+    Guinea: 'غينيا',
+    'Guinea-Bissau': 'غينيا بيساو',
+    Guyana: 'غيانا',
+    Haiti: 'هايتي',
+    Honduras: 'هندوراس',
+    Hungary: 'المجر',
+    Iceland: 'آيسلندا',
+    India: 'الهند',
+    Indonesia: 'إندونيسيا',
+    Iran: 'إيران',
+    Iraq: 'العراق',
+    Ireland: 'إيرلندا',
+    Israel: 'إسرائيل',
+    Italy: 'إيطاليا',
+    Jamaica: 'جامايكا',
+    Japan: 'اليابان',
+    Jordan: 'الأردن',
+    Kazakhstan: 'كازاخستان',
+    Kenya: 'كينيا',
+    Kiribati: 'كيريباتي',
+    Kosovo: 'كوسوفو',
+    Kuwait: 'الكويت',
+    Kyrgyzstan: 'قيرغيزستان',
+    Laos: 'لاوس',
+    Latvia: 'لاتفيا',
+    Lebanon: 'لبنان',
+    Lesotho: 'ليسوتو',
+    Liberia: 'ليبيريا',
+    Libya: 'ليبيا',
+    Liechtenstein: 'ليختنشتاين',
+    Lithuania: 'ليتوانيا',
+    Luxembourg: 'لوكسمبورغ',
+    Madagascar: 'مدغشقر',
+    Malawi: 'مالاوي',
+    Malaysia: 'ماليزيا',
+    Maldives: 'المالديف',
+    Mali: 'مالي',
+    Malta: 'مالطا',
+    'Marshall Islands': 'جزر مارشال',
+    Mauritania: 'موريتانيا',
+    Mauritius: 'موريشيوس',
+    Mexico: 'المكسيك',
+    Moldova: 'مولدوفا',
+    Monaco: 'موناكو',
+    Mongolia: 'منغوليا',
+    Montenegro: 'الجبل الأسود',
+    Morocco: 'المغرب',
+    Mozambique: 'موزمبيق',
+    Myanmar: 'ميانمار',
+    Namibia: 'ناميبيا',
+    Nauru: 'ناورو',
+    Nepal: 'نيبال',
+    Netherlands: 'هولندا',
+    'New Zealand': 'نيوزيلندا',
+    Nicaragua: 'نيكاراغوا',
+    Niger: 'النيجر',
+    Nigeria: 'نيجيريا',
+    'North Korea': 'كوريا الشمالية',
+    'North Macedonia': 'مقدونيا الشمالية',
+    Norway: 'النرويج',
+    Oman: 'عمان',
+    Pakistan: 'باكستان',
+    Palau: 'بالاو',
+    Panama: 'بنما',
+    'Papua New Guinea': 'بابوا غينيا الجديدة',
+    Paraguay: 'باراجواي',
+    Peru: 'بيرو',
+    Philippines: 'الفلبين',
+    Poland: 'بولندا',
+    Portugal: 'البرتغال',
+    Qatar: 'قطر',
+    'Republic of the Congo': 'جمهورية الكونغو',
+    Romania: 'رومانيا',
+    Russia: 'روسيا',
+    Rwanda: 'رواندا',
+    'Saint Kitts and Nevis': 'سانت كيتس ونيفيس',
+    'Saint Lucia': 'سانت لوسيا',
+    'Saint Vincent and the Grenadines': 'سانت فنسنت والغرينادين',
+    Samoa: 'ساموا',
+    'San Marino': 'سان مارينو',
+    'Sao Tome and Principe': 'ساو تومي وبرينسيب',
+    'Saudi Arabia': 'المملكة العربية السعودية',
+    Senegal: 'السنغال',
+    Serbia: 'صربيا',
+    Seychelles: 'سيشيل',
+    'Sierra Leone': 'سيراليون',
+    Singapore: 'سنغافورة',
+    Slovakia: 'سلوفاكيا',
+    Slovenia: 'سلوفينيا',
+    'Solomon Islands': 'جزر سولومون',
+    Somalia: 'الصومال',
+    'South Africa': 'جنوب أفريقيا',
+    'South Korea': 'كوريا الجنوبية',
+    'South Sudan': 'جنوب السودان',
+    Spain: 'إسبانيا',
+    'Sri Lanka': 'سريلانكا',
+    Sudan: 'السودان',
+    Suriname: 'سورينام',
+    Sweden: 'السويد',
+    Switzerland: 'سويسرا',
+    Syria: 'سوريا',
+    Taiwan: 'تايوان',
+    Tajikistan: 'طاجيكستان',
+    Tanzania: 'تنزانيا',
+    Thailand: 'تايلاند',
+    'Timor-Leste': 'تيمور الشرقية',
+    Togo: 'توغو',
+    Tonga: 'تونغا',
+    'Trinidad and Tobago': 'ترينيداد وتوباغو',
+    Tunisia: 'تونس',
+    Turkey: 'تركيا',
+    Turkmenistan: 'تركمانستان',
+    Tuvalu: 'توفالو',
+    Uganda: 'أوغندا',
+    Ukraine: 'أوكرانيا',
+    'United Arab Emirates': 'الإمارات العربية المتحدة',
+    'United Kingdom': 'المملكة المتحدة',
+    'United States of America': 'الولايات المتحدة الأمريكية',
+    Uruguay: 'أوروغواي',
+    Uzbekistan: 'أوزبكستان',
+    Vanuatu: 'فانواتو',
+    'Vatican City': 'دولة الفاتيكان',
+    Venezuela: 'فنزويلا',
+    Vietnam: 'فيتنام',
+    Yemen: 'اليمن',
+    Zambia: 'زامبيا',
+    Zimbabwe: 'زيمبابوي',
+  };
+
+  // Utility: Replace option text with Arabic labels when mapping exists
+  function localizeSelectOptions(selectEl) {
+    if (!selectEl || !selectEl.options) return;
+    for (let i = 0; i < selectEl.options.length; i++) {
+      const opt = selectEl.options[i];
+      if (!opt.value) continue;
+      if (Object.prototype.hasOwnProperty.call(countryNamesArabic, opt.value)) {
+        opt.textContent = countryNamesArabic[opt.value];
+      }
+    }
+  }
+
+  // Update the existing selects before copying into otherPermanentResidentSelect
+  if (nationalitySelect) localizeSelectOptions(nationalitySelect);
+  const otherNationalitySelect = document.getElementById('otherNationalitySelect');
+  if (otherNationalitySelect) localizeSelectOptions(otherNationalitySelect);
+
+  function populateCountryList(targetId) {
+    const target = document.getElementById(targetId);
+    if (!target || !nationalitySelect) return;
+    target.innerHTML = nationalitySelect.innerHTML.replace('-- اختر / Select --', '- اختر -');
+    localizeSelectOptions(target);
+  }
+
+  // Populate now in case fields are shown later; also call when the field is revealed
+  populateCountryList('otherPermanentResidentSelect');
+
+  permResRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (otherPermanentResidentFields) {
+        if (this.value === 'Yes') {
+          otherPermanentResidentFields.style.display = 'block';
+          otherPermanentResidentFields.style.animation = 'fadeIn 0.5s';
+          populateCountryList('otherPermanentResidentSelect');
+        } else {
+          otherPermanentResidentFields.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // Ensure initial state is correct (e.g., if fields were pre-filled)
+  hideAllMaritalFields();
+  if (companionFields) companionFields.style.display = 'none';
+  if (denialTimeField) denialTimeField.style.display = 'none';
+  if (otherNationalityFields) otherNationalityFields.style.display = 'none';
+  if (otherPassportField) otherPassportField.style.display = 'none';
+  if (otherPermanentResidentFields) otherPermanentResidentFields.style.display = 'none';
+});

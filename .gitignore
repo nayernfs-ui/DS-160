@@ -62,6 +62,8 @@ typings/
 # dotenv environment variables file
 .env
 .env.*
+# Local env overrides (may contain secrets)
+.env.local
 
 # next.js build output
 .next

@@ -1,0 +1,394 @@
+[
+  {
+    "name": "HasOtherNationality",
+    "id": "otherNatYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 487.9375,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": "<input type=\"radio\" name=\"HasOtherNationality\" value=\"Yes\" id=\"otherNatYes\">",
+    "overlapped": false
+  },
+  {
+    "name": "HasOtherNationality",
+    "id": "otherNatNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 369.59375,
+      "top": 487.9375,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": "<input type=\"radio\" name=\"HasOtherNationality\" value=\"No\" id=\"otherNatNo\" checked=\"\">",
+    "overlapped": false
+  },
+  {
+    "name": "Other_Nationality_Passport",
+    "id": "otherPassYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 0,
+      "top": 0,
+      "width": 0,
+      "height": 0
+    },
+    "elementAtCenter": "<body>\n    <div class=\"container\">\n      <!-- DEPLOY BANNER: visible for debugging; remove before merging -->\n      <div id=\"deploy-banner\" style=\"\n          background: #fffbeb;\n          border: 1px",
+    "overlapped": false
+  },
+  {
+    "name": "Other_Nationality_Passport",
+    "id": "otherPassNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 0,
+      "top": 0,
+      "width": 0,
+      "height": 0
+    },
+    "elementAtCenter": "<body>\n    <div class=\"container\">\n      <!-- DEPLOY BANNER: visible for debugging; remove before merging -->\n      <div id=\"deploy-banner\" style=\"\n          background: #fffbeb;\n          border: 1px",
+    "overlapped": false
+  },
+  {
+    "name": "LostPassport",
+    "id": "lostPassportYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 463.953125,
+      "top": 578.9375,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": "<input type=\"radio\" name=\"LostPassport\" value=\"Yes\" id=\"lostPassportYes\">",
+    "overlapped": false
+  },
+  {
+    "name": "LostPassport",
+    "id": "lostPassportNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 388.59375,
+      "top": 578.9375,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": "<input type=\"radio\" name=\"LostPassport\" value=\"No\" id=\"lostPassportNo\" checked=\"\">",
+    "overlapped": false
+  },
+  {
+    "name": "HasOtherPermanentResident",
+    "id": "permResYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 463.953125,
+      "top": 982.96875,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "HasOtherPermanentResident",
+    "id": "permResNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 388.59375,
+      "top": 982.96875,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "US_ImmediateRelatives",
+    "id": "relativesYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 463.953125,
+      "top": 1049.46875,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "US_ImmediateRelatives",
+    "id": "relativesNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 388.59375,
+      "top": 1049.46875,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "US_OtherRelatives",
+    "id": "otherRelativesYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 463.953125,
+      "top": 1105.46875,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "US_OtherRelatives",
+    "id": "otherRelativesNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 388.59375,
+      "top": 1105.46875,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "TravellingWithOthers",
+    "id": "travelYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 2114,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "TravellingWithOthers",
+    "id": "travelNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 369.59375,
+      "top": 2114,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "US_Visited",
+    "id": null,
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 2274.5,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "US_Visited",
+    "id": null,
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 369.59375,
+      "top": 2274.5,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "HadUSVisaBefore",
+    "id": null,
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 2341,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "HadUSVisaBefore",
+    "id": null,
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 369.59375,
+      "top": 2341,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "USVisaDenied",
+    "id": "deniedYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 3000.0625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "USVisaDenied",
+    "id": "deniedNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 369.59375,
+      "top": 3000.0625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "Father_In_US",
+    "id": "fatherInYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 3298.5625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "Father_In_US",
+    "id": "fatherInNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 369.59375,
+      "top": 3298.5625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "Mother_In_US",
+    "id": "motherInYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 3494.5625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "Mother_In_US",
+    "id": "motherInNo",
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 369.59375,
+      "top": 3494.5625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "HasOtherEducation",
+    "id": null,
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 5742.625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "HasOtherEducation",
+    "id": null,
+    "value": "No",
+    "checked": true,
+    "rect": {
+      "left": 369.59375,
+      "top": 5742.625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "Military_Served",
+    "id": "militaryYes",
+    "value": "Yes",
+    "checked": false,
+    "rect": {
+      "left": 444.953125,
+      "top": 7082.65625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  },
+  {
+    "name": "Military_Served",
+    "id": "militaryNo",
+    "value": "No",
+    "checked": false,
+    "rect": {
+      "left": 369.59375,
+      "top": 7082.65625,
+      "width": 18,
+      "height": 13
+    },
+    "elementAtCenter": null,
+    "overlapped": false
+  }
+]

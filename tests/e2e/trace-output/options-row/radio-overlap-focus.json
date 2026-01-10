@@ -1,0 +1,522 @@
+[
+  {
+    "idx": 23,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "HasOtherNationality",
+        "id": "otherNatYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": "<input type=\"radio\" name=\"HasOtherNationality\" value=\"Yes\" id=\"otherNatYes\">"
+      },
+      {
+        "name": "HasOtherNationality",
+        "id": "otherNatNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": "<input type=\"radio\" name=\"HasOtherNationality\" value=\"No\" id=\"otherNatNo\" checked=\"\">"
+      }
+    ],
+    "after": [
+      {
+        "name": "HasOtherNationality",
+        "id": "otherNatYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": "<input type=\"radio\" name=\"HasOtherNationality\" value=\"Yes\" id=\"otherNatYes\">"
+      },
+      {
+        "name": "HasOtherNationality",
+        "id": "otherNatNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": "<input type=\"radio\" name=\"HasOtherNationality\" value=\"No\" id=\"otherNatNo\" checked=\"\">"
+      }
+    ]
+  },
+  {
+    "idx": 27,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "LostPassport",
+        "id": "lostPassportYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": "<input type=\"radio\" name=\"LostPassport\" value=\"Yes\" id=\"lostPassportYes\">"
+      },
+      {
+        "name": "LostPassport",
+        "id": "lostPassportNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": "<input type=\"radio\" name=\"LostPassport\" value=\"No\" id=\"lostPassportNo\" checked=\"\">"
+      }
+    ],
+    "after": [
+      {
+        "name": "LostPassport",
+        "id": "lostPassportYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": "<input type=\"radio\" name=\"LostPassport\" value=\"Yes\" id=\"lostPassportYes\">"
+      },
+      {
+        "name": "LostPassport",
+        "id": "lostPassportNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": "<input type=\"radio\" name=\"LostPassport\" value=\"No\" id=\"lostPassportNo\" checked=\"\">"
+      }
+    ]
+  },
+  {
+    "idx": 31,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "HasOtherPermanentResident",
+        "id": "permResYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "HasOtherPermanentResident",
+        "id": "permResNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "HasOtherPermanentResident",
+        "id": "permResYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "HasOtherPermanentResident",
+        "id": "permResNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 33,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "US_ImmediateRelatives",
+        "id": "relativesYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "US_ImmediateRelatives",
+        "id": "relativesNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "US_ImmediateRelatives",
+        "id": "relativesYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "US_ImmediateRelatives",
+        "id": "relativesNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 34,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "US_OtherRelatives",
+        "id": "otherRelativesYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "US_OtherRelatives",
+        "id": "otherRelativesNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "US_OtherRelatives",
+        "id": "otherRelativesYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "US_OtherRelatives",
+        "id": "otherRelativesNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 47,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "TravellingWithOthers",
+        "id": "travelYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "TravellingWithOthers",
+        "id": "travelNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "TravellingWithOthers",
+        "id": "travelYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "TravellingWithOthers",
+        "id": "travelNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 50,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "US_Visited",
+        "id": null,
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "US_Visited",
+        "id": null,
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "US_Visited",
+        "id": null,
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "US_Visited",
+        "id": null,
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 51,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "HadUSVisaBefore",
+        "id": null,
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "HadUSVisaBefore",
+        "id": null,
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "HadUSVisaBefore",
+        "id": null,
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "HadUSVisaBefore",
+        "id": null,
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 58,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "USVisaDenied",
+        "id": "deniedYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "USVisaDenied",
+        "id": "deniedNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "USVisaDenied",
+        "id": "deniedYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "USVisaDenied",
+        "id": "deniedNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 62,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "Father_In_US",
+        "id": "fatherInYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "Father_In_US",
+        "id": "fatherInNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "Father_In_US",
+        "id": "fatherInYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "Father_In_US",
+        "id": "fatherInNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 66,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "Mother_In_US",
+        "id": "motherInYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "Mother_In_US",
+        "id": "motherInNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "Mother_In_US",
+        "id": "motherInYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "Mother_In_US",
+        "id": "motherInNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 90,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "HasOtherEducation",
+        "id": null,
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "HasOtherEducation",
+        "id": null,
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "HasOtherEducation",
+        "id": null,
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "HasOtherEducation",
+        "id": null,
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  },
+  {
+    "idx": 103,
+    "hasFocusable": false,
+    "before": [
+      {
+        "name": "Military_Served",
+        "id": "militaryYes",
+        "value": "Yes",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "Military_Served",
+        "id": "militaryNo",
+        "value": "No",
+        "context": "before",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ],
+    "after": [
+      {
+        "name": "Military_Served",
+        "id": "militaryYes",
+        "value": "Yes",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      },
+      {
+        "name": "Military_Served",
+        "id": "militaryNo",
+        "value": "No",
+        "context": "after",
+        "overlapped": false,
+        "elementAtCenter": null
+      }
+    ]
+  }
+]

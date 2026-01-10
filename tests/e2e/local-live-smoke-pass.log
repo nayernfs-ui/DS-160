@@ -1,0 +1,17 @@
+Target URL: http://127.0.0.1:8080
+Visiting: http://127.0.0.1:8080
+
+Navigation completed (domcontentloaded).
+Waiting for visits radio...
+Clicking Yes radio to reveal visits...
+Waiting for marital status select...
+Selecting Married from marital status...
+E2E: marital visibility & ARIA checks passed (Married shows spouse, hides widowed)
+Starting add-entry loop...
+Entries after click: 2
+Entries after click: 3
+Entries after click: 4
+Entries after click: 5
+Reached 5 entries — now verifying keyboard navigation (Tab) reaches newly generated fields
+Keyboard navigation reaches newly generated fields: PASS
+Live site supports up to 5 entries: PASS

@@ -1,0 +1,8 @@
+{
+  "found": true,
+  "display": "flex",
+  "flexDirection": "row",
+  "gap": "30px",
+  "direction": "rtl",
+  "docDir": "rtl"
+}

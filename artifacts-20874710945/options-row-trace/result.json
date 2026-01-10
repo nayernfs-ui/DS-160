@@ -1,0 +1,58 @@
+[
+  {
+    "viewport": {
+      "width": 1200,
+      "height": 900
+    },
+    "ltr": {
+      "found": true,
+      "display": "flex",
+      "flexDirection": "row",
+      "gap": "30px",
+      "direction": "rtl",
+      "docDir": "ltr"
+    }
+  },
+  {
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "ltr": {
+      "found": true,
+      "display": "flex",
+      "flexDirection": "row",
+      "gap": "30px",
+      "direction": "rtl",
+      "docDir": "ltr"
+    }
+  },
+  {
+    "viewport": {
+      "width": 1200,
+      "height": 900
+    },
+    "rtl": {
+      "found": true,
+      "display": "flex",
+      "flexDirection": "row",
+      "gap": "30px",
+      "direction": "rtl",
+      "docDir": "rtl"
+    }
+  },
+  {
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "rtl": {
+      "found": true,
+      "display": "flex",
+      "flexDirection": "row",
+      "gap": "30px",
+      "direction": "rtl",
+      "docDir": "rtl"
+    }
+  }
+]

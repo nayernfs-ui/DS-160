@@ -37,6 +37,13 @@ let apiKey = defaultClient.authentications['api-key'];
 apiKey.apiKey = API_KEY;
 let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
+// Export api instance and provide an injectable send wrapper for tests
+module.exports.apiInstance = apiInstance;
+module.exports._sendTransacEmail = async function (payload) {
+  // Default behaviour defers to the real API instance — tests may override this function
+  return apiInstance.sendTransacEmail(payload);
+};
+
 /**
  * Map a field key to one of the major sections.
  */
@@ -351,8 +358,8 @@ const submitHandler = async (req, res) => {
       },
     ];
 
-    // 5. Send the Email
-    await apiInstance.sendTransacEmail(sendSmtpEmail);
+    // 5. Send the Email using injectable wrapper (easier to stub in tests)
+    await module.exports._sendTransacEmail(sendSmtpEmail);
 
     console.log('DOCX Attached & Email sent successfully via Brevo.');
     res
@@ -370,3 +377,12 @@ const submitHandler = async (req, res) => {
 // Expose the handler and generateDocument for testing
 module.exports = submitHandler;
 module.exports.generateDocument = generateDocument;
+
+// Ensure exported handler has injectable properties for testing (apiInstance and send wrapper)
+// Attach them to the exported function so external test code can override the send wrapper.
+module.exports.apiInstance = apiInstance;
+module.exports._sendTransacEmail =
+  module.exports._sendTransacEmail ||
+  async function (payload) {
+    return apiInstance.sendTransacEmail(payload);
+  };

@@ -1,0 +1,70 @@
+{
+  "images": [
+    {
+      "name": "ltr-desktop.png",
+      "currentPath": "D:\\DS-160\\tests\\e2e\\trace-output\\options-row\\ltr-desktop.png",
+      "basePath": "D:\\DS-160\\tests\\e2e\\baseline\\options-row\\ltr-desktop.png",
+      "currentExists": true,
+      "baseExists": true,
+      "width": 1200,
+      "height": 7958,
+      "baseWidth": 1200,
+      "baseHeight": 9070,
+      "diffPixels": 0,
+      "percent": 0,
+      "exceeded": false,
+      "diffPath": null,
+      "error": "size_mismatch"
+    },
+    {
+      "name": "ltr-mobile.png",
+      "currentPath": "D:\\DS-160\\tests\\e2e\\trace-output\\options-row\\ltr-mobile.png",
+      "basePath": "D:\\DS-160\\tests\\e2e\\baseline\\options-row\\ltr-mobile.png",
+      "currentExists": true,
+      "baseExists": true,
+      "width": 375,
+      "height": 24964,
+      "baseWidth": 577,
+      "baseHeight": 28595,
+      "diffPixels": 0,
+      "percent": 0,
+      "exceeded": false,
+      "diffPath": null,
+      "error": "size_mismatch"
+    },
+    {
+      "name": "rtl-desktop.png",
+      "currentPath": "D:\\DS-160\\tests\\e2e\\trace-output\\options-row\\rtl-desktop.png",
+      "basePath": "D:\\DS-160\\tests\\e2e\\baseline\\options-row\\rtl-desktop.png",
+      "currentExists": true,
+      "baseExists": true,
+      "width": 1200,
+      "height": 7978,
+      "baseWidth": 1200,
+      "baseHeight": 9150,
+      "diffPixels": 0,
+      "percent": 0,
+      "exceeded": false,
+      "diffPath": null,
+      "error": "size_mismatch"
+    },
+    {
+      "name": "rtl-mobile.png",
+      "currentPath": "D:\\DS-160\\tests\\e2e\\trace-output\\options-row\\rtl-mobile.png",
+      "basePath": "D:\\DS-160\\tests\\e2e\\baseline\\options-row\\rtl-mobile.png",
+      "currentExists": true,
+      "baseExists": true,
+      "width": 375,
+      "height": 25020,
+      "baseWidth": 577,
+      "baseHeight": 28628,
+      "diffPixels": 0,
+      "percent": 0,
+      "exceeded": false,
+      "diffPath": null,
+      "error": "size_mismatch"
+    }
+  ],
+  "missingBaseline": false,
+  "passed": false
+}
