@@ -2386,12 +2386,46 @@ function __ds160OnDomReady(_event) {
   const otherNationalitySelect = document.getElementById('otherNationalitySelect');
   if (otherNationalitySelect) localizeSelectOptions(otherNationalitySelect);
 
-  if (otherPermanentResidentSelect && nationalitySelect) {
-    otherPermanentResidentSelect.innerHTML = nationalitySelect.innerHTML.replace(
-      '-- اختر / Select --',
-      '- اختر -'
-    );
+  // Build a resilient options HTML source. Prefer the existing #nationality options if present; otherwise build from our country list.
+  function getBaseCountryOptionsHtml() {
+    if (nationalitySelect && nationalitySelect.options && nationalitySelect.options.length > 0) {
+      return nationalitySelect.innerHTML.replace('-- اختر / Select --', '- اختر -');
+    }
+    // Fallback: construct from countryNamesArabic keys (English value, localized by localizeSelectOptions)
+    let html = '<option value="">-- اختر / Select --</option>';
+    Object.keys(countryNamesArabic).forEach((country) => {
+      html += `<option value="${country}">${country}</option>`;
+    });
+    return html;
   }
+
+  // Ensure each target select is populated independently using the base options source.
+  function ensurePopulateIds(ids) {
+    const base = getBaseCountryOptionsHtml();
+    ids.forEach((id) => {
+      const target = document.getElementById(id);
+      if (!target) return;
+      if (!target.options || target.options.length === 0) {
+        target.innerHTML = base;
+      }
+      // Always apply localization to ensure Arabic labels appear when available
+      localizeSelectOptions(target);
+    });
+  }
+
+  // Populate common country selects now in a robust way (works even if #nationality is missing on page)
+  const _countryTargetIds = [
+    'nationality',
+    'otherPermanentResidentSelect',
+    'otherNationalitySelect',
+    'issuingCountry',
+    'otherResidencyCountry',
+  ];
+  ensurePopulateIds(_countryTargetIds);
+  // Retry a few times (small delays) in case another script mutates or replaces selects after DOMContentLoaded
+  [200, 800, 2000].forEach((t) => setTimeout(() => ensurePopulateIds(_countryTargetIds), t));
+  // Also attempt again on full window load as a fallback
+  window.addEventListener('load', () => ensurePopulateIds(_countryTargetIds));
 
   permResRadios.forEach((radio) => {
     radio.addEventListener('change', function () {
@@ -2399,6 +2433,8 @@ function __ds160OnDomReady(_event) {
         if (this.value === 'Yes') {
           otherPermanentResidentFields.style.display = 'block';
           otherPermanentResidentFields.style.animation = 'fadeIn 0.5s';
+          // Ensure the shown field is populated even if it wasn't at load time
+          ensurePopulateIds(['otherPermanentResidentSelect']);
         } else {
           otherPermanentResidentFields.style.display = 'none';
         }
