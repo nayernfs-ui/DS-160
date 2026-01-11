@@ -766,13 +766,18 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   }
 
   // Populate common country selects now in a robust way (works even if #nationality is missing on page)
-  ensurePopulateIds([
+  const _countryTargetIds = [
     'nationality',
     'otherPermanentResidentSelect',
     'otherNationalitySelect',
     'issuingCountry',
     'otherResidencyCountry',
-  ]);
+  ];
+  ensurePopulateIds(_countryTargetIds);
+  // Retry a few times (small delays) in case another script mutates or replaces selects after DOMContentLoaded
+  [200, 800, 2000].forEach((t) => setTimeout(() => ensurePopulateIds(_countryTargetIds), t));
+  // Also attempt again on full window load as a fallback
+  window.addEventListener('load', () => ensurePopulateIds(_countryTargetIds));
 
   permResRadios.forEach((radio) => {
     radio.addEventListener('change', function () {
