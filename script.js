@@ -738,15 +738,41 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   const otherNationalitySelect = document.getElementById('otherNationalitySelect');
   if (otherNationalitySelect) localizeSelectOptions(otherNationalitySelect);
 
-  function populateCountryList(targetId) {
-    const target = document.getElementById(targetId);
-    if (!target || !nationalitySelect) return;
-    target.innerHTML = nationalitySelect.innerHTML.replace('-- اختر / Select --', '- اختر -');
-    localizeSelectOptions(target);
+  // Build a resilient options HTML source. Prefer the existing #nationality options if present; otherwise build from our country list.
+  function getBaseCountryOptionsHtml() {
+    if (nationalitySelect && nationalitySelect.options && nationalitySelect.options.length > 0) {
+      return nationalitySelect.innerHTML.replace('-- اختر / Select --', '- اختر -');
+    }
+    // Fallback: construct from countryNamesArabic keys (English value, localized by localizeSelectOptions)
+    let html = '<option value="">-- اختر / Select --</option>';
+    Object.keys(countryNamesArabic).forEach((country) => {
+      html += `<option value="${country}">${country}</option>`;
+    });
+    return html;
   }
 
-  // Populate now in case fields are shown later; also call when the field is revealed
-  populateCountryList('otherPermanentResidentSelect');
+  // Ensure each target select is populated independently using the base options source.
+  function ensurePopulateIds(ids) {
+    const base = getBaseCountryOptionsHtml();
+    ids.forEach((id) => {
+      const target = document.getElementById(id);
+      if (!target) return;
+      if (!target.options || target.options.length === 0) {
+        target.innerHTML = base;
+      }
+      // Always apply localization to ensure Arabic labels appear when available
+      localizeSelectOptions(target);
+    });
+  }
+
+  // Populate common country selects now in a robust way (works even if #nationality is missing on page)
+  ensurePopulateIds([
+    'nationality',
+    'otherPermanentResidentSelect',
+    'otherNationalitySelect',
+    'issuingCountry',
+    'otherResidencyCountry',
+  ]);
 
   permResRadios.forEach((radio) => {
     radio.addEventListener('change', function () {
@@ -754,7 +780,8 @@ document.addEventListener('DOMContentLoaded', (_event) => {
         if (this.value === 'Yes') {
           otherPermanentResidentFields.style.display = 'block';
           otherPermanentResidentFields.style.animation = 'fadeIn 0.5s';
-          populateCountryList('otherPermanentResidentSelect');
+          // Ensure the shown field is populated even if it wasn't at load time
+          ensurePopulateIds(['otherPermanentResidentSelect']);
         } else {
           otherPermanentResidentFields.style.display = 'none';
         }
