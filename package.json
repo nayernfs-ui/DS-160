@@ -21,7 +21,7 @@
     "test:api-health": "node tests/unit/api-health.test.js",
     "test:stub-email": "node tools/test-email-stub.js",
     "test:docx-arabic": "node test/docx-arabic.test.js",
-    "test:ci": "npm run lint:ci && npm run lint:html && npm run smoke-docx && npm run test:stub-email && npm run test:docx-arabic",
+    "test:ci": "npm run lint:ci && npm run lint:html && npm run smoke-docx && npm run test:stub-email && npm run test:docx-arabic && node tests/unit/resilience.test.js",
     "test": "npm run test:ci",
     "promote:vercel": "node tools/vercel-promote.js",
     "test:vercel-promote": "node tests/unit/vercel-promote.test.js",

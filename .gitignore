@@ -100,3 +100,6 @@ tmp_live_script.js
 # E2E trace output (generated artifacts)
 /tests/e2e/trace-output/
 
+# Local UI check screenshots
+tools/*.png
+
