@@ -739,6 +739,7 @@ document.addEventListener('DOMContentLoaded', (_event) => {
   if (otherNationalitySelect) localizeSelectOptions(otherNationalitySelect);
 
   // Build a resilient options HTML source. Prefer the existing #nationality options if present; otherwise build from our country list.
+  // Last Deploy: 2026-01-11T
   function getBaseCountryOptionsHtml() {
     if (nationalitySelect && nationalitySelect.options && nationalitySelect.options.length > 0) {
       return nationalitySelect.innerHTML.replace('-- اختر / Select --', '- اختر -');
