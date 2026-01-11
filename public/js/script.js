@@ -2168,6 +2168,9 @@ function __ds160OnDomReady(_event) {
 
   // Populate the permanent resident select from the main nationality list to avoid duplication
   const nationalitySelect = document.getElementById('nationality');
+  // Ensure any pre-existing localized labels are applied (prevents eslint unused-var warning)
+  if (typeof localizeSelectOptions === 'function' && otherPermanentResidentSelect)
+    localizeSelectOptions(otherPermanentResidentSelect);
 
   // --- Arabic country names mapping ---
   const countryNamesArabic = {
