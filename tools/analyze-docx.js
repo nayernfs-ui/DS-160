@@ -1,6 +1,6 @@
 const fs = require('fs');
 const JSZip = require('jszip');
-const { DOMParser } = require('xmldom');
+const { XMLParser } = require('fast-xml-parser');
 
 (async function () {
   const files = fs
@@ -24,10 +24,12 @@ const { DOMParser } = require('xmldom');
   console.log('\nLast 200 chars:');
   console.log(docXmlStr.substring(docXmlStr.length - 200));
   try {
-    const dom = new DOMParser().parseFromString(docXmlStr, 'text/xml');
-    console.log('\nXML parsed ok. Root element:', dom.documentElement.nodeName);
+    const parser = new XMLParser({ ignoreDeclaration: true, ignoreAttributes: false });
+    const obj = parser.parse(docXmlStr);
+    const root = Object.keys(obj)[0];
+    console.log('\nXML parsed ok. Root element:', root);
   } catch (err) {
-    console.error('\nDOM parse error:', err);
+    console.error('\nXML parse error:', err);
   }
   // Detect illegal XML chars
   const illegal = [];

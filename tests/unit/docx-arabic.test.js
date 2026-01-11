@@ -1,6 +1,6 @@
 const assert = require('assert');
 const JSZip = require('jszip');
-const submit = require('../api/submit');
+const submit = require('../../api/submit');
 
 (async function run() {
   try {

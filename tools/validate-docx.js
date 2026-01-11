@@ -1,6 +1,6 @@
 const fs = require('fs');
 const JSZip = require('jszip');
-const { DOMParser } = require('xmldom');
+const { XMLParser } = require('fast-xml-parser');
 
 (async function () {
   try {
@@ -28,8 +28,10 @@ const { DOMParser } = require('xmldom');
         reportLines.push('\n---- ' + xmlFile + ' length: ' + xmlStr.length);
         reportLines.push('First 200 chars: ' + xmlStr.substring(0, 200).replace(/\r?\n/g, '\\n'));
         try {
-          const dom = new DOMParser().parseFromString(xmlStr, 'text/xml');
-          reportLines.push('XML parsed ok. Root: ' + dom.documentElement.nodeName);
+          const parser = new XMLParser({ ignoreDeclaration: true, ignoreAttributes: false });
+          const obj = parser.parse(xmlStr);
+          const root = Object.keys(obj)[0];
+          reportLines.push('XML parsed ok. Root: ' + root);
         } catch (err) {
           reportLines.push('XML parse error: ' + err.message);
         }

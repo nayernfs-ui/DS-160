@@ -21,7 +21,7 @@
 - Updated existing `tests/unit/visits.test.js` to reflect `US_Visited` naming and the add/remove behavior (including removing last visit node and auto-switching to `No`).
 - **Test results:** Ran full test suite via `npm test`; all tests passed (see test runner output).
   All tests have passed; the `feature/military-us-visits-accessibility` branch is ready for review and merge.
-<<<<<<< HEAD
+  <<<<<<< HEAD
 
 **Maintenance / Cleanup**
 
@@ -33,6 +33,5 @@
 
 - Added `xmldom` (dev) to satisfy `tools/` scripts that parse DOCX XML.
 - Ran `depcheck` and confirmed no unused production dependencies; some dev tools remain intentionally installed (eslint, prettier, html-validate, lint-staged).
-- Smoke tests for DOCX/email ran; the email send attempt returned 401 (Unauthorized) because the Sendinblue/Brevo API key is not set in the environment — this is expected unless credentials are provided.
-=======
->>>>>>> 55148bd (fix: populate residency dropdown and align sub-question radios)
+- # Smoke tests for DOCX/email ran; the email send attempt returned 401 (Unauthorized) because the Sendinblue/Brevo API key is not set in the environment — this is expected unless credentials are provided.
+  > > > > > > > 55148bd (fix: populate residency dropdown and align sub-question radios)
