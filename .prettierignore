@@ -4,3 +4,16 @@ dist/
 test_output_docx_*.docx
 .DS_Store
 npm-debug.log
+# Ignore e2e trace artifacts
+# (explicitly ignore all files under these folders)
+tests/e2e/trace-output/**
+artifacts-*/**
+**/trace-output/**
+# Ignore test artifacts and logs
+*.log
+*.out
+tests/e2e/*.log
+tools/*.txt
+# Ignore text artifacts and generated JSON output
+*.txt
+html-validate-out.json
