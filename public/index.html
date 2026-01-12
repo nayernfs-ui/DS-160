@@ -836,11 +836,24 @@
           <label>هل سبق وفقدت جواز سفر أو سُرق منك؟</label>
           <div class="options-row" role="radiogroup" aria-label="Lost passport">
             <label
-              ><input type="radio" name="LostPassport" value="Yes" id="lostPassportYes" />
+              ><input
+                type="radio"
+                name="LostPassport"
+                value="Yes"
+                id="lostPassportYes"
+                onclick="togglePassportLost(true)"
+              />
               نعم</label
             >
             <label
-              ><input type="radio" name="LostPassport" value="No" id="lostPassportNo" checked />
+              ><input
+                type="radio"
+                name="LostPassport"
+                value="No"
+                id="lostPassportNo"
+                onclick="togglePassportLost(false)"
+                checked
+              />
               لا</label
             >
           </div>
@@ -863,36 +876,40 @@
             >يرجى تقديم المعلومات التالية:
           </legend>
 
-          <div class="question-group">
-            <label for="lostPassportNumber">Passport/Travel Document Number</label>
-            <input
-              type="text"
-              id="lostPassportNumber"
-              name="LostPassport_PassportNumber"
-              style="direction: ltr"
-            />
-            <label style="margin-left: 10px"
-              ><input
-                type="checkbox"
-                id="lostPassportDoNotKnow"
-                name="LostPassport_DoNotKnow"
-                value="true"
+          <div id="lost_passport_details" style="display: none">
+            <div class="question-group">
+              <label for="lostPassportNumber">Passport/Travel Document Number</label>
+              <input
+                type="text"
+                id="lostPassportNumber"
+                name="LostPassport_PassportNumber"
+                style="direction: ltr"
               />
-              لا أعرف</label
-            >
-          </div>
+              <label style="margin-left: 10px"
+                ><input
+                  type="checkbox"
+                  id="lostPassportDoNotKnow"
+                  name="LostPassport_DoNotKnow"
+                  value="true"
+                />
+                لا أعرف</label
+              >
+            </div>
 
-          <div class="question-group">
-            <label for="lostPassportCountry">الدولة/السلطة التي أصدرت جواز/وثيقة السفر:</label>
-            <select id="lostPassportCountry" name="LostPassport_Country"></select>
-          </div>
+            <div class="question-group">
+              <label for="lost_passport_country_id"
+                >الدولة/السلطة التي أصدرت جواز/وثيقة السفر:</label
+              >
+              <select id="lost_passport_country_id" name="LostPassport_Country"></select>
+            </div>
 
-          <div class="question-group">
-            <label for="lostPassportExplain">اشرح:</label>
-            <textarea id="lostPassportExplain" name="LostPassport_Explain" rows="4"></textarea>
-          </div>
+            <div class="question-group">
+              <label for="lostPassportExplain">اشرح:</label>
+              <textarea id="lostPassportExplain" name="LostPassport_Explain" rows="4"></textarea>
+            </div>
 
-          <span class="error-message" id="error-lostPassportNumber"></span>
+            <span class="error-message" id="error-lostPassportNumber"></span>
+          </div>
         </fieldset>
 
         <!-- Permanent resident question (added in Arabic) -->

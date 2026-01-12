@@ -2429,6 +2429,12 @@ function __ds160OnDomReady(_event) {
   [200, 800, 2000].forEach((t) => setTimeout(() => ensurePopulateIds(_countryTargetIds), t));
   // Also attempt again on full window load as a fallback
   window.addEventListener('load', () => ensurePopulateIds(_countryTargetIds));
+  // Expose ensurePopulateIds on window so inline handlers can reference it safely
+  try {
+    window.ensurePopulateIds = ensurePopulateIds;
+  } catch (e) {
+    /* ignore */
+  }
 
   permResRadios.forEach((radio) => {
     radio.addEventListener('change', function () {
@@ -2598,3 +2604,40 @@ function __ds160OnDomReady(_event) {
 if (document.readyState === 'loading')
   document.addEventListener('DOMContentLoaded', __ds160OnDomReady);
 else __ds160OnDomReady();
+
+// Toggle lost passport details visibility (used by inline radio onclick handlers)
+function togglePassportLost(show) {
+  try {
+    const container = document.getElementById('lost_passport_details');
+    if (!container) return;
+    if (show) {
+      container.style.display = 'block';
+      container.style.animation = 'fadeIn 0.25s';
+      container.setAttribute('aria-expanded', 'true');
+      // Enable contained inputs and ensure country select is populated
+      container.querySelectorAll('input, select, textarea').forEach((c) => {
+        c.disabled = false;
+      });
+      // Ensure the country select is populated even if it was empty at load
+      try {
+        if (typeof window !== 'undefined' && typeof window.ensurePopulateIds === 'function') {
+          window.ensurePopulateIds(['lost_passport_country_id']);
+        }
+      } catch (e) {
+        /* ignore */
+      }
+    } else {
+      container.style.display = 'none';
+      container.setAttribute('aria-expanded', 'false');
+      container.querySelectorAll('input, select, textarea').forEach((c) => {
+        c.disabled = true;
+        c.removeAttribute('required');
+        if (c.type === 'checkbox' || c.type === 'radio') c.checked = false;
+        if (c.tagName && c.tagName.toLowerCase() === 'select') c.selectedIndex = 0;
+      });
+    }
+  } catch (e) {
+    /* ignore */
+  }
+}
+window.togglePassportLost = togglePassportLost;
