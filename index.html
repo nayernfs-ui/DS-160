@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DS-160 Client Survey — preview c4293f7</title>
+    <title>DS-160 Client Survey</title>
     <!-- Google Font: Cairo for improved Arabic typography -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
@@ -41,27 +41,33 @@
   </head>
   <body>
     <div class="container">
-      <!-- DEPLOY BANNER: visible for debugging; remove before merging -->
-      <div
-        id="deploy-banner"
-        style="
-          background: #fffbeb;
-          border: 1px solid #f59e0b;
-          color: #92400e;
-          padding: 8px 12px;
-          border-radius: 6px;
-          margin-bottom: 12px;
-          font-weight: 600;
-        "
-      >
-        Preview deploy: commit <strong>c4293f7</strong> — 2026-01-08 17:35 UTC
-      </div>
+      <!-- conditional deploy banner (inserted only when build-time flag is set) -->
       <script>
         (function () {
-          window.__DEPLOY_COMMIT = 'c4293f7';
-          console.info('Preview deploy commit:', window.__DEPLOY_COMMIT);
-          var el = document.getElementById('deploy-banner');
-          if (el) el.title = 'deploy:' + window.__DEPLOY_COMMIT;
+          try {
+            var commit =
+              window.__DEPLOY_COMMIT ||
+              (document.querySelector('meta[name="deploy-commit"]') || {}).content;
+            var time = (document.querySelector('meta[name="deploy-time"]') || {}).content;
+            var show =
+              window.__SHOW_PREVIEW === 'true' ||
+              (document.querySelector('meta[name="show-preview"]') || {}).content === 'true';
+            if (!show || !commit) return;
+            if (document.getElementById('deploy-banner')) return; // guard against duplicates
+            var el = document.createElement('div');
+            el.id = 'deploy-banner';
+            el.setAttribute(
+              'style',
+              'background: #fffbeb; border: 1px solid #f59e0b; color: #92400e; padding: 8px 12px; border-radius: 6px; margin-bottom: 12px; font-weight: 600;'
+            );
+            el.textContent = 'Preview deploy: commit ' + commit + (time ? ' — ' + time : '');
+            var container = document.querySelector('.container');
+            if (container) container.insertBefore(el, container.firstChild);
+            el.title = 'deploy:' + commit;
+            console.info('Preview deploy commit:', commit);
+          } catch (e) {
+            console.warn('Failed to render preview banner', e);
+          }
         })();
       </script>
       <!-- Progress Bar: updates as the user moves through sections -->
