@@ -81,6 +81,43 @@ try {
               /* ignore */
             }
           }
+
+          // Support immediate radio toggles in JSDOM for immediate relatives
+          if (this.name === 'US_ImmediateRelatives') {
+            try {
+              const container = document.getElementById('US_Relatives_Container');
+              const detailsBox = document.getElementById('relative_details');
+              if (container) {
+                if (isYes) {
+                  container.style.setProperty('display', 'block', 'important');
+                  container.style.animation = 'fadeIn 0.5s';
+                  container.setAttribute('aria-expanded', 'true');
+                  container.setAttribute('aria-hidden', 'false');
+                  // Ensure contained controls are enabled and required
+                  if (detailsBox) {
+                    detailsBox.style.setProperty('display', 'block', 'important');
+                    detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                      c.disabled = false;
+                      c.setAttribute('required', '');
+                    });
+                  }
+                } else {
+                  container.style.setProperty('display', 'none', 'important');
+                  container.setAttribute('aria-expanded', 'false');
+                  container.removeAttribute('aria-hidden');
+                  if (detailsBox) {
+                    detailsBox.style.setProperty('display', 'none', 'important');
+                    detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                      c.disabled = true;
+                      c.removeAttribute('required');
+                    });
+                  }
+                }
+              }
+            } catch (e) {
+              /* ignore */
+            }
+          }
         } catch (e) {
           void e;
         }
@@ -281,6 +318,186 @@ try {
 
 function __ds160OnDomReady(_event) {
   console.debug('__ds160OnDomReady invoked');
+
+  // Defensive binding: ensure relatives radios are wired when DOM ready (handles timing where earlier queries ran too early)
+  try {
+    const _radios = document.querySelectorAll('input[name="US_ImmediateRelatives"]');
+    if (_radios && _radios.length && !window.__ds160RelativesInit) {
+      console.debug('DOM ready: binding relatives radios, count=', _radios.length);
+      // trigger the same initialization as the immediate binding block
+      _radios.forEach((r) => {
+        if (r.__ds160RelativesBound) return;
+        r.addEventListener('change', function () {
+          const _relativesContainer = document.getElementById('US_Relatives_Container');
+          const detailsBox = document.getElementById('relative_details');
+          const _relativeEntries = document.getElementById('relativeEntries');
+          if (!_relativesContainer) return;
+          if (this.value === 'Yes') {
+            _relativesContainer.style.display = 'block';
+            _relativesContainer.style.animation = 'fadeIn 0.5s';
+            _relativesContainer.setAttribute('aria-expanded', 'true');
+            _relativesContainer.setAttribute('aria-hidden', 'false');
+            if (detailsBox) {
+              detailsBox.style.display = 'block';
+              detailsBox.style.animation = 'fadeIn 0.5s';
+            }
+            const currentCount = _relativeEntries ? _relativeEntries.querySelectorAll('.relative-entry').length : 0;
+            for (let i = 1; i <= currentCount; i++) setRelativeRequired(i, true);
+            if (detailsBox) detailsBox.querySelectorAll('input, select, textarea').forEach((c) => { c.disabled = false; });
+          } else {
+            _relativesContainer.style.display = 'none';
+            _relativesContainer.setAttribute('aria-expanded', 'false');
+            _relativesContainer.removeAttribute('aria-hidden');
+            if (detailsBox) detailsBox.style.display = 'none';
+            for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
+            if (detailsBox) detailsBox.querySelectorAll('input, select, textarea').forEach((c) => { c.disabled = true; });
+          }
+        });
+        r.__ds160RelativesBound = true;
+      });
+      window.__ds160RelativesInit = true;
+      // enforce initial state based on existing checked radio (No is default)
+      const yesRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="Yes"]');
+      const noRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="No"]');
+      if (yesRadio && yesRadio.checked) yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
+      else if (noRadio) {
+        noRadio.checked = true;
+        noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      // Ensure click delegation is bound so add/remove controls work even if the DOM was not ready at initial binding
+      try {
+        const clickRoot = document.getElementById('US_Relatives_Container') || document.getElementById('relativeEntries') || document.getElementById('relative_details');
+        if (clickRoot && !clickRoot.__ds160RelativesClickBound) {
+          clickRoot.addEventListener('click', function (e) {
+            const addBtn = e.target.closest && e.target.closest('.add-relative');
+            const remBtn = e.target.closest && e.target.closest('.remove-relative');
+            // delegated add/remove click for relatives
+
+            if (addBtn && clickRoot.contains(addBtn)) {
+              e.preventDefault();
+              const current = document.querySelectorAll('#relativeEntries .relative-entry').length;
+              if (current >= maxRelatives) return;
+              const template = document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
+              if (!template) return;
+              const clone = template.cloneNode(true);
+              const newIndex = current + 1;
+              clone.setAttribute('data-index', String(newIndex));
+
+              // Update ids, names and labels inside cloned node
+              clone.querySelectorAll('[id]').forEach((el) => {
+                el.id = el.id
+                  .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+                  .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+                if (el.name)
+                  el.name = el.name
+                    .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+                    .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+                if (el.tagName === 'INPUT') el.value = '';
+                if (el.tagName === 'SELECT') el.selectedIndex = 0;
+              });
+              clone.querySelectorAll('label').forEach((lbl) => {
+                if (lbl.htmlFor)
+                  lbl.htmlFor = lbl.htmlFor
+                    .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+                    .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+              });
+
+              clone.querySelectorAll('[aria-describedby]').forEach((el) => {
+                const v = el.getAttribute('aria-describedby');
+                if (!v) return;
+                el.setAttribute(
+                  'aria-describedby',
+                  v
+                    .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+                    .replace(/Relative_\d+$/g, `Relative_${newIndex}`)
+                );
+              });
+
+              const shouldRequire = window.getComputedStyle(document.getElementById('US_Relatives_Container')||document.getElementById('relative_details')).display !== 'none';
+              clone.querySelectorAll('input, select').forEach((el) => {
+                if (shouldRequire) el.setAttribute('required', 'required');
+                else el.removeAttribute('required');
+              });
+
+              clone.querySelectorAll('.remove-relative').forEach((btn) => {
+                btn.setAttribute('role', 'button');
+                btn.setAttribute('tabindex', '0');
+                btn.setAttribute('aria-label', `Remove relative ${newIndex}`);
+              });
+
+              document.getElementById('relativeEntries').appendChild(clone);
+              setRelativeRequired(newIndex, shouldRequire);
+              updateRelativeAddControls();
+            }
+
+            if (remBtn && document.getElementById('relativeEntries') && document.getElementById('relativeEntries').contains(remBtn)) {
+              e.preventDefault();
+              const entry = remBtn.closest('.relative-entry');
+              if (!entry) return;
+              const entries = document.querySelectorAll('#relativeEntries .relative-entry');
+              if (entries.length === 1) {
+                entry.remove();
+                for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
+                updateRelativeAddControls();
+                const yesRadio = document.querySelector(
+                  'input[name="US_ImmediateRelatives"][value="Yes"]'
+                );
+                const noRadio = document.querySelector(
+                  'input[name="US_ImmediateRelatives"][value="No"]'
+                );
+                if (yesRadio && yesRadio.checked && noRadio) {
+                  noRadio.checked = true;
+                  noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+              } else {
+                entry.remove();
+                const remaining = document.querySelectorAll('#relativeEntries .relative-entry');
+                remaining.forEach((el, idx) => {
+                  const newIdx = idx + 1;
+                  el.setAttribute('data-index', String(newIdx));
+                  el.querySelectorAll('[id]').forEach((node) => {
+                    if (node.id)
+                      node.id = node.id
+                        .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+                        .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+                    if (node.name)
+                      node.name = node.name
+                        .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+                        .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+                  });
+                  // update label 'for' attributes to match renumbered field ids
+                  el.querySelectorAll('label').forEach((lbl) => {
+                    if (lbl.htmlFor)
+                      lbl.htmlFor = lbl.htmlFor
+                        .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+                        .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+                  });
+                  // update aria-describedby attributes to match renumbered field ids
+                  el.querySelectorAll('[aria-describedby]').forEach((node) => {
+                    const v = node.getAttribute('aria-describedby');
+                    if (!v) return;
+                    node.setAttribute(
+                      'aria-describedby',
+                      v
+                        .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+                        .replace(/Relative_\d+$/g, `Relative_${newIdx}`)
+                    );
+                  });
+                });
+                updateRelativeAddControls();
+              }
+            }
+          });
+          clickRoot.__ds160RelativesClickBound = true;
+        }
+      } catch (e) {
+        /* ignore */
+      }
+    }
+  } catch (e) {
+    /* ignore */
+  }
 
   // 1. Marital Status Logic
   const maritalStatusSelect = document.getElementById('maritalStatus');
@@ -1531,6 +1748,70 @@ function __ds160OnDomReady(_event) {
     });
   }
 
+  // Attempt to bind the add-relative button directly for immediate responses in test environments
+  try {
+    const directAdd = document.querySelector('.add-relative');
+    if (directAdd && !directAdd.__ds160DirectBound) {
+      directAdd.addEventListener('click', function (e) {
+        e.preventDefault();
+        const current = document.querySelectorAll('#relativeEntries .relative-entry').length;
+        if (current >= maxRelatives) return;
+        const template = document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
+        if (!template) return;
+        const clone = template.cloneNode(true);
+        const newIndex = current + 1;
+        clone.setAttribute('data-index', String(newIndex));
+        clone.querySelectorAll('[id]').forEach((el) => {
+          el.id = el.id
+            .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+            .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+          if (el.name)
+            el.name = el.name
+              .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+              .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+          if (el.tagName === 'INPUT') el.value = '';
+          if (el.tagName === 'SELECT') el.selectedIndex = 0;
+        });
+        clone.querySelectorAll('label').forEach((lbl) => {
+          if (lbl.htmlFor)
+            lbl.htmlFor = lbl.htmlFor
+              .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+              .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+        });
+
+        clone.querySelectorAll('[aria-describedby]').forEach((el) => {
+          const v = el.getAttribute('aria-describedby');
+          if (!v) return;
+          el.setAttribute(
+            'aria-describedby',
+            v
+              .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+              .replace(/Relative_\d+$/g, `Relative_${newIndex}`)
+          );
+        });
+
+        const shouldRequire = window.getComputedStyle(document.getElementById('US_Relatives_Container')||document.getElementById('relative_details')).display !== 'none';
+        clone.querySelectorAll('input, select').forEach((el) => {
+          if (shouldRequire) el.setAttribute('required', 'required');
+          else el.removeAttribute('required');
+        });
+
+        clone.querySelectorAll('.remove-relative').forEach((btn) => {
+          btn.setAttribute('role', 'button');
+          btn.setAttribute('tabindex', '0');
+          btn.setAttribute('aria-label', `Remove relative ${newIndex}`);
+        });
+
+        document.getElementById('relativeEntries').appendChild(clone);
+        setRelativeRequired(newIndex, shouldRequire);
+        updateRelativeAddControls();
+      });
+      directAdd.__ds160DirectBound = true;
+    }
+  } catch (e) {
+    /* ignore */
+  }
+
   function setRelativeRequired(index, required) {
     const surnames = document.getElementById(`Relative_${index}_Surnames`);
     const given = document.getElementById(`Relative_${index}_GivenNames`);
@@ -1543,32 +1824,196 @@ function __ds160OnDomReady(_event) {
     });
   }
 
+  // Expose a global helper so inline onclick attributes can reuse the same behavior
+  function toggleRelativeDetails(show) {
+    const yesRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="Yes"]');
+    const noRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="No"]');
+    if (show && yesRadio) {
+      yesRadio.checked = true;
+      yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    } else if (!show && noRadio) {
+      noRadio.checked = true;
+      noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  // Programmatic helpers for inline button handlers
+  function addRelative() {
+    try {
+      const current = document.querySelectorAll('#relativeEntries .relative-entry').length;
+      if (current >= maxRelatives) return false;
+      const template = document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
+      if (!template) return false;
+      const clone = template.cloneNode(true);
+      const newIndex = current + 1;
+      clone.setAttribute('data-index', String(newIndex));
+
+      // Update ids, names and labels inside cloned node
+      clone.querySelectorAll('[id]').forEach((el) => {
+        el.id = el.id
+          .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+          .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+        if (el.name)
+          el.name = el.name
+            .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+            .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+        if (el.tagName === 'INPUT') el.value = '';
+        if (el.tagName === 'SELECT') el.selectedIndex = 0;
+      });
+      clone.querySelectorAll('label').forEach((lbl) => {
+        if (lbl.htmlFor)
+          lbl.htmlFor = lbl.htmlFor
+            .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+            .replace(/Relative_\d+$/g, `Relative_${newIndex}`);
+      });
+
+      clone.querySelectorAll('[aria-describedby]').forEach((el) => {
+        const v = el.getAttribute('aria-describedby');
+        if (!v) return;
+        el.setAttribute(
+          'aria-describedby',
+          v
+            .replace(/Relative_\d+_/g, `Relative_${newIndex}_`)
+            .replace(/Relative_\d+$/g, `Relative_${newIndex}`)
+        );
+      });
+
+      const shouldRequire = window.getComputedStyle(document.getElementById('US_Relatives_Container')||document.getElementById('relative_details')).display !== 'none';
+      clone.querySelectorAll('input, select').forEach((el) => {
+        if (shouldRequire) el.setAttribute('required', 'required');
+        else el.removeAttribute('required');
+      });
+
+      clone.querySelectorAll('.remove-relative').forEach((btn) => {
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
+        btn.setAttribute('aria-label', `Remove relative ${newIndex}`);
+        // wire inline handler so clones are interactive even without delegated listeners
+        btn.setAttribute('onclick', 'removeRelative(this)');
+      });
+
+      document.getElementById('relativeEntries').appendChild(clone);
+      setRelativeRequired(newIndex, shouldRequire);
+      updateRelativeAddControls();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function removeRelative(btn) {
+    try {
+      const entry = btn.closest('.relative-entry');
+      if (!entry) return false;
+      const entries = document.querySelectorAll('#relativeEntries .relative-entry');
+      if (entries.length === 1) {
+        entry.remove();
+        for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
+        updateRelativeAddControls();
+        const yesRadio = document.querySelector(
+          'input[name="US_ImmediateRelatives"][value="Yes"]'
+        );
+        const noRadio = document.querySelector(
+          'input[name="US_ImmediateRelatives"][value="No"]'
+        );
+        if (yesRadio && yesRadio.checked && noRadio) {
+          noRadio.checked = true;
+          noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        return true;
+      }
+
+      entry.remove();
+      const remaining = document.querySelectorAll('#relativeEntries .relative-entry');
+      remaining.forEach((el, idx) => {
+        const newIdx = idx + 1;
+        el.setAttribute('data-index', String(newIdx));
+        el.querySelectorAll('[id]').forEach((node) => {
+          if (node.id)
+            node.id = node.id
+              .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+              .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+          if (node.name)
+            node.name = node.name
+              .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+              .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+        });
+        // update label 'for' attributes to match renumbered field ids
+        el.querySelectorAll('label').forEach((lbl) => {
+          if (lbl.htmlFor)
+            lbl.htmlFor = lbl.htmlFor
+              .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+              .replace(/Relative_\d+$/g, `Relative_${newIdx}`);
+        });
+        // update aria-describedby attributes to match renumbered field ids
+        el.querySelectorAll('[aria-describedby]').forEach((node) => {
+          const v = node.getAttribute('aria-describedby');
+          if (!v) return;
+          node.setAttribute(
+            'aria-describedby',
+            v
+              .replace(/Relative_\d+_/g, `Relative_${newIdx}_`)
+              .replace(/Relative_\d+$/g, `Relative_${newIdx}`)
+          );
+        });
+      });
+      updateRelativeAddControls();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Ensure the details box starts hidden and controls are disabled to avoid timing races
+  try {
+    const _relDetails = document.getElementById('relative_details');
+    if (_relDetails) {
+      _relDetails.style.display = 'none';
+      if (relativesContainer) relativesContainer.setAttribute('aria-expanded', 'false');
+      _relDetails.querySelectorAll('input, select, textarea').forEach((el) => {
+        el.disabled = true;
+        el.removeAttribute('required');
+      });
+    }
+  } catch (e) {
+    /* ignore */
+  }
+
   if (relativesRadios && relativesRadios.length) {
     if (!window.__ds160RelativesInit) {
       window.__ds160RelativesInit = true;
+      console.debug('relatives init: binding change listeners, count=', relativesRadios ? relativesRadios.length : 0);
 
       relativesRadios.forEach((radio) => {
         radio.addEventListener('change', function () {
-          if (!relativesContainer) return;
+          const _relativeEntries = document.getElementById('relativeEntries');
+          if (!_relativesContainer) return;
           if (this.value === 'Yes') {
-            relativesContainer.style.display = 'block';
-            relativesContainer.style.animation = 'fadeIn 0.5s';
-            relativesContainer.setAttribute('aria-expanded', 'true');
-            // aria-hidden omitted to avoid hidden-focusable lint (relatives shown)
-            const currentCount = relativeEntries
-              ? relativeEntries.querySelectorAll('.relative-entry').length
-              : 0;
+            _relativesContainer.style.display = 'block';
+            _relativesContainer.style.animation = 'fadeIn 0.5s';
+            _relativesContainer.setAttribute('aria-expanded', 'true');
+            // mark aria-hidden=false so assistive tech knows this section is exposed
+            _relativesContainer.setAttribute('aria-hidden', 'false');
+            if (detailsBox) {
+              detailsBox.style.display = 'block';
+              detailsBox.style.animation = 'fadeIn 0.5s';
+            }
+            const currentCount = _relativeEntries ? _relativeEntries.querySelectorAll('.relative-entry').length : 0;
             for (let i = 1; i <= currentCount; i++) setRelativeRequired(i, true);
+            if (detailsBox) detailsBox.querySelectorAll('input, select, textarea').forEach((c) => { c.disabled = false; });
           } else {
-            relativesContainer.style.display = 'none';
-            relativesContainer.setAttribute('aria-expanded', 'false');
-            // aria-hidden omitted to avoid hidden-focusable lint (relatives hidden)
+            _relativesContainer.style.display = 'none';
+            _relativesContainer.setAttribute('aria-expanded', 'false');
+            // remove aria-hidden when hidden to match existing accessibility patterns
+            _relativesContainer.removeAttribute('aria-hidden');
+            if (detailsBox) detailsBox.style.display = 'none';
             for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
+            if (detailsBox) detailsBox.querySelectorAll('input, select, textarea').forEach((c) => { c.disabled = true; });
           }
         });
       });
 
-      const clickDelegateRoot = relativesContainer || relativeEntries;
+      const clickDelegateRoot = document.getElementById('US_Relatives_Container') || document.getElementById('relativeEntries');
       if (clickDelegateRoot) {
         clickDelegateRoot.addEventListener('click', function (e) {
           const addBtn = e.target.closest && e.target.closest('.add-relative');

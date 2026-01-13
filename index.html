@@ -953,7 +953,7 @@
           <label>هل لديك أي أقارب مباشرين (غير الوالدين) في الولايات المتحدة؟</label>
           <div class="options-row" role="radiogroup" aria-label="US immediate relatives">
             <label
-              ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" />
+              ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" onclick="toggleRelativeDetails(true)" />
               نعم</label
             >
             <label
@@ -963,6 +963,7 @@
                 value="No"
                 id="relativesNo"
                 checked
+                onclick="toggleRelativeDetails(false)"
               />
               لا</label
             >
@@ -1006,70 +1007,72 @@
             >يرجى تقديم المعلومات التالية:
           </legend>
 
-          <div id="relativeEntries">
-            <div class="relative-entry" data-index="1">
-              <div class="question-group">
-                <label for="Relative_1_Surnames">اللقب (Surnames):</label>
-                <input
-                  type="text"
-                  id="Relative_1_Surnames"
-                  name="Relative_1_Surnames"
-                  required
-                  style="direction: auto"
-                />
-                <span class="error-message" id="error-Relative_1_Surnames"></span>
-              </div>
+          <div id="relative_details" style="display: none; margin-top: 10px;">
+            <div id="relativeEntries">
+              <div class="relative-entry" data-index="1">
+                <div class="question-group">
+                  <label for="Relative_1_Surnames">اللقب (Surnames):</label>
+                  <input
+                    type="text"
+                    id="Relative_1_Surnames"
+                    name="Relative_1_Surnames"
+                    required
+                    style="direction: auto"
+                  />
+                  <span class="error-message" id="error-Relative_1_Surnames"></span>
+                </div>
 
-              <div class="question-group">
-                <label for="Relative_1_GivenNames">الأسماء (Given Names):</label>
-                <input
-                  type="text"
-                  id="Relative_1_GivenNames"
-                  name="Relative_1_GivenNames"
-                  required
-                  style="direction: auto"
-                />
-                <span class="error-message" id="error-Relative_1_GivenNames"></span>
-              </div>
+                <div class="question-group">
+                  <label for="Relative_1_GivenNames">الأسماء (Given Names):</label>
+                  <input
+                    type="text"
+                    id="Relative_1_GivenNames"
+                    name="Relative_1_GivenNames"
+                    required
+                    style="direction: auto"
+                  />
+                  <span class="error-message" id="error-Relative_1_GivenNames"></span>
+                </div>
 
-              <div class="question-group">
-                <label for="Relative_1_Relationship">العلاقة بك (Relationship to You):</label>
-                <select id="Relative_1_Relationship" name="Relative_1_Relationship" required>
-                  <option value="">- اختر -</option>
-                  <option value="Spouse">زوج/زوجة (Spouse)</option>
-                  <option value="Child">ابن/ابنة (Child)</option>
-                  <option value="Sibling">أخ/أخت (Sibling)</option>
-                  <option value="Other">آخر (Other)</option>
-                </select>
-              </div>
+                <div class="question-group">
+                  <label for="Relative_1_Relationship">العلاقة بك (Relationship to You):</label>
+                  <select id="Relative_1_Relationship" name="Relative_1_Relationship" required>
+                    <option value="">- اختر -</option>
+                    <option value="Spouse">زوج/زوجة (Spouse)</option>
+                    <option value="Child">ابن/ابنة (Child)</option>
+                    <option value="Sibling">أخ/أخت (Sibling)</option>
+                    <option value="Other">آخر (Other)</option>
+                  </select>
+                </div>
 
-              <div class="question-group">
-                <label for="Relative_1_Status">حالة القريب (Relative's Status):</label>
-                <select id="Relative_1_Status" name="Relative_1_Status" required>
-                  <option value="">- اختر -</option>
-                  <option value="US_Citizen">مواطن أمريكي (U.S. Citizen)</option>
-                  <option value="Permanent_Resident">مقيم دائم (Permanent Resident)</option>
-                  <option value="Other">آخر (Other)</option>
-                </select>
-              </div>
+                <div class="question-group">
+                  <label for="Relative_1_Status">حالة القريب (Relative's Status):</label>
+                  <select id="Relative_1_Status" name="Relative_1_Status" required>
+                    <option value="">- اختر -</option>
+                    <option value="US_Citizen">مواطن أمريكي (U.S. Citizen)</option>
+                    <option value="Permanent_Resident">مقيم دائم (Permanent Resident)</option>
+                    <option value="Other">آخر (Other)</option>
+                  </select>
+                </div>
 
-              <div class="question-group">
-                <button
-                  type="button"
-                  class="remove-relative"
-                  style="margin-left: 8px"
-                  aria-label="Remove relative 1 (إزالة)"
-                >
-                  - إزالة
-                </button>
+                <div class="question-group">
+                  <button
+                    type="button"
+                    class="remove-relative"
+                    style="margin-left: 8px"
+                    aria-label="Remove relative 1 (إزالة)"
+                  >
+                    - إزالة
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="question-group" id="relativeControls">
-            <button type="button" class="add-relative" aria-label="Add relative (إضافة)">
-              + إضافة
-            </button>
+            <div class="question-group" id="relativeControls">
+              <button type="button" class="add-relative" aria-label="Add relative (إضافة)">
+                + إضافة
+              </button>
+            </div>
           </div>
         </fieldset>
 
