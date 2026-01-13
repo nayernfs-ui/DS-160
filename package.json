@@ -33,6 +33,7 @@
     "test:e2e:options-row-compare": "node tests/e2e/compare-options-row.js",
     "test:e2e:options-row-accept": "node tests/e2e/update-options-row-baseline.js",
     "test:e2e:other-passport-options-row": "node tests/e2e/check-other-passport-options-row.js",
+    "prune": "node tools/prune-old-deploys.js",
     "check:main": "npm run lint:ci && npm test"
   },
   "dependencies": {
