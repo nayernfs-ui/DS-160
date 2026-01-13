@@ -47,7 +47,7 @@
           try {
             var commit = window.__DEPLOY_COMMIT || (document.querySelector('meta[name="deploy-commit"]') || {}).content;
             var time = (document.querySelector('meta[name="deploy-time"]') || {}).content;
-            var show = window.__SHOW_PREVIEW === 'true';
+            var show = (window.__SHOW_PREVIEW === 'true') || ((document.querySelector('meta[name="show-preview"]') || {}).content === 'true');
             if (!show || !commit) return;
             if (document.getElementById('deploy-banner')) return; // guard against duplicates
             var el = document.createElement('div');
