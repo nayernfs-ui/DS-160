@@ -38,7 +38,7 @@ function showEmploymentEntry(entryNumber) {
 function showEducationEntries() {
   const educationContainer = document.getElementById('Education_Container');
   if (educationContainer) {
-    educationContainer.style.display = 'block';
+    educationContainer.classList.add('is-visible');
     educationContainer.setAttribute('aria-expanded', 'true');
     // Also set HasOtherEducation to Yes
     const radioYes = document.querySelector('input[name="HasOtherEducation"][value="Yes"]');
