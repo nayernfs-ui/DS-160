@@ -34,6 +34,22 @@ function showEmploymentEntry(entryNumber) {
   }
 }
 
+// Show education entries container
+function showEducationEntries() {
+  const educationContainer = document.getElementById('Education_Container');
+  if (educationContainer) {
+    educationContainer.style.display = 'block';
+    educationContainer.setAttribute('aria-expanded', 'true');
+    // Also set HasOtherEducation to Yes
+    const radioYes = document.querySelector('input[name="HasOtherEducation"][value="Yes"]');
+    if (radioYes) {
+      radioYes.checked = true;
+    }
+    // Scroll to the new section
+    educationContainer.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 document.addEventListener('DOMContentLoaded', (_event) => {
   // 1. Marital Status Logic
   const maritalStatusSelect = document.getElementById('maritalStatus');
