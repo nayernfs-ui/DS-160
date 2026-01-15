@@ -36,16 +36,7 @@ function showEmploymentEntry(entryNumber) {
 
 // Show education entries container
 function showEducationEntries() {
-  const educationEntry2 = document.getElementById('education_entry_2');
   const educationContainer = document.getElementById('Education_Container');
-  
-  // Show 8b. Education History 2
-  if (educationEntry2) {
-    educationEntry2.classList.add('is-visible');
-    educationEntry2.setAttribute('aria-expanded', 'true');
-  }
-  
-  // Show Education_Container
   if (educationContainer) {
     educationContainer.classList.add('is-visible');
     educationContainer.setAttribute('aria-expanded', 'true');
