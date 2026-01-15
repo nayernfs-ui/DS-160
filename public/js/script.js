@@ -14,6 +14,16 @@ function toggleVisaDetails(show) {
   }
 }
 
+// Toggle visibility of Previous Employment section
+function showPreviousEmployment() {
+  const prevSection = document.getElementById('previous_employment_section');
+  if (prevSection) {
+    prevSection.style.display = 'block';
+    // Optional: Scroll to the new section
+    prevSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 // Monkey-patch `checked` setter for deterministic UI updates in JSDOM (required for tests)
 try {
   const desc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'checked');
