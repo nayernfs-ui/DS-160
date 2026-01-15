@@ -1,3 +1,11 @@
+// Toggle visibility of U.S. visit details section
+function toggleUSVisits(show) {
+  const detailsBox = document.getElementById('us_visit_details');
+  if (detailsBox) {
+    detailsBox.style.display = show ? 'block' : 'none';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', (_event) => {
   // 1. Marital Status Logic
   const maritalStatusSelect = document.getElementById('maritalStatus');
