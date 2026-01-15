@@ -14,13 +14,23 @@ function toggleVisaDetails(show) {
   }
 }
 
-// Toggle visibility of Previous Employment section
+// Toggle visibility of Previous Employment section - show first entry
 function showPreviousEmployment() {
-  const prevSection = document.getElementById('previous_employment_section');
-  if (prevSection) {
-    prevSection.style.display = 'block';
-    // Optional: Scroll to the new section
-    prevSection.scrollIntoView({ behavior: 'smooth' });
+  const entry1 = document.getElementById('employment_entry_1');
+  if (entry1) {
+    entry1.style.display = 'block';
+    // Scroll to the new section
+    entry1.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// Show a specific employment entry (2 or 3)
+function showEmploymentEntry(entryNumber) {
+  const entry = document.getElementById(`employment_entry_${entryNumber}`);
+  if (entry) {
+    entry.style.display = 'block';
+    // Scroll to the new section
+    entry.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
