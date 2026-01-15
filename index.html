@@ -2518,23 +2518,6 @@
             />
           </div>
 
-          <button
-            type="button"
-            onclick="showEducationEntries()"
-            style="
-              margin-top: 20px;
-              padding: 10px 20px;
-              background-color: #007bff;
-              color: white;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-              font-size: 16px;
-            "
-          >
-            + Add Another Education
-          </button>
-
           <!-- Section 12: Repeated Education History (allow up to five institutions) -->
           <div class="question-group" style="display: none;">
             <label>هل لديك مؤسسات تعليمية أخرى؟</label>
@@ -2544,45 +2527,6 @@
             </div>
           </div>
 
-          <fieldset
-            id="Education_Container"
-            class="conditional-fields"
-            style="display: none;"
-            aria-live="polite"
-            aria-expanded="false"
-          >
-            <legend>Provide up to five additional institutions (حتى خمسة مؤسسات إضافية)</legend>
-            <div id="educationEntries">
-              <div class="edu-entry" data-index="1">
-                <div class="question-group">
-                  <label for="Education_1_InstitutionName">اسم المؤسسة:</label>
-                  <input
-                    type="text"
-                    id="Education_1_InstitutionName"
-                    name="Education_1_InstitutionName"
-                  />
-                </div>
-                <div class="question-group">
-                  <label for="Education_1_QualificationName">المؤهل:</label>
-                  <input
-                    type="text"
-                    id="Education_1_QualificationName"
-                    name="Education_1_QualificationName"
-                  />
-                </div>
-                <div class="question-group">
-                  <button type="button" class="remove-education" aria-label="Remove institution">
-                    - إزالة
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="question-group">
-              <button type="button" class="add-education" aria-label="Add institution">
-                + إضافة مؤسسة
-              </button>
-            </div>
-          </fieldset>
           <div class="question-group">
             <label for="institutionAddress">عنوانها:</label
             ><textarea
@@ -2908,6 +2852,63 @@
               />
             </div>
           </div>
+
+          <button
+            type="button"
+            onclick="showEducationEntries()"
+            style="
+              margin-top: 20px;
+              padding: 10px 20px;
+              background-color: #007bff;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 16px;
+            "
+          >
+            + Add Another Education
+          </button>
+
+          <fieldset
+            id="Education_Container"
+            class="conditional-fields"
+            style="display: none;"
+            aria-live="polite"
+            aria-expanded="false"
+          >
+            <legend>Provide up to five additional institutions (حتى خمسة مؤسسات إضافية)</legend>
+            <div id="educationEntries">
+              <div class="edu-entry" data-index="1">
+                <div class="question-group">
+                  <label for="Education_1_InstitutionName">اسم المؤسسة:</label>
+                  <input
+                    type="text"
+                    id="Education_1_InstitutionName"
+                    name="Education_1_InstitutionName"
+                  />
+                </div>
+                <div class="question-group">
+                  <label for="Education_1_QualificationName">المؤهل:</label>
+                  <input
+                    type="text"
+                    id="Education_1_QualificationName"
+                    name="Education_1_QualificationName"
+                  />
+                </div>
+                <div class="question-group">
+                  <button type="button" class="remove-education" aria-label="Remove institution">
+                    - إزالة
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="question-group">
+              <button type="button" class="add-education" aria-label="Add institution">
+                + إضافة مؤسسة
+              </button>
+            </div>
+          </fieldset>
         </fieldset>
         <fieldset>
           <legend>
