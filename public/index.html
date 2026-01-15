@@ -1396,11 +1396,12 @@
           <div class="question-group">
             <label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label>
             <div class="options-row" role="radiogroup" aria-label="Had US visa before">
-              <label><input type="radio" name="HadUSVisaBefore" value="Yes" /> نعم</label>
-              <label><input type="radio" name="HadUSVisaBefore" value="No" checked /> لا</label>
+              <label><input type="radio" name="HadUSVisaBefore" value="Yes" onclick="toggleVisaDetails(true)" /> نعم</label>
+              <label><input type="radio" name="HadUSVisaBefore" value="No" checked onclick="toggleVisaDetails(false)" /> لا</label>
             </div>
           </div>
 
+          <div id="visa_details" style="display: none; margin-top: 10px;">
           <fieldset id="previousUSVisas" class="conditional-fields">
             <legend>
               <span class="section-icon" aria-hidden="true"
@@ -1487,6 +1488,8 @@
               <span class="error-message" id="error-visaNumber"></span>
             </div>
           </fieldset>
+          </div>
+
           <div class="question-group">
             <label>هل تم رفضك قبل ذلك في التقديم على تأشيرة أمريكا؟</label>
             <div class="options-row" role="radiogroup" aria-label="US visa denied before">

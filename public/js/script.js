@@ -6,6 +6,14 @@ function toggleUSVisits(show) {
   }
 }
 
+// Toggle visibility of U.S. Visa details section
+function toggleVisaDetails(show) {
+  const detailsBox = document.getElementById('visa_details');
+  if (detailsBox) {
+    detailsBox.style.display = show ? 'block' : 'none';
+  }
+}
+
 // Monkey-patch `checked` setter for deterministic UI updates in JSDOM (required for tests)
 try {
   const desc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'checked');
