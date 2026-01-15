@@ -14,6 +14,16 @@ function toggleVisaDetails(show) {
   }
 }
 
+// Toggle visibility of Previous Employment section
+function showPreviousEmployment() {
+  const prevSection = document.getElementById('previous_employment_section');
+  if (prevSection) {
+    prevSection.style.display = 'block';
+    // Optional: Scroll to the new section
+    prevSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 document.addEventListener('DOMContentLoaded', (_event) => {
   // 1. Marital Status Logic
   const maritalStatusSelect = document.getElementById('maritalStatus');

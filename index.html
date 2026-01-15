@@ -953,7 +953,13 @@
           <label>هل لديك أي أقارب مباشرين (غير الوالدين) في الولايات المتحدة؟</label>
           <div class="options-row" role="radiogroup" aria-label="US immediate relatives">
             <label
-              ><input type="radio" name="US_ImmediateRelatives" value="Yes" id="relativesYes" onclick="toggleRelativeDetails(true)" />
+              ><input
+                type="radio"
+                name="US_ImmediateRelatives"
+                value="Yes"
+                id="relativesYes"
+                onclick="toggleRelativeDetails(true)"
+              />
               نعم</label
             >
             <label
@@ -1007,7 +1013,7 @@
             >يرجى تقديم المعلومات التالية:
           </legend>
 
-          <div id="relative_details" style="display: none; margin-top: 10px;">
+          <div id="relative_details" style="display: none; margin-top: 10px">
             <div id="relativeEntries">
               <div class="relative-entry" data-index="1">
                 <div class="question-group">
@@ -1224,252 +1230,285 @@
           <div class="question-group">
             <label>Have you ever been in the U.S.? (هل زرت الولايات المتحدة من قبل؟)</label>
             <div class="options-row" role="radiogroup" aria-label="Visited US">
-              <label><input type="radio" name="US_Visited" value="Yes" onclick="toggleUSVisits(true)" /> نعم</label>
-              <label><input type="radio" name="US_Visited" value="No" checked onclick="toggleUSVisits(false)" /> لا</label>
+              <label
+                ><input type="radio" name="US_Visited" value="Yes" onclick="toggleUSVisits(true)" />
+                نعم</label
+              >
+              <label
+                ><input
+                  type="radio"
+                  name="US_Visited"
+                  value="No"
+                  checked
+                  onclick="toggleUSVisits(false)"
+                />
+                لا</label
+              >
             </div>
           </div>
-          <div id="us_visit_details" style="display: none; margin-top: 10px;">
-          <fieldset
-            id="US_Visits_Container"
-            class="conditional-fields"
-            aria-live="polite"
-            aria-expanded="false"
-          >
-            <legend>
-              <span class="section-icon" aria-hidden="true"
-                ><svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  role="img"
-                  focusable="false"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                  <path
-                    fill="#fff"
-                    d="M12 12a3 3 0 100-6 3 3 0 000 6zM5 11a3 3 0 100-6 3 3 0 000 6zM19 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM14 20v-1a4 4 0 00-8 0v1h8z"
-                  /></svg></span
-              >Provide information on your last five U.S. visits (آخر خمسة زيارات إلى الولايات
-              المتحدة)
-            </legend>
-
-            <div id="visitEntries">
-              <div class="visit-entry" data-index="1">
-                <div class="question-group">
-                  <label id="label-USVisit_1_DateArrived"
-                    >تاريخ الوصول (التنسيق: يوم-شهر-سنة):</label
+          <div id="us_visit_details" style="display: none; margin-top: 10px">
+            <fieldset
+              id="US_Visits_Container"
+              class="conditional-fields"
+              aria-live="polite"
+              aria-expanded="false"
+            >
+              <legend>
+                <span class="section-icon" aria-hidden="true"
+                  ><svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    focusable="false"
+                    aria-hidden="true"
                   >
-                  <div class="date-row" role="group" aria-labelledby="label-USVisit_1_DateArrived">
-                    <label class="sr-only" for="USVisit_1_DateArrived_Day">يوم</label>
-                    <select
-                      name="USVisit_1_DateArrived_Day"
-                      id="USVisit_1_DateArrived_Day"
-                      aria-describedby="label-USVisit_1_DateArrived"
+                    <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                    <path
+                      fill="#fff"
+                      d="M12 12a3 3 0 100-6 3 3 0 000 6zM5 11a3 3 0 100-6 3 3 0 000 6zM19 11a3 3 0 100-6 3 3 0 000 6zM2 20v-1a6 6 0 0112 0v1H2zM14 20v-1a4 4 0 00-8 0v1h8z"
+                    /></svg></span
+                >Provide information on your last five U.S. visits (آخر خمسة زيارات إلى الولايات
+                المتحدة)
+              </legend>
+
+              <div id="visitEntries">
+                <div class="visit-entry" data-index="1">
+                  <div class="question-group">
+                    <label id="label-USVisit_1_DateArrived"
+                      >تاريخ الوصول (التنسيق: يوم-شهر-سنة):</label
                     >
-                      <option value="">Day</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                      <option value="13">13</option>
-                      <option value="14">14</option>
-                      <option value="15">15</option>
-                      <option value="16">16</option>
-                      <option value="17">17</option>
-                      <option value="18">18</option>
-                      <option value="19">19</option>
-                      <option value="20">20</option>
-                      <option value="21">21</option>
-                      <option value="22">22</option>
-                      <option value="23">23</option>
-                      <option value="24">24</option>
-                      <option value="25">25</option>
-                      <option value="26">26</option>
-                      <option value="27">27</option>
-                      <option value="28">28</option>
-                      <option value="29">29</option>
-                      <option value="30">30</option>
-                      <option value="31">31</option>
-                    </select>
-                    <label class="sr-only" for="USVisit_1_DateArrived_Month">شهر</label>
-                    <select
-                      name="USVisit_1_DateArrived_Month"
-                      id="USVisit_1_DateArrived_Month"
-                      aria-describedby="label-USVisit_1_DateArrived"
+                    <div
+                      class="date-row"
+                      role="group"
+                      aria-labelledby="label-USVisit_1_DateArrived"
                     >
-                      <option value="">شهر</option>
-                      <option value="Jan">يناير</option>
-                      <option value="Feb">فبراير</option>
-                      <option value="Mar">مارس</option>
-                      <option value="Apr">أبريل</option>
-                      <option value="May">مايو</option>
-                      <option value="Jun">يونيو</option>
-                      <option value="Jul">يوليو</option>
-                      <option value="Aug">أغسطس</option>
-                      <option value="Sep">سبتمبر</option>
-                      <option value="Oct">أكتوبر</option>
-                      <option value="Nov">نوفمبر</option>
-                      <option value="Dec">ديسمبر</option>
-                    </select>
-                    <label class="sr-only" for="USVisit_1_DateArrived_Year">سنة</label>
+                      <label class="sr-only" for="USVisit_1_DateArrived_Day">يوم</label>
+                      <select
+                        name="USVisit_1_DateArrived_Day"
+                        id="USVisit_1_DateArrived_Day"
+                        aria-describedby="label-USVisit_1_DateArrived"
+                      >
+                        <option value="">Day</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                      </select>
+                      <label class="sr-only" for="USVisit_1_DateArrived_Month">شهر</label>
+                      <select
+                        name="USVisit_1_DateArrived_Month"
+                        id="USVisit_1_DateArrived_Month"
+                        aria-describedby="label-USVisit_1_DateArrived"
+                      >
+                        <option value="">شهر</option>
+                        <option value="Jan">يناير</option>
+                        <option value="Feb">فبراير</option>
+                        <option value="Mar">مارس</option>
+                        <option value="Apr">أبريل</option>
+                        <option value="May">مايو</option>
+                        <option value="Jun">يونيو</option>
+                        <option value="Jul">يوليو</option>
+                        <option value="Aug">أغسطس</option>
+                        <option value="Sep">سبتمبر</option>
+                        <option value="Oct">أكتوبر</option>
+                        <option value="Nov">نوفمبر</option>
+                        <option value="Dec">ديسمبر</option>
+                      </select>
+                      <label class="sr-only" for="USVisit_1_DateArrived_Year">سنة</label>
+                      <input
+                        type="text"
+                        name="USVisit_1_DateArrived_Year"
+                        id="USVisit_1_DateArrived_Year"
+                        placeholder="YYYY"
+                        aria-describedby="label-USVisit_1_DateArrived"
+                      />
+                    </div>
+                    <span class="error-message" id="error-USVisit_1_DateArrived"></span>
+                  </div>
+
+                  <div class="question-group">
+                    <label id="label-USVisit_1_Length">مدة الإقامة:</label>
+                    <label class="sr-only" for="USVisit_1_Length">المدة</label>
                     <input
                       type="text"
-                      name="USVisit_1_DateArrived_Year"
-                      id="USVisit_1_DateArrived_Year"
-                      placeholder="YYYY"
-                      aria-describedby="label-USVisit_1_DateArrived"
+                      name="USVisit_1_Length"
+                      id="USVisit_1_Length"
+                      style="width: 120px"
+                      aria-describedby="label-USVisit_1_Length"
                     />
+                    <label class="sr-only" for="USVisit_1_Unit">وحدة</label>
+                    <select
+                      name="USVisit_1_Unit"
+                      id="USVisit_1_Unit"
+                      aria-describedby="label-USVisit_1_Length"
+                    >
+                      <option value="">-اختر-</option>
+                      <option value="Days">أيام</option>
+                      <option value="Weeks">أسابيع</option>
+                      <option value="Months">أشهر</option>
+                    </select>
                   </div>
-                  <span class="error-message" id="error-USVisit_1_DateArrived"></span>
-                </div>
 
-                <div class="question-group">
-                  <label id="label-USVisit_1_Length">مدة الإقامة:</label>
-                  <label class="sr-only" for="USVisit_1_Length">المدة</label>
-                  <input
-                    type="text"
-                    name="USVisit_1_Length"
-                    id="USVisit_1_Length"
-                    style="width: 120px"
-                    aria-describedby="label-USVisit_1_Length"
-                  />
-                  <label class="sr-only" for="USVisit_1_Unit">وحدة</label>
-                  <select
-                    name="USVisit_1_Unit"
-                    id="USVisit_1_Unit"
-                    aria-describedby="label-USVisit_1_Length"
-                  >
-                    <option value="">-اختر-</option>
-                    <option value="Days">أيام</option>
-                    <option value="Weeks">أسابيع</option>
-                    <option value="Months">أشهر</option>
-                  </select>
-                </div>
-
-                <div class="question-group">
-                  <button
-                    type="button"
-                    class="remove-visit"
-                    style="margin-left: 8px"
-                    aria-label="Remove visit 1"
-                    tabindex="0"
-                  >
-                    - إزالة
-                  </button>
+                  <div class="question-group">
+                    <button
+                      type="button"
+                      class="remove-visit"
+                      style="margin-left: 8px"
+                      aria-label="Remove visit 1"
+                      tabindex="0"
+                    >
+                      - إزالة
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="question-group" id="visitControls">
-              <button type="button" class="add-visit" aria-label="Add visit">+ إضافة</button>
-            </div>
-          </fieldset>
+              <div class="question-group" id="visitControls">
+                <button type="button" class="add-visit" aria-label="Add visit">+ إضافة</button>
+              </div>
+            </fieldset>
           </div>
 
           <div class="question-group">
             <label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label>
             <div class="options-row" role="radiogroup" aria-label="Had US visa before">
-              <label><input type="radio" name="HadUSVisaBefore" value="Yes" onclick="toggleVisaDetails(true)" /> نعم</label>
-              <label><input type="radio" name="HadUSVisaBefore" value="No" checked onclick="toggleVisaDetails(false)" /> لا</label>
+              <label
+                ><input
+                  type="radio"
+                  name="HadUSVisaBefore"
+                  value="Yes"
+                  onclick="toggleVisaDetails(true)"
+                />
+                نعم</label
+              >
+              <label
+                ><input
+                  type="radio"
+                  name="HadUSVisaBefore"
+                  value="No"
+                  checked
+                  onclick="toggleVisaDetails(false)"
+                />
+                لا</label
+              >
             </div>
           </div>
 
-          <div id="visa_details" style="display: none; margin-top: 10px;">
-          <fieldset id="previousUSVisas" class="conditional-fields">
-            <legend>
-              <span class="section-icon" aria-hidden="true"
-                ><svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  role="img"
-                  focusable="false"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                  <path
-                    fill="#fff"
-                    d="M6 2h8a2 2 0 012 2v16h-2l-1-2H7a2 2 0 01-2-2V4a2 2 0 012-2zM8 8a4 4 0 100 8 4 4 0 000-8z"
-                  /></svg></span
-              >السجلات السابقة لتأشيرات الولايات المتحدة
-            </legend>
-            <div class="question-group">
-              <label>تاريخ إصدار آخر فيزا (التنسيق: يوم-شهر-سنة):</label>
-              <div class="date-row">
-                <select id="visaDay" name="Visa_Last_Issue_Day">
-                  <option value="">يوم</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                  <option value="13">13</option>
-                  <option value="14">14</option>
-                  <option value="15">15</option>
-                  <option value="16">16</option>
-                  <option value="17">17</option>
-                  <option value="18">18</option>
-                  <option value="19">19</option>
-                  <option value="20">20</option>
-                  <option value="21">21</option>
-                  <option value="22">22</option>
-                  <option value="23">23</option>
-                  <option value="24">24</option>
-                  <option value="25">25</option>
-                  <option value="26">26</option>
-                  <option value="27">27</option>
-                  <option value="28">28</option>
-                  <option value="29">29</option>
-                  <option value="30">30</option>
-                  <option value="31">31</option>
-                </select>
-                <select id="visaMonth" name="Visa_Last_Issue_Month">
-                  <option value="">شهر</option>
-                  <option value="Jan">Jan</option>
-                  <option value="Feb">Feb</option>
-                  <option value="Mar">Mar</option>
-                  <option value="Apr">Apr</option>
-                  <option value="May">May</option>
-                  <option value="Jun">Jun</option>
-                  <option value="Jul">Jul</option>
-                  <option value="Aug">Aug</option>
-                  <option value="Sep">Sep</option>
-                  <option value="Oct">Oct</option>
-                  <option value="Nov">Nov</option>
-                  <option value="Dec">Dec</option>
-                </select>
-                <input type="text" id="visaYear" name="Visa_Last_Issue_Year" placeholder="YYYY" />
+          <div id="visa_details" style="display: none; margin-top: 10px">
+            <fieldset id="previousUSVisas" class="conditional-fields">
+              <legend>
+                <span class="section-icon" aria-hidden="true"
+                  ><svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    focusable="false"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                    <path
+                      fill="#fff"
+                      d="M6 2h8a2 2 0 012 2v16h-2l-1-2H7a2 2 0 01-2-2V4a2 2 0 012-2zM8 8a4 4 0 100 8 4 4 0 000-8z"
+                    /></svg></span
+                >السجلات السابقة لتأشيرات الولايات المتحدة
+              </legend>
+              <div class="question-group">
+                <label>تاريخ إصدار آخر فيزا (التنسيق: يوم-شهر-سنة):</label>
+                <div class="date-row">
+                  <select id="visaDay" name="Visa_Last_Issue_Day">
+                    <option value="">يوم</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                  </select>
+                  <select id="visaMonth" name="Visa_Last_Issue_Month">
+                    <option value="">شهر</option>
+                    <option value="Jan">Jan</option>
+                    <option value="Feb">Feb</option>
+                    <option value="Mar">Mar</option>
+                    <option value="Apr">Apr</option>
+                    <option value="May">May</option>
+                    <option value="Jun">Jun</option>
+                    <option value="Jul">Jul</option>
+                    <option value="Aug">Aug</option>
+                    <option value="Sep">Sep</option>
+                    <option value="Oct">Oct</option>
+                    <option value="Nov">Nov</option>
+                    <option value="Dec">Dec</option>
+                  </select>
+                  <input type="text" id="visaYear" name="Visa_Last_Issue_Year" placeholder="YYYY" />
+                </div>
+                <span class="error-message" id="error-visaDate"></span>
               </div>
-              <span class="error-message" id="error-visaDate"></span>
-            </div>
 
-            <div class="question-group">
-              <label for="visaNumber">رقم التأشيرة:</label>
-              <input type="text" id="visaNumber" name="Visa_Number" style="direction: ltr" />
-              <label
-                ><input type="checkbox" id="visaNumberUnknown" name="Visa_Number_Unknown" /> لا
-                أعرف</label
-              >
-              <span class="error-message" id="error-visaNumber"></span>
-            </div>
-          </fieldset>
+              <div class="question-group">
+                <label for="visaNumber">رقم التأشيرة:</label>
+                <input type="text" id="visaNumber" name="Visa_Number" style="direction: ltr" />
+                <label
+                  ><input type="checkbox" id="visaNumberUnknown" name="Visa_Number_Unknown" /> لا
+                  أعرف</label
+                >
+                <span class="error-message" id="error-visaNumber"></span>
+              </div>
+            </fieldset>
           </div>
 
           <div class="question-group">
@@ -1728,7 +1767,7 @@
                   fill="#fff"
                   d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
                 /></svg></span
-            >6. Current Employment (الوظيفة الحالية)
+            >6. Employment / التوظيف
           </legend>
           <div class="question-group">
             <label for="jobTitleCurrent">المسمى الوظيفي:</label
@@ -1843,561 +1882,575 @@
             <label for="salaryCurrent">الراتب الشهري:</label
             ><input type="number" id="salaryCurrent" name="Current_Salary" style="direction: ltr" />
           </div>
-        </fieldset>
 
-        <fieldset>
-          <legend>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path
-                  fill="#fff"
-                  d="M12 1a11 11 0 1011 11A11 11 0 0012 1zm1 12V8h2v6h-3z"
-                /></svg></span
-            >7. Previous Employment (الوظائف السابقة)
-          </legend>
-          <h3>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path
-                  fill="#fff"
-                  d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
-                /></svg></span
-            >الوظيفة السابقة (1)
-          </h3>
-          <div class="question-group">
-            <label for="jobTitlePrev1">المسمى الوظيفي:</label
-            ><input type="text" id="jobTitlePrev1" name="PrevJob1_Title" style="direction: auto" />
-          </div>
-          <div class="question-group">
-            <label for="workplacePrev1">مكان العمل:</label
-            ><input
-              type="text"
-              id="workplacePrev1"
-              name="PrevJob1_Workplace"
-              style="direction: auto"
-            />
-          </div>
-          <div class="question-group">
-            <label for="addressWorkPrev1">عنوان العمل بالتفصيل:</label
-            ><textarea
-              id="addressWorkPrev1"
-              name="PrevJob1_WorkAddress"
-              rows="2"
-              style="direction: auto"
-            ></textarea>
-          </div>
-          <div class="date-row">
-            <div class="date-group">
-              <label>تاريخ التعيين:</label>
-              <select id="startDatePrev1Day" name="PrevJob1_StartDate_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="startDatePrev1Month" name="PrevJob1_StartDate_Month">
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
-                type="text"
-                id="startDatePrev1Year"
-                name="PrevJob1_StartDate_Year"
-                placeholder="YYYY"
-              />
-            </div>
-            <div class="date-group">
-              <label>تاريخ الانتهاء:</label>
-              <select id="endDatePrev1Day" name="PrevJob1_EndDate_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="endDatePrev1Month" name="PrevJob1_EndDate_Month">
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
-                type="text"
-                id="endDatePrev1Year"
-                name="PrevJob1_EndDate_Year"
-                placeholder="YYYY"
-              />
-            </div>
-          </div>
-          <div class="question-group">
-            <label for="phoneWorkPrev1">تليفون العمل:</label
-            ><input
-              type="tel"
-              id="phoneWorkPrev1"
-              name="PrevJob1_WorkPhone"
-              style="direction: ltr"
-            />
-          </div>
-          <div class="question-group">
-            <label for="managerNamePrev1">اسم المدير المسئول:</label
-            ><input
-              type="text"
-              id="managerNamePrev1"
-              name="PrevJob1_ManagerName"
-              style="direction: auto"
-            />
-          </div>
-          <span class="error-message" id="error-managerNamePrev1"></span>
+          <button
+            type="button"
+            onclick="showPreviousEmployment()"
+            style="
+              margin-top: 20px;
+              padding: 10px 20px;
+              background-color: #007bff;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 16px;
+            "
+          >
+            + Add Previous Employment
+          </button>
 
-          <h3>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path
-                  fill="#fff"
-                  d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
-                /></svg></span
-            >الوظيفة السابقة (2)
-          </h3>
-          <div class="question-group">
-            <label for="jobTitlePrev2">المسمى الوظيفي:</label
-            ><input type="text" id="jobTitlePrev2" name="PrevJob2_Title" style="direction: auto" />
-          </div>
-          <div class="question-group">
-            <label for="workplacePrev2">مكان العمل:</label
-            ><input
-              type="text"
-              id="workplacePrev2"
-              name="PrevJob2_Workplace"
-              style="direction: auto"
-            />
-          </div>
-          <div class="question-group">
-            <label for="addressWorkPrev2">عنوان العمل بالتفصيل:</label
-            ><textarea
-              id="addressWorkPrev2"
-              name="PrevJob2_WorkAddress"
-              rows="2"
-              style="direction: auto"
-            ></textarea>
-          </div>
-          <div class="date-row">
-            <div class="date-group">
-              <label>تاريخ التعيين:</label>
-              <select id="startDatePrev2Day" name="PrevJob2_StartDate_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="startDatePrev2Month" name="PrevJob2_StartDate_Month">
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
+          <div id="previous_employment_section" style="display: none; margin-top: 20px">
+            <h3>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path
+                    fill="#fff"
+                    d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
+                  /></svg></span
+              >الوظيفة السابقة (1)
+            </h3>
+            <div class="question-group">
+              <label for="jobTitlePrev1">المسمى الوظيفي:</label
+              ><input
                 type="text"
-                id="startDatePrev2Year"
-                name="PrevJob2_StartDate_Year"
-                placeholder="YYYY"
+                id="jobTitlePrev1"
+                name="PrevJob1_Title"
+                style="direction: auto"
               />
             </div>
-            <div class="date-group">
-              <label>تاريخ الانتهاء:</label>
-              <select id="endDatePrev2Day" name="PrevJob2_EndDate_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="endDatePrev2Month" name="PrevJob2_EndDate_Month">
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
+            <div class="question-group">
+              <label for="workplacePrev1">مكان العمل:</label
+              ><input
                 type="text"
-                id="endDatePrev2Year"
-                name="PrevJob2_EndDate_Year"
-                placeholder="YYYY"
+                id="workplacePrev1"
+                name="PrevJob1_Workplace"
+                style="direction: auto"
               />
             </div>
-          </div>
-          <div class="question-group">
-            <label for="phoneWorkPrev2">تليفون العمل:</label
-            ><input
-              type="tel"
-              id="phoneWorkPrev2"
-              name="PrevJob2_WorkPhone"
-              style="direction: ltr"
-            />
-          </div>
-          <div class="question-group">
-            <label for="managerNamePrev2">اسم المدير المسئول:</label
-            ><input
-              type="text"
-              id="managerNamePrev2"
-              name="PrevJob2_ManagerName"
-              style="direction: auto"
-            />
-          </div>
-          <span class="error-message" id="error-managerNamePrev2"></span>
+            <div class="question-group">
+              <label for="addressWorkPrev1">عنوان العمل بالتفصيل:</label
+              ><textarea
+                id="addressWorkPrev1"
+                name="PrevJob1_WorkAddress"
+                rows="2"
+                style="direction: auto"
+              ></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-group">
+                <label>تاريخ التعيين:</label>
+                <select id="startDatePrev1Day" name="PrevJob1_StartDate_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="startDatePrev1Month" name="PrevJob1_StartDate_Month">
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input
+                  type="text"
+                  id="startDatePrev1Year"
+                  name="PrevJob1_StartDate_Year"
+                  placeholder="YYYY"
+                />
+              </div>
+              <div class="date-group">
+                <label>تاريخ الانتهاء:</label>
+                <select id="endDatePrev1Day" name="PrevJob1_EndDate_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="endDatePrev1Month" name="PrevJob1_EndDate_Month">
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input
+                  type="text"
+                  id="endDatePrev1Year"
+                  name="PrevJob1_EndDate_Year"
+                  placeholder="YYYY"
+                />
+              </div>
+            </div>
+            <div class="question-group">
+              <label for="phoneWorkPrev1">تليفون العمل:</label
+              ><input
+                type="tel"
+                id="phoneWorkPrev1"
+                name="PrevJob1_WorkPhone"
+                style="direction: ltr"
+              />
+            </div>
+            <div class="question-group">
+              <label for="managerNamePrev1">اسم المدير المسئول:</label
+              ><input
+                type="text"
+                id="managerNamePrev1"
+                name="PrevJob1_ManagerName"
+                style="direction: auto"
+              />
+            </div>
+            <span class="error-message" id="error-managerNamePrev1"></span>
 
-          <h3>
-            <span class="section-icon" aria-hidden="true"
-              ><svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="10" fill="#dc3545" />
-                <path
-                  fill="#fff"
-                  d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
-                /></svg></span
-            >الوظيفة السابقة (3)
-          </h3>
-          <div class="question-group">
-            <label for="jobTitlePrev3">المسمى الوظيفي:</label
-            ><input type="text" id="jobTitlePrev3" name="PrevJob3_Title" style="direction: auto" />
-          </div>
-          <div class="question-group">
-            <label for="workplacePrev3">مكان العمل:</label
-            ><input
-              type="text"
-              id="workplacePrev3"
-              name="PrevJob3_Workplace"
-              style="direction: auto"
-            />
-          </div>
-          <div class="question-group">
-            <label for="addressWorkPrev3">عنوان العمل بالتفصيل:</label
-            ><textarea
-              id="addressWorkPrev3"
-              name="PrevJob3_WorkAddress"
-              rows="2"
-              style="direction: auto"
-            ></textarea>
-          </div>
-          <div class="date-row">
-            <div class="date-group">
-              <label>تاريخ التعيين:</label>
-              <select id="startDatePrev3Day" name="PrevJob3_StartDate_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="startDatePrev3Month" name="PrevJob3_StartDate_Month">
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
+            <h3>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path
+                    fill="#fff"
+                    d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
+                  /></svg></span
+              >الوظيفة السابقة (2)
+            </h3>
+            <div class="question-group">
+              <label for="jobTitlePrev2">المسمى الوظيفي:</label
+              ><input
                 type="text"
-                id="startDatePrev3Year"
-                name="PrevJob3_StartDate_Year"
-                placeholder="YYYY"
+                id="jobTitlePrev2"
+                name="PrevJob2_Title"
+                style="direction: auto"
               />
             </div>
-            <div class="date-group">
-              <label>تاريخ الانتهاء:</label>
-              <select id="endDatePrev3Day" name="PrevJob3_EndDate_Day">
-                <option value="">يوم</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <select id="endDatePrev3Month" name="PrevJob3_EndDate_Month">
-                <option value="">شهر</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <input
+            <div class="question-group">
+              <label for="workplacePrev2">مكان العمل:</label
+              ><input
                 type="text"
-                id="endDatePrev3Year"
-                name="PrevJob3_EndDate_Year"
-                placeholder="YYYY"
-                style="width: 110px"
+                id="workplacePrev2"
+                name="PrevJob2_Workplace"
+                style="direction: auto"
               />
             </div>
+            <div class="question-group">
+              <label for="addressWorkPrev2">عنوان العمل بالتفصيل:</label
+              ><textarea
+                id="addressWorkPrev2"
+                name="PrevJob2_WorkAddress"
+                rows="2"
+                style="direction: auto"
+              ></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-group">
+                <label>تاريخ التعيين:</label>
+                <select id="startDatePrev2Day" name="PrevJob2_StartDate_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="startDatePrev2Month" name="PrevJob2_StartDate_Month">
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input
+                  type="text"
+                  id="startDatePrev2Year"
+                  name="PrevJob2_StartDate_Year"
+                  placeholder="YYYY"
+                />
+              </div>
+              <div class="date-group">
+                <label>تاريخ الانتهاء:</label>
+                <select id="endDatePrev2Day" name="PrevJob2_EndDate_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="endDatePrev2Month" name="PrevJob2_EndDate_Month">
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input
+                  type="text"
+                  id="endDatePrev2Year"
+                  name="PrevJob2_EndDate_Year"
+                  placeholder="YYYY"
+                />
+              </div>
+            </div>
+            <div class="question-group">
+              <label for="phoneWorkPrev2">تليفون العمل:</label
+              ><input
+                type="tel"
+                id="phoneWorkPrev2"
+                name="PrevJob2_WorkPhone"
+                style="direction: ltr"
+              />
+            </div>
+            <div class="question-group">
+              <label for="managerNamePrev2">اسم المدير المسئول:</label
+              ><input
+                type="text"
+                id="managerNamePrev2"
+                name="PrevJob2_ManagerName"
+                style="direction: auto"
+              />
+            </div>
+            <span class="error-message" id="error-managerNamePrev2"></span>
+
+            <h3>
+              <span class="section-icon" aria-hidden="true"
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  focusable="false"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#dc3545" />
+                  <path
+                    fill="#fff"
+                    d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1H6zM4 9h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"
+                  /></svg></span
+              >الوظيفة السابقة (3)
+            </h3>
+            <div class="question-group">
+              <label for="jobTitlePrev3">المسمى الوظيفي:</label
+              ><input
+                type="text"
+                id="jobTitlePrev3"
+                name="PrevJob3_Title"
+                style="direction: auto"
+              />
+            </div>
+            <div class="question-group">
+              <label for="workplacePrev3">مكان العمل:</label
+              ><input
+                type="text"
+                id="workplacePrev3"
+                name="PrevJob3_Workplace"
+                style="direction: auto"
+              />
+            </div>
+            <div class="question-group">
+              <label for="addressWorkPrev3">عنوان العمل بالتفصيل:</label
+              ><textarea
+                id="addressWorkPrev3"
+                name="PrevJob3_WorkAddress"
+                rows="2"
+                style="direction: auto"
+              ></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-group">
+                <label>تاريخ التعيين:</label>
+                <select id="startDatePrev3Day" name="PrevJob3_StartDate_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="startDatePrev3Month" name="PrevJob3_StartDate_Month">
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input
+                  type="text"
+                  id="startDatePrev3Year"
+                  name="PrevJob3_StartDate_Year"
+                  placeholder="YYYY"
+                />
+              </div>
+              <div class="date-group">
+                <label>تاريخ الانتهاء:</label>
+                <select id="endDatePrev3Day" name="PrevJob3_EndDate_Day">
+                  <option value="">يوم</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="endDatePrev3Month" name="PrevJob3_EndDate_Month">
+                  <option value="">شهر</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <input
+                  type="text"
+                  id="endDatePrev3Year"
+                  name="PrevJob3_EndDate_Year"
+                  placeholder="YYYY"
+                  style="width: 110px"
+                />
+              </div>
+            </div>
+            <div class="question-group">
+              <label for="phoneWorkPrev3">تليفون العمل:</label
+              ><input
+                type="tel"
+                id="phoneWorkPrev3"
+                name="PrevJob3_WorkPhone"
+                style="direction: ltr"
+              />
+            </div>
+            <div class="question-group">
+              <label for="managerNamePrev3">اسم المدير المسئول:</label
+              ><input
+                type="text"
+                id="managerNamePrev3"
+                name="PrevJob3_ManagerName"
+                style="direction: auto"
+              />
+            </div>
+            <span class="error-message" id="error-managerNamePrev3"></span>
           </div>
-          <div class="question-group">
-            <label for="phoneWorkPrev3">تليفون العمل:</label
-            ><input
-              type="tel"
-              id="phoneWorkPrev3"
-              name="PrevJob3_WorkPhone"
-              style="direction: ltr"
-            />
-          </div>
-          <div class="question-group">
-            <label for="managerNamePrev3">اسم المدير المسئول:</label
-            ><input
-              type="text"
-              id="managerNamePrev3"
-              name="PrevJob3_ManagerName"
-              style="direction: auto"
-            />
-          </div>
-          <span class="error-message" id="error-managerNamePrev3"></span>
         </fieldset>
 
         <fieldset>
