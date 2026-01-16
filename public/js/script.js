@@ -3225,6 +3225,7 @@ document.addEventListener(
         if (isYes) {
           // Show the container
           target.style.setProperty('display', 'block', 'important');
+          target.classList.add('is-visible');
           target.removeAttribute('aria-hidden');
           if (target.hasAttribute('aria-expanded')) {
             target.setAttribute('aria-expanded', 'true');
@@ -3237,6 +3238,7 @@ document.addEventListener(
         } else {
           // Hide the container
           target.style.setProperty('display', 'none', 'important');
+          target.classList.remove('is-visible');
           target.setAttribute('aria-hidden', 'true');
           if (target.hasAttribute('aria-expanded')) {
             target.setAttribute('aria-expanded', 'false');
