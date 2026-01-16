@@ -980,7 +980,13 @@
           <label>هل لديك أي أقارب آخرين في الولايات المتحدة؟</label>
           <div class="options-row" role="radiogroup" aria-label="US other relatives">
             <label
-              ><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes" onclick="toggleRelativeDetails(true)" />
+              ><input
+                type="radio"
+                name="US_OtherRelatives"
+                value="Yes"
+                id="otherRelativesYes"
+                onclick="toggleRelativeDetails(true)"
+              />
               نعم</label
             >
             <label
@@ -1401,25 +1407,8 @@
           <div class="question-group">
             <label>هل حصلت على تأشيرة أمريكا قبل سابق؟</label>
             <div class="options-row" role="radiogroup" aria-label="Had US visa before">
-              <label
-                ><input
-                  type="radio"
-                  name="HadUSVisaBefore"
-                  value="Yes"
-                  onclick="toggleVisaDetails(true)"
-                />
-                نعم</label
-              >
-              <label
-                ><input
-                  type="radio"
-                  name="HadUSVisaBefore"
-                  value="No"
-                  checked
-                  onclick="toggleVisaDetails(false)"
-                />
-                لا</label
-              >
+              <label><input type="radio" name="HadUSVisaBefore" value="Yes" /> نعم</label>
+              <label><input type="radio" name="HadUSVisaBefore" value="No" checked /> لا</label>
             </div>
           </div>
 
@@ -2086,22 +2075,22 @@
             <span class="error-message" id="error-managerNamePrev1"></span>
           </div>
 
-            <button
-              type="button"
-              onclick="showEmploymentEntry(2)"
-              style="
-                margin-top: 20px;
-                padding: 10px 20px;
-                background-color: #28a745;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 16px;
-              "
-            >
-              + Add Another Previous Employment
-            </button>
+          <button
+            type="button"
+            onclick="showEmploymentEntry(2)"
+            style="
+              margin-top: 20px;
+              padding: 10px 20px;
+              background-color: #28a745;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 16px;
+            "
+          >
+            + Add Another Previous Employment
+          </button>
 
           <div id="employment_entry_2" style="display: none; margin-top: 20px">
             <h3>
@@ -2288,22 +2277,22 @@
             <span class="error-message" id="error-managerNamePrev2"></span>
           </div>
 
-            <button
-              type="button"
-              onclick="showEmploymentEntry(3)"
-              style="
-                margin-top: 20px;
-                padding: 10px 20px;
-                background-color: #28a745;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 16px;
-              "
-            >
-              + Add Another Previous Employment
-            </button>
+          <button
+            type="button"
+            onclick="showEmploymentEntry(3)"
+            style="
+              margin-top: 20px;
+              padding: 10px 20px;
+              background-color: #28a745;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 16px;
+            "
+          >
+            + Add Another Previous Employment
+          </button>
 
           <div id="employment_entry_3" style="display: none; margin-top: 20px">
             <h3>
@@ -2490,7 +2479,6 @@
             </div>
             <span class="error-message" id="error-managerNamePrev3"></span>
           </div>
-
         </fieldset>
 
         <fieldset>
@@ -2520,7 +2508,7 @@
           </div>
 
           <!-- Section 12: Repeated Education History (allow up to five institutions) -->
-          <div class="question-group" style="display: none;">
+          <div class="question-group" style="display: none">
             <label>هل لديك مؤسسات تعليمية أخرى؟</label>
             <div class="options-row" role="radiogroup" aria-label="Has other education">
               <label><input type="radio" name="HasOtherEducation" value="Yes" /> نعم</label>
@@ -2676,184 +2664,184 @@
         </fieldset>
 
         <fieldset
-            id="Education_Container"
-            class="conditional-fields"
-            aria-live="polite"
-            aria-expanded="false"
-          >
-            <legend>Provide up to five additional institutions (حتى خمسة مؤسسات إضافية)</legend>
-            <div id="educationEntries">
-              <div class="edu-entry" data-index="1">
-                <h3 style="margin-top: 20px; margin-bottom: 15px;">مؤسسة تعليمية إضافية (1)</h3>
-                <div class="question-group">
-                  <label for="Education_1_InstitutionName">اسم المؤسسة التعليمية:</label>
+          id="Education_Container"
+          class="conditional-fields"
+          aria-live="polite"
+          aria-expanded="false"
+        >
+          <legend>Provide up to five additional institutions (حتى خمسة مؤسسات إضافية)</legend>
+          <div id="educationEntries">
+            <div class="edu-entry" data-index="1">
+              <h3 style="margin-top: 20px; margin-bottom: 15px">مؤسسة تعليمية إضافية (1)</h3>
+              <div class="question-group">
+                <label for="Education_1_InstitutionName">اسم المؤسسة التعليمية:</label>
+                <input
+                  type="text"
+                  id="Education_1_InstitutionName"
+                  name="Education_1_InstitutionName"
+                  style="direction: auto"
+                />
+              </div>
+              <div class="question-group">
+                <label for="Education_1_Address">عنوانها:</label>
+                <textarea
+                  id="Education_1_Address"
+                  name="Education_1_Address"
+                  rows="2"
+                  style="direction: auto"
+                ></textarea>
+              </div>
+              <div class="question-group">
+                <label for="Education_1_QualificationName">اسم المؤهل:</label>
+                <input
+                  type="text"
+                  id="Education_1_QualificationName"
+                  name="Education_1_QualificationName"
+                  style="direction: auto"
+                />
+              </div>
+              <div class="question-group">
+                <label for="Education_1_QualificationMajor">شعبة المؤهل:</label>
+                <input
+                  type="text"
+                  id="Education_1_QualificationMajor"
+                  name="Education_1_QualificationMajor"
+                  style="direction: auto"
+                />
+              </div>
+              <div class="date-row">
+                <div class="date-group">
+                  <label>تاريخ بدء الدراسة:</label>
+                  <select id="Education_1_StartDateDay" name="Education_1_StartDate_Day">
+                    <option value="">يوم</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                  </select>
+                  <select id="Education_1_StartDateMonth" name="Education_1_StartDate_Month">
+                    <option value="">شهر</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
                   <input
                     type="text"
-                    id="Education_1_InstitutionName"
-                    name="Education_1_InstitutionName"
-                    style="direction: auto"
+                    id="Education_1_StartDateYear"
+                    name="Education_1_StartDate_Year"
+                    placeholder="YYYY"
+                    style="width: 110px"
                   />
                 </div>
-                <div class="question-group">
-                  <label for="Education_1_Address">عنوانها:</label>
-                  <textarea
-                    id="Education_1_Address"
-                    name="Education_1_Address"
-                    rows="2"
-                    style="direction: auto"
-                  ></textarea>
-                </div>
-                <div class="question-group">
-                  <label for="Education_1_QualificationName">اسم المؤهل:</label>
+                <div class="date-group">
+                  <label>تاريخ نهاية الدراسة:</label>
+                  <select id="Education_1_EndDateDay" name="Education_1_EndDate_Day">
+                    <option value="">يوم</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                  </select>
+                  <select id="Education_1_EndDateMonth" name="Education_1_EndDate_Month">
+                    <option value="">شهر</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
                   <input
                     type="text"
-                    id="Education_1_QualificationName"
-                    name="Education_1_QualificationName"
-                    style="direction: auto"
+                    id="Education_1_EndDateYear"
+                    name="Education_1_EndDate_Year"
+                    placeholder="YYYY"
+                    style="width: 110px"
                   />
-                </div>
-                <div class="question-group">
-                  <label for="Education_1_QualificationMajor">شعبة المؤهل:</label>
-                  <input
-                    type="text"
-                    id="Education_1_QualificationMajor"
-                    name="Education_1_QualificationMajor"
-                    style="direction: auto"
-                  />
-                </div>
-                <div class="date-row">
-                  <div class="date-group">
-                    <label>تاريخ بدء الدراسة:</label>
-                    <select id="Education_1_StartDateDay" name="Education_1_StartDate_Day">
-                      <option value="">يوم</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                      <option value="13">13</option>
-                      <option value="14">14</option>
-                      <option value="15">15</option>
-                      <option value="16">16</option>
-                      <option value="17">17</option>
-                      <option value="18">18</option>
-                      <option value="19">19</option>
-                      <option value="20">20</option>
-                      <option value="21">21</option>
-                      <option value="22">22</option>
-                      <option value="23">23</option>
-                      <option value="24">24</option>
-                      <option value="25">25</option>
-                      <option value="26">26</option>
-                      <option value="27">27</option>
-                      <option value="28">28</option>
-                      <option value="29">29</option>
-                      <option value="30">30</option>
-                      <option value="31">31</option>
-                    </select>
-                    <select id="Education_1_StartDateMonth" name="Education_1_StartDate_Month">
-                      <option value="">شهر</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                    </select>
-                    <input
-                      type="text"
-                      id="Education_1_StartDateYear"
-                      name="Education_1_StartDate_Year"
-                      placeholder="YYYY"
-                      style="width: 110px"
-                    />
-                  </div>
-                  <div class="date-group">
-                    <label>تاريخ نهاية الدراسة:</label>
-                    <select id="Education_1_EndDateDay" name="Education_1_EndDate_Day">
-                      <option value="">يوم</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                      <option value="13">13</option>
-                      <option value="14">14</option>
-                      <option value="15">15</option>
-                      <option value="16">16</option>
-                      <option value="17">17</option>
-                      <option value="18">18</option>
-                      <option value="19">19</option>
-                      <option value="20">20</option>
-                      <option value="21">21</option>
-                      <option value="22">22</option>
-                      <option value="23">23</option>
-                      <option value="24">24</option>
-                      <option value="25">25</option>
-                      <option value="26">26</option>
-                      <option value="27">27</option>
-                      <option value="28">28</option>
-                      <option value="29">29</option>
-                      <option value="30">30</option>
-                      <option value="31">31</option>
-                    </select>
-                    <select id="Education_1_EndDateMonth" name="Education_1_EndDate_Month">
-                      <option value="">شهر</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                    </select>
-                    <input
-                      type="text"
-                      id="Education_1_EndDateYear"
-                      name="Education_1_EndDate_Year"
-                      placeholder="YYYY"
-                      style="width: 110px"
-                    />
-                  </div>
-                </div>
-                <div class="question-group">
-                  <button type="button" class="remove-education" aria-label="Remove institution">
-                    - إزالة
-                  </button>
                 </div>
               </div>
+              <div class="question-group">
+                <button type="button" class="remove-education" aria-label="Remove institution">
+                  - إزالة
+                </button>
+              </div>
             </div>
-            <div class="question-group">
-              <button type="button" class="add-education" aria-label="Add institution">
-                + إضافة مؤسسة
-              </button>
-            </div>
-          </fieldset>
+          </div>
+          <div class="question-group">
+            <button type="button" class="add-education" aria-label="Add institution">
+              + إضافة مؤسسة
+            </button>
+          </div>
+        </fieldset>
 
         <button
           type="button"
