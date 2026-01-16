@@ -2236,6 +2236,52 @@ function __ds160OnDomReady(_event) {
     }
   }
 
+  // Handle US_OtherRelatives radio buttons - they should also show the same relatives container
+  const otherRelativesRadios = document.querySelectorAll('input[name="US_OtherRelatives"]');
+  if (otherRelativesRadios && otherRelativesRadios.length) {
+    if (!window.__ds160OtherRelativesInit) {
+      window.__ds160OtherRelativesInit = true;
+      const detailsBox = document.getElementById('relative_details');
+
+      otherRelativesRadios.forEach((radio) => {
+        radio.addEventListener('change', function () {
+          const _relativeEntries = document.getElementById('relativeEntries');
+          if (!relativesContainer) return;
+          if (this.value === 'Yes') {
+            relativesContainer.style.display = 'block';
+            relativesContainer.style.animation = 'fadeIn 0.5s';
+            relativesContainer.setAttribute('aria-expanded', 'true');
+            // mark aria-hidden=false so assistive tech knows this section is exposed
+            relativesContainer.setAttribute('aria-hidden', 'false');
+            if (detailsBox) {
+              detailsBox.style.display = 'block';
+              detailsBox.style.animation = 'fadeIn 0.5s';
+            }
+            const currentCount = _relativeEntries
+              ? _relativeEntries.querySelectorAll('.relative-entry').length
+              : 0;
+            for (let i = 1; i <= currentCount; i++) setRelativeRequired(i, true);
+            if (detailsBox)
+              detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                c.disabled = false;
+              });
+          } else {
+            relativesContainer.style.display = 'none';
+            relativesContainer.setAttribute('aria-expanded', 'false');
+            // remove aria-hidden when hidden to match existing accessibility patterns
+            relativesContainer.removeAttribute('aria-hidden');
+            if (detailsBox) detailsBox.style.display = 'none';
+            for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
+            if (detailsBox)
+              detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                c.disabled = true;
+              });
+          }
+        });
+      });
+    }
+  }
+
   function updateRelativeAddControls() {
     const entries = relativeEntries
       ? relativeEntries.querySelectorAll('.relative-entry').length
@@ -3179,3 +3225,84 @@ function togglePassportLost(show) {
   }
 }
 window.togglePassportLost = togglePassportLost;
+/**
+ * GLOBAL EVENT DELEGATION: Centralized radio button change handler
+ * Replaces scattered individual toggle functions with a robust observer
+ * Handles all yes/no radio toggles across the form
+ */
+document.addEventListener(
+  'change',
+  function (e) {
+    if (!e.target || e.target.type !== 'radio') return;
+
+    const name = e.target.name;
+    const isYes = e.target.value === 'Yes';
+
+    // Define the mapping of radio names to container IDs and their configuration
+    const toggleMap = {
+      US_ImmediateRelatives: {
+        containers: ['relative_details', 'US_Relatives_Container'],
+      },
+      US_OtherRelatives: {
+        containers: ['relative_details', 'US_Relatives_Container'],
+      },
+      LostPassport: {
+        containers: ['lost_passport_details'],
+      },
+      US_Visited: {
+        containers: ['us_visit_details', 'US_Visits_Container'],
+      },
+      HadUSVisaBefore: {
+        containers: ['visa_details'],
+      },
+      MedicalDisease: {
+        containers: ['exp_disease'],
+      },
+      MedicalDisorder: {
+        containers: ['exp_disorder'],
+      },
+    };
+
+    if (toggleMap[name]) {
+      const config = toggleMap[name];
+      config.containers.forEach((containerId) => {
+        const target = document.getElementById(containerId);
+        if (!target) return;
+
+        if (isYes) {
+          // Show the container
+          target.style.setProperty('display', 'block', 'important');
+          target.removeAttribute('aria-hidden');
+          if (target.hasAttribute('aria-expanded')) {
+            target.setAttribute('aria-expanded', 'true');
+          }
+
+          // Enable all form controls inside
+          target.querySelectorAll('input, select, textarea').forEach((ctrl) => {
+            ctrl.disabled = false;
+          });
+        } else {
+          // Hide the container
+          target.style.setProperty('display', 'none', 'important');
+          target.setAttribute('aria-hidden', 'true');
+          if (target.hasAttribute('aria-expanded')) {
+            target.setAttribute('aria-expanded', 'false');
+          }
+
+          // Disable all form controls inside
+          target.querySelectorAll('input, select, textarea').forEach((ctrl) => {
+            ctrl.disabled = true;
+            ctrl.removeAttribute('required');
+          });
+        }
+      });
+
+      console.debug(
+        `[Global Radio Handler] ${name}=${e.target.value}, toggled containers: ${toggleMap[
+          name
+        ].containers.join(', ')}`
+      );
+    }
+  },
+  true
+); // Use capture phase for early handling
