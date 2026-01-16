@@ -1111,21 +1111,8 @@ function __ds160OnDomReady(_event) {
   }
 
   // 2. Travel Companion Logic
-  const travelRadios = document.querySelectorAll('input[name="TravellingWithOthers"]');
+  // NOTE: Event listener removed - handled by global centralized handler
   const companionFields = document.getElementById('travelCompanionFields');
-
-  travelRadios.forEach((radio) => {
-    radio.addEventListener('change', function () {
-      if (companionFields) {
-        if (this.value === 'Yes') {
-          companionFields.style.display = 'block';
-          companionFields.style.animation = 'fadeIn 0.5s';
-        } else {
-          companionFields.style.display = 'none';
-        }
-      }
-    });
-  });
 
   // 3. Visa Denial Logic
   const denialRadios = document.querySelectorAll('input[name="USVisaDenied"]');
@@ -2608,37 +2595,9 @@ function __ds160OnDomReady(_event) {
   }
 
   // 4. Other Nationality Logic (new)
-  const otherNatRadios = document.querySelectorAll('input[name="HasOtherNationality"]');
+  // NOTE: Event listeners removed - handled by global centralized handler
   const otherNationalityFields = document.getElementById('otherNationalityFields');
-  const otherPassRadios = document.querySelectorAll('input[name="Other_Nationality_Passport"]');
   const otherPassportField = document.getElementById('otherPassportField');
-
-  otherNatRadios.forEach((radio) => {
-    radio.addEventListener('change', function () {
-      if (otherNationalityFields) {
-        if (this.value === 'Yes') {
-          otherNationalityFields.style.display = 'block';
-          otherNationalityFields.style.animation = 'fadeIn 0.5s';
-        } else {
-          otherNationalityFields.style.display = 'none';
-          if (otherPassportField) otherPassportField.style.display = 'none';
-        }
-      }
-    });
-  });
-
-  otherPassRadios.forEach((radio) => {
-    radio.addEventListener('change', function () {
-      if (otherPassportField) {
-        if (this.value === 'Yes') {
-          otherPassportField.style.display = 'block';
-          otherPassportField.style.animation = 'fadeIn 0.5s';
-        } else {
-          otherPassportField.style.display = 'none';
-        }
-      }
-    });
-  });
 
   // 6. Lost/ Stolen Passport Logic
   const lostPassportRadios = document.querySelectorAll('input[name="LostPassport"]');
@@ -2723,30 +2682,10 @@ function __ds160OnDomReady(_event) {
       }
     });
   }
-
-  militaryRadios.forEach((radio) => {
-    if (radio.__ds160MilitaryBound) return;
-    radio.addEventListener('change', function () {
-      console.debug('military: change event, value=', this.value);
-      if (!militaryFields) return;
-      if (this.value === 'Yes') {
-        militaryFields.style.display = 'block';
-        militaryFields.style.animation = 'fadeIn 0.5s';
-        militaryFields.setAttribute('aria-expanded', 'true');
-        militaryFields.removeAttribute('aria-hidden');
-        setMilitaryRequired(true);
-      } else {
-        militaryFields.style.display = 'none';
-        militaryFields.setAttribute('aria-expanded', 'false');
-        militaryFields.removeAttribute('aria-hidden');
-        setMilitaryRequired(false);
-      }
-    });
-    radio.__ds160MilitaryBound = true;
-  });
+  // NOTE: Event listener removed - handled by global centralized handler
 
   // 5. Other Permanent Resident Logic (Arabic question)
-  const permResRadios = document.querySelectorAll('input[name="HasOtherPermanentResident"]');
+  // NOTE: Event listener removed - handled by global centralized handler
   const otherPermanentResidentFields = document.getElementById('otherPermanentResidentFields');
   const otherPermanentResidentSelect = document.getElementById('otherPermanentResidentSelect');
 
@@ -3020,20 +2959,7 @@ function __ds160OnDomReady(_event) {
     /* ignore */
   }
 
-  permResRadios.forEach((radio) => {
-    radio.addEventListener('change', function () {
-      if (otherPermanentResidentFields) {
-        if (this.value === 'Yes') {
-          otherPermanentResidentFields.style.display = 'block';
-          otherPermanentResidentFields.style.animation = 'fadeIn 0.5s';
-          // Ensure the shown field is populated even if it wasn't at load time
-          ensurePopulateIds(['otherPermanentResidentSelect']);
-        } else {
-          otherPermanentResidentFields.style.display = 'none';
-        }
-      }
-    });
-  });
+  // NOTE: Event listener removed for HasOtherPermanentResident - handled by global centralized handler
 
   // Move initialization and listeners into exported init so test harnesses can call it
   function initDs160() {
@@ -3244,6 +3170,12 @@ document.addEventListener(
 
     // Define the mapping of radio names to container IDs and their configuration
     const toggleMap = {
+      HasOtherNationality: {
+        containers: ['otherNationalityFields'],
+      },
+      Other_Nationality_Passport: {
+        containers: ['otherPassportField'],
+      },
       US_ImmediateRelatives: {
         containers: ['relative_details', 'US_Relatives_Container'],
       },
@@ -3251,7 +3183,7 @@ document.addEventListener(
         containers: ['relative_details', 'US_Relatives_Container'],
       },
       LostPassport: {
-        containers: ['lost_passport_details'],
+        containers: ['lostPassportFields', 'lost_passport_details'],
       },
       US_Visited: {
         containers: ['us_visit_details', 'US_Visits_Container'],
@@ -3264,6 +3196,15 @@ document.addEventListener(
       },
       MedicalDisorder: {
         containers: ['exp_disorder'],
+      },
+      TravellingWithOthers: {
+        containers: ['travelCompanionFields'],
+      },
+      Military_Served: {
+        containers: ['militaryFields'],
+      },
+      HasOtherPermanentResident: {
+        containers: ['otherPermanentResidentFields'],
       },
     };
 
