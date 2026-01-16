@@ -3216,6 +3216,12 @@ document.addEventListener(
             target.setAttribute('aria-expanded', 'true');
           }
 
+          // Also add is-visible class to any conditional-fields inside
+          target.querySelectorAll('.conditional-fields').forEach((field) => {
+            field.classList.add('is-visible');
+            field.style.removeProperty('display');
+          });
+
           // Enable all form controls inside
           target.querySelectorAll('input, select, textarea').forEach((ctrl) => {
             ctrl.disabled = false;
@@ -3228,6 +3234,12 @@ document.addEventListener(
           if (target.hasAttribute('aria-expanded')) {
             target.setAttribute('aria-expanded', 'false');
           }
+
+          // Also remove is-visible class from any conditional-fields inside
+          target.querySelectorAll('.conditional-fields').forEach((field) => {
+            field.classList.remove('is-visible');
+            field.style.setProperty('display', 'none', 'important');
+          });
 
           // Disable all form controls inside
           target.querySelectorAll('input, select, textarea').forEach((ctrl) => {
