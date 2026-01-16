@@ -3236,7 +3236,11 @@ document.addEventListener(
     if (!e.target || e.target.type !== 'radio') return;
 
     const name = e.target.name;
-    const isYes = e.target.value === 'Yes';
+    const value = e.target.value;
+    const isYes = value === 'Yes';
+
+    // Debug logging
+    console.log(`[Radio Change] name=${name}, value=${value}, isYes=${isYes}`);
 
     // Define the mapping of radio names to container IDs and their configuration
     const toggleMap = {
@@ -3265,8 +3269,16 @@ document.addEventListener(
 
     if (toggleMap[name]) {
       const config = toggleMap[name];
+      console.log(
+        `[Handler] Found mapping for ${name}, containers: ${config.containers.join(', ')}`
+      );
       config.containers.forEach((containerId) => {
         const target = document.getElementById(containerId);
+        console.log(
+          `[Container] ${containerId}: exists=${!!target}, display=${
+            target ? window.getComputedStyle(target).display : 'N/A'
+          }`
+        );
         if (!target) return;
 
         if (isYes) {
