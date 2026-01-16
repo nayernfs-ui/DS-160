@@ -393,16 +393,24 @@ function __ds160OnDomReady(_event) {
               detailsBox.style.display = 'block';
               detailsBox.style.animation = 'fadeIn 0.5s';
             }
-            const currentCount = _relativeEntries ? _relativeEntries.querySelectorAll('.relative-entry').length : 0;
+            const currentCount = _relativeEntries
+              ? _relativeEntries.querySelectorAll('.relative-entry').length
+              : 0;
             for (let i = 1; i <= currentCount; i++) setRelativeRequired(i, true);
-            if (detailsBox) detailsBox.querySelectorAll('input, select, textarea').forEach((c) => { c.disabled = false; });
+            if (detailsBox)
+              detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                c.disabled = false;
+              });
           } else {
             _relativesContainer.style.display = 'none';
             _relativesContainer.setAttribute('aria-expanded', 'false');
             _relativesContainer.removeAttribute('aria-hidden');
             if (detailsBox) detailsBox.style.display = 'none';
             for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
-            if (detailsBox) detailsBox.querySelectorAll('input, select, textarea').forEach((c) => { c.disabled = true; });
+            if (detailsBox)
+              detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                c.disabled = true;
+              });
           }
         });
         r.__ds160RelativesBound = true;
@@ -411,7 +419,8 @@ function __ds160OnDomReady(_event) {
       // enforce initial state based on existing checked radio (No is default)
       const yesRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="Yes"]');
       const noRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="No"]');
-      if (yesRadio && yesRadio.checked) yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
+      if (yesRadio && yesRadio.checked)
+        yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
       else if (noRadio) {
         noRadio.checked = true;
         noRadio.dispatchEvent(new Event('change', { bubbles: true }));
@@ -419,7 +428,10 @@ function __ds160OnDomReady(_event) {
 
       // Ensure click delegation is bound so add/remove controls work even if the DOM was not ready at initial binding
       try {
-        const clickRoot = document.getElementById('US_Relatives_Container') || document.getElementById('relativeEntries') || document.getElementById('relative_details');
+        const clickRoot =
+          document.getElementById('US_Relatives_Container') ||
+          document.getElementById('relativeEntries') ||
+          document.getElementById('relative_details');
         if (clickRoot && !clickRoot.__ds160RelativesClickBound) {
           clickRoot.addEventListener('click', function (e) {
             const addBtn = e.target.closest && e.target.closest('.add-relative');
@@ -430,7 +442,8 @@ function __ds160OnDomReady(_event) {
               e.preventDefault();
               const current = document.querySelectorAll('#relativeEntries .relative-entry').length;
               if (current >= maxRelatives) return;
-              const template = document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
+              const template =
+                document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
               if (!template) return;
               const clone = template.cloneNode(true);
               const newIndex = current + 1;
@@ -466,7 +479,11 @@ function __ds160OnDomReady(_event) {
                 );
               });
 
-              const shouldRequire = window.getComputedStyle(document.getElementById('US_Relatives_Container')||document.getElementById('relative_details')).display !== 'none';
+              const shouldRequire =
+                window.getComputedStyle(
+                  document.getElementById('US_Relatives_Container') ||
+                    document.getElementById('relative_details')
+                ).display !== 'none';
               clone.querySelectorAll('input, select').forEach((el) => {
                 if (shouldRequire) el.setAttribute('required', 'required');
                 else el.removeAttribute('required');
@@ -483,7 +500,11 @@ function __ds160OnDomReady(_event) {
               updateRelativeAddControls();
             }
 
-            if (remBtn && document.getElementById('relativeEntries') && document.getElementById('relativeEntries').contains(remBtn)) {
+            if (
+              remBtn &&
+              document.getElementById('relativeEntries') &&
+              document.getElementById('relativeEntries').contains(remBtn)
+            ) {
               e.preventDefault();
               const entry = remBtn.closest('.relative-entry');
               if (!entry) return;
@@ -1808,7 +1829,8 @@ function __ds160OnDomReady(_event) {
         e.preventDefault();
         const current = document.querySelectorAll('#relativeEntries .relative-entry').length;
         if (current >= maxRelatives) return;
-        const template = document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
+        const template =
+          document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
         if (!template) return;
         const clone = template.cloneNode(true);
         const newIndex = current + 1;
@@ -1842,7 +1864,11 @@ function __ds160OnDomReady(_event) {
           );
         });
 
-        const shouldRequire = window.getComputedStyle(document.getElementById('US_Relatives_Container')||document.getElementById('relative_details')).display !== 'none';
+        const shouldRequire =
+          window.getComputedStyle(
+            document.getElementById('US_Relatives_Container') ||
+              document.getElementById('relative_details')
+          ).display !== 'none';
         clone.querySelectorAll('input, select').forEach((el) => {
           if (shouldRequire) el.setAttribute('required', 'required');
           else el.removeAttribute('required');
@@ -1894,7 +1920,8 @@ function __ds160OnDomReady(_event) {
     try {
       const current = document.querySelectorAll('#relativeEntries .relative-entry').length;
       if (current >= maxRelatives) return false;
-      const template = document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
+      const template =
+        document.querySelector('#relativeEntries .relative-entry') || relativeTemplateNode;
       if (!template) return false;
       const clone = template.cloneNode(true);
       const newIndex = current + 1;
@@ -1930,7 +1957,11 @@ function __ds160OnDomReady(_event) {
         );
       });
 
-      const shouldRequire = window.getComputedStyle(document.getElementById('US_Relatives_Container')||document.getElementById('relative_details')).display !== 'none';
+      const shouldRequire =
+        window.getComputedStyle(
+          document.getElementById('US_Relatives_Container') ||
+            document.getElementById('relative_details')
+        ).display !== 'none';
       clone.querySelectorAll('input, select').forEach((el) => {
         if (shouldRequire) el.setAttribute('required', 'required');
         else el.removeAttribute('required');
@@ -1962,12 +1993,8 @@ function __ds160OnDomReady(_event) {
         entry.remove();
         for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
         updateRelativeAddControls();
-        const yesRadio = document.querySelector(
-          'input[name="US_ImmediateRelatives"][value="Yes"]'
-        );
-        const noRadio = document.querySelector(
-          'input[name="US_ImmediateRelatives"][value="No"]'
-        );
+        const yesRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="Yes"]');
+        const noRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="No"]');
         if (yesRadio && yesRadio.checked && noRadio) {
           noRadio.checked = true;
           noRadio.dispatchEvent(new Event('change', { bubbles: true }));
@@ -2034,38 +2061,52 @@ function __ds160OnDomReady(_event) {
   if (relativesRadios && relativesRadios.length) {
     if (!window.__ds160RelativesInit) {
       window.__ds160RelativesInit = true;
-      console.debug('relatives init: binding change listeners, count=', relativesRadios ? relativesRadios.length : 0);
+      console.debug(
+        'relatives init: binding change listeners, count=',
+        relativesRadios ? relativesRadios.length : 0
+      );
+      const detailsBox = document.getElementById('relative_details');
 
       relativesRadios.forEach((radio) => {
         radio.addEventListener('change', function () {
           const _relativeEntries = document.getElementById('relativeEntries');
-          if (!_relativesContainer) return;
+          if (!relativesContainer) return;
           if (this.value === 'Yes') {
-            _relativesContainer.style.display = 'block';
-            _relativesContainer.style.animation = 'fadeIn 0.5s';
-            _relativesContainer.setAttribute('aria-expanded', 'true');
+            relativesContainer.style.display = 'block';
+            relativesContainer.style.animation = 'fadeIn 0.5s';
+            relativesContainer.setAttribute('aria-expanded', 'true');
             // mark aria-hidden=false so assistive tech knows this section is exposed
-            _relativesContainer.setAttribute('aria-hidden', 'false');
+            relativesContainer.setAttribute('aria-hidden', 'false');
             if (detailsBox) {
               detailsBox.style.display = 'block';
               detailsBox.style.animation = 'fadeIn 0.5s';
             }
-            const currentCount = _relativeEntries ? _relativeEntries.querySelectorAll('.relative-entry').length : 0;
+            const currentCount = _relativeEntries
+              ? _relativeEntries.querySelectorAll('.relative-entry').length
+              : 0;
             for (let i = 1; i <= currentCount; i++) setRelativeRequired(i, true);
-            if (detailsBox) detailsBox.querySelectorAll('input, select, textarea').forEach((c) => { c.disabled = false; });
+            if (detailsBox)
+              detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                c.disabled = false;
+              });
           } else {
-            _relativesContainer.style.display = 'none';
-            _relativesContainer.setAttribute('aria-expanded', 'false');
+            relativesContainer.style.display = 'none';
+            relativesContainer.setAttribute('aria-expanded', 'false');
             // remove aria-hidden when hidden to match existing accessibility patterns
-            _relativesContainer.removeAttribute('aria-hidden');
+            relativesContainer.removeAttribute('aria-hidden');
             if (detailsBox) detailsBox.style.display = 'none';
             for (let i = 1; i <= maxRelatives; i++) setRelativeRequired(i, false);
-            if (detailsBox) detailsBox.querySelectorAll('input, select, textarea').forEach((c) => { c.disabled = true; });
+            if (detailsBox)
+              detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                c.disabled = true;
+              });
           }
         });
       });
 
-      const clickDelegateRoot = document.getElementById('US_Relatives_Container') || document.getElementById('relativeEntries');
+      const clickDelegateRoot =
+        document.getElementById('US_Relatives_Container') ||
+        document.getElementById('relativeEntries');
       if (clickDelegateRoot) {
         clickDelegateRoot.addEventListener('click', function (e) {
           const addBtn = e.target.closest && e.target.closest('.add-relative');
