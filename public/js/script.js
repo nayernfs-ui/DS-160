@@ -1132,28 +1132,10 @@ function __ds160OnDomReady(_event) {
   });
 
   // 3b. Previous U.S. Visa details (show when HadUSVisaBefore = Yes)
-  const hadVisaRadios = document.querySelectorAll('input[name="HadUSVisaBefore"]');
+  // HANDLED BY GLOBAL EVENT LISTENER - removed individual listeners to avoid conflicts
   const previousUSVisas = document.getElementById('previousUSVisas');
   const visaNumberInput = document.getElementById('visaNumber');
   const visaNumberUnknown = document.getElementById('visaNumberUnknown');
-
-  hadVisaRadios.forEach((radio) => {
-    radio.addEventListener('change', function () {
-      if (previousUSVisas) {
-        if (this.value === 'Yes') {
-          previousUSVisas.style.display = 'block';
-          previousUSVisas.style.animation = 'fadeIn 0.5s';
-          // make visa number required unless unknown is checked
-          if (visaNumberInput && (!visaNumberUnknown || !visaNumberUnknown.checked)) {
-            visaNumberInput.setAttribute('required', 'required');
-          }
-        } else {
-          previousUSVisas.style.display = 'none';
-          if (visaNumberInput) visaNumberInput.removeAttribute('required');
-        }
-      }
-    });
-  });
 
   // Visa number 'Do Not Know' checkbox logic
   if (visaNumberUnknown && visaNumberInput) {
