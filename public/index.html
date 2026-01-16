@@ -998,7 +998,7 @@
           <label>هل لديك أي أقارب آخرين في الولايات المتحدة؟</label>
           <div class="options-row" role="radiogroup" aria-label="US other relatives">
             <label
-              ><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes" />
+              ><input type="radio" name="US_OtherRelatives" value="Yes" id="otherRelativesYes" onclick="toggleRelativeDetails(true)" />
               نعم</label
             >
             <label
@@ -1008,6 +1008,7 @@
                 value="No"
                 id="otherRelativesNo"
                 checked
+                onclick="toggleRelativeDetails(false)"
               />
               لا</label
             >
