@@ -3191,6 +3191,9 @@ document.addEventListener(
       HadUSVisaBefore: {
         containers: ['visa_details'],
       },
+      USVisaDenied: {
+        containers: ['denialTimeField'],
+      },
       MedicalDisease: {
         containers: ['exp_disease'],
       },
