@@ -141,21 +141,20 @@ try {
               const detailsBox = document.getElementById('immediate_relative_details');
               if (container) {
                 if (isYes) {
-                  container.style.setProperty('display', 'block', 'important');
+                  container.style.removeProperty('display');
                   container.classList.add('is-visible');
                   container.style.animation = 'fadeIn 0.5s';
                   container.setAttribute('aria-expanded', 'true');
                   container.setAttribute('aria-hidden', 'false');
                   // Ensure contained controls are enabled and required
                   if (detailsBox) {
-                    detailsBox.style.setProperty('display', 'block', 'important');
+                    detailsBox.style.removeProperty('display');
                     detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
                       c.disabled = false;
                       c.setAttribute('required', '');
                     });
                   }
                 } else {
-                  container.style.setProperty('display', 'none', 'important');
                   container.classList.remove('is-visible');
                   container.setAttribute('aria-expanded', 'false');
                   container.removeAttribute('aria-hidden');
@@ -180,21 +179,20 @@ try {
               const detailsBox = document.getElementById('other_relative_details');
               if (container) {
                 if (isYes) {
-                  container.style.setProperty('display', 'block', 'important');
+                  container.style.removeProperty('display');
                   container.classList.add('is-visible');
                   container.style.animation = 'fadeIn 0.5s';
                   container.setAttribute('aria-expanded', 'true');
                   container.setAttribute('aria-hidden', 'false');
                   // Ensure contained controls are enabled and required
                   if (detailsBox) {
-                    detailsBox.style.setProperty('display', 'block', 'important');
+                    detailsBox.style.removeProperty('display');
                     detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
                       c.disabled = false;
                       c.setAttribute('required', '');
                     });
                   }
                 } else {
-                  container.style.setProperty('display', 'none', 'important');
                   container.classList.remove('is-visible');
                   container.setAttribute('aria-expanded', 'false');
                   container.removeAttribute('aria-hidden');
