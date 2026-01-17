@@ -137,8 +137,45 @@ try {
           // Support immediate radio toggles in JSDOM for immediate relatives
           if (this.name === 'US_ImmediateRelatives') {
             try {
-              const container = document.getElementById('US_Relatives_Container');
-              const detailsBox = document.getElementById('relative_details');
+              const container = document.getElementById('US_ImmediateRelatives_Container');
+              const detailsBox = document.getElementById('immediate_relative_details');
+              if (container) {
+                if (isYes) {
+                  container.style.setProperty('display', 'block', 'important');
+                  container.style.animation = 'fadeIn 0.5s';
+                  container.setAttribute('aria-expanded', 'true');
+                  container.setAttribute('aria-hidden', 'false');
+                  // Ensure contained controls are enabled and required
+                  if (detailsBox) {
+                    detailsBox.style.setProperty('display', 'block', 'important');
+                    detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                      c.disabled = false;
+                      c.setAttribute('required', '');
+                    });
+                  }
+                } else {
+                  container.style.setProperty('display', 'none', 'important');
+                  container.setAttribute('aria-expanded', 'false');
+                  container.removeAttribute('aria-hidden');
+                  if (detailsBox) {
+                    detailsBox.style.setProperty('display', 'none', 'important');
+                    detailsBox.querySelectorAll('input, select, textarea').forEach((c) => {
+                      c.disabled = true;
+                      c.removeAttribute('required');
+                    });
+                  }
+                }
+              }
+            } catch (e) {
+              /* ignore */
+            }
+          }
+
+          // Support immediate radio toggles in JSDOM for other relatives
+          if (this.name === 'US_OtherRelatives') {
+            try {
+              const container = document.getElementById('US_OtherRelatives_Container');
+              const detailsBox = document.getElementById('other_relative_details');
               if (container) {
                 if (isYes) {
                   container.style.setProperty('display', 'block', 'important');
@@ -1875,6 +1912,18 @@ function __ds160OnDomReady(_event) {
   function toggleRelativeDetails(show) {
     const yesRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="Yes"]');
     const noRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="No"]');
+    if (show && yesRadio) {
+      yesRadio.checked = true;
+      yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    } else if (!show && noRadio) {
+      noRadio.checked = true;
+      noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  function toggleOtherRelativeDetails(show) {
+    const yesRadio = document.querySelector('input[name="US_OtherRelatives"][value="Yes"]');
+    const noRadio = document.querySelector('input[name="US_OtherRelatives"][value="No"]');
     if (show && yesRadio) {
       yesRadio.checked = true;
       yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
