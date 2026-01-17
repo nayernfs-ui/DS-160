@@ -1918,12 +1918,18 @@ function __ds160OnDomReady(_event) {
 
     if (show && yesRadio) {
       yesRadio.checked = true;
-      if (container) container.style.setProperty('display', 'block', 'important');
+      if (container) {
+        container.style.setProperty('display', 'block', 'important');
+        container.classList.add('is-visible');
+      }
       if (detailsBox) detailsBox.style.setProperty('display', 'block', 'important');
       yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
     } else if (!show && noRadio) {
       noRadio.checked = true;
-      if (container) container.style.setProperty('display', 'none', 'important');
+      if (container) {
+        container.style.setProperty('display', 'none', 'important');
+        container.classList.remove('is-visible');
+      }
       if (detailsBox) detailsBox.style.setProperty('display', 'none', 'important');
       noRadio.dispatchEvent(new Event('change', { bubbles: true }));
     }
@@ -1938,12 +1944,18 @@ function __ds160OnDomReady(_event) {
 
     if (show && yesRadio) {
       yesRadio.checked = true;
-      if (container) container.style.setProperty('display', 'block', 'important');
+      if (container) {
+        container.style.setProperty('display', 'block', 'important');
+        container.classList.add('is-visible');
+      }
       if (detailsBox) detailsBox.style.setProperty('display', 'block', 'important');
       yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
     } else if (!show && noRadio) {
       noRadio.checked = true;
-      if (container) container.style.setProperty('display', 'none', 'important');
+      if (container) {
+        container.style.setProperty('display', 'none', 'important');
+        container.classList.remove('is-visible');
+      }
       if (detailsBox) detailsBox.style.setProperty('display', 'none', 'important');
       noRadio.dispatchEvent(new Event('change', { bubbles: true }));
     }
