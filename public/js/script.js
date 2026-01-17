@@ -1910,25 +1910,41 @@ function __ds160OnDomReady(_event) {
 
   // Expose a global helper so inline onclick attributes can reuse the same behavior
   function toggleRelativeDetails(show) {
+    const container = document.getElementById('US_ImmediateRelatives_Container');
+    const detailsBox = document.getElementById('immediate_relative_details');
+
     const yesRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="Yes"]');
     const noRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="No"]');
+
     if (show && yesRadio) {
       yesRadio.checked = true;
+      if (container) container.style.display = 'block';
+      if (detailsBox) detailsBox.style.display = 'block';
       yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
     } else if (!show && noRadio) {
       noRadio.checked = true;
+      if (container) container.style.display = 'none';
+      if (detailsBox) detailsBox.style.display = 'none';
       noRadio.dispatchEvent(new Event('change', { bubbles: true }));
     }
   }
 
   function toggleOtherRelativeDetails(show) {
+    const container = document.getElementById('US_OtherRelatives_Container');
+    const detailsBox = document.getElementById('other_relative_details');
+
     const yesRadio = document.querySelector('input[name="US_OtherRelatives"][value="Yes"]');
     const noRadio = document.querySelector('input[name="US_OtherRelatives"][value="No"]');
+
     if (show && yesRadio) {
       yesRadio.checked = true;
+      if (container) container.style.display = 'block';
+      if (detailsBox) detailsBox.style.display = 'block';
       yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
     } else if (!show && noRadio) {
       noRadio.checked = true;
+      if (container) container.style.display = 'none';
+      if (detailsBox) detailsBox.style.display = 'none';
       noRadio.dispatchEvent(new Event('change', { bubbles: true }));
     }
   }
