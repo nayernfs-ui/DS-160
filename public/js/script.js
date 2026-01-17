@@ -3170,58 +3170,6 @@ function __ds160OnDomReady(_event) {
     /* ignore */
   }
 
-  // Apply admin configuration if present in localStorage
-  try {
-    const adminConfig = localStorage.getItem('ds160_admin_settings');
-    if (adminConfig) {
-      const config = JSON.parse(adminConfig);
-      // List of container IDs that can be toggled by admin
-      const toggleableContainers = [
-        'personalInfoSection',
-        'passportSection',
-        'visaSection',
-        'addressSection',
-        'contactSection',
-        'employmentSection',
-        'educationSection',
-        'familySection',
-        'US_ImmediateRelatives_Container',
-        'otherRelativesQuestion',
-        'travelSection',
-        'securitySection',
-      ];
-
-      Object.entries(config).forEach(([sectionId, enabled]) => {
-        // Map sectionId to containerId
-        const containerMap = {
-          personalInfo: 'personalInfoSection',
-          passportInfo: 'passportSection',
-          visaInfo: 'visaSection',
-          addressInfo: 'addressSection',
-          contactInfo: 'contactSection',
-          employmentInfo: 'employmentSection',
-          educationInfo: 'educationSection',
-          familyInfo: 'familySection',
-          relativesInfo: 'US_ImmediateRelatives_Container',
-          otherInfo: 'otherRelativesQuestion',
-          travelHistory: 'travelSection',
-          securityInfo: 'securitySection',
-        };
-
-        const containerId = containerMap[sectionId];
-        if (containerId) {
-          const container = document.getElementById(containerId);
-          if (container && !enabled) {
-            container.style.setProperty('display', 'none', 'important');
-            container.classList.add('admin-hidden');
-          }
-        }
-      });
-    }
-  } catch (e) {
-    /* ignore admin configuration errors */
-  }
-
   // Run initialization
   initDs160();
 }
