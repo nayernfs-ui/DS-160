@@ -3163,6 +3163,9 @@ function __ds160OnDomReady(_event) {
   try {
     window.__ds160AddImpl = addVisitEntry;
     window.__ds160RemoveImpl = removeVisitEntry;
+    // Expose toggle functions for inline onclick handlers
+    window.toggleRelativeDetails = toggleRelativeDetails;
+    window.toggleOtherRelativeDetails = toggleOtherRelativeDetails;
   } catch (e) {
     /* ignore */
   }
