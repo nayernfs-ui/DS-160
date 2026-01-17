@@ -1921,10 +1921,10 @@ function __ds160OnDomReady(_event) {
     if (show && yesRadio) {
       yesRadio.checked = true;
       if (container) {
-        container.style.setProperty('display', 'block', 'important');
+        container.style.removeProperty('display');
         container.classList.add('is-visible');
       }
-      if (detailsBox) detailsBox.style.setProperty('display', 'block', 'important');
+      if (detailsBox) detailsBox.style.removeProperty('display');
       yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
     } else if (!show && noRadio) {
       noRadio.checked = true;
@@ -1947,10 +1947,10 @@ function __ds160OnDomReady(_event) {
     if (show && yesRadio) {
       yesRadio.checked = true;
       if (container) {
-        container.style.setProperty('display', 'block', 'important');
+        container.style.removeProperty('display');
         container.classList.add('is-visible');
       }
-      if (detailsBox) detailsBox.style.setProperty('display', 'block', 'important');
+      if (detailsBox) detailsBox.style.removeProperty('display');
       yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
     } else if (!show && noRadio) {
       noRadio.checked = true;
