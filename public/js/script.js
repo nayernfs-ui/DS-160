@@ -142,6 +142,7 @@ try {
               if (container) {
                 if (isYes) {
                   container.style.setProperty('display', 'block', 'important');
+                  container.classList.add('is-visible');
                   container.style.animation = 'fadeIn 0.5s';
                   container.setAttribute('aria-expanded', 'true');
                   container.setAttribute('aria-hidden', 'false');
@@ -155,6 +156,7 @@ try {
                   }
                 } else {
                   container.style.setProperty('display', 'none', 'important');
+                  container.classList.remove('is-visible');
                   container.setAttribute('aria-expanded', 'false');
                   container.removeAttribute('aria-hidden');
                   if (detailsBox) {
@@ -179,6 +181,7 @@ try {
               if (container) {
                 if (isYes) {
                   container.style.setProperty('display', 'block', 'important');
+                  container.classList.add('is-visible');
                   container.style.animation = 'fadeIn 0.5s';
                   container.setAttribute('aria-expanded', 'true');
                   container.setAttribute('aria-hidden', 'false');
@@ -192,6 +195,7 @@ try {
                   }
                 } else {
                   container.style.setProperty('display', 'none', 'important');
+                  container.classList.remove('is-visible');
                   container.setAttribute('aria-expanded', 'false');
                   container.removeAttribute('aria-hidden');
                   if (detailsBox) {
