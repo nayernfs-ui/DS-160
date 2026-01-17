@@ -994,33 +994,6 @@
           </div>
         </div>
 
-        <div class="question-group">
-          <label>هل لديك أي أقارب آخرين في الولايات المتحدة؟</label>
-          <div class="options-row" role="radiogroup" aria-label="US other relatives">
-            <label
-              ><input
-                type="radio"
-                name="US_OtherRelatives"
-                value="Yes"
-                id="otherRelativesYes"
-                onclick="toggleRelativeDetails(true)"
-              />
-              نعم</label
-            >
-            <label
-              ><input
-                type="radio"
-                name="US_OtherRelatives"
-                value="No"
-                id="otherRelativesNo"
-                checked
-                onclick="toggleRelativeDetails(false)"
-              />
-              لا</label
-            >
-          </div>
-        </div>
-
         <fieldset id="US_Relatives_Container" class="conditional-fields" aria-expanded="false">
           <legend>
             <span class="section-icon" aria-hidden="true"
@@ -1100,14 +1073,37 @@
             </div>
 
             <div class="question-group" id="relativeControls">
-              <button type="button" class="add-relative" aria-label="Add relative (إضافة)">
-                + إضافة
-              </button>
+              <button type="button" class="add-relative" aria-label="Add relative (إضافة)"></button>
             </div>
           </div>
         </fieldset>
 
-        <!-- marriedFields moved earlier -->
+        <div class="question-group">
+          <label>هل لديك أي أقارب آخرين في الولايات المتحدة؟</label>
+          <div class="options-row" role="radiogroup" aria-label="US other relatives">
+            <label
+              ><input
+                type="radio"
+                name="US_OtherRelatives"
+                value="Yes"
+                id="otherRelativesYes"
+                onclick="toggleRelativeDetails(true)"
+              />
+              نعم</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="US_OtherRelatives"
+                value="No"
+                id="otherRelativesNo"
+                checked
+                onclick="toggleRelativeDetails(false)"
+              />
+              لا</label
+            >
+          </div>
+        </div>
 
         <!-- widowedFields moved earlier -->
 
