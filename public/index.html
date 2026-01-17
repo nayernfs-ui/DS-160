@@ -230,6 +230,7 @@
                   name="Spouse_DOB_Year"
                   placeholder="YYYY"
                   required
+                  autocomplete="off"
                 />
               </div>
               <span class="error-message" id="error-spouseDOBDay"></span>
@@ -286,6 +287,7 @@
                 id="deceasedName"
                 name="Deceased_FullName"
                 style="direction: auto"
+                autocomplete="off"
               />
             </div>
             <div class="question-group">
@@ -325,6 +327,7 @@
                   type="text"
                   id="dateOfDeathYear"
                   name="Deceased_DOD_Year"
+                  autocomplete="off"
                   placeholder="YYYY"
                 />
               </div>
@@ -387,6 +390,7 @@
                     name="FormerSpouse_1_Surnames"
                     minlength="2"
                     maxlength="100"
+                    autocomplete="name"
                     required
                   />
                 </div>
@@ -397,6 +401,7 @@
                     id="formerGiven_1"
                     name="FormerSpouse_1_GivenNames"
                     minlength="2"
+                    autocomplete="name"
                     maxlength="100"
                     required
                   />
@@ -439,6 +444,7 @@
                       type="text"
                       id="formerDOBYear_1"
                       name="FormerSpouse_1_DOB_Year"
+                      autocomplete="off"
                       pattern="^[0-9]{4}$"
                       placeholder="YYYY"
                       required
@@ -484,7 +490,7 @@
                 </div>
 
                 <div class="question-group">
-                  <label for="formerDateMarriage_1">Date of Marriage</label>
+                  <label>Date of Marriage</label>
                   <div class="date-row">
                     <select id="formerMarriageDay_1" name="FormerSpouse_1_Marriage_Day" required>
                       <option value="">يوم</option>
@@ -505,6 +511,7 @@
                     <input
                       type="text"
                       id="formerMarriageYear_1"
+                      autocomplete="off"
                       name="FormerSpouse_1_Marriage_Year"
                       pattern="^[0-9]{4}$"
                       placeholder="YYYY"
@@ -514,7 +521,7 @@
                 </div>
 
                 <div class="question-group">
-                  <label for="formerDateEnd_1">Date Marriage Ended</label>
+                  <label>Date Marriage Ended</label>
                   <div class="date-row">
                     <select id="formerEndDay_1" name="FormerSpouse_1_MarriageEnd_Day" required>
                       <option value="">يوم</option>
@@ -525,6 +532,7 @@
                     <input
                       type="text"
                       id="formerEndYear_1"
+                      autocomplete="off"
                       name="FormerSpouse_1_MarriageEnd_Year"
                       pattern="^[0-9]{4}$"
                       placeholder="YYYY"
@@ -861,6 +869,7 @@
                   name="Other_PassportNumber"
                   required
                   style="direction: ltr"
+                  autocomplete="off"
                 />
               </div>
               <span class="error-message" id="error-otherPassportNumber"></span>
@@ -917,6 +926,7 @@
             <div class="question-group">
               <label for="lostPassportNumber">Passport/Travel Document Number</label>
               <input
+                autocomplete="off"
                 type="text"
                 id="lostPassportNumber"
                 name="LostPassport_PassportNumber"
@@ -1642,6 +1652,7 @@
             <label for="fatherName">اسم الاب بالكامل:</label
             ><input
               type="text"
+              autocomplete="off"
               id="fatherName"
               name="Father_FullName"
               required
@@ -1743,6 +1754,7 @@
           <div class="question-group">
             <label for="motherName">اسم الام بالكامل:</label
             ><input
+              autocomplete="off"
               type="text"
               id="motherName"
               name="Mother_FullName"
@@ -1803,6 +1815,7 @@
                 <option value="12">12</option>
               </select>
               <input
+                autocomplete="off"
                 type="text"
                 id="motherDOBYear"
                 name="Mother_DOB_Year"
@@ -1870,6 +1883,7 @@
               name="Current_JobTitle"
               required
               style="direction: auto"
+              autocomplete="off"
             />
             <span class="error-message" id="error-jobTitleCurrent"></span>
           </div>
@@ -1969,6 +1983,7 @@
               id="phoneWorkCurrent"
               name="Current_WorkPhone"
               style="direction: ltr"
+              autocomplete="tel"
             />
           </div>
           <div class="question-group">
@@ -2786,6 +2801,7 @@
                 <label for="Education_1_InstitutionName">اسم المؤسسة التعليمية:</label>
                 <input
                   type="text"
+                  autocomplete="off"
                   id="Education_1_InstitutionName"
                   name="Education_1_InstitutionName"
                   style="direction: auto"
@@ -2803,6 +2819,7 @@
               <div class="question-group">
                 <label for="Education_1_QualificationName">اسم المؤهل:</label>
                 <input
+                  autocomplete="off"
                   type="text"
                   id="Education_1_QualificationName"
                   name="Education_1_QualificationName"
@@ -2812,6 +2829,7 @@
               <div class="question-group">
                 <label for="Education_1_QualificationMajor">شعبة المؤهل:</label>
                 <input
+                  autocomplete="off"
                   type="text"
                   id="Education_1_QualificationMajor"
                   name="Education_1_QualificationMajor"
@@ -3037,6 +3055,7 @@
           >
             <div class="question-group">
               <label for="militaryBranch">فرع الخدمة:</label>
+              autocomplete="off"
               <input
                 type="text"
                 id="militaryBranch"
@@ -3055,6 +3074,7 @@
               />
             </div>
             <div class="question-group">
+              autocomplete="off"
               <label for="militarySpecialty">السلاح:</label>
               <input
                 type="text"
