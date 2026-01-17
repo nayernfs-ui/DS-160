@@ -120,7 +120,14 @@
           </legend>
           <div class="question-group">
             <label for="fullName">الاسم بالكامل:</label>
-            <input type="text" id="fullName" name="FullName" required style="direction: auto" />
+            <input
+              type="text"
+              id="fullName"
+              name="FullName"
+              required
+              style="direction: auto"
+              autocomplete="name"
+            />
             <span class="error-message" id="error-fullName"></span>
           </div>
           <div class="question-group">
@@ -157,7 +164,13 @@
             </legend>
             <div class="question-group">
               <label for="spouseName">اسم الزوج/الزوجة بالكامل:</label
-              ><input type="text" id="spouseName" name="Spouse_FullName" style="direction: auto" />
+              ><input
+                type="text"
+                id="spouseName"
+                name="Spouse_FullName"
+                style="direction: auto"
+                autocomplete="name"
+              />
             </div>
             <div class="question-group">
               <label>تاريخ الميلاد:</label>
@@ -225,7 +238,13 @@
             </div>
             <div class="question-group">
               <label for="spousePOB">محافظة وبلد الميلاد:</label
-              ><input type="text" id="spousePOB" name="Spouse_POB" style="direction: auto" />
+              ><input
+                type="text"
+                id="spousePOB"
+                name="Spouse_POB"
+                style="direction: auto"
+                autocomplete="off"
+              />
             </div>
 
             <div class="question-group">
@@ -315,7 +334,13 @@
             </div>
             <div class="question-group">
               <label for="deceasedPOB">محافظة وبلد الميلاد:</label
-              ><input type="text" id="deceasedPOB" name="Deceased_POB" style="direction: auto" />
+              ><input
+                type="text"
+                id="deceasedPOB"
+                name="Deceased_POB"
+                style="direction: auto"
+                autocomplete="off"
+              />
             </div>
           </div>
 
@@ -436,7 +461,13 @@
                   <label>Former Spouse's Place of Birth</label>
                   <div class="question-group">
                     <label for="formerCity_1">المدينة / City</label>
-                    <input type="text" id="formerCity_1" name="FormerSpouse_1_POB_City" required />
+                    <input
+                      type="text"
+                      id="formerCity_1"
+                      name="FormerSpouse_1_POB_City"
+                      required
+                      autocomplete="off"
+                    />
                     <label style="margin-left: 8px; font-weight: 400">Do Not Know</label>
                     <input
                       type="checkbox"
@@ -1169,18 +1200,34 @@
           </div>
           <div class="question-group">
             <label for="phoneSecondary">رقم التليفون الاحتياطي:</label
-            ><input type="tel" id="phoneSecondary" name="Phone_Secondary" style="direction: ltr" />
+            ><input
+              type="tel"
+              id="phoneSecondary"
+              name="Phone_Secondary"
+              style="direction: ltr"
+              autocomplete="tel"
+            />
           </div>
           <div class="question-group">
             <label for="phoneWork">رقم تليفون العمل:</label
-            ><input type="tel" id="phoneWork" name="Phone_Work" style="direction: ltr" />
+            ><input
+              type="tel"
+              id="phoneWork"
+              name="Phone_Work"
+              style="direction: ltr"
+              autocomplete="tel"
+            />
           </div>
           <div class="question-group">
             <label for="email">البريد الإلكتروني:</label
-            ><input type="email" id="email" name="Email" required style="direction: ltr" /><span
-              class="error-message"
-              id="error-email"
-            ></span>
+            ><input
+              type="email"
+              id="email"
+              name="Email"
+              required
+              style="direction: ltr"
+              autocomplete="email"
+            /><span class="error-message" id="error-email"></span>
           </div>
           <div class="question-group">
             <label for="facebookLink"
@@ -1516,14 +1563,26 @@
                     <option value="Nov">Nov</option>
                     <option value="Dec">Dec</option>
                   </select>
-                  <input type="text" id="visaYear" name="Visa_Last_Issue_Year" placeholder="YYYY" />
+                  <input
+                    type="text"
+                    id="visaYear"
+                    name="Visa_Last_Issue_Year"
+                    placeholder="YYYY"
+                    autocomplete="off"
+                  />
                 </div>
                 <span class="error-message" id="error-visaDate"></span>
               </div>
 
               <div class="question-group">
                 <label for="visaNumber">رقم التأشيرة:</label>
-                <input type="text" id="visaNumber" name="Visa_Number" style="direction: ltr" />
+                <input
+                  type="text"
+                  id="visaNumber"
+                  name="Visa_Number"
+                  style="direction: ltr"
+                  autocomplete="off"
+                />
                 <label
                   ><input type="checkbox" id="visaNumberUnknown" name="Visa_Number_Unknown" /> لا
                   أعرف</label
@@ -1549,7 +1608,13 @@
             <div class="question-group">
               <label for="denialTime"
                 >إذا تم الرفض، يرجى ذكر الوقت الذي تم فيه الرفض (السنة/الشهر):</label
-              ><input type="text" id="denialTime" name="Denial_Time" style="direction: auto" />
+              ><input
+                type="text"
+                id="denialTime"
+                name="Denial_Time"
+                style="direction: auto"
+                autocomplete="off"
+              />
             </div>
           </div>
         </fieldset>
@@ -1635,7 +1700,13 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
               </select>
-              <input type="text" id="fatherDOBYear" name="Father_DOB_Year" placeholder="YYYY" />
+              <input
+                type="text"
+                id="fatherDOBYear"
+                name="Father_DOB_Year"
+                placeholder="YYYY"
+                autocomplete="off"
+              />
             </div>
             <span class="error-message" id="error-fatherDOBDay"></span>
             <span class="error-message" id="error-fatherDOBMonth"></span>
@@ -1902,7 +1973,13 @@
           </div>
           <div class="question-group">
             <label for="salaryCurrent">الراتب الشهري:</label
-            ><input type="number" id="salaryCurrent" name="Current_Salary" style="direction: ltr" />
+            ><input
+              type="number"
+              id="salaryCurrent"
+              name="Current_Salary"
+              style="direction: ltr"
+              autocomplete="off"
+            />
           </div>
 
           <button
@@ -2969,7 +3046,13 @@
             </div>
             <div class="question-group">
               <label for="militaryRank">الرتبة:</label>
-              <input type="text" id="militaryRank" name="Military_Rank" style="direction: auto" />
+              <input
+                type="text"
+                id="militaryRank"
+                name="Military_Rank"
+                style="direction: auto"
+                autocomplete="off"
+              />
             </div>
             <div class="question-group">
               <label for="militarySpecialty">السلاح:</label>
