@@ -1925,6 +1925,8 @@ function __ds160OnDomReady(_event) {
         container.classList.add('is-visible');
       }
       if (detailsBox) detailsBox.style.removeProperty('display');
+      // Initialize add/remove controls when showing
+      updateImmediateRelativeAddControls();
       yesRadio.dispatchEvent(new Event('change', { bubbles: true }));
     } else if (!show && noRadio) {
       noRadio.checked = true;
@@ -2088,6 +2090,175 @@ function __ds160OnDomReady(_event) {
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  // ---------- Immediate Relatives Handlers (US_ImmediateRelatives) ----------
+  // Add and remove handlers for immediate relatives with IDs like ImmediateRelative_1_Surnames
+  function addImmediateRelative() {
+    try {
+      const entriesContainer = document.getElementById('immediateRelativeEntries');
+      if (!entriesContainer) return false;
+
+      const current = entriesContainer.querySelectorAll('.relative-entry').length;
+      const maxImmediate = 10;
+      if (current >= maxImmediate) return false;
+
+      const template = entriesContainer.querySelector('.relative-entry');
+      if (!template) return false;
+
+      const clone = template.cloneNode(true);
+      const newIndex = current + 1;
+      clone.setAttribute('data-index', String(newIndex));
+
+      // Update IDs and names from ImmediateRelative_1_* to ImmediateRelative_N_*
+      clone.querySelectorAll('[id]').forEach((el) => {
+        el.id = el.id.replace(/ImmediateRelative_\d+_/g, `ImmediateRelative_${newIndex}_`);
+        if (el.name)
+          el.name = el.name.replace(/ImmediateRelative_\d+_/g, `ImmediateRelative_${newIndex}_`);
+        if (el.tagName === 'INPUT') el.value = '';
+        if (el.tagName === 'SELECT') el.selectedIndex = 0;
+      });
+
+      clone.querySelectorAll('label').forEach((lbl) => {
+        if (lbl.htmlFor)
+          lbl.htmlFor = lbl.htmlFor.replace(
+            /ImmediateRelative_\d+_/g,
+            `ImmediateRelative_${newIndex}_`
+          );
+      });
+
+      clone.querySelectorAll('[aria-describedby]').forEach((el) => {
+        const v = el.getAttribute('aria-describedby');
+        if (!v) return;
+        el.setAttribute(
+          'aria-describedby',
+          v.replace(/ImmediateRelative_\d+_/g, `ImmediateRelative_${newIndex}_`)
+        );
+      });
+
+      // Set required state based on visibility
+      const container = document.getElementById('US_ImmediateRelatives_Container');
+      const shouldRequire = container && window.getComputedStyle(container).display !== 'none';
+      clone.querySelectorAll('input, select').forEach((el) => {
+        if (shouldRequire) el.setAttribute('required', 'required');
+        else el.removeAttribute('required');
+      });
+
+      clone.querySelectorAll('.remove-immediate-relative').forEach((btn) => {
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
+        btn.setAttribute('aria-label', `Remove relative ${newIndex} (إزالة)`);
+        btn.onclick = function (e) {
+          removeImmediateRelative(this);
+          e.preventDefault();
+        };
+      });
+
+      entriesContainer.appendChild(clone);
+      updateImmediateRelativeAddControls();
+      return true;
+    } catch (e) {
+      console.error('addImmediateRelative error:', e);
+      return false;
+    }
+  }
+
+  function removeImmediateRelative(btn) {
+    try {
+      const entriesContainer = document.getElementById('immediateRelativeEntries');
+      if (!entriesContainer) return false;
+
+      const entry = btn.closest('.relative-entry');
+      if (!entry) return false;
+
+      const entries = entriesContainer.querySelectorAll('.relative-entry');
+      if (entries.length === 1) {
+        // Last entry; remove it and toggle radio to No
+        entry.remove();
+        updateImmediateRelativeAddControls();
+        const yesRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="Yes"]');
+        const noRadio = document.querySelector('input[name="US_ImmediateRelatives"][value="No"]');
+        if (yesRadio && yesRadio.checked && noRadio) {
+          noRadio.checked = true;
+          noRadio.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        return true;
+      }
+
+      // Remove and renumber remaining entries
+      entry.remove();
+      const remaining = entriesContainer.querySelectorAll('.relative-entry');
+      remaining.forEach((el, idx) => {
+        const newIdx = idx + 1;
+        el.setAttribute('data-index', String(newIdx));
+        el.querySelectorAll('[id]').forEach((node) => {
+          if (node.id)
+            node.id = node.id.replace(/ImmediateRelative_\d+_/g, `ImmediateRelative_${newIdx}_`);
+          if (node.name)
+            node.name = node.name.replace(
+              /ImmediateRelative_\d+_/g,
+              `ImmediateRelative_${newIdx}_`
+            );
+        });
+        el.querySelectorAll('label').forEach((lbl) => {
+          if (lbl.htmlFor)
+            lbl.htmlFor = lbl.htmlFor.replace(
+              /ImmediateRelative_\d+_/g,
+              `ImmediateRelative_${newIdx}_`
+            );
+        });
+        el.querySelectorAll('[aria-describedby]').forEach((node) => {
+          const v = node.getAttribute('aria-describedby');
+          if (!v) return;
+          node.setAttribute(
+            'aria-describedby',
+            v.replace(/ImmediateRelative_\d+_/g, `ImmediateRelative_${newIdx}_`)
+          );
+        });
+        const remBtn = el.querySelector('.remove-immediate-relative');
+        if (remBtn) {
+          remBtn.setAttribute('aria-label', `Remove relative ${newIdx} (إزالة)`);
+          remBtn.onclick = function (e) {
+            removeImmediateRelative(this);
+            e.preventDefault();
+          };
+        }
+      });
+      updateImmediateRelativeAddControls();
+      return true;
+    } catch (e) {
+      console.error('removeImmediateRelative error:', e);
+      return false;
+    }
+  }
+
+  function updateImmediateRelativeAddControls() {
+    const entriesContainer = document.getElementById('immediateRelativeEntries');
+    const entries = entriesContainer
+      ? entriesContainer.querySelectorAll('.relative-entry').length
+      : 0;
+    const addBtn = document.querySelector('.add-immediate-relative');
+    const maxImmediate = 10;
+
+    if (addBtn) {
+      addBtn.setAttribute('role', 'button');
+      addBtn.setAttribute('tabindex', '0');
+      if (!addBtn.getAttribute('aria-label'))
+        addBtn.setAttribute('aria-label', 'Add relative (إضافة)');
+      if (entries >= maxImmediate) {
+        addBtn.style.setProperty('display', 'none', 'important');
+      } else {
+        addBtn.style.display = 'inline-block';
+      }
+      // Ensure click handler is bound
+      if (!addBtn.__ds160ImmediateBound) {
+        addBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          addImmediateRelative();
+        });
+        addBtn.__ds160ImmediateBound = true;
+      }
     }
   }
 
@@ -3031,6 +3202,10 @@ function __ds160OnDomReady(_event) {
     if (otherNationalityFields) otherNationalityFields.style.display = 'none';
     if (otherPassportField) otherPassportField.style.display = 'none';
     if (otherPermanentResidentFields) otherPermanentResidentFields.style.display = 'none';
+
+    // Initialize immediate relatives add/remove controls
+    updateImmediateRelativeAddControls();
+
     // Ensure military fields start hidden; keep aria-hidden attribute removed to avoid hidden-focusable lint
     if (militaryFields) {
       militaryFields.style.display = 'none';
@@ -3166,6 +3341,10 @@ function __ds160OnDomReady(_event) {
     // Expose toggle functions for inline onclick handlers
     window.toggleRelativeDetails = toggleRelativeDetails;
     window.toggleOtherRelativeDetails = toggleOtherRelativeDetails;
+    // Expose immediate relatives handlers
+    window.addImmediateRelative = addImmediateRelative;
+    window.removeImmediateRelative = removeImmediateRelative;
+    window.updateImmediateRelativeAddControls = updateImmediateRelativeAddControls;
   } catch (e) {
     /* ignore */
   }
