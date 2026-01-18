@@ -147,7 +147,10 @@ async function generateDocument(formData, opts = {}) {
     if (containsArabic(value) && reshaper && typeof reshaper.reshape === 'function') {
       try {
         const shaped = reshaper.reshape(value);
-        value = shaped.split('').reverse().join('');
+        // Do not reverse the shaped string — reversing reorders embedded
+        // digits (e.g. "37" -> "73"). Let the renderer handle bidi
+        // presentation; keep the shaped string as-is.
+        value = shaped;
       } catch (er) {
         /* ignore */
       }
